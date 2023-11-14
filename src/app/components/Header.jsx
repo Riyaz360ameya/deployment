@@ -67,7 +67,7 @@ function Header({ setMenu, menu, setLoader }) {
                     <div className="absolute mt-44 right-5 w-36 text-sm text-center bg-white border border-gray-400 rounded-md shadow-md ">
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={handleDropdown} >Profile</p>
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={handleDropdown} >All Projects</p>
-                        <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={handleDropdown} >Payments</p>
+                        <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={handleDropdown} >Transactions</p>
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={onLogout} >Logout</p>
                     </div>
                 )}
