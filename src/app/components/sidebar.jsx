@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { FaRegPenToSquare, FaIndianRupeeSign, FaStreetView } from 'react-icons/fa6';
 import { ImStatsDots } from 'react-icons/im';
+import {FcOrganization} from 'react-icons/fc';
 import profileImage from '../../../public/Profile.jpeg'
 import logo from '../../../public/ameyaLogo.png'
 import Image from 'next/image';
@@ -49,7 +50,7 @@ const sidebar = ({ menu }) => {
 
             <div className='p-3 bg-[#F5F5F5]'>
                 <div className="flex items-center ml-5 text-xl bottom-0">
-                    <Image src={profileImage} alt="" width={50} height={50} />
+                    <FcOrganization />
                     {menu ? <span className="ml-2 text-sm font-bold text-black">{data.organisation}</span> : ''}
                 </div>
             </div>
