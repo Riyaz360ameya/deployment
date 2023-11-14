@@ -20,10 +20,6 @@ const detailSchema = new mongoose.Schema({
         type: Date,
         required: [true, "Please provide your endDate"],
     },
-    // budget: {
-    //     type: Number,
-    //     required: [true, "Please provide your project budget"],
-    // },
     cadFile: {
         type:Buffer
         // data: Buffer, // Store file data as Buffer
@@ -31,9 +27,7 @@ const detailSchema = new mongoose.Schema({
         // fileName: String, // Original file name
         // // required: [true, "Please provide your project budget"],
     },
-    // cadFile: {
-    //     type:Buffer
-    // },
+
     instruction: {
         type: String,
         required: [true, "Please provide your project instruction"],

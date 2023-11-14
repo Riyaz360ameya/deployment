@@ -8,7 +8,7 @@ export const sendEmail = async ({ email, emailType, userId }) => {
         //create hashed token
         const hashedToken = await bcryptjs.hash(userId.toString(), 10)
         console.log(hashedToken, "hashedtoken")
-
+        //update with user id
         if (emailType === "VERIFY") {
             await User.findByIdAndUpdate(userId,
                 { verifyToken: hashedToken, verifyTokenExpiry: Date.now() + 3600000 })
