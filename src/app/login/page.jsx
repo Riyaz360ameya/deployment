@@ -4,8 +4,10 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner';
+
 
 function Page() {
     const router = useRouter();
@@ -42,7 +44,9 @@ function Page() {
             try {
                 setLoading(true);
                 const response = await axios.post("/api/users/login", user);
-                notify()
+                console.log(response.data.User, '----------login response')
+                localStorage.setItem('user', JSON.stringify(response.data.User))
+                toast.success("Login successful")
                 console.log("Login successful");
                 router.push("/client");
             } catch (error) {
@@ -63,7 +67,7 @@ function Page() {
 
     return (
         <>
-            <ToastContainer autoClose={2000} />
+            {/* <ToastContainer autoClose={2000} /> */}
             <div className='h-screen bg-black text-center flex items-center justify-end'>
 
                 <img

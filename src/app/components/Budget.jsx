@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 const Budgets = () => {
-
     const [interior, setInterior] = useState(0)
     const [exterior, setExterior] = useState(0)
     const [video, setVideo] = useState(0)
@@ -41,7 +40,7 @@ const Budgets = () => {
             </p>
             <div className='text-left'>
                 <label className='font-bold text-green-900' >Interior</label>
-                <div className='flex justify-between gap-5'>
+                <div className='flex gap-5'>
                     <div>
                         <label>No of view </label>
                         <input
@@ -51,17 +50,8 @@ const Budgets = () => {
                             onChange={interiorCalculation}
                         />
                     </div>
-                    {/* <div>
-                        <label>Cost Per View </label>
-                        <input
-                            type='number'
-                            className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
-                            value={interiorValue}
-                            readOnly
-                        />
-                    </div> */}
                     <div>
-                        <label>Total in INR</label>
+                        <label>Estimated cost</label>
                         <input
                             type='number'
                             className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
@@ -73,8 +63,7 @@ const Budgets = () => {
             </div>
             <div className='text-left'>
                 <label className='font-bold text-amber-900' >Exterior</label>
-                <div className='flex justify-between gap-5'>
-                    <div>
+                <div className='flex gap-5'>                    <div>
                         <label>No of view </label>
                         <input
                             type='number'
@@ -83,17 +72,8 @@ const Budgets = () => {
                             onChange={exteriorCalculation}
                         />
                     </div>
-                    {/* <div>
-                        <label>Cost Per View </label>
-                        <input
-                            type='number'
-                            className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
-                            value={exteriorValue}
-                            readOnly
-                        />
-                    </div> */}
                     <div>
-                        <label>Total in INR</label>
+                        <label>Estimated cost</label>
                         <input
                             type='number'
                             className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
@@ -105,8 +85,7 @@ const Budgets = () => {
             </div>
             <div className='text-left'>
                 <label className='font-bold text-yellow-800' >Video</label>
-                <div className='flex justify-between gap-5'>
-                    <div>
+                <div className='flex gap-5'>                    <div>
                         <label>No of Mints</label>
                         <input
                             type='number'
@@ -115,17 +94,8 @@ const Budgets = () => {
                             onChange={videoCalculation}
                         />
                     </div>
-                    {/* <div>
-                        <label>Cost Per Mints</label>
-                        <input
-                            type='number'
-                            className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
-                            value={videoValue}
-                            readOnly
-                        />
-                    </div> */}
                     <div>
-                        <label>Total in INR</label>
+                        <label>Estimated cost</label>
                         <input
                             type='number'
                             className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'

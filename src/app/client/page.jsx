@@ -4,10 +4,15 @@ import Sidebar from '../components/sidebar'
 import UploadDetails from '../components/uploadDetails'
 import Header from '../components/Header'
 import { InfinitySpin } from 'react-loader-spinner'
+import Status from '../components/Status'
+import Payment from '../components/Payment'
+import View from '../components/View'
+import Package from '../components/Package'
 
 function page() {
     const [loader, setLoader] = useState(false)
     const [menu, setMenu] = useState(false)
+    const [Project, setProject] = useState("New Project")
     return (
 
         <>
@@ -20,14 +25,19 @@ function page() {
                         />
                     </div>
                     :
-                    <div className='h-screen bg-slate-500 '>
-                        <div className='flex'>
-                            <Sidebar menu={menu} />
-                            <div className="flex flex-col flex-1">
-                                <Header setLoader={setLoader} setMenu={setMenu} />
-                                <UploadDetails />
+                    <div className='h-screen flex w-full bg-slate-500 '>
+                        <Sidebar setProject={setProject} menu={menu} />
+                        <div className="flex flex-col flex-1">
+                            <Header setLoader={setLoader} setMenu={setMenu} />
+                            {
+                                Project === "New Project" ? <UploadDetails />
+                                    : Project === "Project Status" ? <Status />
+                                        : Project === "Payment" ? <Payment />
+                                            : Project === "View" ? <View />
+                                            : Project === "Package" ? <Package />
+                                                : ""
+                            }
 
-                            </div>
                         </div>
                     </div>
             }

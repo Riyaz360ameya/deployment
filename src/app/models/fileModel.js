@@ -1,18 +1,29 @@
-import mongoose, { Schema } from "mongoose";
-
-const cadfileSchema = new mongoose.Schema({
-    
-   
-    cadFile: {
-        type: Buffer,
-        contentType: String,
-        fileName: String,
+import mongoose from 'mongoose';
+const fileSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Types.ObjectId,
+        ref: 'users',
+        required: true,
     },
-   
-   
-
-})
-
-const cadfile = mongoose.models.cadfiles || mongoose.model("cadfiles", cadfileSchema)
-
-export default cadfile;
+    Files: [
+        {
+            name: {
+                type: String,
+                required: true,
+            },
+            file: {
+                data: {
+                    type: Buffer,
+                    required: true,
+                },
+                contentType: {
+                    type: String,
+                    required: true,
+                },
+            },
+            date: Date,
+        }
+    ],
+});
+const FileModel = mongoose.models.files || mongoose.model('files', fileSchema);
+export default FileModel;

@@ -10,28 +10,28 @@ export async function POST(request = NextRequest) {
         console.log(reqData, 'cadfile');
         
         
-        // const {
+        const {
            
-        //     cadFile,
+            cadFile,
            
-        // } = reqData;
+        } = reqData;
 
-        // const newData = new cadfile({
+        const newData = new cadfile({
            
-        //     cadFile,
+            cadFile,
             
-        // });
+        });
 
-        // const savedData = await newData.save();
-        // console.log(savedData, "savedData");
+        const savedData = await newData.save();
+        console.log(savedData, "savedData");
 
-        // console.log("Project details added successfully:", savedData);
+        console.log("Project details added successfully:", savedData);
 
-        // return NextResponse.json({
-        //     message: "Project details added successfully",
-        //     success: true,
-        //     savedData
-        // }, { status: 200 });
+        return NextResponse.json({
+            message: "Project details added successfully",
+            success: true,
+            savedData
+        }, { status: 200 });
     } catch (error) {
         console.error("Error adding project details:", error);
         return NextResponse.json({ error: error.message }, { status: 500 });

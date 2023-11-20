@@ -1,16 +1,16 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { MdOutlineMenuOpen } from 'react-icons/md';
 import { CiSearch } from 'react-icons/ci';
 import { BiBell } from 'react-icons/bi';
 import { FaAngleDown } from 'react-icons/fa';
 import { AiOutlineMenuUnfold, AiOutlineMenuFold } from 'react-icons/ai';
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import profileImage from '../../../public/Profile.jpeg'
 import axios from 'axios';
 import Image from 'next/image';
-function Header({ setMenu, menu, setLoader }) {
+import { Toaster, toast } from 'sonner';
+
+function Header({ setMenu, menu }) {
     const [data, setData] = useState({})
     const router = useRouter()
     const [drop, setDrop] = useState(false)
@@ -18,6 +18,7 @@ function Header({ setMenu, menu, setLoader }) {
         try {
             await axios.get("/api/users/logout")
             console.log("Logout success")
+            toast.success("Logout successfully!")
             router.push("/login")
         } catch (error) {
             console.log(error.message)
@@ -29,10 +30,10 @@ function Header({ setMenu, menu, setLoader }) {
     }
     //fetching user details from token
 
-    const userDetails = async () => {
-        const res = await axios.get("/api/users/userdata")
-        console.log(res.data)
-        setData(res.data.data)
+    const userDetails = () => {
+        const res = localStorage.getItem('user')
+        const user = JSON.parse(res);
+        setData(user)
     }
 
     useEffect(() => {
@@ -87,3 +88,4 @@ function Header({ setMenu, menu, setLoader }) {
 }
 
 export default Header
+

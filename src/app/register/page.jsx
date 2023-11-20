@@ -5,8 +5,11 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 // import toast from 'react-hot-toast';
 import { BeatLoader } from 'react-spinners';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner';
+
+
 function Page() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -53,15 +56,42 @@ function Page() {
     };
     const notifys = () => toast("Registration successful!");
 
+    // const onRegister = async (e) => {
+    //     e.preventDefault()
+    //     if (validateInput()) {
+    //         try {
+    //             setLoading(true);
+    //             const response = await axios.post("/api/users/register", user);
+    //             console.log(response.data, "Registered successfully");
+    //             notifys();
+    //             // toast.success("Success")
+    //             router.push("/login");
+    //         } catch (error) {
+    //             console.log("register failed", error.message);
+    //             toast.error("Registration failed.");
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     }
+    // };
     const onRegister = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         if (validateInput()) {
             try {
                 setLoading(true);
+    
+                // Check  email is already registered
                 const response = await axios.post("/api/users/register", user);
+                toast.success("Registration successful!")
+                if (response.data.error && response.data.error.includes("email")) {
+                    toast.error("Email is already registered. Please use a different email.");
+                    return;
+                   
+                }
+    
+                // Proceed with user registration
                 console.log(response.data, "Registered successfully");
-                notifys();
-                // toast.success("Success")
+                
                 router.push("/login");
             } catch (error) {
                 console.log("register failed", error.message);
@@ -71,10 +101,10 @@ function Page() {
             }
         }
     };
-
+    
     return (
         <>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
             <div className='h-screen bg-white text-center flex items-center justify-end'>
                 <img src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a43592af6b9a40001bda44b_HomeCover.jpg" alt="" className='w-full h-full object-cover' />
                 <div className='absolute md:w-[40%] p-5'>
@@ -146,10 +176,6 @@ function Page() {
                             />
                             {errors.password && <p className='text-red-500'>{errors.password}</p>}
                         </div>
-                        {/* <div className='text-left text-sm'>
-                        <label className='font-bold' htmlFor="confirmPassword">Confirm Password</label>
-                        <input type='password' className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md' name="confirmPassword" id="confirmPassword" />
-                    </div> */}
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="confirmPassword">Confirm Password</label>
                             <input
@@ -172,7 +198,9 @@ function Page() {
                             <p className='text-gray-500 underline cursor-pointer'>
                                 Already have an account? <Link href='/login'><span className='font-bold text-black'>Login</span></Link>
                             </p>
+
                         </div>
+                        
                     </div>
                 </div>
             </div>
