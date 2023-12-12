@@ -5,9 +5,9 @@ import { BiBell } from 'react-icons/bi';
 import { FaAngleDown } from 'react-icons/fa';
 import { AiOutlineMenuUnfold, AiOutlineMenuFold } from 'react-icons/ai';
 import { useRouter } from 'next/navigation'
-import profileImage from '../../../public/Profile.jpeg'
+// import profileImage from '../../../public/Profile.jpeg'
 import axios from 'axios';
-import Image from 'next/image';
+// import Image from 'next/image';
 import { Toaster, toast } from 'sonner';
 
 function Header({ setMenu, menu }) {
@@ -59,8 +59,10 @@ function Header({ setMenu, menu }) {
                     <div className="w-3 h-3 bg-red-600 rounded-full absolute top-0 right-0"></div>
                 </div>
                 <div className='flex items-center gap-3'>
+                <img className="h-10 cursor-pointer" src='/public/Profile.jpeg' alt="" />
+
                     {/* <img className="h-10 cursor-pointer" src={profileImage} alt="" /> */}
-                    <Image src={profileImage} alt="" width={30} height={50} />
+                    {/* <Image src={profileImage} alt="" width={30} height={50} /> */}
                     <p className="text-base">{data.firstName}</p>
                     <FaAngleDown className="text-lg cursor-pointer" onClick={handleDropdown} />
                 </div>

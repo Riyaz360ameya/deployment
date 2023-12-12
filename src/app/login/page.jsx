@@ -4,40 +4,37 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-import { Toaster, toast } from 'sonner';
-
-
+import { toast } from 'sonner';
+import Forgot from '../components/Forgot';
 function Page() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState(false);
+    const [otpVerify, setOtpVerify] = useState(false)
+    const [changePass, setChangePass] = useState(false)
+    const [pass, setPass] = useState({
+        password: '',
+        confirmPassword: ''
+    })
+    const [otp, setOtp] = useState("")
+    const [otpEmail, setOtpEmail] = useState("")
     const [user, setUser] = useState({
         email: '',
         password: '',
     });
-    const notify = () => toast("Login successful!");
-
     const [errors, setErrors] = useState({});
-
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-
     const validateInput = () => {
         const newErrors = {};
-
         if (!user.email.match(emailRegex)) {
             newErrors.email = 'Please enter a valid email address';
         }
         if (!user.password) {
             newErrors.password = 'Please enter your password';
         }
-
         setErrors(newErrors);
-
         return Object.keys(newErrors).length === 0;
     };
-
     const onLogin = async (e) => {
         e.preventDefault()
         if (validateInput()) {
@@ -50,9 +47,8 @@ function Page() {
                 console.log("Login successful");
                 router.push("/client");
             } catch (error) {
-                console.log("Login failed", error.message);
-                toast.error('Login failed. Please check your credentials.');
-
+                console.log("Login failed-----------", error.response.data.error);
+                toast.error(error.response.data.error);
             } finally {
                 setLoading(false);
             }
@@ -60,22 +56,24 @@ function Page() {
             toast.error('Please correct the form errors.');
         }
     };
-
     const handleForgot = () => {
         setPassword((prev) => !prev);
+        setOtpVerify(false)
+        setLoading(false);
+        setChangePass(false)
+        setUser({
+            email: '',
+            password: ''
+        })
     };
-
     return (
         <>
-            {/* <ToastContainer autoClose={2000} /> */}
             <div className='h-screen bg-black text-center flex items-center justify-end'>
-
                 <img
                     src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a43592af6b9a40001bda44b_HomeCover.jpg"
                     alt=""
                     className='w-full h-full object-cover'
                 />
-
                 <div className='absolute md:w-[40%] p-5'>
                     <div className='border border-gray-400 rounded-md p-5 mr-10'>
                         <div className='flex items-center gap-5 justify-center'>
@@ -124,41 +122,20 @@ function Page() {
                                 </div>
                                 <div className=' mt-5 text-sm'>
                                     <p className='text-gray-500 underline cursor-pointer'>
-                                        Need a new Account? <Link href='/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
+                                        Need a new Account? <Link href='/client/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
                                     </p>
                                 </div>
                             </>
                         ) : (
-                            <>
-                                <div className='text-left text-sm'>
-                                    <label className='font-bold' htmlFor="email">Email</label>
-                                    <input
-                                        type="text"
-                                        className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
-                                        name="email"
-                                        id="email"
-                                    />
-                                </div>
-                                <div className='flex justify-between mt-5 text-sm'>
-                                    <p className='text-black font-bold underline cursor-pointer'>Resend OTP</p>
-                                    <p className='text-black font-bold underline cursor-pointer' onClick={handleForgot}>
-                                        Cancel
-                                    </p>
-                                </div>
-                            </>
+                            <Forgot setPassword={setPassword} />
                         )}
                     </div>
                 </div>
-            </div></>
+            </div>
+        </>
     );
 }
-
 export default Page;
-
-
-
-
-
 
 
 

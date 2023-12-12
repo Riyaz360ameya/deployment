@@ -11,7 +11,7 @@ import Package from '../components/Package'
 
 function page() {
     const [loader, setLoader] = useState(false)
-    const [menu, setMenu] = useState(false)
+    const [menu, setMenu] = useState(true)
     const [Project, setProject] = useState("New Project")
     return (
 
@@ -25,7 +25,7 @@ function page() {
                         />
                     </div>
                     :
-                    <div className='h-screen flex w-full bg-slate-500 '>
+                    <div className='h-screen flex w-full '>
                         <Sidebar setProject={setProject} menu={menu} />
                         <div className="flex flex-col flex-1">
                             <Header setLoader={setLoader} setMenu={setMenu} />

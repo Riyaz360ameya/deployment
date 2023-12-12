@@ -1,6 +1,6 @@
-import { connect } from "@/app/dbConfig/dbConfig";
-import User from "@/app/models/userModel";
+import { connect } from "../../dbConfig/dbConfig";
 import { NextRequest,NextResponse } from "next/server";
+import userModel from "../../models/userModel";
 connect();
 
 export async function POST(request=NextRequest){
@@ -9,8 +9,8 @@ export async function POST(request=NextRequest){
         console.log(reqBody)
         const {token} = reqBody
         console.log(token,"verify route")
-
-        const user = await User.findOne({
+        
+        const user = await userModel.findOne({
             verifyToken:token,verifyTokenExpiry:{$gt:Date.now()}
         })
         if(!user){
