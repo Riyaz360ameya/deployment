@@ -22,7 +22,7 @@ function page() {
       try {
         const response = await axios.post("/api/projectManager/register",user)
         toast.success("Registration successful!")
-        router.push('/rolebased/manager/login')
+        router.push('/projectManager/login')
         console.log(response.data)
       } catch (error) {
         toast.error("Registration failed")

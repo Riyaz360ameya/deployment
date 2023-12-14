@@ -18,7 +18,7 @@ const managerLoginSchema = new mongoose.Schema({
     },
     designation: {
         type: String,
-        required: true
+        // required: true
     },
     haveAccess: {
         type: Boolean,
