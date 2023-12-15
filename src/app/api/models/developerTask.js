@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 const moment = require('moment');
-const teamLeadSchema = new mongoose.Schema({
-    teamLeadId: {
+const developerTaskSchema = new mongoose.Schema({
+    developerId: {
         type: mongoose.Types.ObjectId,
-        ref: 'leadLogins', // Update to match the actual model name
+        ref: 'developerLogins', // Update to match the actual model name
         required: true,
     },
     newTasks: [
@@ -101,15 +101,7 @@ const teamLeadSchema = new mongoose.Schema({
                 type: mongoose.Types.ObjectId,
                 ref: 'projectInformation',
                 required: true,
-            },
-            devAssignedDate: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
-            },
-            assignedDeveloperName: {
-                type: String,
-                required: true,
-            },
+            }
         }
     ],
     completedTasks: [
@@ -162,18 +154,10 @@ const teamLeadSchema = new mongoose.Schema({
                 type: mongoose.Types.ObjectId,
                 ref: 'projectInformation',
                 required: true,
-            },
-            devAssignedDate: {
-                type: String,
-                required: true,
-            },
-            assignedDeveloperName: {
-                type: String,
-                required: true,
-            },
+            }
         }
     ]
 });
-delete mongoose.connection.models['leadTasks'];
-const LeadTaskModel = mongoose.models.leadTasks || mongoose.model("leadTasks", teamLeadSchema);
-export default LeadTaskModel;
+delete mongoose.connection.models['devTasks'];
+const devTaskModel = mongoose.models.devTasks || mongoose.model("devTasks", developerTaskSchema);
+export default devTaskModel;

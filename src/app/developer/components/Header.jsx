@@ -29,12 +29,15 @@ function Header({ setMenu, menu }) {
     const handleDropdown = () => {
         setDrop((prev) => !prev)
     }
-    //fetching user details from token
+    //fetching user details
     const userDetails = () => {
-        const res = localStorage.getItem('user')
+        const res = localStorage.getItem('Dev')
         const user = JSON.parse(res);
         setData(user)
     }
+    useEffect(() => {
+        userDetails()
+    }, [])
     return (
         <div className="flex items-center justify-between  px-4 py-4 bg-white  h-16 w-full shadow-xl">
             <div className="hidden md:flex text-2xl cursor-pointer" >
@@ -68,7 +71,7 @@ function Header({ setMenu, menu }) {
                 <div className='flex items-center gap-3'>
                     <div className='text-right'>
                         <p className="text-base">Ameya360</p>
-                        <p className="text-sm text-gray-500">Interior</p>
+                        <p className="text-sm text-gray-500">{data.designation}</p>
                     </div>
                     <div className='h-12 w-12 '>
                         {/* <Image src={logo} className='object-contain rounded-full' alt="" width={100} height={100} /> */}

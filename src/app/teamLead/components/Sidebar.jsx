@@ -11,17 +11,18 @@ import { IoKeyOutline } from "react-icons/io5";
 import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
 import axios from 'axios';
-const Sidebar = ({ menu, setProject }) => {
+const Sidebar = ({ menu, setProject, Project }) => {
+    const [selectedItem, setSelectedItem] = useState(Project);
     //fetching user details from token
     const [data, setData] = useState("")
     const icons = [
         { icon: <SiTraefikproxy />, name: 'Projects' },
         { icon: <MdDeviceHub />, name: 'Developers' },
         { icon: <SlCalender />, name: 'Calender' },
-       
     ];
     const handleClick = (name) => {
-        console.log(name,'...................here')
+        console.log(name, '...................here')
+        setSelectedItem(name)
         setProject(name)
     }
     return (
@@ -42,8 +43,8 @@ const Sidebar = ({ menu, setProject }) => {
                             return (
                                 <div key={i}
                                     onClick={() => handleClick(item.name)}
-                                    className={`flex gap-2 mt-2 items-center ${menu ? "" : "justify-center"}  text-lg  p-2 cursor-pointer  rounded duration-300 ease-in-out
-                                ${i === 0 && "bg-slate-600"}
+                                    className={`flex gap-2 mt-2 items-center ${menu ? "" : "justify-center"}  text-base  p-2 cursor-pointer  rounded duration-300 ease-in-out
+                                ${selectedItem === item.name && "bg-slate-600"}
                                 hover:bg-slate-600`} >
                                     <p className='flex items-center gap-2'>{item.icon}
                                         {menu && <span className=" ">{item.name}</span>}
@@ -52,8 +53,6 @@ const Sidebar = ({ menu, setProject }) => {
                             )
                         })}
                     </div>
-                  
-                   
                 </div>
             </div>
         </div >

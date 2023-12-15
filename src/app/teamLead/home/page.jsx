@@ -1,13 +1,9 @@
 "use client"
 import React, { useState } from 'react'
-import Dashboard from '../components/Dashboard'
 import Projects from '../components/Projects'
-import Leads from '../components/Leads'
 import Developers from '../components/Developers'
-import Charts from '../components/Charts'
 import Calender from '../components/Calender'
-import Clients from '../components/Clients'
-import Authorization from '../components/Authorization'
+
 import Sidebar from '../components/Sidebar'
 import Header from '../components/Header'
 const page = () => {
@@ -23,13 +19,9 @@ const page = () => {
                     {
 
                         Project === "Projects" ? <Projects />
-                            // : Project === "Team Leads" ? <Leads />
-                                : Project === "Developers" ? <Developers />
-                                    : Project === "Calender" ? <Calender />
-                                        // : Project === "Clients" ? <Clients />
-                                        //     : Project === "Charts" ? <Charts />
-                                                // : Project === "Authorization" ? <Authorization />
-                                                    : ""
+                            : Project === "Developers" ? <Developers />
+                                : Project === "Calender" ? <Calender />
+                                    : ""
                     }
                 </div>
             </div>

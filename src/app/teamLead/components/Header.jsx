@@ -31,10 +31,13 @@ function Header({ setMenu, menu }) {
     }
     //fetching user details from token
     const userDetails = () => {
-        const res = localStorage.getItem('user')
+        const res = localStorage.getItem('TeamLead')
         const user = JSON.parse(res);
         setData(user)
     }
+    useEffect(() => {
+        userDetails()
+    }, [])
     return (
         <div className="flex items-center justify-between  px-4 py-4 bg-white  h-16 w-full shadow-xl">
             <div className="hidden md:flex text-2xl cursor-pointer" >
@@ -67,8 +70,8 @@ function Header({ setMenu, menu }) {
                 </div>
                 <div className='flex items-center gap-3'>
                     <div className='text-right'>
-                        <p className="text-base">James Bond</p>
-                        <p className="text-sm text-gray-500">Project Manager</p>
+                        <p className="text-base">{data.firstName} {data.lastName}</p>
+                        <p className="text-sm text-gray-500">{data.designation}</p>
                     </div>
                     <div className=''>
                         <SlUser className='h-8 w-8 ' />
