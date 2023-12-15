@@ -1,9 +1,9 @@
 import { connect } from "../../dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
-import leadLoginModel from "../../models/leadLoginModel";
 import { devTaskAssign } from "./devTaskAssign";
 import { upDateLeadTask } from "./upDateTask";
-import developerModel from "../../models/developerLoginModel";
+import developerModel from "../../models/Developer/developerLoginModel";
+import leadLoginModel from "../../models/TeamLead/leadLoginModel";
 connect()
 export async function POST(request = NextRequest) {
     try {

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from 'bcryptjs'
 import Jwt from "jsonwebtoken";
 import { connect } from "../../dbConfig/dbConfig";
-import leadLoginModel from "../../models/leadLoginModel";
+import leadLoginModel from "../../models/TeamLead/leadLoginModel";
 connect();
 export async function POST(request = NextRequest) {
     try {

@@ -1,9 +1,12 @@
 import mongoose from "mongoose";
 const moment = require('moment');
+import leadLoginModel from "./leadLoginModel";
+const leadData = mongoose.models.leadLogins || leadLoginModel;
+
 const teamLeadSchema = new mongoose.Schema({
     teamLeadId: {
         type: mongoose.Types.ObjectId,
-        ref: 'leadLogins', // Update to match the actual model name
+        ref: leadData, // Update to match the actual model name
         required: true,
     },
     newTasks: [

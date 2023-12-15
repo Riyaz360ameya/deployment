@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
-import developerModel from "../../models/developerLoginModel";
+import developerModel from "../../models/Developer/developerLoginModel";
 connect();
 export const POST = async (request = NextRequest) => {
     try {

@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
-import leadLoginModel from "../../models/leadLoginModel";
-import LeadTaskModel from "../../models/leadTaskModel";
-import moment from 'moment';
-import managerLoginModel from "../../models/managerLoginModel";
+import leadLoginModel from "../../models/TeamLead/leadLoginModel";
+import managerLoginModel from "../../models/ProjectManager/managerLoginModel";
+import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 connect();
 export async function POST(request = NextRequest) {
     try {

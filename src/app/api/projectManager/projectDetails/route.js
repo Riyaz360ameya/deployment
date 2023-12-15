@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import projectInfoModel from "../../models/projectInfoModel";
 import { connect } from "../../dbConfig/dbConfig";
+import projectInfoModel from "../../models/User/projectInfoModel";
 connect();
 
 export async function GET(request = NextRequest) {

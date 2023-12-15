@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import devTaskModel from "../../models/developerTask";
+import devTaskModel from "../../models/Developer/developerTask";
 export const devTaskAssign = async ({ findDev, findLead, reqBody }) => {
     try {
         const { developer, importance, projectTitle, description, instruction, startDate, endDate, projectId, assignedBy } = reqBody

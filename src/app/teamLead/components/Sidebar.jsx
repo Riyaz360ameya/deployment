@@ -11,8 +11,8 @@ import { IoKeyOutline } from "react-icons/io5";
 import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
 import axios from 'axios';
-const Sidebar = ({ menu, setProject, Project }) => {
-    const [selectedItem, setSelectedItem] = useState(Project);
+const Sidebar = ({ menu, setProject, Projects }) => {
+    const [selectedItem, setSelectedItem] = useState(Projects);
     //fetching user details from token
     const [data, setData] = useState("")
     const icons = [

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from 'bcryptjs'
-import leadLoginModel from "../../models/leadLoginModel";
 import { connect } from "../../dbConfig/dbConfig";
+import leadLoginModel from "../../models/TeamLead/leadLoginModel";
 connect();
 
 export async function POST(request = NextRequest) {

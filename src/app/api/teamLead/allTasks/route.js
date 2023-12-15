@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
-import LeadTaskModel from "../../models/leadTaskModel";
+import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 connect()
 export async function POST(request = NextRequest) {
     try {

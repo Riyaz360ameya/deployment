@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
-import developerModel from "../../models/developerLoginModel";
 import bcryptjs from 'bcryptjs'
+import developerModel from "../../models/Developer/developerLoginModel";
 connect();
 
 

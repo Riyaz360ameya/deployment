@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import devTaskModel from "../../models/developerTask";
 import { connect } from "../../dbConfig/dbConfig";
+import devTaskModel from "../../models/Developer/developerTask";
 connect()
 export async function POST(request = NextRequest) {
     try {

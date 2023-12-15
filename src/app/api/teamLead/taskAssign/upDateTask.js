@@ -1,4 +1,5 @@
-import LeadTaskModel from "../../models/leadTaskModel";
+import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
+
 export const upDateLeadTask = async ({ devName, teamLeadId,projectId }) => {
     try {
         const findLeadTask = await LeadTaskModel.findOne({ teamLeadId });

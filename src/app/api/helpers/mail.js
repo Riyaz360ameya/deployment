@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
-import userModel from '../models/userModel'
 import bcryptjs from 'bcryptjs'
 import otpVerifyModel from '../models/otpVerifyModel.js'
+import userModel from '../models/User/userModel.js'
 export const sendEmail = async ({ email, emailType, userId }) => {
     try {
         //create hashed token

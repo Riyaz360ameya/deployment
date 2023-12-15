@@ -1,8 +1,8 @@
 import { connect } from "../../dbConfig/dbConfig";
 import { NextRequest, NextResponse } from "next/server";
 import bcryptjs from 'bcryptjs'
-import userModel from "../../models/userModel";
 import { sendEmail } from "../../helpers/mail";
+import userModel from "../../models/User/userModel";
 
 
 connect()

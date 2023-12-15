@@ -13,7 +13,7 @@ const page = () => {
     return (
         <>
             <div className='h-screen flex w-full '>
-                <Sidebar setProject={setProject} menu={menu} />
+                <Sidebar setProject={setProject} menu={menu} Projects={Project} />
                 <div className="flex flex-col flex-1">
                     <Header setLoader={setLoader} menu={menu} setMenu={setMenu} />
                     {

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
-import LeadLoginModel from "../../models/leadLoginModel";
-import LeadTaskModel from "../../models/leadTaskModel";
+import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 connect();
 export const GET = async (request = NextRequest) => {
     try {
