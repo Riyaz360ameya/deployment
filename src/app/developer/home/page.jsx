@@ -10,8 +10,8 @@ const page = () => {
     const [newTasks, setNewTasks] = useState([])
     const [onGoing, setOnGoing] = useState([])
     const [completed, setCompleted] = useState([])
-    const [Project, setProject] = useState("New Task")
-    const userDetails = async () => {
+    const [Project, setProject] = useState("New Tasks")
+    const devTasks = async () => {
         try {
             const dev = localStorage.getItem("Dev")
             const devData = JSON.parse(dev)
@@ -32,9 +32,9 @@ const page = () => {
                 <div className="flex flex-col flex-1">
                     <Header setLoader={setLoader} menu={menu} setMenu={setMenu} />
                     {
-                        Project === "New Task" ? <Tasks userDetails={userDetails} task={newTasks} Project={Project} />
-                            : Project === "Ongoing Tasks" ? <Tasks userDetails={userDetails} task={onGoing} Project={Project} />
-                                : Project === "Completed" ? <Tasks userDetails={userDetails} task={completed} Project={Project} />
+                        Project === "New Tasks" ? <Tasks devTasks={devTasks} task={newTasks} Project={Project} />
+                            : Project === "Ongoing Tasks" ? <Tasks devTasks={devTasks} task={onGoing} Project={Project} />
+                                : Project === "Completed" ? <Tasks devTasks={devTasks} task={completed} Project={Project} />
                                     : ""
                     }
                 </div>

@@ -13,7 +13,7 @@ import Header from '../components/Header'
 const page = () => {
     const [loader, setLoader] = useState(false)
     const [menu, setMenu] = useState(true)
-    const [Project, setProject] = useState("Projects")
+    const [Project, setProject] = useState("Team Leads")
     const [loading, setLoading] = useState(true);
     return (
         <>

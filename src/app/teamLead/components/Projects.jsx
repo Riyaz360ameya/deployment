@@ -5,9 +5,12 @@ import { PiChatDotsLight } from 'react-icons/pi';
 import axios from 'axios';
 import TaskAssignModal from './TaskAssignModal';
 import { toast } from 'sonner';
+import ConfirmModal from './ConfirmModal';
 const Projects = () => {
     const [projectId, setProjectId] = useState('')
+    const [Lead, setLead] = useState()
     const [modal, setModal] = useState(false);
+    const [cModal, setCModal] = useState(false)
     const [newTasks, setNewTasks] = useState([])
     const [onGoing, setOnGoing] = useState([])
     const [completed, setCompleted] = useState([])
@@ -33,6 +36,7 @@ const Projects = () => {
         try {
             const lead = JSON.parse(localStorage.getItem("TeamLead"));
             const leadId = lead._id
+            setLead(leadId)
             const { data } = await axios.post('/api/teamLead/allTasks', { leadId });
             setData(data.LeadTasks.newTasks)
             setNewTasks(data.LeadTasks.newTasks)
@@ -47,6 +51,10 @@ const Projects = () => {
     useEffect(() => {
         fetchTasks();
     }, []);
+    const handleUpdate = (id) => {
+        setCModal(true)
+        setProjectId(id)
+    }
     return (
         <>
             <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden' >
@@ -133,13 +141,18 @@ const Projects = () => {
                                             {
                                                 item.status === "New Task" ?
                                                     <>
-                                                        <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item._id)} >Assign Task to</button>
+                                                        <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item.projectId)} >Assign Task to</button>
                                                     </>
                                                     :
-                                                    <>
-                                                        <button className='px-3 bg-blue-600 text-white rounded'>E</button>
-                                                        <button className='px-3 bg-red-600 text-white rounded'>D</button>
-                                                    </>
+                                                    item.status === "Completed" ?
+                                                        <>
+                                                            <button className='px-3 bg-blue-600 text-white rounded' onClick={() => handleUpdate(item.projectId)}>Update</button>
+                                                        </>
+                                                        :
+                                                        <>
+                                                            <button className='px-3 bg-blue-600 text-white rounded'>E</button>
+                                                            <button className='px-3 bg-red-600 text-white rounded'>D</button>
+                                                        </>
                                             }
                                         </td>
                                     </tr>
@@ -150,6 +163,9 @@ const Projects = () => {
                 </div>
                 {
                     modal ? <TaskAssignModal projectId={projectId} setModal={setModal} /> : ""
+                }
+                {
+                    cModal ? <ConfirmModal Lead={Lead} projectId={projectId} setCModal={setCModal} /> : ""
                 }
             </div>
         </>

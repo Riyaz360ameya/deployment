@@ -2,16 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { FiAlertOctagon } from "react-icons/fi";
 import { PiChatDotsLight } from "react-icons/pi";
 import { MdFileDownload } from "react-icons/md";
-const Tasks = ({ userDetails, task, Project }) => {
+import axios from 'axios';
+const Tasks = ({ devTasks, task, Project }) => {
+    const [dev, setDev] = useState()
     useEffect(() => {
-        userDetails();
+        devTasks()
+        devDetails()
     }, []);
-    const handleStartClick = () => {
-        console.log('Its Started')
+    const devDetails = () => {
+        const devDetails = JSON.parse(localStorage.getItem("Dev"))
+        setDev(devDetails)
+        const developerId = devDetails._id
+        console.log(developerId, '----------devDetails')
     }
-    const handleCompleted = () => {
-        console.log('Its Completed')
+    const handleStartClick = async (projectId) => {
+        console.log(projectId, 'Its Started')
+        const developerId = dev._id
+        console.log(developerId, '----------devDetails')
+        const data = await axios.post('/api/developer/startTask', { projectId, developerId })
     }
+    const handleCompleted = async (projectId) => {
+        console.log(projectId, 'Its Completed')
+        const developerId = dev._id
+        const data = await axios.post('/api/developer/complete', { projectId, developerId })
+    }
+
+
     return (
         <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden'>
             <div className='border shadow mt-4'>
@@ -21,8 +37,17 @@ const Tasks = ({ userDetails, task, Project }) => {
                             <th>No</th>
                             <th>Project Title</th>
                             <th>Importance</th>
-                            <th>Comments</th>
+                            <th>description</th>
+                            <th>Assigned Date</th>
+                            <th>Start Date</th>
+                            {
+                                Project !== "New Tasks" && <th>I Started</th>
+                            }
+
                             <th>Deadline</th>
+                            {
+                                Project === "Completed" && <th>Completed Date</th>
+                            }
                             {
                                 Project !== "Completed" &&
                                 <th>Task Option</th>
@@ -32,7 +57,7 @@ const Tasks = ({ userDetails, task, Project }) => {
                         {
                             task.length === 0 ? (
                                 <tr className="text-center mt-10 shadow-xl border">
-                                    <td colSpan="6" className='text-2xl text-blue-600'>No Tasks</td>
+                                    <td colSpan="8" className='text-2xl text-blue-600'>No Tasks</td>
                                 </tr>
                             ) : (
                                 task.map((item, i) => (
@@ -44,21 +69,33 @@ const Tasks = ({ userDetails, task, Project }) => {
                                         <td className="">
                                             <div className="flex items-center justify-center">
                                                 <FiAlertOctagon color='red' />
-                                                <p className="text-sm text-gray-600 ml-2">Urgent</p>
+                                                <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
                                             </div>
                                         </td>
                                         <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.description}</td>
-                                        <td className='bg-red-200 rounded text-red-600'>{item.endDate}</td>
+                                        <td className='b rounded text-green-600'>{item.assignedDate}</td>
+                                        <td className='b rounded text-green-600'>{item.startDate}</td>
+                                        {
+                                            Project !== "New Tasks" && <td>{item.devStartedDate}</td>
+                                        }
+                                        <td className='bg-red-200  rounded text-red-600 font-bold'>{item.endDate}</td>
+                                        {
+                                            Project === "Completed" && <td>{item.devCompletedDate}</td>
+                                        }
                                         {
                                             Project !== "Completed" &&
                                             <td>
                                                 <button
-                                                    onClick={Project === "New Task" ? handleStartClick :
-                                                        Project === "Ongoing Tasks" ? handleCompleted : ''
-                                                    }
+                                                    onClick={() => {
+                                                        if (Project === "New Tasks") {
+                                                            handleStartClick(item.projectId);
+                                                        } else if (Project === "Ongoing Tasks") {
+                                                            handleCompleted(item.projectId);
+                                                        }
+                                                    }}
                                                     className='bg-green-800 text-white px-4 py-1 rounded'
                                                 >
-                                                    Start
+                                                    {Project === "New Tasks" ? "Start" : Project === "Ongoing Tasks" ? "Set Completed" : ''}
                                                 </button>
                                             </td>
                                         }

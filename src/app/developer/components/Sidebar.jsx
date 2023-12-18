@@ -20,7 +20,7 @@ const Sidebar = ({ menu, setProject,Project }) => {
     //fetching user details from token
     const [data, setData] = useState("")
     const icons = [
-        { icon: <SiTraefikproxy />, name: 'New Task' },
+        { icon: <SiTraefikproxy />, name: 'New Tasks' },
         { icon: <FaUserGear />, name: 'Ongoing Tasks' },
         { icon: <VscWorkspaceTrusted />, name: 'Completed' },
     ];
