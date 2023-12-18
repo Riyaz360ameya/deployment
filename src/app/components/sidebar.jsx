@@ -62,12 +62,12 @@ const sidebar = ({ menu, setProject }) => {
                 </div>
             </div>
 
-            <div className='p-3 bg-[#F5F5F5]'>
+            {/* <div className='p-3 bg-[#F5F5F5]'>
                 <div className="flex items-center ml-5 text-xl bottom-0">
                     <FcOrganization />
                     {menu ? <span className="ml-2 text-sm font-bold text-black">{data.organisation}</span> : ''}
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
