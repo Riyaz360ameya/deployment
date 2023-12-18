@@ -6,14 +6,13 @@ import userModel from "../../models/User/userModel";
 
 
 connect()
-
 export async function POST(request = NextRequest) {
     try {
         const reqBody = await request.json()
         const { firstName, lastName, email, organisation, password } = reqBody
 
         //check if user already exist
-        const user = await userModel.findOne({ email })
+        const user = await userModel.findOne({ email });
         if (user) {
             return NextResponse.json({ error: "User Already exists!" })
         }

@@ -29,9 +29,46 @@ function uploadDetails() {
         location: '',
         projectOverview: '',
     })
+    //validation 
+    const validate = () => {
+        const requiredFields = [
+            'ventureName',
+            'projectPlace',
+            'email',
+            'ventureType',
+            'vision',
+            'projectUsp',
+            'contact',
+            'specification',
+            'amenities',
+            'pages',
+            'brochureLanguage',
+            'brochureBudget',
+            'leafLet',
+            'ventureDescription',
+            'estimatedDelivaryDate',
+            'siteAddress',
+            'previousVenture',
+            'officeAdress',
+            'location',
+            'projectOverview',
+        ];
 
+
+        for (const index of requiredFields) {
+            if (!formData[index]) {
+                toast.error(`${index} is required`);
+                return false;
+            }
+        }
+        return true;
+    }
     const submitProjectDetails = async (e) => {
         e.preventDefault();
+        //validate
+        if (!validate()) {
+            return
+        }
         try {
             const userString = localStorage.getItem('user');
             const user = JSON.parse(userString);
@@ -61,7 +98,6 @@ function uploadDetails() {
                             focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
                             dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                             dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""
-                            required
                             value={formData.ventureName}
                             onChange={(e) => setFormData({ ...formData, ventureName: e.target.value })}
                         />
@@ -74,7 +110,6 @@ function uploadDetails() {
                                 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
                             value={formData.projectPlace}
                             onChange={(e) => setFormData({ ...formData, projectPlace: e.target.value })}
                         />
@@ -88,7 +123,7 @@ function uploadDetails() {
                                 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                                dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         />
@@ -102,7 +137,7 @@ function uploadDetails() {
                                 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                                 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.ventureType}
                             onChange={(e) => setFormData({ ...formData, ventureType: e.target.value })}
                         />
@@ -115,7 +150,7 @@ function uploadDetails() {
                             w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                             dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.vision}
                             onChange={(e) => setFormData({ ...formData, vision: e.target.value })}
                         />
@@ -128,7 +163,7 @@ function uploadDetails() {
                           block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.projectUsp}
                             onChange={(e) => setFormData({ ...formData, projectUsp: e.target.value })}
                         />
@@ -142,7 +177,7 @@ function uploadDetails() {
                            dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                            dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.contact}
                             onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
                         />
@@ -156,7 +191,7 @@ function uploadDetails() {
                              dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                              dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.specification}
                             onChange={(e) => setFormData({ ...formData, specification: e.target.value })}
                         />
@@ -170,7 +205,7 @@ function uploadDetails() {
                              dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
                              dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.amenities}
                             onChange={(e) => setFormData({ ...formData, amenities: e.target.value })}
                         />
@@ -184,7 +219,7 @@ function uploadDetails() {
                            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                            dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.pages}
                             onChange={(e) => setFormData({ ...formData, pages: e.target.value })}
                         />
@@ -197,7 +232,7 @@ function uploadDetails() {
                              block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                             dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.brochureLanguage}
                             onChange={(e) => setFormData({ ...formData, brochureLanguage: e.target.value })}
                         />
@@ -210,7 +245,7 @@ function uploadDetails() {
                              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                              dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.brochureBudget}
                             onChange={(e) => setFormData({ ...formData, brochureBudget: e.target.value })}
                         />
@@ -223,7 +258,7 @@ function uploadDetails() {
                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.leafLet}
                             onChange={(e) => setFormData({ ...formData, leafLet: e.target.value })}
                         />
@@ -236,7 +271,6 @@ function uploadDetails() {
                            block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
                             value={formData.ventureDescription}
                             onChange={(e) => setFormData({ ...formData, ventureDescription: e.target.value })}
                         />
@@ -249,7 +283,7 @@ function uploadDetails() {
                             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                             dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
+
                             value={formData.estimatedDelivaryDate}
                             onChange={(e) => setFormData({ ...formData, estimatedDelivaryDate: e.target.value })}
                         />
@@ -262,7 +296,6 @@ function uploadDetails() {
                            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                             dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
                             value={formData.siteAddress}
                             onChange={(e) => setFormData({ ...formData, siteAddress: e.target.value })}
                         />
@@ -278,7 +311,6 @@ function uploadDetails() {
                             w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
                             dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
                             value={formData.previousVenture}
                             onChange={(e) => setFormData({ ...formData, previousVenture: e.target.value })}
                         />
@@ -291,7 +323,6 @@ function uploadDetails() {
                            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                            dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
                             value={formData.officeAdress}
                             onChange={(e) => setFormData({ ...formData, officeAdress: e.target.value })}
                         />
@@ -304,7 +335,6 @@ function uploadDetails() {
                              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
                              dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder=""
-                            required
                             value={formData.location}
                             onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                         />
@@ -327,7 +357,6 @@ function uploadDetails() {
                                 id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 
                               rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700
                              dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                                required
                             />
                         </div>
                         <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
@@ -343,7 +372,7 @@ function uploadDetails() {
 
 
         </>
-    
+
     )
 }
 

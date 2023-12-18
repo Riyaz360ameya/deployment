@@ -5,14 +5,19 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { BeatLoader } from 'react-spinners'
 import { Toaster, toast } from 'sonner';
+import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 function page() {
     const router = useRouter();
     const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [visiblePassword, setvisiblePassword] = useState(false)
     const [user, setUser] = useState({
         email: '',
         password: ''
     })
+    const showHiddenPassword = () => {
+        setvisiblePassword(!visiblePassword)
+    }
     const leadRegister = async (e) => {
         e.preventDefault()
         try {
@@ -58,14 +63,22 @@ function page() {
                             </div>
                             <div className='text-left text-sm'>
                                 <label className='font-bold' htmlFor="password">Password</label>
-                                <input
-                                    type="password"
+                              <div className="relative">
+                              <input
+                                    type={visiblePassword ? "text":"password"}
                                     className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
                                 `}
                                     id="password"
                                     value={user.password}
                                     onChange={(e) => setUser({ ...user, password: e.target.value })}
                                 />
+                                <div 
+                                 className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                                  onClick={showHiddenPassword}
+                                >
+                                  {visiblePassword ? <IoIosEye/> :<IoIosEyeOff/>}
+                                </div>
+                              </div>
                             </div>
                             <div>
                                 <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' onClick={leadRegister}>
