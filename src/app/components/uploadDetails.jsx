@@ -87,7 +87,7 @@ function uploadDetails() {
 
     return (
         <>
-            <form onSubmit={submitProjectDetails}>
+            <form onSubmit={submitProjectDetails} className='overflow-hidden overflow-y-scroll'>
                 <div class="grid gap-6 mb-6 md:grid-cols-2 my-5 mx-5 overflow-hidden ">
                     <div>
                         <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Venture name</label>
