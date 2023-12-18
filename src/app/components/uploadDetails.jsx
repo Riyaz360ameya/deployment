@@ -7,6 +7,7 @@ import { Toaster, toast } from 'sonner';
 function uploadDetails() {
     const router = useRouter()
     const inputFileRef = useRef(null);
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         ventureName: '',
         projectPlace: '',
@@ -65,6 +66,7 @@ function uploadDetails() {
     }
     const submitProjectDetails = async (e) => {
         e.preventDefault();
+        setLoading(true);
         //validate
         if (!validate()) {
             return
@@ -79,9 +81,11 @@ function uploadDetails() {
             const { data } = await axios.post("/api/users/projectInput", formData);
             toast.success(data.message)
             router.push("/proceed");
+            setLoading(false)
         } catch (error) {
             toast.error("something went wrong")
             console.log(error)
+            setLoading(false);
         }
     }
 
