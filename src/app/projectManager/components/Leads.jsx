@@ -25,11 +25,13 @@ const Leads = ({ loading, setLoading }) => {
   return (
     <>
       {loading ?
-        <div className='  h-full flex items-center justify-center '>
-          <div><InfinitySpin
-            width='200'
-            color="black"
-          /></div>
+        <div className='h-full flex items-center justify-center '>
+          <div>
+            <InfinitySpin
+              width='200'
+              color="black"
+            />
+            </div>
         </div>
         :
         <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden' >
