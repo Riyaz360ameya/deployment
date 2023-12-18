@@ -83,26 +83,6 @@ const Projects = () => {
                                 <th>Options</th>
                             </tr>
                             <tr className='h-5'></tr>
-                            {/* <tr className='text-center mt-10 shadow-xl border'>
-                                <td>1</td>
-                                <td className='text-center flex justify-center items-center h-10 '>
-                                    <div className="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
-                                        <input placeholder="checkbox" type="checkbox" className="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full " />
-                                    </div>
-                                </td>
-                                <td className="">
-                                    <div className="flex items-center gap-2 ml-5">
-                                        <FaLink color='blue' />
-                                        <p className="text-base font-medium  text-gray-700 ">Sandro</p>
-                                    </div>
-                                </td>
-                                <td className="">
-                                    <p>5</p>
-                                </td>
-                                <td colSpan="8" className="text-center">
-                                    <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={handleAssign} >Assign Task to</button>
-                                </td>
-                            </tr> */}
                             {data.map((item, i) => {
                                 return (
                                     <tr key={i} className='text-center mt-10 shadow-xl border'>
