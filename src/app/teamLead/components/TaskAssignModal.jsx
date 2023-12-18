@@ -31,8 +31,8 @@ const TaskAssignModal = ({ setModal, projectId }) => {
             console.log(data, '--------------response')
             toast.success(data.message)
         } catch (error) {
+            console.log(error)
             toast.error(error.response.data.error)
-            console.log(error.message)
         }
         setModal(false)
     }

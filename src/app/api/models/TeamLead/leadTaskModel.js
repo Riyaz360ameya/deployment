@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
 const moment = require('moment');
 import leadLoginModel from "./leadLoginModel";
+import developerModel from "../Developer/developerLoginModel";
+import projectInfoModel from "../User/projectInfoModel";
+
 const leadData = mongoose.models.leadLogins || leadLoginModel;
+const DevData = mongoose.models.developerLogins || developerModel;
+const projectData = mongoose.models.projectInformation || projectInfoModel;
 
 const teamLeadSchema = new mongoose.Schema({
     teamLeadId: {
@@ -53,7 +58,7 @@ const teamLeadSchema = new mongoose.Schema({
             },
             projectId: {
                 type: mongoose.Types.ObjectId,
-                ref: 'projectInformation',
+                ref: projectData,
                 required: true,
             }
         }
@@ -102,7 +107,7 @@ const teamLeadSchema = new mongoose.Schema({
             },
             projectId: {
                 type: mongoose.Types.ObjectId,
-                ref: 'projectInformation',
+                ref: projectData,
                 required: true,
             },
             devAssignedDate: {
@@ -113,6 +118,12 @@ const teamLeadSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
+            assignedDeveloperId: {
+                type: mongoose.Types.ObjectId,
+                ref: DevData,
+                required: true,
+            },
+
         }
     ],
     completedTasks: [
@@ -163,7 +174,7 @@ const teamLeadSchema = new mongoose.Schema({
             },
             projectId: {
                 type: mongoose.Types.ObjectId,
-                ref: 'projectInformation',
+                ref: projectData,
                 required: true,
             },
             devAssignedDate: {
@@ -171,6 +182,15 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             assignedDeveloperName: {
+                type: String,
+                required: true,
+            },
+            assignedDeveloperId: {
+                type: mongoose.Types.ObjectId,
+                ref: DevData,
+                required: true,
+            },
+            devCompletedDate: {
                 type: String,
                 required: true,
             },
