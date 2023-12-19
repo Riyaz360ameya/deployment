@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+const projectInfo = mongoose.models.leadLogins || leadLoginModel;
+const leadData = mongoose.models.leadLogins || leadLoginModel;
 const managerLoginSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -28,6 +30,23 @@ const managerLoginSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    notifications: [
+        {
+            projectId: {
+                type: mongoose.Types.ObjectId,
+                ref: 'projectInformation', // Update to match the actual model name
+                required: true,
+            },
+            message: {
+                type: String,
+                required: true
+            },
+            time: {
+                type: String,
+                default: () => moment().format('DD/MM/YY hh:mm A'),
+            },
+        }
+    ],
     forgotPassword: String,
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
