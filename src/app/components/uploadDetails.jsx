@@ -93,579 +93,228 @@ function uploadDetails() {
 
     return (
         <>
-         {
-            loading ? (
-                <div className='h-full flex items-center justify-center'>
-                <InfinitySpin width='200' color='black' />
-            </div>
-            ):(
-                <form onSubmit={submitProjectDetails} className='overflow-hidden overflow-y-scroll'>
-                <div class="grid gap-6 mb-6 md:grid-cols-2 my-5 mx-5 overflow-hidden ">
-                    <div>
-                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Venture name</label>
-                        <input
-                            type="text" id="first_name"
-                            class="bg-gray-50 border border-gray-300
-                            text-gray-900 text-sm rounded-lg focus:ring-blue-500
-                            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-                            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                            dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""
-                            value={formData.ventureName}
-                            onChange={(e) => setFormData({ ...formData, ventureName: e.target.value })}
-                        />
+            {
+                loading ? (
+                    <div className='h-full flex items-center justify-center'>
+                        <InfinitySpin width='200' color='black' />
                     </div>
-                    <div>
-                        <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Place </label>
-                        <input
-                            type="text" id="last_name" class="bg-gray-50 border border-gray-300
-                                text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
-                                block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                               dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.projectPlace}
-                            onChange={(e) => setFormData({ ...formData, projectPlace: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Id</label>
-                        <input
-                            type="text" id="company"
-                            class="bg-gray-50 border border-gray-300
-                                text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
-                                p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                               dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                ) : (
+                    <form onSubmit={submitProjectDetails} className='overflow-hidden overflow-y-scroll'>
+                        <div className="grid gap-6 mb-6 md:grid-cols-2 my-5 mx-5 overflow-hidden ">
+                            <div>
+                                <label for="first_name" className="block mb-2 text-sm font-medium text-gray-900 ">Venture name</label>
+                                <input
+                                    type="text" id="first_name"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " placeholder=""
+                                    value={formData.ventureName}
+                                    onChange={(e) => setFormData({ ...formData, ventureName: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="last_name" className="block mb-2 text-sm font-medium text-gray-900 ">Project Place </label>
+                                <input
+                                    type="text" id="last_name" className="bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   "
+                                    placeholder=""
+                                    value={formData.projectPlace}
+                                    onChange={(e) => setFormData({ ...formData, projectPlace: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="company" className="block mb-2 text-sm font-medium text-gray-900 ">Email Id</label>
+                                <input
+                                    type="text" id="company"
+                                    className="bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5   "
+                                    placeholder=""
 
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Venture Type</label>
-                        <input
-                            type="text" id="company"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="company" className="block mb-2 text-sm font-medium text-gray-900 ">Venture Type</label>
+                                <input
+                                    type="text" id="company"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   "
+                                    placeholder=""
 
-                            value={formData.ventureType}
-                            onChange={(e) => setFormData({ ...formData, ventureType: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vision</label>
-                        <input
-                            type="text" id="phone" class="bg-gray-50 border border-gray-300
-                            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block
-                            w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.ventureType}
+                                    onChange={(e) => setFormData({ ...formData, ventureType: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="phone" className="block mb-2 text-sm font-medium text-gray-900 ">Vision</label>
+                                <input
+                                    type="text" id="phone" className="bg-gray-50 border border-gray-300   text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block   w-full p-2.5     "
+                                    placeholder=""
 
-                            value={formData.vision}
-                            onChange={(e) => setFormData({ ...formData, vision: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project USP</label>
-                        <input
-                            type="text" id="website" class="bg-gray-50 border border-gray-300
-                         text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-                          block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                          dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.vision}
+                                    onChange={(e) => setFormData({ ...formData, vision: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="website" className="block mb-2 text-sm font-medium text-gray-900 ">Project USP</label>
+                                <input
+                                    type="text" id="website" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500   block w-full p-2.5     "
+                                    placeholder=""
 
-                            value={formData.projectUsp}
-                            onChange={(e) => setFormData({ ...formData, projectUsp: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="visitors" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact</label>
-                        <input
-                            type="number" id="visitors" class="bg-gray-50 border
-                           border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
-                           focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
-                           dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
-                           dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.projectUsp}
+                                    onChange={(e) => setFormData({ ...formData, projectUsp: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="visitors" className="block mb-2 text-sm font-medium text-gray-900 ">Contact</label>
+                                <input
+                                    type="number" id="visitors" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5    "
+                                    placeholder=""
 
-                            value={formData.contact}
-                            onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Specification</label>
-                        <input
-                            type="text" id="phone" class="bg-gray-50 border border-gray-300
-                             text-gray-900 text-sm rounded-lg focus:ring-blue-500
-                             focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-                             dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                             dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.contact}
+                                    onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="phone" className="block mb-2 text-sm font-medium text-gray-900 ">Specification</label>
+                                <input
+                                    type="text" id="phone" className="bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-blue-500  focus:border-blue-500 block w-full p-2.5     "
+                                    placeholder=""
 
-                            value={formData.specification}
-                            onChange={(e) => setFormData({ ...formData, specification: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amenities</label>
-                        <input
-                            type="text" id="website" class="bg-gray-50 border border-gray-300
-                             text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
-                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
-                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
-                             dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.specification}
+                                    onChange={(e) => setFormData({ ...formData, specification: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="website" className="block mb-2 text-sm font-medium text-gray-900 ">Amenities</label>
+                                <input
+                                    type="text" id="website" className="bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  block w-full p-2.5      "
+                                    placeholder=""
 
-                            value={formData.amenities}
-                            onChange={(e) => setFormData({ ...formData, amenities: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.of pages (brochure)</label>
-                        <input
-                            type="text" id="phone"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                           focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-                           dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                           dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.amenities}
+                                    onChange={(e) => setFormData({ ...formData, amenities: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="phone" className="block mb-2 text-sm font-medium text-gray-900 ">No.of pages (brochure)</label>
+                                <input
+                                    type="text" id="phone"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   "
+                                    placeholder=""
 
-                            value={formData.pages}
-                            onChange={(e) => setFormData({ ...formData, pages: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brochure(language)</label>
-                        <input
-                            type="text" id="website" class="bg-gray-50 border border-gray-300
-                             text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
-                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.pages}
+                                    onChange={(e) => setFormData({ ...formData, pages: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="website" className="block mb-2 text-sm font-medium text-gray-900 ">Brochure(language)</label>
+                                <input
+                                    type="text" id="website" className="bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   "
+                                    placeholder=""
 
-                            value={formData.brochureLanguage}
-                            onChange={(e) => setFormData({ ...formData, brochureLanguage: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Budget brochure</label>
-                        <input
-                            type="number" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 
-                              text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                             dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.brochureLanguage}
+                                    onChange={(e) => setFormData({ ...formData, brochureLanguage: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="phone" className="block mb-2 text-sm font-medium text-gray-900 ">Budget brochure</label>
+                                <input
+                                    type="number" id="phone" className="bg-gray-50 border border-gray-300 text-gray-900       text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5           "
+                                    placeholder=""
 
-                            value={formData.brochureBudget}
-                            onChange={(e) => setFormData({ ...formData, brochureBudget: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Leaflet</label>
-                        <input
-                            type="text" id="website" class="bg-gray-50 border border-gray-300
-                           text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-                            block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.brochureBudget}
+                                    onChange={(e) => setFormData({ ...formData, brochureBudget: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="website" className="block mb-2 text-sm font-medium text-gray-900 ">Leaflet</label>
+                                <input
+                                    type="text" id="website" className="bg-gray-50 border border-gray-300   text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500     block w-full p-2.5      "
+                                    placeholder=""
 
-                            value={formData.leafLet}
-                            onChange={(e) => setFormData({ ...formData, leafLet: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Venture description</label>
-                        <input
-                            type="text" id="phone" class="bg-gray-50 border border-gray-300
-                           text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-                           block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.ventureDescription}
-                            onChange={(e) => setFormData({ ...formData, ventureDescription: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estimated Delivary Date</label>
-                        <input
-                            type="date" id="website" class="bg-gray-50 border border-gray-300 text-gray-900 
-                            text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                            dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                                    value={formData.leafLet}
+                                    onChange={(e) => setFormData({ ...formData, leafLet: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="phone" className="block mb-2 text-sm font-medium text-gray-900 ">Venture description</label>
+                                <input
+                                    type="text" id="phone" className="bg-gray-50 border border-gray-300   text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500    block w-full p-2.5      "
+                                    placeholder=""
+                                    value={formData.ventureDescription}
+                                    onChange={(e) => setFormData({ ...formData, ventureDescription: e.target.value })}
+                                />
+                            </div>
+                            <div>
+                                <label for="website" className="block mb-2 text-sm font-medium text-gray-900 ">Estimated Delivary Date</label>
+                                <input
+                                    type="date" id="website" className="bg-gray-50 border border-gray-300 text-gray-900   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5     "
+                                    placeholder=""
 
-                            value={formData.estimatedDelivaryDate}
-                            onChange={(e) => setFormData({ ...formData, estimatedDelivaryDate: e.target.value })}
-                        />
-                    </div>
-                    <div class="mb-6 ">
-                        <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Site address</label>
-                        <input
-                            type="text" id="email" class="bg-gray-50 border border-gray-300 text-gray-900
-                            text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                            dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.siteAddress}
-                            onChange={(e) => setFormData({ ...formData, siteAddress: e.target.value })}
-                        />
-                    </div>
-                </div>
-                <div class="my-5 mx-5">
-
-                    <div class="mb-6">
-                        <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Previous ventuare</label>
-                        <input
-                            type="text" id="email" class="bg-gray-50 border border-gray-300
-                            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block 
-                            w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.previousVenture}
-                            onChange={(e) => setFormData({ ...formData, previousVenture: e.target.value })}
-                        />
-                    </div>
-                    <div class="mb-6">
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Office address</label>
-                        <input
-                            type="text" id="password" class="bg-gray-50 border border-gray-300 text-gray-900
-                            text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                           dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.officeAdress}
-                            onChange={(e) => setFormData({ ...formData, officeAdress: e.target.value })}
-                        />
-                    </div>
-                    <div class="mb-6">
-                        <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
-                        <input
-                            type="text" id="confirm_password" class="bg-gray-50 border border-gray-300 text-gray-900
-                             text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                             dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.location}
-                            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                        />
-                    </div>
-
-                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project overview</label>
-                    <textarea
-                        id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 
-                       rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500
-                      dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                      dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Extent,number of units,club house sqft..."
-                        value={formData.projectOverview}
-                        onChange={(e) => setFormData({ ...formData, projectOverview: e.target.value })}
-                    ></textarea>
-
-                    <div class="flex items-start mb-6 mt-5">
-                        <div class="flex items-center h-5">
-                            <input
-                                id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 
-                              rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700
-                             dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                            />
+                                    value={formData.estimatedDelivaryDate}
+                                    onChange={(e) => setFormData({ ...formData, estimatedDelivaryDate: e.target.value })}
+                                />
+                            </div>
+                            <div className="mb-6 ">
+                                <label for="text" className="block mb-2 text-sm font-medium text-gray-900 ">Site address</label>
+                                <input
+                                    type="text" id="email" className="bg-gray-50 border border-gray-300 text-gray    text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    placeholder=""
+                                    value={formData.siteAddress}
+                                    onChange={(e) => setFormData({ ...formData, siteAddress: e.target.value })}
+                                />
+                            </div>
                         </div>
-                        <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
-                    </div>
-                </div>
-                <button
-                    type="submit" class="text-white my-5 mx-5 bg-blue-700 hover:bg-blue-800 
-                focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm 
-                w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700
-                 dark:focus:ring-blue-800" >Submit</button>
-            </form>
-            )
-         }
-            {/* <form onSubmit={submitProjectDetails} className='overflow-hidden overflow-y-scroll'>
-                <div class="grid gap-6 mb-6 md:grid-cols-2 my-5 mx-5 overflow-hidden ">
-                    <div>
-                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Venture name</label>
-                        <input
-                            type="text" id="first_name"
-                            class="bg-gray-50 border border-gray-300
-                            text-gray-900 text-sm rounded-lg focus:ring-blue-500
-                            focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-                            dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                            dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""
-                            value={formData.ventureName}
-                            onChange={(e) => setFormData({ ...formData, ventureName: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Place </label>
-                        <input
-                            type="text" id="last_name" class="bg-gray-50 border border-gray-300
-                                text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
-                                block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                               dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.projectPlace}
-                            onChange={(e) => setFormData({ ...formData, projectPlace: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Id</label>
-                        <input
-                            type="text" id="company"
-                            class="bg-gray-50 border border-gray-300
-                                text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
-                                p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                               dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                        <div className="my-5 mx-5">
 
-                            value={formData.email}
-                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="company" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Venture Type</label>
-                        <input
-                            type="text" id="company"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                                focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                                dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                            <div className="mb-6">
+                                <label for="text" className="block mb-2 text-sm font-medium text-gray-900 ">Previous venture</label>
+                                <input
+                                    type="text" id="email" className="bg-gray-50 border   text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-  w-full p-2   "
+                                    placeholder=""
+                                    value={formData.previousVenture}
+                                    onChange={(e) => setFormData({ ...formData, previousVenture: e.target.value })}
+                                />
+                            </div>
+                            <div className="mb-6">
+                                <label for="password" className="block mb-2 text-sm font-medium text-gray-900 ">Office address</label>
+                                <input
+                                    type="text" id="password" className="bg-gray-50 border border-gray-  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
+                                    placeholder=""
+                                    value={formData.officeAdress}
+                                    onChange={(e) => setFormData({ ...formData, officeAdress: e.target.value })}
+                                />
+                            </div>
+                            <div className="mb-6">
+                                <label for="confirm_password" className="block mb-2 text-sm font-medium text-gray-900 ">Location</label>
+                                <input
+                                    type="text" id="confirm_password" className="bg-gray-50 border border-  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-full p-2 "
+                                    placeholder=""
+                                    value={formData.location}
+                                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                                />
+                            </div>
 
-                            value={formData.ventureType}
-                            onChange={(e) => setFormData({ ...formData, ventureType: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vision</label>
-                        <input
-                            type="text" id="phone" class="bg-gray-50 border border-gray-300
-                            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block
-                            w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
+                            <label for="message" className="block mb-2 text-sm font-medium text-gray-900 ">Project overview</label>
+                            <textarea
+                                id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                                placeholder="Extent,number of units,club house sqft..."
+                                value={formData.projectOverview}
+                                onChange={(e) => setFormData({ ...formData, projectOverview: e.target.value })}
+                            ></textarea>
 
-                            value={formData.vision}
-                            onChange={(e) => setFormData({ ...formData, vision: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project USP</label>
-                        <input
-                            type="text" id="website" class="bg-gray-50 border border-gray-300
-                         text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-                          block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                          dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-
-                            value={formData.projectUsp}
-                            onChange={(e) => setFormData({ ...formData, projectUsp: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="visitors" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact</label>
-                        <input
-                            type="number" id="visitors" class="bg-gray-50 border
-                           border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
-                           focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
-                           dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
-                           dark:focus:border-blue-500"
-                            placeholder=""
-
-                            value={formData.contact}
-                            onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Specification</label>
-                        <input
-                            type="text" id="phone" class="bg-gray-50 border border-gray-300
-                             text-gray-900 text-sm rounded-lg focus:ring-blue-500
-                             focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-                             dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                             dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-
-                            value={formData.specification}
-                            onChange={(e) => setFormData({ ...formData, specification: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Amenities</label>
-                        <input
-                            type="text" id="website" class="bg-gray-50 border border-gray-300
-                             text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
-                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
-                             dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
-                             dark:focus:border-blue-500"
-                            placeholder=""
-
-                            value={formData.amenities}
-                            onChange={(e) => setFormData({ ...formData, amenities: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No.of pages (brochure)</label>
-                        <input
-                            type="text" id="phone"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-                           focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-                           dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                           dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-
-                            value={formData.pages}
-                            onChange={(e) => setFormData({ ...formData, pages: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brochure(language)</label>
-                        <input
-                            type="text" id="website" class="bg-gray-50 border border-gray-300
-                             text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
-                             block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-
-                            value={formData.brochureLanguage}
-                            onChange={(e) => setFormData({ ...formData, brochureLanguage: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Budget brochure</label>
-                        <input
-                            type="number" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 
-                              text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                             dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-
-                            value={formData.brochureBudget}
-                            onChange={(e) => setFormData({ ...formData, brochureBudget: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Leaflet</label>
-                        <input
-                            type="text" id="website" class="bg-gray-50 border border-gray-300
-                           text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-                            block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-
-                            value={formData.leafLet}
-                            onChange={(e) => setFormData({ ...formData, leafLet: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Venture description</label>
-                        <input
-                            type="text" id="phone" class="bg-gray-50 border border-gray-300
-                           text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 
-                           block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                           dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.ventureDescription}
-                            onChange={(e) => setFormData({ ...formData, ventureDescription: e.target.value })}
-                        />
-                    </div>
-                    <div>
-                        <label for="website" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Estimated Delivary Date</label>
-                        <input
-                            type="date" id="website" class="bg-gray-50 border border-gray-300 text-gray-900 
-                            text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                            dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                            dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-
-                            value={formData.estimatedDelivaryDate}
-                            onChange={(e) => setFormData({ ...formData, estimatedDelivaryDate: e.target.value })}
-                        />
-                    </div>
-                    <div class="mb-6 ">
-                        <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Site address</label>
-                        <input
-                            type="text" id="email" class="bg-gray-50 border border-gray-300 text-gray-900
-                            text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                            dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.siteAddress}
-                            onChange={(e) => setFormData({ ...formData, siteAddress: e.target.value })}
-                        />
-                    </div>
-                </div>
-                <div class="my-5 mx-5">
-
-                    <div class="mb-6">
-                        <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Previous ventuare</label>
-                        <input
-                            type="text" id="email" class="bg-gray-50 border border-gray-300
-                            text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block 
-                            w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
-                            dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.previousVenture}
-                            onChange={(e) => setFormData({ ...formData, previousVenture: e.target.value })}
-                        />
-                    </div>
-                    <div class="mb-6">
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Office address</label>
-                        <input
-                            type="text" id="password" class="bg-gray-50 border border-gray-300 text-gray-900
-                            text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                           dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                           dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.officeAdress}
-                            onChange={(e) => setFormData({ ...formData, officeAdress: e.target.value })}
-                        />
-                    </div>
-                    <div class="mb-6">
-                        <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
-                        <input
-                            type="text" id="confirm_password" class="bg-gray-50 border border-gray-300 text-gray-900
-                             text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                             dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                             dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder=""
-                            value={formData.location}
-                            onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                        />
-                    </div>
-
-                    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project overview</label>
-                    <textarea
-                        id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 
-                       rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500
-                      dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                      dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Extent,number of units,club house sqft..."
-                        value={formData.projectOverview}
-                        onChange={(e) => setFormData({ ...formData, projectOverview: e.target.value })}
-                    ></textarea>
-
-                    <div class="flex items-start mb-6 mt-5">
-                        <div class="flex items-center h-5">
-                            <input
-                                id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 
-                              rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700
-                             dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                            />
+                            <div className="flex items-start mb-6 mt-5">
+                                <div className="flex items-center h-5">
+                                    <input
+                                        id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300  rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 "
+                                    />
+                                </div>
+                                <label for="remember" className="ms-2 text-sm font-medium text-gray-900 ">I agree with the <a href="#" className="text-blue-600 hover:underline ">terms and conditions</a>.</label>
+                            </div>
                         </div>
-                        <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
-                    </div>
-                </div>
-                <button
-                    type="submit" class="text-white my-5 mx-5 bg-blue-700 hover:bg-blue-800 
-                focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm 
-                w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700
-                 dark:focus:ring-blue-800" >Submit</button>
-            </form> */}
-
-
-
+                        <button
+                            className="text-white my-5 mx-5 bg-blue-700 hover:bg-blue-800
+                            focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm 
+                w-full sm:w-auto px-5 py-2.5 text-center  " >Submit</button>
+                    </form>
+                )
+            }
         </>
 
     )
