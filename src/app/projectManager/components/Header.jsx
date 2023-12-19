@@ -69,10 +69,10 @@ function Header({ setMenu, menu }) {
                     </span>
                 </div>
                 <div className='flex items-center gap-3'>
-                    <div className='text-right'>
+                    {/* <div className='text-right'>
                         <p className="text-base">{data.firstName} {data.lastName}</p>
                         <p className="text-sm text-gray-500">{data.designation}</p>
-                    </div>
+                    </div> */}
                     <div className=''>
                         <SlUser className='h-8 w-8 ' />
                         {/* <Image src={profileImage} className='object-contain rounded-full' alt="" width={100} height={100} /> */}
@@ -90,7 +90,7 @@ function Header({ setMenu, menu }) {
                 <div className="p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <AiOutlineMenuUnfold className="text-white text-xl" onClick={() => setMenu((prev) => !prev)} />
                 </div>
-                <p className="text-lg">{data.firstName}</p>
+                {/* <p className="text-lg">{data.firstName}</p> */}
                 <div className="relative p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <BiBell className="text-white text-xl" />
                     <div className="w-2 h-2 bg-red-500 rounded-full absolute top-2 right-2"></div>
