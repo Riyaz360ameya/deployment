@@ -6,12 +6,21 @@ import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
 import { toast } from 'sonner';
 import Forgot from '../components/Forgot';
+import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
+
 function Page() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState(false);
     const [otpVerify, setOtpVerify] = useState(false)
     const [changePass, setChangePass] = useState(false)
+    const [visiblePassword, setVisiblePassword] = useState(false)
+
+
+    const showHiddenPassword = () => {
+        setVisiblePassword(!visiblePassword);
+    }
+
     const [pass, setPass] = useState({
         password: '',
         confirmPassword: ''
@@ -100,14 +109,25 @@ function Page() {
                                 </div>
                                 <div className='text-left text-sm'>
                                     <label className='font-bold' htmlFor="password">Password</label>
-                                    <input
-                                        type="password"
-                                        className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.password ? 'border-red-500' : ''
-                                            }`}
-                                        id="password"
-                                        value={user.password}
-                                        onChange={(e) => setUser({ ...user, password: e.target.value })}
-                                    />
+                                    <div className='relative'>
+                                        <input
+                                            type={visiblePassword ? "text" : "password"}
+                                            className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.password ? 'border-red-500' : ''
+                                                }`}
+                                            id="password"
+                                            value={user.password}
+                                            onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                        />
+                                        <div
+                                            className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                                            onClick={showHiddenPassword}
+                                        >
+                                            {visiblePassword ?
+                                                 <IoIosEye />
+                                                :<IoIosEyeOff />
+                                            }
+                                        </div>
+                                    </div>
                                     {errors.password && <p className='text-red-500'>{errors.password}</p>}
                                 </div>
                                 <div>

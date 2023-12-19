@@ -73,7 +73,7 @@ const Projects = ({ loading, setLoading }) => {
                                     <th>Venture Type</th>
                                     <th>Description</th>
                                     <th>Deadline</th>
-                                    <th>Work</th>
+                                    {/* <th>Work</th> */}
                                     <th>Status</th>
                                     <th>Options</th>
                                 </tr>
@@ -107,7 +107,7 @@ const Projects = ({ loading, setLoading }) => {
                                                 {item.ventureDescription}
                                             </td>
                                             <td className='bg-red-200 rounded text-red-600'>{item.estimatedDelivaryDate}</td>
-                                            <td>assigned</td>
+                                            {/* <td>assigned</td> */}
                                             <td>{item.status}</td>
                                             <td className='flex gap-2 items-center justify-center'>
                                                 {
