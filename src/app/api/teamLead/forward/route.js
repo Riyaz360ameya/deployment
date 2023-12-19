@@ -27,6 +27,7 @@ export const POST = async (request = NextRequest) => {
         const devTask = await devTaskModel.findOne({ developerId })
         const devData = devTask.completedTasks.find(task => task.projectId.toString() === projectId.toString());
         data.devCompletedDate = devData.devCompletedDate
+        
         // const upDatedLead = await upDateLeadTask({ data, findLeadTask, projectId })
 
         const clientData = await upDateOnClient({ projectId })
