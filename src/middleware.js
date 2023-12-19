@@ -9,6 +9,7 @@ export function middleware(request) {
         return NextResponse.redirect(new URL('/client', request.nextUrl))
     }
     if (!isPublicPath && !token) {
+        // return NextResponse.redirect(new(URL('/profile',request.nextUrl)))
                 // return NextResponse.redirect(new(URL('/profile',request.nextUrl)))
         return NextResponse.redirect(new URL('/login', request.nextUrl))
     }
