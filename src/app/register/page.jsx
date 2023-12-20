@@ -54,26 +54,7 @@ function Page() {
         // Check if there are any errors
         return Object.keys(newErrors).length === 0;
     };
-    const notifys = () => toast("Registration successful!");
 
-    // const onRegister = async (e) => {
-    //     e.preventDefault()
-    //     if (validateInput()) {
-    //         try {
-    //             setLoading(true);
-    //             const response = await axios.post("/api/users/register", user);
-    //             console.log(response.data, "Registered successfully");
-    //             notifys();
-    //             // toast.success("Success")
-    //             router.push("/login");
-    //         } catch (error) {
-    //             console.log("register failed", error.message);
-    //             toast.error("Registration failed.");
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     }
-    // };
     const onRegister = async (e) => {
         e.preventDefault();
         if (validateInput()) {
@@ -104,7 +85,6 @@ function Page() {
     
     return (
         <>
-            {/* <ToastContainer /> */}
             <div className='h-screen bg-white text-center flex items-center justify-end'>
                 <img src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a43592af6b9a40001bda44b_HomeCover.jpg" alt="" className='w-full h-full object-cover' />
                 <div className='absolute md:w-[40%] p-5'>
