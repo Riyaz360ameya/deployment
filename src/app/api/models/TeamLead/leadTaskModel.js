@@ -2,8 +2,10 @@ import mongoose from "mongoose";
 const moment = require('moment');
 import leadLoginModel from "./leadLoginModel";
 import developerModel from "../Developer/developerLoginModel";
-import projectInfoModel from "../User/projectInfoModel";
+import projectInfoModel from "../projectInfoModel";
+import managerLoginModel from "../ProjectManager/managerLoginModel";
 
+const PmData = mongoose.models.managerLogin || managerLoginModel;
 const leadData = mongoose.models.leadLogins || leadLoginModel;
 const DevData = mongoose.models.developerLogins || developerModel;
 const projectData = mongoose.models.projectInformation || projectInfoModel;
@@ -18,6 +20,11 @@ const teamLeadSchema = new mongoose.Schema({
         {
             assignedBy: {
                 type: String,
+                required: true,
+            },
+            assignedPersonId: {
+                type: mongoose.Types.ObjectId,
+                ref: PmData, // Update to match the actual model name
                 required: true,
             },
             assignedPersonName: {
@@ -71,6 +78,11 @@ const teamLeadSchema = new mongoose.Schema({
             },
             assignedPersonName: {
                 type: String,
+                required: true,
+            },
+            assignedPersonId: {
+                type: mongoose.Types.ObjectId,
+                ref: PmData, // Update to match the actual model name
                 required: true,
             },
             importance: {
@@ -134,6 +146,11 @@ const teamLeadSchema = new mongoose.Schema({
             },
             assignedPersonName: {
                 type: String,
+                required: true,
+            },
+            assignedPersonId: {
+                type: mongoose.Types.ObjectId,
+                ref: PmData, // Update to match the actual model name
                 required: true,
             },
             importance: {

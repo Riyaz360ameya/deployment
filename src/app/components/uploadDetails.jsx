@@ -24,10 +24,10 @@ function uploadDetails() {
         brochureBudget: '',
         leafLet: '',
         ventureDescription: '',
-        estimatedDelivaryDate: '',
+        estimatedDeliveryDate: '',
         siteAddress: '',
         previousVenture: '',
-        officeAdress: '',
+        officeAddress: '',
         location: '',
         projectOverview: '',
     })
@@ -48,10 +48,10 @@ function uploadDetails() {
             'brochureBudget',
             'leafLet',
             'ventureDescription',
-            'estimatedDelivaryDate',
+            'estimatedDeliveryDate',
             'siteAddress',
             'previousVenture',
-            'officeAdress',
+            'officeAddress',
             'location',
             'projectOverview',
         ];
@@ -67,7 +67,7 @@ function uploadDetails() {
     }
     const submitProjectDetails = async (e) => {
         e.preventDefault();
-        // setLoading(true);
+        setLoading(true);
         //validate
         if (!validate()) {
             setLoading(false)
@@ -76,18 +76,17 @@ function uploadDetails() {
         try {
             const userString = localStorage.getItem('user');
             const user = JSON.parse(userString);
-            // console.log(user, "user")
             const userId = user._id
             formData.userId = userId
             console.log(formData, '-----------formData')
             const { data } = await axios.post("/api/users/projectInput", formData);
             toast.success(data.message)
-            // router.push("/proceed");
-            // setLoading(false)
+            setLoading(false)
+            router.push("/proceed");
         } catch (error) {
             toast.error("something went wrong")
             console.log(error)
-            setLoading(false);
+            // setLoading(false);
         }
     }
 
@@ -99,8 +98,10 @@ function uploadDetails() {
                         <InfinitySpin width='200' color='black' />
                     </div>
                 ) : (
-                    <form onSubmit={submitProjectDetails} className='overflow-hidden overflow-y-scroll'>
-                        <div className="grid gap-6 mb-6 md:grid-cols-2 my-5 mx-5 overflow-hidden ">
+                    <form
+                        onSubmit={submitProjectDetails}
+                        className='overflow-hidden overflow-y-scroll'>
+                        <div className="grid gap-6 grid-cols-2 mb-6 md:grid-cols-3 my-5 mx-5 overflow-hidden ">
                             <div>
                                 <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 ">Venture name</label>
                                 <input
@@ -194,7 +195,7 @@ function uploadDetails() {
                             <div>
                                 <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 ">No.of pages (brochure)</label>
                                 <input
-                                    type="text" id="phone"
+                                    type="number" id="phone"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5   "
                                     placeholder=""
 
@@ -247,50 +248,48 @@ function uploadDetails() {
                                     type="date" id="website" className="bg-gray-50 border border-gray-300 text-gray-900   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5     "
                                     placeholder=""
 
-                                    value={formData.estimatedDelivaryDate}
-                                    onChange={(e) => setFormData({ ...formData, estimatedDelivaryDate: e.target.value })}
+                                    value={formData.estimatedDeliveryDate}
+                                    onChange={(e) => setFormData({ ...formData, estimatedDeliveryDate: e.target.value })}
                                 />
                             </div>
-                            <div className="mb-6 ">
+                            <div >
                                 <label htmlFor="text" className="block mb-2 text-sm font-medium text-gray-900 ">Site address</label>
                                 <input
-                                    type="text" id="email" className="bg-gray-50 border border-gray-300 text-gray    text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    type="text" id="email" className="bg-gray-50 border border-gray-300 text-gray-900   text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     placeholder=""
                                     value={formData.siteAddress}
                                     onChange={(e) => setFormData({ ...formData, siteAddress: e.target.value })}
                                 />
                             </div>
-                        </div>
-                        <div className="my-5 mx-5">
-
-                            <div className="mb-6">
+                            <div >
                                 <label htmlFor="text" className="block mb-2 text-sm font-medium text-gray-900 ">Previous venture</label>
                                 <input
-                                    type="text" id="email" className="bg-gray-50 border   text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-  w-full p-2   "
+                                    type="text" id="email" className="bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full p-2.5   "
                                     placeholder=""
                                     value={formData.previousVenture}
                                     onChange={(e) => setFormData({ ...formData, previousVenture: e.target.value })}
                                 />
                             </div>
-                            <div className="mb-6">
+                            <div >
                                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Office address</label>
                                 <input
-                                    type="text" id="password" className="bg-gray-50 border border-gray-  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 "
+                                    type="text" id="password" className="bg-gray-50 border border-gray-  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                                     placeholder=""
-                                    value={formData.officeAdress}
-                                    onChange={(e) => setFormData({ ...formData, officeAdress: e.target.value })}
+                                    value={formData.officeAddress}
+                                    onChange={(e) => setFormData({ ...formData, officeAddress: e.target.value })}
                                 />
                             </div>
-                            <div className="mb-6">
+                            <div >
                                 <label htmlFor="confirm_password" className="block mb-2 text-sm font-medium text-gray-900 ">Location</label>
                                 <input
-                                    type="text" id="confirm_password" className="bg-gray-50 border border-  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-full p-2 "
+                                    type="text" id="confirm_password" className="bg-gray-50 border border-  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  w-full p-2.5 "
                                     placeholder=""
                                     value={formData.location}
                                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                                 />
                             </div>
-
+                        </div>
+                        <div className="my-5 mx-5">
                             <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 ">Project overview</label>
                             <textarea
                                 id="message" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
@@ -308,10 +307,10 @@ function uploadDetails() {
                                 <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 ">I agree with the <a href="#" className="text-blue-600 hover:underline ">terms and conditions</a>.</label>
                             </div>
                         </div>
-                        <button
-                            className="text-white my-5 mx-5 bg-blue-700 hover:bg-blue-800
-                            focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm 
-                w-full sm:w-auto px-5 py-2.5 text-center  " >Submit</button>
+                        <button type='submit' className='text-white my-5 mx-5 bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm 
+                w-full sm:w-auto px-5 py-2.5 text-center'>
+                            Submit
+                        </button>
                     </form>
                 )
             }

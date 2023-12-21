@@ -3,13 +3,15 @@ import leadLoginModel from "../TeamLead/leadLoginModel";
 import userModel from "../User/userModel";
 import developerModel from "../Developer/developerLoginModel";
 import managerLoginModel from "./managerLoginModel";
-import projectInfoModel from "../User/projectInfoModel";
+import projectInfoModel from "../projectInfoModel";
+import LeadTaskModel from "../TeamLead/leadTaskModel";
 const moment = require('moment');
 
 const PM = mongoose.models.managerLogin || managerLoginModel;
 const Lead = mongoose.models.leadLogins || leadLoginModel;
+const LeadTask = mongoose.models.leadTasks || LeadTaskModel;
 const User = mongoose.models.users || userModel;
-const Project = mongoose.models.projectInformation || projectInfoModel;
+const Project = mongoose.models.projectInfo || projectInfoModel;
 
 const proManagerProjectSchema = new mongoose.Schema({
     proManagerId: {
@@ -69,41 +71,14 @@ const proManagerProjectSchema = new mongoose.Schema({
             },
             assignedLeadId: {
                 type: mongoose.Types.ObjectId,
-                ref: Lead, // Update to match the actual model name
+                ref: Lead, 
                 required: true,
             },
-            assignedLeadName: {
-                type: String,
+            assignedLeadTaskId: {
+                type: mongoose.Types.ObjectId,
+                ref: LeadTask, // Update to match the actual model name
                 required: true,
             },
-            importance: {
-                type: String,
-                required: true,
-            },
-            projectTitle: {
-                type: String,
-                required: true,
-            },
-            description: {
-                type: String,
-                required: true,
-            },
-            instruction: {
-                type: String,
-                required: true,
-            },
-            leadTaskAssignedDate: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
-            },
-            leadTaskStartDate: {
-                type: String,
-                required: true,
-            },
-            leadTaskEndDate: {
-                type: String,
-                required: true,
-            }
         }
     ],
     completedProjects: [

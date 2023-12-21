@@ -10,14 +10,16 @@ export async function GET(request = NextRequest) {
     try {
         const userId = await getDataFromToken(request)
         const user = await userModel.findOne({ _id: userId }).select("-password")
+        console.log(user,'--------------user')
         return NextResponse.json({
             message: "user found",
             data: user
         })
     } catch (error) {
+        // console.log(error,'------------error in sidebar')
         return NextResponse.json(
             { error: error.message },
-            { status: 400 }
+            { status: 500 }
         )
     }
 }
