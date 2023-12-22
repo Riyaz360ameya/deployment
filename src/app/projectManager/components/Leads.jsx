@@ -7,20 +7,29 @@ import { InfinitySpin } from 'react-loader-spinner'
 
 const Leads = ({ loading, setLoading }) => {
   const [show, setShow] = useState("")
+  const [position, setPosition] = useState("New Task")
   const [allTasks, setAllTasks] = useState([])
+  const [data, setData] = useState([])
   const teamLeadTasks = async () => {
     const { data } = await axios.get('/api/projectManager/allTasks')
-    console.log(data, "-------------")
+    console.log(data, "-------data------")
     setAllTasks(data.tasks)
+    setData(data.tasks[0].newTasks)
     setShow("Interior")
     setLoading(false)
   }
   useEffect(() => {
     teamLeadTasks()
   }, [])
-  const handleShow = (designation) => {
-    console.log(designation)
+  const handleShow = ({ designation, tasks }) => {
     setShow(designation)
+    setData(tasks)
+    setPosition("New Task")
+  }
+  const handleData = ({ label, data }) => {
+    setPosition(label)
+    setData(data)
+    console.log(data, '.................67')
   }
   return (
     <>
@@ -40,7 +49,7 @@ const Leads = ({ loading, setLoading }) => {
             {
               allTasks.map((item, i) => {
                 return (
-                  <div onClick={() => handleShow(item.teamLeadId.designation)} className='cursor-pointer'>
+                  <div key={i} onClick={() => handleShow({ designation: item.teamLeadId.designation, tasks: item.newTasks })} className='cursor-pointer'>
                     <h1 className='text-2xl font-bold bg-slate-500 text-white p-5 rounded'> {item.teamLeadId.designation} Team</h1>
                   </div>
                 )
@@ -54,15 +63,14 @@ const Leads = ({ loading, setLoading }) => {
                   <div>
                     <h1 key={i} className='text-lg font-bold p-2'>{item.teamLeadId.designation} Team Lead</h1>
                     <div className=''>
-                      {/* <h1 className='text-xl p-2'>Projects</h1> */}
                       <div className='flex gap-4 ml-2'>
-                        <div className="py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full shadow-xl">
-                          <p>New Task</p>
+                        <div onClick={() => handleData({ label: "New Task", data: item.newTasks })} className={`py-2 px-8  ${position === "New Task" && "bg-indigo-100"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl`}>
+                          <p className=''>New Task</p>
                         </div>
-                        <div className="py-2 px-8 hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl">
-                          <p>Ongoing</p>
+                        <div onClick={() => handleData({ label: "OnGoing", data: item.onGoingTasks })} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
+                          <p>OnGoing</p>
                         </div>
-                        <div className="py-2 px-8  hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl">
+                        <div onClick={() => handleData({ label: "Completed", data: item.completedTasks })} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
                           <p>Completed</p>
                         </div>
                       </div>
@@ -83,7 +91,7 @@ const Leads = ({ loading, setLoading }) => {
                           </tr>
                           <tr className='h-5'></tr>
                           {
-                            item.newTasks.map((item, i) => {
+                            data.map((item, i) => {
                               return (
                                 <>
                                   <tr key={i} className='text-center mt-10 shadow-xl'>
@@ -110,7 +118,6 @@ const Leads = ({ loading, setLoading }) => {
                                         <p className="text-sm text-gray-600 ml-2">Urgent</p>
                                       </div>
                                     </td>
-                                    {/* <td className='text-center border'>Tony Stark</td> */}
                                     <td className=' border'>
                                       <div className='flex items-center justify-center'><PiChatDotsLight />2 msg</div>
                                     </td>

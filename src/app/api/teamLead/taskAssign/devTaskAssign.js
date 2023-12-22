@@ -6,9 +6,11 @@ export const devTaskAssign = async ({ findDev, findLead, reqBody }) => {
         const id = developer
         const developerId = findDev._id
         const existDev = await devTaskModel.findOne({ developerId })
+        console.log(findLead._id,'-----------------findLead._id')
         if (existDev) {
             existDev.newTasks.push({
                 assignedBy: "Team Lead",
+                assignedPersonId:findLead._id,
                 assignedPersonName: `${findLead.firstName} ${findLead.lastName}`,
                 importance,
                 projectTitle,
@@ -20,6 +22,7 @@ export const devTaskAssign = async ({ findDev, findLead, reqBody }) => {
                 projectId
             })
             const savedData = await existDev.save();
+            console.log(savedData,'------------------savedData savedData ')
             const latestNewTaskId = savedData.newTasks[savedData.newTasks.length - 1]._id;
             findDev.notifications.push({
                 message: `Team Lead ${findLead.firstName} Assigned a New Task`,
@@ -39,6 +42,7 @@ export const devTaskAssign = async ({ findDev, findLead, reqBody }) => {
                 developerId,
                 newTasks: [{
                     assignedBy: "Team Lead",
+                    assignedPersonId:findLead._id,
                     assignedPersonName: `${findLead.firstName} ${findLead.lastName}`,
                     importance,
                     projectTitle,
