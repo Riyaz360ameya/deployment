@@ -52,8 +52,8 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             assignedDate: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
             endDate: {
                 type: String,
@@ -106,7 +106,7 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             assignedDate: {
-                type: String,
+                type: Date,
                 required: true,
             },
             startDate: {
@@ -123,8 +123,8 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             devAssignedDate: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
             assignedDeveloperName: {
                 type: String,
@@ -135,7 +135,9 @@ const teamLeadSchema = new mongoose.Schema({
                 ref: DevData,
                 required: true,
             },
-
+            devCompletedDate: {
+                type: Date,
+            },
         }
     ],
     completedTasks: [
@@ -174,7 +176,7 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             assignedDate: {
-                type: String,
+                type: Date,
                 required: true,
             },
             startDate: {
@@ -186,8 +188,8 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             completedDate: {
-                type: String,
-                required: true,
+                type: Date,
+                default: Date.now,
             },
             projectId: {
                 type: mongoose.Types.ObjectId,
@@ -195,7 +197,7 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             devAssignedDate: {
-                type: String,
+                type: Date,
                 required: true,
             },
             assignedDeveloperName: {
@@ -208,7 +210,7 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             devCompletedDate: {
-                type: String,
+                type: Date,
                 required: true,
             },
         }

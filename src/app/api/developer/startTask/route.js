@@ -22,11 +22,11 @@ export const POST = async (request = NextRequest) => {
         console.log(data, '------data');
         // Update data and move it to onGoingTasks
         const upDatedDev = await upDateTask({ data, findDevTask, projectId })
-        const teamLeadId = data.assignedPersonId.toString()
+        const teamLeadId = data.assignedLeadId
         const upDatedLead = await upDateOnLead({ projectId, teamLeadId })
         return NextResponse.json({ message: "Got It", success: true }, { upDatedDev }, { status: 200 });
     } catch (error) {
-        console.error(error, '------------POST error');
+        console.error(error.message, '------------POST error');
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 };

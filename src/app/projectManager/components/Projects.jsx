@@ -5,6 +5,7 @@ import TaskAssignModal from './TaskAssignModal';
 import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner';
 import Badge from './Badge';
+import { dateConverter } from '@/app/api/helpers/dateConverter';
 
 const Projects = ({ loading, setLoading }) => {
     const [projectId, setProjectId] = useState()
@@ -15,36 +16,34 @@ const Projects = ({ loading, setLoading }) => {
     const [completed, setCompleted] = useState([])
     const [position, setPosition] = useState("New")
     const [modal, setModal] = useState(false);
+    const [proManagerId, setProManagerId] = useState()
 
     const fetchProjects = async () => {
         try {
             const PM = JSON.parse(localStorage.getItem("PM"))
             const proManagerId = PM._id
-            // const { data } = await axios.get('/api/projectManager/projectDetails');
+            setProManagerId(proManagerId)
             const { data } = await axios.post('/api/projectManager/allProjects', { proManagerId });
-            // console.log(data.PmProjects.newProjects[2], '-----------------data.PmProjects.newProjects')
             setNewPro(data.PmProjects.newProjects)
             setAllProjects(data.projectData)
             setOnGoingProjects(data.PmProjects.onGoingProjects)
             setCompleted(data.PmProjects.completedProjects)
+            console.log(data.PmProjects.completedProjects, '-------------data.PmProjects.completedProjects')
             setProjects(data.PmProjects.newProjects)
             // const updatedTasks = details.map((project) => {
             //     const isNew = new Date(project.date) > new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
             //     return { ...project, isNew };
             // });
-
             // setTasks(updatedTasks);
             // console.log(updatedTasks, 'projectdata');
         } catch (error) {
             console.error('Error fetching tasks:', error.message);
         }
     };
-
     useEffect(() => {
         fetchProjects();
         setLoading(false);
     }, []);
-
     const handleAssign = (id) => {
         setModal(true);
         setProjectId(id)
@@ -57,6 +56,9 @@ const Projects = ({ loading, setLoading }) => {
                     : name === "Completed" ? setProjects(completed)
                         : "";
     };
+    const handleUpdate = async (projectId) => {
+        const data = await axios.post('/api/projectManager/complete', { projectId, proManagerId })
+    }
     return (
         <>
             {loading ? (
@@ -68,7 +70,7 @@ const Projects = ({ loading, setLoading }) => {
             ) : (
                 <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden'>
                     <div>
-                        <h1 className='text-xl p-2'>Projects</h1>
+                        <h1 className='text-2xl font-bold p-2'>PROJECTS</h1>
                         <div className='flex gap-4 ml-2'>
                             {/* <div className='py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full shadow-xl' onClick={() => handleProject("All")}>
                                 <p>All</p>
@@ -101,15 +103,20 @@ const Projects = ({ loading, setLoading }) => {
                                     <th>ReachedOn</th>
                                     <th>Deadline</th>
                                     <th>Status</th>
-                                    <th>Lead Status</th>
-                                    <th>Options</th>
+                                    {
+                                        position == "Completed" && <th>Completed On</th>
+                                    }
+                                    {
+                                        position !== "Completed" && <th>Options</th>
+                                    }
                                 </tr>
                                 <tr className='h-5'></tr>
                                 {
                                     projects.length === 0 ? (
                                         <tr className="text-center mt-10 shadow-xl border">
                                             <td colSpan="10" className='text-2xl text-blue-600'>No Projects</td>
-                                        </tr>) :
+                                        </tr>
+                                    ) :
                                         projects.map((item, i) => {
                                             return (
                                                 <tr key={i} className='text-center mt-10 shadow-xl border'>
@@ -138,22 +145,31 @@ const Projects = ({ loading, setLoading }) => {
                                                         <PiChatDotsLight />
                                                         {item.projectId.projectInfo.ventureDescription}
                                                     </td>
-                                                    <td className=' rounded text-blue-600'>{item.projectReachedOn}</td>
+                                                    <td className=' rounded text-blue-600'>{dateConverter(item.projectReachedOn)}</td>
                                                     <td className='bg-red-200 rounded text-red-600'>{item.projectId.projectInfo.estimatedDeliveryDate}</td>
                                                     <td>{item.status}</td>
-                                                    <td>{item.projectId.projectInfo.status}</td>
+                                                    {/* <td>{item.projectId.projectInfo.status}</td> */}
+                                                    {
+                                                        position == "Completed" && <td className='font-bold text-green-700'>{dateConverter(item.leadTaskCompletedDate)}</td>
+                                                    }
                                                     <td>
-                                                        {item.payment === "Payment is not Done" ?
-                                                                <p className='text-red-600'>
-                                                                    Not Payed
-                                                                </p>
-                                                            :
-                                                            item.status === "Assigned" ?
-                                                            <>
-                                                                <button className='px-3 bg-blue-600 text-white rounded'>E</button>
-                                                                <button className='px-3 bg-red-600 text-white rounded'>D</button>
-                                                            </>
-                                                            : <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item.projectId._id)} >Assign Task to</button>
+                                                        {
+                                                            position !== "Completed" ?
+                                                                item.payment === "Payment is Done" ?
+                                                                    <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item.projectId._id)} >Assign Task to</button>
+                                                                    :
+                                                                    item.status === "Assigned" ?
+                                                                        <>
+                                                                            <button className='px-3 bg-blue-600 text-white rounded'>E</button>
+                                                                            <button className='px-3 bg-red-600 text-white rounded'>D</button>
+                                                                        </>
+                                                                        :
+                                                                        item.status === "Completed" ?
+                                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleUpdate(item.projectId._id)} >Update</button>
+                                                                            : <p className='text-red-600'>
+                                                                                Not Payed
+                                                                            </p>
+                                                                : ''
                                                         }
                                                     </td>
                                                 </tr>

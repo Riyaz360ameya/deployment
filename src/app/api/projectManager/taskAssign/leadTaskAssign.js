@@ -26,7 +26,7 @@ export const leadTaskAssign = async ({ findLead, teamLeadId, findPM, projectId, 
                 projectId: latestNewTaskId,
             })
             const saveNotification = await findLead.save()
-            return { savedTask, latestNewTaskId }
+            return savedTask
 
         } else {
             const assignedTask = new LeadTaskModel({

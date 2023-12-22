@@ -7,8 +7,8 @@ export const upDateTask = async ({ data, findDevTask, projectId }) => {
         // Move newTasks to onGoingTasks
         findDevTask.completedTasks.push({
             assignedBy: data.assignedBy,
-            assignedPersonId: data.assignedPersonId,
-            assignedPersonName: data.assignedPersonName,
+            assignedLeadId: data.assignedLeadId,
+            assignedLeadName: data.assignedLeadName,
             importance: data.importance,
             projectTitle: data.projectTitle,
             description: data.description,
@@ -18,7 +18,6 @@ export const upDateTask = async ({ data, findDevTask, projectId }) => {
             startDate: data.startDate,
             endDate: data.endDate,
             projectId: data.projectId,
-            assignedDeveloperName: data.devName,
             devStartedDate:data.devStartedDate,
         });
 

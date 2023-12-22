@@ -42,7 +42,6 @@ const Projects = () => {
             setNewTasks(data.LeadTasks.newTasks)
             setOnGoing(data.LeadTasks.onGoingTasks)
             setCompleted(data.LeadTasks.completedTasks)
-            toast.success(data.message);
         } catch (error) {
             console.error(error, '--------------allTasks error 1122');
             toast.error(error.response.data.error)
@@ -83,61 +82,77 @@ const Projects = () => {
                                 <th>Assigned Date</th>
                                 <th>Comments</th>
                                 <th>Deadline</th>
-                                <th>Status</th>
                                 {
-                                    (position === "OnGoing" || position === "Completed") &&
-                                    <th>Assigned Dev</th>
+                                    position !== "New Task" && (
+                                        <>
+                                            <th>Assigned Dev</th>
+                                            <th>Dev Status</th>
+                                        </>
+                                    )
                                 }
-                                <th>Options</th>
+
+                                {
+                                    (position !== "Completed") &&
+                                    <> <th>status</th>
+                                        <th>Options</th>
+                                    </>
+                                }
+
                             </tr>
                             <tr className='h-5'></tr>
-                            {data.map((item, i) => {
-                                return (
-                                    <tr key={i} className='text-center mt-10 shadow-xl border'>
-                                        <td>{i + 1}</td>
-                                        <td className='text-center flex justify-center items-center h-10 '>
-                                            <div className="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
-                                                <input placeholder="checkbox" type="checkbox" className="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full " />
-                                            </div>
-                                        </td>
-                                        <td className="">
-                                            <div className="flex items-center gap-2  ml-5">
-                                                <FaLink color='blue' />
-                                                <p className="text-base font-medium  text-gray-700 ">{item.projectTitle}</p>
-                                            </div>
-                                        </td>
-                                        <td className="">
-                                            <div className="flex items-center justify-center">
-                                                <FiAlertOctagon color='red' />
-                                                <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
-                                            </div>
-                                        </td>
-                                        <td className='text-center'>{item.assignedDate}</td>
-                                        <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.instruction}</td>
-                                        <td className='bg-red-200 rounded text-red-600'>{item.endDate}</td>
-                                        <td>{item.status}</td>
-                                        {position !== "New Task" && <td>{item.assignedDeveloperName}</td>}
-                                        <td className='flex gap-2 items-center justify-center'>
-                                            {
-                                                item.status === "New Task" ?
-                                                    <>
-                                                        <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item.projectId)} >Assign Task to</button>
-                                                    </>
-                                                    :
-                                                    item.status === "Completed" ?
-                                                        <>
-                                                            <button className='px-3 bg-blue-600 text-white rounded' onClick={() => handleUpdate(item.projectId)}>Update</button>
-                                                        </>
-                                                        :
-                                                        <>
-                                                            <button className='px-3 bg-blue-600 text-white rounded'>E</button>
-                                                            <button className='px-3 bg-red-600 text-white rounded'>D</button>
-                                                        </>
-                                            }
-                                        </td>
+                            {
+                                data.length === 0 ? (
+                                    <tr className="text-center mt-10 shadow-xl border">
+                                        <td colSpan="8" className='text-2xl text-blue-600'>No Tasks</td>
                                     </tr>
-                                )
-                            })}
+                                ) :
+                                    data.map((item, i) => {
+                                        return (
+                                            <tr key={i} className='text-center mt-10 shadow-xl border'>
+                                                <td>{i + 1}</td>
+                                                <td className='text-center flex justify-center items-center h-10 '>
+                                                    <div className="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
+                                                        <input placeholder="checkbox" type="checkbox" className="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full " />
+                                                    </div>
+                                                </td>
+                                                <td className="">
+                                                    <div className="flex items-center gap-2  ml-5">
+                                                        <FaLink color='blue' />
+                                                        <p className="text-base font-medium  text-gray-700 ">{item.projectTitle}</p>
+                                                    </div>
+                                                </td>
+                                                <td className="">
+                                                    <div className="flex items-center justify-center">
+                                                        <FiAlertOctagon color='red' />
+                                                        <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
+                                                    </div>
+                                                </td>
+                                                <td className='text-center'>{item.assignedDate}</td>
+                                                <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.instruction}</td>
+                                                <td className='bg-red-200 rounded text-red-600'>{item.endDate}</td>
+                                                {position !== "New Task" && <td>{item.assignedDeveloperName}</td>}
+                                                <td>{item.status}</td>
+                                                <td className='flex gap-2 items-center justify-center'>
+                                                    {
+                                                        item.status === "New Task" ?
+                                                            <>
+                                                                <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item.projectId)} >Assign Task to</button>
+                                                            </>
+                                                            :
+                                                            position !== "Completed" ?
+                                                                <>
+                                                                    <button className='px-3 bg-blue-600 text-white rounded' onClick={() => handleUpdate(item.projectId)}>Update</button>
+                                                                </>
+                                                                : ""
+                                                        // <>
+                                                        //     <button className='px-3 bg-blue-600 text-white rounded'>E</button>
+                                                        //     <button className='px-3 bg-red-600 text-white rounded'>D</button>
+                                                        // </>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
                         </tbody>
                     </table>
                 </div>

@@ -19,7 +19,7 @@ export const upDateOnLead = async ({ projectId, teamLeadId }) => {
         // console.log(updatedTask, '-----Updated Task');
         return updatedTask
     } catch (error) {
-        console.error(error);
+        console.error(error.message, '--------error');
         // Handle the error
     }
 };

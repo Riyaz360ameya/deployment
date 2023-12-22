@@ -18,7 +18,6 @@ export const pmProjectUpdate = async ({ projectId, latestNewTaskId, teamLeadId, 
         projectReachedOn: data.projectReachedOn,
         payment: "50% Payed",
         assignedLeadId: teamLeadId,
-        assignedLeadTaskId: latestNewTaskId,
     })
     const f = await pmProjects.save();
     // Remove the item from newProjects

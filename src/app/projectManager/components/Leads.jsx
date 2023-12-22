@@ -12,7 +12,6 @@ const Leads = ({ loading, setLoading }) => {
   const [data, setData] = useState([])
   const teamLeadTasks = async () => {
     const { data } = await axios.get('/api/projectManager/allTasks')
-    console.log(data, "-------data------")
     setAllTasks(data.tasks)
     setData(data.tasks[0].newTasks)
     setShow("Interior")
@@ -29,7 +28,6 @@ const Leads = ({ loading, setLoading }) => {
   const handleData = ({ label, data }) => {
     setPosition(label)
     setData(data)
-    console.log(data, '.................67')
   }
   return (
     <>
@@ -40,7 +38,7 @@ const Leads = ({ loading, setLoading }) => {
               width='200'
               color="black"
             />
-            </div>
+          </div>
         </div>
         :
         <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden' >
@@ -91,46 +89,49 @@ const Leads = ({ loading, setLoading }) => {
                           </tr>
                           <tr className='h-5'></tr>
                           {
+                            data.length === 0 ? (
+                              <tr className="text-center mt-10 shadow-xl border">
+                                  <td colSpan="10" className='text-2xl text-blue-600'>No Tasks</td>
+                              </tr>
+                          ) :
                             data.map((item, i) => {
                               return (
-                                <>
-                                  <tr key={i} className='text-center mt-10 shadow-xl'>
-                                    <td className='border'>{i + 1}</td>
-                                    <td className='text-center h-10 border'>
-                                      <div className='flex items-center justify-center'>
-                                        <div className="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
-                                          <input placeholder="checkbox" type="checkbox" className="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full " />
-                                        </div>
+                                <tr key={item.projectTitle + i} className='text-center mt-10 shadow-xl'>
+                                  <td className='border'>{i + 1}</td>
+                                  <td className='text-center h-10 border'>
+                                    <div className='flex items-center justify-center'>
+                                      <div className="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
+                                        <input placeholder="checkbox" type="checkbox" className="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full " />
                                       </div>
-                                    </td>
-                                    <td className="border">
-                                      <div className="flex items-center gap-2  ml-5">
-                                        <FaLink color='blue' />
-                                        <p className="text-base font-medium  text-gray-700 ">{item.projectTitle}</p>
-                                      </div>
-                                    </td>
-                                    <td className=" border">
-                                      <p>55</p>
-                                    </td>
-                                    <td className="border">
-                                      <div className="flex items-center justify-center">
-                                        <FiAlertOctagon color='red' />
-                                        <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
-                                      </div>
-                                    </td>
-                                    <td className=' border'>
-                                      <div className='flex items-center justify-center'><PiChatDotsLight />2 msg</div>
-                                    </td>
-                                    <td className='bg-red-200 rounded text-red-600 border'>{item.endDate}</td>
-                                    <td>New Task</td>
-                                    <td className=' border'>
-                                      <div className='flex gap-2 items-center justify-center'>
-                                        <button className='px-3 bg-blue-600 text-white rounded'>E</button>
-                                        <button className='px-3 bg-red-600 text-white rounded'>D</button>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </>
+                                    </div>
+                                  </td>
+                                  <td className="border">
+                                    <div className="flex items-center gap-2  ml-5">
+                                      <FaLink color='blue' />
+                                      <p className="text-base font-medium  text-gray-700 ">{item.projectTitle}</p>
+                                    </div>
+                                  </td>
+                                  <td className=" border">
+                                    <p>55</p>
+                                  </td>
+                                  <td className="border">
+                                    <div className="flex items-center justify-center">
+                                      <FiAlertOctagon color='red' />
+                                      <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
+                                    </div>
+                                  </td>
+                                  <td className=' border'>
+                                    <div className='flex items-center justify-center'><PiChatDotsLight />2 msg</div>
+                                  </td>
+                                  <td className='bg-red-200 rounded text-red-600 border'>{item.endDate}</td>
+                                  <td>{item.status}</td>
+                                  <td className=' border'>
+                                    <div className='flex gap-2 items-center justify-center'>
+                                      <button className='px-3 bg-blue-600 text-white rounded'>E</button>
+                                      <button className='px-3 bg-red-600 text-white rounded'>D</button>
+                                    </div>
+                                  </td>
+                                </tr>
                               )
                             })
                           }

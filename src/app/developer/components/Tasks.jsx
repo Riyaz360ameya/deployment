@@ -3,6 +3,7 @@ import { FiAlertOctagon } from "react-icons/fi";
 import { PiChatDotsLight } from "react-icons/pi";
 import { MdFileDownload } from "react-icons/md";
 import axios from 'axios';
+import { dateConverter } from '@/app/api/helpers/dateConverter';
 const Tasks = ({ devTasks, task, Project }) => {
     const [dev, setDev] = useState()
     useEffect(() => {
@@ -41,7 +42,7 @@ const Tasks = ({ devTasks, task, Project }) => {
                             <th>Assigned Date</th>
                             <th>Start Date</th>
                             {
-                                Project !== "New Tasks" && <th>I Started</th>
+                                Project !== "New Tasks" && <th>Dev Started</th>
                             }
 
                             <th>Deadline</th>
@@ -73,14 +74,16 @@ const Tasks = ({ devTasks, task, Project }) => {
                                             </div>
                                         </td>
                                         <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.description}</td>
-                                        <td className='b rounded text-green-600'>{item.assignedDate}</td>
-                                        <td className='b rounded text-green-600'>{item.startDate}</td>
+                                        <td className='b rounded text-green-600'>
+                                            {dateConverter(item.assignedDate)}
+                                        </td>
+                                        <td className='b rounded text-blue-600 font-bold'>{item.startDate}</td>
                                         {
-                                            Project !== "New Tasks" && <td>{item.devStartedDate}</td>
+                                            Project !== "New Tasks" && <td> {dateConverter(item.devStartedDate)}</td>
                                         }
                                         <td className='bg-red-200  rounded text-red-600 font-bold'>{item.endDate}</td>
                                         {
-                                            Project === "Completed" && <td>{item.devCompletedDate}</td>
+                                            Project === "Completed" && <td className='text-green-600 font-bold'>{dateConverter(item.devCompletedDate)}</td>
                                         }
                                         {
                                             Project !== "Completed" &&

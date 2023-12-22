@@ -36,8 +36,8 @@ const proManagerProjectSchema = new mongoose.Schema({
                 required: true,
             },
             projectReachedOn: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
             payment: {
                 type: String,
@@ -62,7 +62,7 @@ const proManagerProjectSchema = new mongoose.Schema({
                 required: true,
             },
             projectReachedOn: {
-                type: String,
+                type: Date,
                 required: true,
             },
             payment: {
@@ -72,11 +72,6 @@ const proManagerProjectSchema = new mongoose.Schema({
             assignedLeadId: {
                 type: mongoose.Types.ObjectId,
                 ref: Lead, 
-                required: true,
-            },
-            assignedLeadTaskId: {
-                type: mongoose.Types.ObjectId,
-                ref: LeadTask, // Update to match the actual model name
                 required: true,
             },
         }
@@ -98,7 +93,7 @@ const proManagerProjectSchema = new mongoose.Schema({
                 required: true,
             },
             projectReachedOn: {
-                type: String,
+                type: Date,
                 required: true,
             },
             payment: {
@@ -110,45 +105,17 @@ const proManagerProjectSchema = new mongoose.Schema({
                 ref: Lead, 
                 required: true,
             },
-            assignedLeadName: {
-                type: String,
-                required: true,
-            },
-            assignedLeadDesignation: {
-                type: String,
-                required: true,
-            },
-            importance: {
-                type: String,
-                required: true,
-            },
-            projectTitle: {
-                type: String,
-                required: true,
-            },
-            description: {
-                type: String,
-                required: true,
-            },
-            instruction: {
-                type: String,
-                required: true,
-            },
             leadTaskAssignedDate: {
-                type: String,
+                type: Date,
                 required: true,
             },
             leadTaskStartDate: {
-                type: String,
-                required: true,
-            },
-            leadTaskEndDate: {
-                type: String,
+                type: Date,
                 required: true,
             },
             leadTaskCompletedDate: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
         }
     ]

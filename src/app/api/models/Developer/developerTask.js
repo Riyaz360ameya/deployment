@@ -1,14 +1,17 @@
 import mongoose from "mongoose";
 import developerModel from "./developerLoginModel";
 import leadLoginModel from "../TeamLead/leadLoginModel";
+import projectInfoModel from "../projectInfoModel";
 const moment = require('moment');
 
 const Dev = mongoose.models.developerLogins || developerModel;
 const Lead = mongoose.models.leadLogins || leadLoginModel;
+const projectData = mongoose.models.projectInformation || projectInfoModel;
+
 const developerTaskSchema = new mongoose.Schema({
     developerId: {
         type: mongoose.Types.ObjectId,
-        ref: Dev, // Update to match the actual model name
+        ref: Dev,
         required: true,
     },
     newTasks: [
@@ -17,12 +20,12 @@ const developerTaskSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
-            assignedPersonId: {
+            assignedLeadId: {
                 type: mongoose.Types.ObjectId,
-                ref: Lead, // Update to match the actual model name
+                ref: Lead,
                 required: true,
             },
-            assignedPersonName: {
+            assignedLeadName: {
                 type: String,
                 required: true,
             },
@@ -47,8 +50,8 @@ const developerTaskSchema = new mongoose.Schema({
                 required: true,
             },
             assignedDate: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
             endDate: {
                 type: String,
@@ -60,9 +63,9 @@ const developerTaskSchema = new mongoose.Schema({
             },
             projectId: {
                 type: mongoose.Types.ObjectId,
-                ref: 'projectInformation',
+                ref: projectData,
                 required: true,
-            }
+            },
         }
     ],
     onGoingTasks: [
@@ -71,12 +74,12 @@ const developerTaskSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
-            assignedPersonId: {
+            assignedLeadId: {
                 type: mongoose.Types.ObjectId,
-                ref: Lead, // Update to match the actual model name
+                ref: Lead,
                 required: true,
             },
-            assignedPersonName: {
+            assignedLeadName: {
                 type: String,
                 required: true,
             },
@@ -101,7 +104,7 @@ const developerTaskSchema = new mongoose.Schema({
                 required: true,
             },
             assignedDate: {
-                type: String,
+                type: Date,
                 required: true,
             },
             startDate: {
@@ -114,12 +117,12 @@ const developerTaskSchema = new mongoose.Schema({
             },
             projectId: {
                 type: mongoose.Types.ObjectId,
-                ref: 'projectInformation',
+                ref: projectData,
                 required: true,
             },
             devStartedDate: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
             devCompletedDate: {
                 type: String,
@@ -132,12 +135,12 @@ const developerTaskSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
-            assignedPersonId: {
+            assignedLeadId: {
                 type: mongoose.Types.ObjectId,
-                ref: Lead, // Update to match the actual model name
+                ref: Lead,
                 required: true,
             },
-            assignedPersonName: {
+            assignedLeadName: {
                 type: String,
                 required: true,
             },
@@ -162,7 +165,7 @@ const developerTaskSchema = new mongoose.Schema({
                 required: true,
             },
             assignedDate: {
-                type: String,
+                type: Date,
                 required: true,
             },
             startDate: {
@@ -175,7 +178,7 @@ const developerTaskSchema = new mongoose.Schema({
             },
             projectId: {
                 type: mongoose.Types.ObjectId,
-                ref: 'projectInformation',
+                ref: projectData,
                 required: true,
             },
             devStartedDate: {
@@ -183,12 +186,12 @@ const developerTaskSchema = new mongoose.Schema({
                 required: true,
             },
             devCompletedDate: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
         }
     ]
 });
-// delete mongoose.connection.models['devTasks'];
+delete mongoose.connection.models['devTasks'];
 const devTaskModel = mongoose.models.devTasks || mongoose.model("devTasks", developerTaskSchema);
 export default devTaskModel;
