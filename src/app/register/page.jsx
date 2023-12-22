@@ -9,7 +9,8 @@ import { Toaster, toast } from 'sonner';
 function Page() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const [search, setSearch] = useState()
+    const [search, setSearch] = useState();
+    const [orgSelected, setOrgSelected] = useState(false);
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
@@ -74,6 +75,7 @@ function Page() {
         setSearch(selectedOrg);
         setUser({ ...user, organisation: selectedOrg });
         setOrgSuggestions([]);
+        setOrgSelected(true);
     };
 
     const onRegister = async (e) => {
@@ -148,9 +150,9 @@ function Page() {
                                 onChange={onOrgInputChange}
                                 required
                             />
-                            {search && (
-                                <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-md shadow-md z-10">
-                                    <ul className="py-1">
+                            {search && !orgSelected && (
+                                <div className="absolute  w-full bg-white border border-gray-300 rounded-md shadow-md z-10 h-38 overflow-y">
+                                    <ul className="">
                                         {orgSuggestions.map((org, index) => (
                                             <li key={index} className="px-3 py-2 cursor-pointer hover:bg-gray-100" onClick={() => filterOrgList(org)}>
                                                 {org}
