@@ -5,11 +5,14 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
 import { Toaster, toast } from 'sonner';
-
+import { InfinitySpin } from 'react-loader-spinner';
+import { IoIosEye,IoIosEyeOff } from 'react-icons/io';
 function Page() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState();
+    const [visible, setVisible] = useState(false);
+    const [visibleConfirm, setvisibleConfirm] = useState(false);
     const [orgSelected, setOrgSelected] = useState(false);
     const [user, setUser] = useState({
         firstName: '',
@@ -25,7 +28,13 @@ function Page() {
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     const nameRegex = /^[A-Za-z\s]+$/;
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-
+    
+    const showHiddenPassword = () => {
+        setVisible(!visible);
+    }
+    const showHiddenConfirmPassword = () => {
+        setvisibleConfirm(!visibleConfirm);
+    }
     const validateInput = () => {
         const newErrors = {};
 
@@ -178,20 +187,31 @@ function Page() {
                         </div>
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="password">Password</label>
-                            <input
-                                type='password'
+                           <div className="relative">
+                           <input
+                                type={visible ? 'text':'password'}
                                 className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.password ? 'border-red-500' : ''}`}
                                 id="password"
                                 value={user.password}
                                 onChange={(e) => setUser({ ...user, password: e.target.value })}
                                 required
                             />
+                            <div
+                             className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                              onClick={showHiddenPassword}
+                              >
+                                {
+                                    visible ? <IoIosEye/>:<IoIosEyeOff/>
+                                }
+                            </div>
+                           </div>
                             {errors.password && <p className='text-red-500'>{errors.password}</p>}
                         </div>
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="confirmPassword">Confirm Password</label>
+                            <div className="relative">
                             <input
-                                type='password'
+                                type={visibleConfirm?'text':'password'}
                                 className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.confirmPassword ? 'border-red-500' : ''}`}
                                 name="confirmPassword"
                                 id="confirmPassword"
@@ -199,6 +219,15 @@ function Page() {
                                 onChange={(e) => setUser({ ...user, confirmPassword: e.target.value })}
                                 required
                             />
+                            <div 
+                             className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                             onClick={showHiddenConfirmPassword}
+                            >
+                              {
+                                visibleConfirm ? <IoIosEye/>:<IoIosEyeOff/>
+                              }
+                            </div>
+                            </div>
                             {errors.confirmPassword && <p className='text-red-500'>{errors.confirmPassword}</p>}
                         </div>
                         <div>
