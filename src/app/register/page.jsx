@@ -1,18 +1,15 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-// import toast from 'react-hot-toast';
 import { BeatLoader } from 'react-spinners';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import { Toaster, toast } from 'sonner';
-
 
 function Page() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [search, setSearch] = useState()
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
@@ -20,19 +17,19 @@ function Page() {
         password: '',
         organisation: ''
     });
-    const [errors, setErrors] = useState({}); // To store validation errors
+    const [errors, setErrors] = useState({});
+    const [orgInput, setOrgInput] = useState('');
+    const [orgSuggestions, setOrgSuggestions] = useState([]);
 
-    // Validation functions
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     const nameRegex = /^[A-Za-z\s]+$/;
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // At least 8 characters, one lowercase, one uppercase, and one number
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
     const validateInput = () => {
         const newErrors = {};
 
         if (!user.firstName.match(nameRegex)) {
             newErrors.firstName = 'Please enter a valid first name';
-           
         }
         if (!user.lastName.match(nameRegex)) {
             newErrors.lastName = 'Please enter a valid last name';
@@ -51,28 +48,50 @@ function Page() {
         }
         setErrors(newErrors);
 
-        // Check if there are any errors
         return Object.keys(newErrors).length === 0;
+    };
+
+
+    const getOrganisationList = async (input) => {
+        try {
+            const response = await axios.get("/api/users/register");
+            const allOrganisations = response.data.organizations;
+            const filteredOrgs = allOrganisations.filter(org => org.toLowerCase().includes(input.toLowerCase()));
+            setOrgSuggestions(filteredOrgs);
+            console.log(filteredOrgs);
+        } catch (error) {
+            console.error("Failed to fetch organization list", error);
+        }
+    };
+
+    const onOrgInputChange = (e) => {
+        const input = e.target.value;
+        setSearch(input);
+        getOrganisationList(input);
+    };
+
+    const filterOrgList = (selectedOrg) => {
+        setSearch(selectedOrg);
+        setUser({ ...user, organisation: selectedOrg });
+        setOrgSuggestions([]);
     };
 
     const onRegister = async (e) => {
         e.preventDefault();
+
         if (validateInput()) {
             try {
                 setLoading(true);
-    
-                // Check  email is already registered
+
                 const response = await axios.post("/api/users/register", user);
-                toast.success("Registration successful!")
+                toast.success("Registration successful!");
+
                 if (response.data.error && response.data.error.includes("email")) {
                     toast.error("Email is already registered. Please use a different email.");
                     return;
-                   
                 }
-    
-                // Proceed with user registration
+
                 console.log(response.data, "Registered successfully");
-                
                 router.push("/login");
             } catch (error) {
                 console.log("register failed", error.message);
@@ -82,7 +101,7 @@ function Page() {
             }
         }
     };
-    
+
     return (
         <>
             <div className='h-screen bg-white text-center flex items-center justify-end'>
@@ -119,19 +138,30 @@ function Page() {
                                 {errors.lastName && <p className='text-red-500'>{errors.lastName}</p>}
                             </div>
                         </div>
-
-                        <div className='text-left text-sm'>
-                            <label className='font-bold' htmlFor="organisation">Organization</label>
+                        <div className='text-left text-sm relative'>
+                            <label className='font-bold' htmlFor="organisation">Organisation</label>
                             <input
                                 type='text'
                                 className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.organisation ? 'border-red-500' : ''}`}
                                 id="organisation"
-                                value={user.organisation}
-                                onChange={(e) => setUser({ ...user, organisation: e.target.value })}
+                                value={search}
+                                onChange={onOrgInputChange}
                                 required
                             />
+                            {search && (
+                                <div className="absolute mt-1 w-full bg-white border border-gray-300 rounded-md shadow-md z-10">
+                                    <ul className="py-1">
+                                        {orgSuggestions.map((org, index) => (
+                                            <li key={index} className="px-3 py-2 cursor-pointer hover:bg-gray-100" onClick={() => filterOrgList(org)}>
+                                                {org}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                             {errors.organisation && <p className='text-red-500'>{errors.organisation}</p>}
                         </div>
+
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="email">Email</label>
                             <input
@@ -178,9 +208,7 @@ function Page() {
                             <p className='text-gray-500 underline cursor-pointer'>
                                 Already have an account? <Link href='/login'><span className='font-bold text-black'>Login</span></Link>
                             </p>
-
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -189,7 +217,3 @@ function Page() {
 }
 
 export default Page;
-
-
-
-

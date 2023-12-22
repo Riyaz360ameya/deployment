@@ -142,7 +142,7 @@ function Page() {
                                 </div>
                                 <div className=' mt-5 text-sm'>
                                     <p className='text-gray-500 underline cursor-pointer'>
-                                        Need a new Account? <Link href='/client/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
+                                        Need a new Account? <Link href='/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
                                     </p>
                                 </div>
                             </>
