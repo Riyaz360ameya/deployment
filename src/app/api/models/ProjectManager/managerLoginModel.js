@@ -1,7 +1,7 @@
-import moment from "moment";
 import mongoose from "mongoose";
-const projectInfo = mongoose.models.leadLogins || leadLoginModel;
-const leadData = mongoose.models.leadLogins || leadLoginModel;
+import projectInfoModel from "../projectInfoModel";
+
+const projectInfo = mongoose.models.leadLogins || projectInfoModel;
 const managerLoginSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -35,7 +35,7 @@ const managerLoginSchema = new mongoose.Schema({
         {
             projectId: {
                 type: mongoose.Types.ObjectId,
-                ref: 'projectInformation', // Update to match the actual model name
+                ref: projectInfo, // Update to match the actual model name
                 required: true,
             },
             message: {
@@ -43,8 +43,8 @@ const managerLoginSchema = new mongoose.Schema({
                 required: true
             },
             time: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
         }
     ],

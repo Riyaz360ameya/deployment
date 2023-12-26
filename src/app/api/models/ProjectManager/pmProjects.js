@@ -1,17 +1,13 @@
 import mongoose from "mongoose";
 import leadLoginModel from "../TeamLead/leadLoginModel";
-import userModel from "../User/userModel";
-import developerModel from "../Developer/developerLoginModel";
 import managerLoginModel from "./managerLoginModel";
+import userModel from "../User/userModel";
 import projectInfoModel from "../projectInfoModel";
-import LeadTaskModel from "../TeamLead/leadTaskModel";
-const moment = require('moment');
 
 const PM = mongoose.models.managerLogin || managerLoginModel;
-const Lead = mongoose.models.leadLogins || leadLoginModel;
-const LeadTask = mongoose.models.leadTasks || LeadTaskModel;
-const User = mongoose.models.users || userModel;
 const Project = mongoose.models.projectInfo || projectInfoModel;
+const Lead = mongoose.models.leadLogins || leadLoginModel;
+const user = mongoose.models.users || userModel;
 
 const proManagerProjectSchema = new mongoose.Schema({
     proManagerId: {
@@ -23,7 +19,7 @@ const proManagerProjectSchema = new mongoose.Schema({
         {
             userId: {
                 type: mongoose.Types.ObjectId,
-                ref: User, // Use the registered 'users' model here
+                ref: user, // Use the registered 'users' model here
                 required: true,
             },
             projectId: {
@@ -49,7 +45,7 @@ const proManagerProjectSchema = new mongoose.Schema({
         {
             userId: {
                 type: mongoose.Types.ObjectId,
-                ref: User, // Use the registered 'users' model here
+                ref: user, // Use the registered 'users' model here
                 required: true,
             },
             projectId: {
@@ -80,7 +76,7 @@ const proManagerProjectSchema = new mongoose.Schema({
         {
             userId: {
                 type: mongoose.Types.ObjectId,
-                ref: User, // Use the registered 'users' model here
+                ref: user, // Use the registered 'users' model here
                 required: true,
             },
             projectId: {

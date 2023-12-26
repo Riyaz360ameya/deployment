@@ -62,13 +62,13 @@ const Leads = ({ loading, setLoading }) => {
                     <h1 className='text-lg font-bold p-2'>{item.teamLeadId.designation} Team Lead</h1>
                     <div className=''>
                       <div className='flex gap-4 ml-2'>
-                        <div onClick={() => handleData({ label: "New Task", data: item.newTasks })} className={`py-2 px-8  ${position === "New Task" && "bg-indigo-100"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl`}>
+                        <div onClick={() => handleData({ label: "New Task", data: item.newTasks })} className={`py-2 px-8  ${position === "New Task" && "bg-indigo-100"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
                           <p className=''>New Task</p>
                         </div>
-                        <div onClick={() => handleData({ label: "OnGoing", data: item.onGoingTasks })} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
+                        <div onClick={() => handleData({ label: "OnGoing", data: item.onGoingTasks })} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
                           <p>OnGoing</p>
                         </div>
-                        <div onClick={() => handleData({ label: "Completed", data: item.completedTasks })} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
+                        <div onClick={() => handleData({ label: "Completed", data: item.completedTasks })} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
                           <p>Completed</p>
                         </div>
                       </div>

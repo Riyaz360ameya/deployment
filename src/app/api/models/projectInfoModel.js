@@ -3,6 +3,7 @@ import userModel from "./User/userModel";
 
 // Register the 'users' model with Mongoose
 const User = mongoose.models.users || userModel;
+
 const projectInfoSchema = new mongoose.Schema(
     {
         userId: {
