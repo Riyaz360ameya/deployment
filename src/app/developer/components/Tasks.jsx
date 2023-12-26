@@ -3,6 +3,8 @@ import { FiAlertOctagon } from "react-icons/fi";
 import { PiChatDotsLight } from "react-icons/pi";
 import { MdFileDownload } from "react-icons/md";
 import axios from 'axios';
+import { dateConverter } from '@/app/api/helpers/dateConverter';
+import { toast } from 'sonner';
 const Tasks = ({ devTasks, task, Project }) => {
     const [dev, setDev] = useState()
     useEffect(() => {
@@ -16,15 +18,28 @@ const Tasks = ({ devTasks, task, Project }) => {
         console.log(developerId, '----------devDetails')
     }
     const handleStartClick = async (projectId) => {
-        console.log(projectId, 'Its Started')
-        const developerId = dev._id
-        console.log(developerId, '----------devDetails')
-        const data = await axios.post('/api/developer/startTask', { projectId, developerId })
+        try {
+            console.log(projectId, 'Its Started')
+            const developerId = dev._id
+            console.log(developerId, '----------devDetails')
+            const { data } = await axios.post('/api/developer/startTask', { projectId, developerId })
+            toast.success(data.message)
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.response.data.error);
+        }
     }
     const handleCompleted = async (projectId) => {
-        console.log(projectId, 'Its Completed')
-        const developerId = dev._id
-        const data = await axios.post('/api/developer/complete', { projectId, developerId })
+        try {
+            console.log(projectId, 'Its Completed')
+            const developerId = dev._id
+            const { data } = await axios.post('/api/developer/complete', { projectId, developerId })
+            toast.success(data.message)
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.response.data.error);
+        }
+
     }
 
 
@@ -41,7 +56,7 @@ const Tasks = ({ devTasks, task, Project }) => {
                             <th>Assigned Date</th>
                             <th>Start Date</th>
                             {
-                                Project !== "New Tasks" && <th>I Started</th>
+                                Project !== "New Tasks" && <th>Dev Started</th>
                             }
 
                             <th>Deadline</th>
@@ -73,14 +88,16 @@ const Tasks = ({ devTasks, task, Project }) => {
                                             </div>
                                         </td>
                                         <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.description}</td>
-                                        <td className='b rounded text-green-600'>{item.assignedDate}</td>
-                                        <td className='b rounded text-green-600'>{item.startDate}</td>
+                                        <td className='b rounded text-green-600'>
+                                            {dateConverter(item.assignedDate)}
+                                        </td>
+                                        <td className='b rounded text-blue-600 font-bold'>{item.startDate}</td>
                                         {
-                                            Project !== "New Tasks" && <td>{item.devStartedDate}</td>
+                                            Project !== "New Tasks" && <td> {dateConverter(item.devStartedDate)}</td>
                                         }
                                         <td className='bg-red-200  rounded text-red-600 font-bold'>{item.endDate}</td>
                                         {
-                                            Project === "Completed" && <td>{item.devCompletedDate}</td>
+                                            Project === "Completed" && <td className='text-green-600 font-bold'>{dateConverter(item.devCompletedDate)}</td>
                                         }
                                         {
                                             Project !== "Completed" &&

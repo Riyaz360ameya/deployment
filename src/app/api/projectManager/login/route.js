@@ -9,7 +9,6 @@ export async function POST(request = NextRequest) {
     try {
         const reqBody = await request.json()
         const { email, password } = reqBody
-        console.log(email,'---------email')
         const pass = password
         //check if user exist
         const user = await managerLoginModel.findOne({ email })
@@ -40,7 +39,7 @@ export async function POST(request = NextRequest) {
             return response;
         }
     } catch (error) {
-        console.log(error)
+        console.log(error.message,'------------------error.message')
         return NextResponse.json({
             error: error.message
         }, { status: 500 })

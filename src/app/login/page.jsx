@@ -123,8 +123,8 @@ function Page() {
                                             onClick={showHiddenPassword}
                                         >
                                             {visiblePassword ?
-                                                 <IoIosEye />
-                                                :<IoIosEyeOff />
+                                                <IoIosEye />
+                                                : <IoIosEyeOff />
                                             }
                                         </div>
                                     </div>

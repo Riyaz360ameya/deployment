@@ -20,11 +20,10 @@ export const POST = async (request = NextRequest) => {
         }
         // Update data and move it to onGoingTasks
         const upDatedDev = await upDateTask({ data, findDevTask, projectId })
-        const teamLeadId = data.assignedPersonId.toString()
+        const teamLeadId = data.assignedLeadId.toString()
         const upDatedLead = await upDateOnLead({ projectId, teamLeadId })
-        return NextResponse.json({ message: "Got It", success: true }, { upDatedDev }, { status: 200 });
+        return NextResponse.json({ message: "Task Completed", success: true }, { upDatedDev }, { status: 200 });
     } catch (error) {
-
-
+        console.error(error.message, '--------error message');
     }
 }

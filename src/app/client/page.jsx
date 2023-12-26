@@ -31,12 +31,12 @@ function page() {
                             <Header setLoader={setLoader} setMenu={setMenu} />
                             {
                                 Project === "New Project" ? <UploadDetails />
-                                : Project === "Project Details" ? <ClientInformation/>
+                                    : Project === "Project Details" ? <ClientInformation/>
                                     : Project === "Project Status" ? <Status />
-                                        : Project === "Payment" ? <Payment />
-                                            : Project === "View" ? <View />
-                                            : Project === "Package" ? <Package/>
-                                                : ""
+                                            : Project === "Payment" ? <Payment />
+                                                : Project === "View" ? <View />
+                                                    : Project === "Package" ? <Package/>
+                                                        : ""
                             }
 
                         </div>

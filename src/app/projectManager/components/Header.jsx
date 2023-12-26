@@ -29,10 +29,9 @@ function Header({ setMenu, menu }) {
     const handleDropdown = () => {
         setDrop((prev) => !prev)
     }
-    const userDetails = async () => {
-        const res = await localStorage.getItem('PM')
+    const userDetails = () => {
+        const res = localStorage.getItem('PM')
         const user = JSON.parse(res);
-        console.log(user, '-----------PM details')
         setData(user)
     }
     useEffect(() => {
@@ -69,10 +68,10 @@ function Header({ setMenu, menu }) {
                     </span>
                 </div>
                 <div className='flex items-center gap-3'>
-                    {/* <div className='text-right'>
+                    <div className='text-right'>
                         <p className="text-base">{data.firstName} {data.lastName}</p>
                         <p className="text-sm text-gray-500">{data.designation}</p>
-                    </div> */}
+                    </div>
                     <div className=''>
                         <SlUser className='h-8 w-8 ' />
                         {/* <Image src={profileImage} className='object-contain rounded-full' alt="" width={100} height={100} /> */}

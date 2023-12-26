@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react'
 import { GiCycle } from "react-icons/gi";
 import { IoPlayForwardSharp } from "react-icons/io5";
+import { toast } from 'sonner';
 
 
 const ConfirmModal = ({ Lead, projectId, setCModal }) => {
@@ -15,13 +16,15 @@ const ConfirmModal = ({ Lead, projectId, setCModal }) => {
     }
     const handleAssign = async (projectId) => {
         console.log('Reassign-------iid')
-        const assign = await axios.post('/api/teamLead/reAssign', { Lead, projectId })
+        const { data } = await axios.post('/api/teamLead/reAssign', { Lead, projectId })
         onClose()
+        toast.success(data.message)
     }
     const handleForward = async (projectId) => {
         console.log(projectId, '-------id')
-        const assign = await axios.post('/api/teamLead/forward', { Lead, projectId })
-        // onClose()
+        const { data } = await axios.post('/api/teamLead/forward', { Lead, projectId })
+        toast.success(data.message)
+        onClose()
     }
     return (
         <div

@@ -5,20 +5,20 @@ export const upDateLeadTask = async ({ devName, devId, teamLeadId, projectId }) 
     try {
         const findLeadTask = await LeadTaskModel.findOne({ teamLeadId });
         if (!findLeadTask) {
-            console.log(error, '---error=')
+            console.log(error.message, '---error=')
             return NextResponse.json({ error: error.message }, { status: 404 })
         }
         console.log(findLeadTask, '------55----findLeadTask')
         const data = findLeadTask.newTasks.find(task => task.projectId.toString() === projectId);
         if (!data) {
-            console.log(error, '---error data=')
+            console.log(error.message, '---error data=')
             return NextResponse.json({ error: "Project is Not found" }, { status: 404 })
         }
-        console.log(data, '-----------------data   data')
         // Update data and move it to onGoingTasks
         findLeadTask.onGoingTasks.push({
             assignedBy: data.assignedBy,
             assignedPersonName: data.assignedPersonName,
+            assignedPersonId:data.assignedPersonId,
             importance: data.importance,
             projectTitle: data.projectTitle,
             description: data.description,
@@ -31,15 +31,14 @@ export const upDateLeadTask = async ({ devName, devId, teamLeadId, projectId }) 
             assignedDeveloperName: devName,
             assignedDeveloperId: devId,
         })
-        const f = await findLeadTask.save();
-        console.log(f, '---------saved')
+        const upDatedLeadTask = await findLeadTask.save();
         // Remove the item from newTasks
-        findLeadTask.newTasks = findLeadTask.newTasks.filter(task => task.projectId.toString() !== projectId);
-        const leadTasks = await findLeadTask.save();
+        upDatedLeadTask.newTasks = upDatedLeadTask.newTasks.filter(task => task.projectId.toString() !== projectId);
+        const leadTasks = await upDatedLeadTask.save();
         console.log(leadTasks, '-------after changes');
         return leadTasks
     } catch (error) {
-        console.error(error);
+        console.error(error.message,'--------------error.message');
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

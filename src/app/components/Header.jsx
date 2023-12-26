@@ -21,7 +21,7 @@ function Header({ setMenu, menu }) {
             toast.success("Logout successfully!")
             router.push("/login")
         } catch (error) {
-            console.log(error.message)
+            console.log(error.message, '------------Header Error')
         }
 
     }
@@ -59,7 +59,7 @@ function Header({ setMenu, menu }) {
                     <div className="w-3 h-3 bg-red-600 rounded-full absolute top-0 right-0"></div>
                 </div>
                 <div className='flex items-center gap-3'>
-                <img className="h-10 cursor-pointer" src='/public/Profile.jpeg' alt="" />
+                    {/* <img className="h-10 cursor-pointer" src='/public/Profile.jpeg' alt="" /> */}
 
                     {/* <img className="h-10 cursor-pointer" src={profileImage} alt="" /> */}
                     {/* <Image src={profileImage} alt="" width={30} height={50} /> */}

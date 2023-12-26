@@ -7,7 +7,6 @@ export async function POST(request = NextRequest) {
     try {
         const reqBody = await request.json()
         const { firstName, lastName, email, designation, password } = reqBody
-        console.log(reqBody, "..............manager api")
         const leader = await developerModel.findOne({ email })
         if (leader) {
             return NextResponse.json({ error: "Developer Already exists!", success: false }, { status: 409 })
@@ -22,7 +21,6 @@ export async function POST(request = NextRequest) {
             password: hashPassword
         })
         const savedDeveloper = await newDeveloper.save()
-        console.log(savedDeveloper, '----------Saved Developer')
         return NextResponse.json(
             { message: "Developer created successfully" },
             { savedDeveloper },
