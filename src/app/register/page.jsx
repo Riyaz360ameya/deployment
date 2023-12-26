@@ -1,18 +1,21 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-// import toast from 'react-hot-toast';
 import { BeatLoader } from 'react-spinners';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
 import { Toaster, toast } from 'sonner';
-
-
+import { InfinitySpin } from 'react-loader-spinner';
+import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 function Page() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const [visibleConfirm, setvisibleConfirm] = useState(false);
+    const [search, setSearch] = useState('');
+    const [orgInput, setOrgInput] = useState('');
+    const [orgSuggestions, setOrgSuggestions] = useState([]);
+      const [orgSelected, setOrgSelected] = useState(false);
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
@@ -20,26 +23,31 @@ function Page() {
         password: '',
         organisation: ''
     });
-    const [errors, setErrors] = useState({}); // To store validation errors
+    const [errors, setErrors] = useState({});
 
-    // Validation functions
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
     const nameRegex = /^[A-Za-z\s]+$/;
-    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/; // At least 8 characters, one lowercase, one uppercase, and one number
+    const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
+    const showHiddenPassword = () => {
+        setVisible(!visible);
+    }
+    const showHiddenConfirmPassword = () => {
+        setvisibleConfirm(!visibleConfirm);
+    }
     const validateInput = () => {
         const newErrors = {};
 
         if (!user.firstName.match(nameRegex)) {
             newErrors.firstName = 'Please enter a valid first name';
-           
         }
         if (!user.lastName.match(nameRegex)) {
             newErrors.lastName = 'Please enter a valid last name';
         }
-        if (!user.organisation) {
+        if (!user.organisation || typeof user.organisation !== 'string') {
             newErrors.organisation = 'Please enter your organization';
         }
+
         if (!user.email.match(emailRegex)) {
             newErrors.email = 'Please enter a valid email address';
         }
@@ -51,47 +59,68 @@ function Page() {
         }
         setErrors(newErrors);
 
-        // Check if there are any errors
         return Object.keys(newErrors).length === 0;
     };
-    const notifys = () => toast("Registration successful!");
 
-    // const onRegister = async (e) => {
-    //     e.preventDefault()
-    //     if (validateInput()) {
-    //         try {
-    //             setLoading(true);
-    //             const response = await axios.post("/api/users/register", user);
-    //             console.log(response.data, "Registered successfully");
-    //             notifys();
-    //             // toast.success("Success")
-    //             router.push("/login");
-    //         } catch (error) {
-    //             console.log("register failed", error.message);
-    //             toast.error("Registration failed.");
-    //         } finally {
-    //             setLoading(false);
-    //         }
+
+    // const getOrganisationList = async (input) => {
+    //     try {
+    //         const response = await axios.get("/api/users/organisation")
+    //         const allOrganisations = response.data.organisationData;
+    //         console.log(allOrganisations, "organisations")
+    //     } catch (error) {
+    //         console.error("Failed to fetch organization list", error);
     //     }
     // };
+
+
+    const getOrganisationList = async (input) => {
+        try {
+          const response = await axios.get("/api/users/organisation");
+          const allOrganisations = await response.data.organisationData;
+          console.log(allOrganisations,"allOrganisations")
+          // Filter organizations based on the input keyword
+          const filteredOrganisations = allOrganisations.filter((org) =>
+            String(org.organisation).toLowerCase().includes(input.toLowerCase())
+          );
+      
+          // Update the suggestions state
+          setOrgSuggestions(filteredOrganisations);
+        } catch (error) {
+          console.error("Failed to fetch organization list", error);
+        }
+      };
+      
+ 
+     
+     
+      
+     useEffect(() => {
+           getOrganisationList();
+     },[]);
+     
+      
+
+
+
+
+   
     const onRegister = async (e) => {
         e.preventDefault();
+
         if (validateInput()) {
             try {
                 setLoading(true);
-    
-                // Check  email is already registered
+
                 const response = await axios.post("/api/users/register", user);
-                toast.success("Registration successful!")
+                toast.success("Registration successful!");
+
                 if (response.data.error && response.data.error.includes("email")) {
                     toast.error("Email is already registered. Please use a different email.");
                     return;
-                   
                 }
-    
-                // Proceed with user registration
+
                 console.log(response.data, "Registered successfully");
-                
                 router.push("/login");
             } catch (error) {
                 console.log("register failed", error.message);
@@ -101,10 +130,8 @@ function Page() {
             }
         }
     };
-    
     return (
         <>
-            {/* <ToastContainer /> */}
             <div className='h-screen bg-white text-center flex items-center justify-end'>
                 <img src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a43592af6b9a40001bda44b_HomeCover.jpg" alt="" className='w-full h-full object-cover' />
                 <div className='absolute md:w-[40%] p-5'>
@@ -139,19 +166,23 @@ function Page() {
                                 {errors.lastName && <p className='text-red-500'>{errors.lastName}</p>}
                             </div>
                         </div>
+                       
 
                         <div className='text-left text-sm'>
-                            <label className='font-bold' htmlFor="organisation">Organization</label>
+                            <label className='font-bold' htmlFor="email">Organisation</label>
                             <input
                                 type='text'
-                                className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.organisation ? 'border-red-500' : ''}`}
-                                id="organisation"
+                                className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.email ? 'border-red-500' : ''}`}
+                                id="email"
                                 value={user.organisation}
                                 onChange={(e) => setUser({ ...user, organisation: e.target.value })}
                                 required
                             />
                             {errors.organisation && <p className='text-red-500'>{errors.organisation}</p>}
                         </div>
+
+
+
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="email">Email</label>
                             <input
@@ -166,27 +197,47 @@ function Page() {
                         </div>
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="password">Password</label>
-                            <input
-                                type='password'
-                                className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.password ? 'border-red-500' : ''}`}
-                                id="password"
-                                value={user.password}
-                                onChange={(e) => setUser({ ...user, password: e.target.value })}
-                                required
-                            />
+                            <div className="relative">
+                                <input
+                                    type={visible ? 'text' : 'password'}
+                                    className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.password ? 'border-red-500' : ''}`}
+                                    id="password"
+                                    value={user.password}
+                                    onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                    required
+                                />
+                                <div
+                                    className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                                    onClick={showHiddenPassword}
+                                >
+                                    {
+                                        visible ? <IoIosEye /> : <IoIosEyeOff />
+                                    }
+                                </div>
+                            </div>
                             {errors.password && <p className='text-red-500'>{errors.password}</p>}
                         </div>
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="confirmPassword">Confirm Password</label>
-                            <input
-                                type='password'
-                                className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.confirmPassword ? 'border-red-500' : ''}`}
-                                name="confirmPassword"
-                                id="confirmPassword"
-                                value={user.confirmPassword}
-                                onChange={(e) => setUser({ ...user, confirmPassword: e.target.value })}
-                                required
-                            />
+                            <div className="relative">
+                                <input
+                                    type={visibleConfirm ? 'text' : 'password'}
+                                    className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.confirmPassword ? 'border-red-500' : ''}`}
+                                    name="confirmPassword"
+                                    id="confirmPassword"
+                                    value={user.confirmPassword}
+                                    onChange={(e) => setUser({ ...user, confirmPassword: e.target.value })}
+                                    required
+                                />
+                                <div
+                                    className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                                    onClick={showHiddenConfirmPassword}
+                                >
+                                    {
+                                        visibleConfirm ? <IoIosEye /> : <IoIosEyeOff />
+                                    }
+                                </div>
+                            </div>
                             {errors.confirmPassword && <p className='text-red-500'>{errors.confirmPassword}</p>}
                         </div>
                         <div>
@@ -198,9 +249,7 @@ function Page() {
                             <p className='text-gray-500 underline cursor-pointer'>
                                 Already have an account? <Link href='/login'><span className='font-bold text-black'>Login</span></Link>
                             </p>
-
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -209,7 +258,3 @@ function Page() {
 }
 
 export default Page;
-
-
-
-
