@@ -149,8 +149,8 @@ function Page() {
                                 {errors.lastName && <p className='text-red-500'>{errors.lastName}</p>}
                             </div>
                         </div>
-                        
-                        <div className='text-left text-sm relative'>
+
+                        {/* <div className='text-left text-sm relative'>
                             <label className='font-bold' htmlFor="organisation">Organisation</label>
                             <input
                                 type='text'
@@ -172,8 +172,19 @@ function Page() {
                                 </div>
                             )}
                             {errors.organisation && <p className='text-red-500'>{errors.organisation}</p>}
+                        </div> */}
+                           <div className='text-left text-sm'>
+                            <label className='font-bold' htmlFor="email">Organisation</label>
+                            <input
+                                type='text'
+                                className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.email ? 'border-red-500' : ''}`}
+                                id="email"
+                                value={user.organisation}
+                                onChange={(e) => setUser({ ...user, organisation: e.target.value })}
+                                required
+                            />
+                            {errors.organisation && <p className='text-red-500'>{errors.organisation}</p>}
                         </div>
-
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="email">Email</label>
                             <input
