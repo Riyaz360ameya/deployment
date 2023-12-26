@@ -18,14 +18,14 @@ export async function POST(request = NextRequest) {
         }
         const findPM = await managerLoginModel.findById(assignedBy);
         if (!findPM) {
-            console.log(error, '---error=')
+            console.log(error.message, '--Lead tAsk Assign-error=')
             return NextResponse.json({ error: error.message }, { status: 404 })
         }
         const teamLeadId = findLead._id
         const proManagerId = findPM._id
         // saved data to database
-        const savedTask  = await leadTaskAssign({ findLead, teamLeadId, findPM, reqBody })
-        const updatePm = await pmProjectUpdate({  projectId,teamLeadId,proManagerId })
+        const savedTask = await leadTaskAssign({ findLead, teamLeadId, findPM, reqBody })
+        const updatePm = await pmProjectUpdate({ projectId, teamLeadId, proManagerId })
         return NextResponse.json(
             { message: "Assigned task successfully" },
             { success: true },

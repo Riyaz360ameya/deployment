@@ -14,7 +14,6 @@ export const upDateLeadTask = async ({ devName, devId, teamLeadId, projectId }) 
             console.log(error.message, '---error data=')
             return NextResponse.json({ error: "Project is Not found" }, { status: 404 })
         }
-        console.log(data, '-----------------data   data')
         // Update data and move it to onGoingTasks
         findLeadTask.onGoingTasks.push({
             assignedBy: data.assignedBy,
@@ -32,11 +31,10 @@ export const upDateLeadTask = async ({ devName, devId, teamLeadId, projectId }) 
             assignedDeveloperName: devName,
             assignedDeveloperId: devId,
         })
-        const f = await findLeadTask.save();
-        console.log(f, '---------saved')
+        const upDatedLeadTask = await findLeadTask.save();
         // Remove the item from newTasks
-        findLeadTask.newTasks = findLeadTask.newTasks.filter(task => task.projectId.toString() !== projectId);
-        const leadTasks = await findLeadTask.save();
+        upDatedLeadTask.newTasks = upDatedLeadTask.newTasks.filter(task => task.projectId.toString() !== projectId);
+        const leadTasks = await upDatedLeadTask.save();
         console.log(leadTasks, '-------after changes');
         return leadTasks
     } catch (error) {

@@ -6,6 +6,7 @@ import axios from 'axios';
 import TaskAssignModal from './TaskAssignModal';
 import { toast } from 'sonner';
 import ConfirmModal from './ConfirmModal';
+import { dateConverter } from '@/app/api/helpers/dateConverter';
 const Projects = () => {
     const [projectId, setProjectId] = useState('')
     const [Lead, setLead] = useState()
@@ -93,7 +94,8 @@ const Projects = () => {
 
                                 {
                                     (position !== "Completed") &&
-                                    <> <th>status</th>
+                                    <>
+                                        {/* <th>status</th> */}
                                         <th>Options</th>
                                     </>
                                 }
@@ -127,7 +129,7 @@ const Projects = () => {
                                                         <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
                                                     </div>
                                                 </td>
-                                                <td className='text-center'>{item.assignedDate}</td>
+                                                <td className='text-center'>{dateConverter(item.assignedDate)}</td>
                                                 <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.instruction}</td>
                                                 <td className='bg-red-200 rounded text-red-600'>{item.endDate}</td>
                                                 {position !== "New Task" && <td>{item.assignedDeveloperName}</td>}
@@ -135,21 +137,24 @@ const Projects = () => {
                                                 <td className='flex gap-2 items-center justify-center'>
                                                     {
                                                         item.status === "New Task" ?
-                                                            <>
-                                                                <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item.projectId)} >Assign Task to</button>
-                                                            </>
+
+                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item.projectId)} >
+                                                                Assign Task to
+                                                            </button>
                                                             :
-                                                            position !== "Completed" ?
+                                                            item.status === "Assigned" ?
                                                                 <>
-                                                                    <button className='px-3 bg-blue-600 text-white rounded' onClick={() => handleUpdate(item.projectId)}>Update</button>
+                                                                    <button className='px-3 bg-blue-600 text-white rounded'>E</button>
+                                                                    <button className='px-3 bg-red-600 text-white rounded'>D</button>
                                                                 </>
-                                                                : ""
-                                                        // <>
-                                                        //     <button className='px-3 bg-blue-600 text-white rounded'>E</button>
-                                                        //     <button className='px-3 bg-red-600 text-white rounded'>D</button>
-                                                        // </>
+                                                                :
+                                                                position !== "Completed" &&
+                                                                    item.status === "Completed" ?
+                                                                    <button className='px-3 bg-blue-600 text-white rounded' onClick={() => handleUpdate(item.projectId)}>Update</button>
+                                                                    : ""
                                                     }
                                                 </td>
+
                                             </tr>
                                         )
                                     })}

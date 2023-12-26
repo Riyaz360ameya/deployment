@@ -3,9 +3,7 @@ import pmProjectsModel from "../../models/ProjectManager/pmProjects"
 export const pmProjectUpdate = async ({ projectId, latestNewTaskId, teamLeadId, proManagerId }) => {
     console.log(teamLeadId, '------------teamLeadId')
     const pmProjects = await pmProjectsModel.findOne({ proManagerId })
-    // console.log(pmProjects, '------------pmProjects.newProjects')
     const data = pmProjects.newProjects.find(task => task.projectId.toString() === projectId);
-    console.log(data, '-----------data')
     if (!data) {
         console.log(error, '---error data=')
         return NextResponse.json({ error: "Project is Not found" }, { status: 404 })
@@ -19,11 +17,11 @@ export const pmProjectUpdate = async ({ projectId, latestNewTaskId, teamLeadId, 
         payment: "50% Payed",
         assignedLeadId: teamLeadId,
     })
-    const f = await pmProjects.save();
+    const pmNewProject = await pmProjects.save();
     // Remove the item from newProjects
-    pmProjects.newProjects = pmProjects.newProjects.filter(task => task.projectId.toString() !== projectId);
-    const pmTasks = await pmProjects.save();
-    console.log(pmProjects, '-------after changes');
+    pmNewProject.newProjects = pmNewProject.newProjects.filter(task => task.projectId.toString() !== projectId);
+    const pmTasks = await pmNewProject.save();
+    console.log(pmNewProject, '-------after changes');
     return pmTasks
     // leadTasks
 }

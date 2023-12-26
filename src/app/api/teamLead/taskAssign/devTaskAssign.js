@@ -5,7 +5,6 @@ export const devTaskAssign = async ({ findDev, findLead, reqBody }) => {
         const { importance, projectTitle, description, instruction, startDate, endDate, projectId } = reqBody
         const developerId = findDev._id
         const existDev = await devTaskModel.findOne({ developerId })
-        console.log(findLead._id, '-----------------findLead._id')
         let savedData
         if (existDev) {
             existDev.newTasks.push({
@@ -22,15 +21,6 @@ export const devTaskAssign = async ({ findDev, findLead, reqBody }) => {
                 projectId
             })
             savedData = await existDev.save();
-            console.log(savedData, '------------------savedData savedData ')
-            const latestNewTaskId = savedData.newTasks[savedData.newTasks.length - 1]._id;
-            findDev.notifications.push({
-                message: `Team Lead ${findLead.firstName} Assigned a New Task`,
-                projectId: latestNewTaskId,
-            })
-            const newNotify = await findDev.save();
-            console.log(newNotify, "------newData---------o")
-            return savedData
         }
         else {
             const assignedTask = new devTaskModel({
@@ -49,17 +39,15 @@ export const devTaskAssign = async ({ findDev, findLead, reqBody }) => {
                     projectId
                 }],
             });
-            console.log(assignedTask.newTasks, '----------------task')
             savedData = await assignedTask.save();
-            const latestNewTaskId = savedData.newTasks[savedData.newTasks.length - 1]._id;
-            findDev.notifications.push({
-                message: `Team Lead ${findLead.firstName} Assigned a New Task`,
-                projectId: latestNewTaskId,
-            })
-            const newNotify = await findDev.save()
-            console.log(newNotify, '----new-----notifn')
-            return savedData
         }
+        const latestNewTaskId = savedData.newTasks[savedData.newTasks.length - 1]._id;
+        findDev.notifications.push({
+            message: `Team Lead ${findLead.firstName} Assigned a New Task`,
+            projectId: latestNewTaskId,
+        })
+        const newNotify = await findDev.save();
+        return savedData
     } catch (error) {
         console.error(error.message, '--------------error.message');
         return NextResponse.json({ error: error.message }, { status: 500 });

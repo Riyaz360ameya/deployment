@@ -5,6 +5,7 @@ export const leadTaskAssign = async ({ findLead, teamLeadId, findPM, projectId, 
     try {
         const { importance, projectTitle, description, instruction, startDate, endDate, projectId } = reqBody
         const existLeadTask = await LeadTaskModel.findOne({ teamLeadId })
+        let savedTask
         if (existLeadTask) {
             existLeadTask.newTasks.push({
                 assignedBy: "Project Manager",
@@ -19,15 +20,7 @@ export const leadTaskAssign = async ({ findLead, teamLeadId, findPM, projectId, 
                 projectId,
                 startDate
             })
-            const savedTask = await existLeadTask.save();
-            const latestNewTaskId = savedTask.newTasks[savedTask.newTasks.length - 1]._id;
-            findLead.notifications.push({
-                message: `Project Manager ${findPM.firstName} Assigned a New Task`,
-                projectId: latestNewTaskId,
-            })
-            const saveNotification = await findLead.save()
-            return savedTask
-
+            savedTask = await existLeadTask.save();
         } else {
             const assignedTask = new LeadTaskModel({
                 teamLeadId,
@@ -45,17 +38,17 @@ export const leadTaskAssign = async ({ findLead, teamLeadId, findPM, projectId, 
                     startDate
                 }],
             });
-            const savedTask = await assignedTask.save();
-            const latestNewTaskId = savedTask.newTasks[savedTask.newTasks.length - 1]._id;
-            findLead.notifications.push({
-                message: `Project Manager ${findPM.firstName} Assigned New a Task`,
-                projectId: latestNewTaskId,
-            })
-            const saveNotification = await findLead.save()
-            return { savedTask, latestNewTaskId }
+            savedTask = await assignedTask.save();
         }
+        const latestNewTaskId = savedTask.newTasks[savedTask.newTasks.length - 1]._id;
+        findLead.notifications.push({
+            message: `Project Manager ${findPM.firstName} Assigned a New Task`,
+            projectId: latestNewTaskId,
+        })
+        const saveNotification = await findLead.save()
+        return savedTask
     } catch (error) {
-        console.log(error, '----------error ')
+        console.log(error.message, '----------error ')
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }

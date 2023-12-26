@@ -4,6 +4,7 @@ import { PiChatDotsLight } from "react-icons/pi";
 import { MdFileDownload } from "react-icons/md";
 import axios from 'axios';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
+import { toast } from 'sonner';
 const Tasks = ({ devTasks, task, Project }) => {
     const [dev, setDev] = useState()
     useEffect(() => {
@@ -17,15 +18,28 @@ const Tasks = ({ devTasks, task, Project }) => {
         console.log(developerId, '----------devDetails')
     }
     const handleStartClick = async (projectId) => {
-        console.log(projectId, 'Its Started')
-        const developerId = dev._id
-        console.log(developerId, '----------devDetails')
-        const data = await axios.post('/api/developer/startTask', { projectId, developerId })
+        try {
+            console.log(projectId, 'Its Started')
+            const developerId = dev._id
+            console.log(developerId, '----------devDetails')
+            const { data } = await axios.post('/api/developer/startTask', { projectId, developerId })
+            toast.success(data.message)
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.response.data.error);
+        }
     }
     const handleCompleted = async (projectId) => {
-        console.log(projectId, 'Its Completed')
-        const developerId = dev._id
-        const data = await axios.post('/api/developer/complete', { projectId, developerId })
+        try {
+            console.log(projectId, 'Its Completed')
+            const developerId = dev._id
+            const { data } = await axios.post('/api/developer/complete', { projectId, developerId })
+            toast.success(data.message)
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.response.data.error);
+        }
+
     }
 
 

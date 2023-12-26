@@ -23,10 +23,9 @@ export const upDateLeadTask = async ({ data, findLeadTask, projectId }) => {
         });
         const saved = await findLeadTask.save();
         // Remove the item from onGoingTasks
-        findLeadTask.onGoingTasks = findLeadTask.onGoingTasks.filter(task => task.projectId.toString() !== projectId.toString());
-        console.log(findLeadTask, '------------findLeadTask')
+        saved.onGoingTasks = saved.onGoingTasks.filter(task => task.projectId.toString() !== projectId.toString());
         // // Save the changes
-        const updatedLeadTask = await findLeadTask.save();
+        const updatedLeadTask = await saved.save();
         return updatedLeadTask;
     } catch (error) {
         console.log(error.message, '...........error');

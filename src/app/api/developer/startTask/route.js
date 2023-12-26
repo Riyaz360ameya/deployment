@@ -24,7 +24,7 @@ export const POST = async (request = NextRequest) => {
         const upDatedDev = await upDateTask({ data, findDevTask, projectId })
         const teamLeadId = data.assignedLeadId
         const upDatedLead = await upDateOnLead({ projectId, teamLeadId })
-        return NextResponse.json({ message: "Got It", success: true }, { upDatedDev }, { status: 200 });
+        return NextResponse.json({ message: "Task Started", success: true }, { upDatedDev }, { status: 200 });
     } catch (error) {
         console.error(error.message, '------------POST error');
         return NextResponse.json({ error: error.message }, { status: 500 });

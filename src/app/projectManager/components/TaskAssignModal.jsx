@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
+import { BeatLoader } from 'react-spinners';
 
 const TaskAssignModal = ({ setModal, projectId }) => {
     const [assigned, setAssigned] = useState(false);
@@ -160,7 +161,9 @@ const TaskAssignModal = ({ setModal, projectId }) => {
                             />
                         </div>
                         <div className='text-end'>
-                            <button type='submit' className='bg-gray-900 text-white rounded-md p-2 px-5 mt-5 font-bold'>Submit</button>
+                            <button type={loading ? "button" : "submit"} className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold'>
+                                {loading ? <BeatLoader color='white' /> : 'Submit'}
+                            </button>
                         </div>
                     </form>
                 )}

@@ -23,7 +23,6 @@ export async function POST(request = NextRequest) {
         );
         const Task = updatedTask.onGoingTasks.find(task => task.projectId.toString() === projectId);
         const devId = Task.assignedDeveloperId
-        console.log(devId.toString(), '----------------developerId')
         const developerId = devId.toString()
         const findDevTask = await devTaskModel.findOne({ developerId })
         if (!findDevTask) {
@@ -33,7 +32,7 @@ export async function POST(request = NextRequest) {
         const upDatedDev = await upDateDevTask({ findDevTask, projectId })
         return NextResponse.json({ message: "Task Re-Assigned", success: true }, { updatedTask }, { status: 202 });
     } catch (error) {
-        console.error(error, '------------POST error');
+        console.error(error.message, '------------POST error');
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner';
 import Badge from './Badge';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
+import { toast } from 'sonner';
 
 const Projects = ({ loading, setLoading }) => {
     const [projectId, setProjectId] = useState()
@@ -57,7 +58,13 @@ const Projects = ({ loading, setLoading }) => {
                         : "";
     };
     const handleUpdate = async (projectId) => {
-        const data = await axios.post('/api/projectManager/complete', { projectId, proManagerId })
+        try {
+            const { data } = await axios.post('/api/projectManager/complete', { projectId, proManagerId })
+            toast.success(data.message)
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.response.data.error);
+        }
     }
     return (
         <>
@@ -161,7 +168,7 @@ const Projects = ({ loading, setLoading }) => {
                                                                     item.status === "Assigned" ?
                                                                         <>
                                                                             <button className='px-3 bg-blue-600 text-white rounded'>E</button>
-                                                                            <button className='px-3 bg-red-600 text-white rounded'>D</button>
+                                                                            <button className='px-3 ml-2 bg-red-600 text-white rounded'>D</button>
                                                                         </>
                                                                         :
                                                                         item.status === "Completed" ?
