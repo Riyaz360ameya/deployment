@@ -19,19 +19,11 @@ export const POST = async (request = NextRequest) => {
             console.log(error.message, 'Task not found for projectId:', projectId);
             return NextResponse.json({ error: "Task not found" }, { status: 404 });
         }
-        console.log(data, '------------data')
         const teamLeadId = data.assignedLeadId
         const leadTask = await LeadTaskModel.findOne({ teamLeadId })
         const leadTaskDetails = leadTask.completedTasks.find(task => task.projectId.toString() === projectId.toString());
-        // console.log(leadTask, '-----------leadTask')
-        // console.log(leadTaskDetails, '-----------leadTaskDetails')
-
         data.leadTaskAssignedDate = leadTaskDetails.assignedDate
         data.leadTaskStartDate = leadTaskDetails.devAssignedDate
-
-        // data.leadTaskCompletedDate = leadTaskDetails.completedDate
-        // Update data and move it to completedProjects
-
         const upDatedPmPro = await upDatePmProject({ data, findPmProjects, projectId })
         const userId = data.userId.toString()
         const upDatedLead = await upDateClientProject({ projectId, userId })

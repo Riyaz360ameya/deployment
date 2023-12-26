@@ -8,20 +8,11 @@ export async function POST(request = NextRequest) {
     try {
         const reqBody = await request.json()
         const { proManagerId } = reqBody
-        console.log(proManagerId, '----------------proManagerId')
-        // const projectData = await projectInfoModel
-        //     .find()
-        //     .populate({
-        //         path: 'userId',
-        //         select: 'firstName lastName organisation',
-        //     })
-        //     .sort({ createdAt: -1 });
         const PmProjects = await pmProjectsModel.findOne({ proManagerId })
             .populate({
                 path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.projectId completedProjects.userId completedProjects.projectId',
                 select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry',
             }).sort({ projectReachedOn: -1 });
-        console.log(PmProjects, '----------------findPmProjects ')
         return NextResponse.json({
             message: "data has been fetched",
             success: true,

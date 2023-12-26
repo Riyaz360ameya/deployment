@@ -7,7 +7,6 @@ export async function POST(request = NextRequest) {
     try {
         const reqBody = await request.json()
         const { firstName, lastName, email, designation, password } = reqBody
-        console.log(reqBody, "..............manager api")
         const leader = await leadLoginModel.findOne({ email })
         if (leader) {
             return NextResponse.json({ error: "Leader Already exists!", success: false }, { status: 409 })
@@ -22,7 +21,6 @@ export async function POST(request = NextRequest) {
             password: hashPassword
         })
         const savedLeader = await newLeader.save()
-        console.log(savedLeader, '----------Saved Leader')
         return NextResponse.json(
             { message: "Team Lead created successfully" },
             { savedLeader },
@@ -30,7 +28,7 @@ export async function POST(request = NextRequest) {
             { status: 200 }
         )
     } catch (error) {
-        console.log(error, '---------error in add new Team lead')
+        console.log(error.message, '---------error in add new Team lead')
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }
