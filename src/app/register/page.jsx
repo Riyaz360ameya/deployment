@@ -149,6 +149,7 @@ function Page() {
                                 {errors.lastName && <p className='text-red-500'>{errors.lastName}</p>}
                             </div>
                         </div>
+                        
                         <div className='text-left text-sm relative'>
                             <label className='font-bold' htmlFor="organisation">Organisation</label>
                             <input
