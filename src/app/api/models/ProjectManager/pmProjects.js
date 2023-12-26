@@ -1,15 +1,12 @@
 import mongoose from "mongoose";
 import leadLoginModel from "../TeamLead/leadLoginModel";
-import userModel from "../User/userModel";
-import developerModel from "../Developer/developerLoginModel";
 import managerLoginModel from "./managerLoginModel";
 import projectInfoModel from "../projectInfoModel";
-import LeadTaskModel from "../TeamLead/leadTaskModel";
+import userModel from "../User/userModel";
 const moment = require('moment');
 
 const PM = mongoose.models.managerLogin || managerLoginModel;
 const Lead = mongoose.models.leadLogins || leadLoginModel;
-const LeadTask = mongoose.models.leadTasks || LeadTaskModel;
 const User = mongoose.models.users || userModel;
 const Project = mongoose.models.projectInfo || projectInfoModel;
 
