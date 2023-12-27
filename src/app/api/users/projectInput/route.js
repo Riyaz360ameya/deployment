@@ -31,7 +31,7 @@ export async function POST(request = NextRequest) {
 
 export async function GET(request=NextRequest){
     try {
-        const projectsInformation = await projectInfoModel.find().populate("userId");;
+        const projectsInformation = await projectInfoModel.find().populate("userId");
         console.log(projectsInformation,"ppppppppppppp");
         return NextResponse.json({
             message:"fetched data successfully",
