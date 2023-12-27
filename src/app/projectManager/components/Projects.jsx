@@ -31,12 +31,12 @@ const Projects = ({ loading, setLoading }) => {
             setCompleted(data.PmProjects.completedProjects)
             console.log(data.PmProjects.completedProjects, '-------------data.PmProjects.completedProjects')
             setProjects(data.PmProjects.newProjects)
-            // const updatedTasks = details.map((project) => {
-            //     const isNew = new Date(project.date) > new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
-            //     return { ...project, isNew };
-            // });
-            // setTasks(updatedTasks);
-            // console.log(updatedTasks, 'projectdata');
+            const updatedTasks = details.map((project) => {
+                const isNew = new Date(project.date) > new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
+                return { ...project, isNew };
+            });
+            setTasks(updatedTasks);
+            console.log(updatedTasks, 'projectdata');
         } catch (error) {
             console.error('Error fetching tasks:', error.message);
         }
@@ -139,9 +139,9 @@ const Projects = ({ loading, setLoading }) => {
                                                     </td>
                                                     <td className=''>
                                                         <div className='flex items-center gap-2 ml-5' >
-                                                            {/* {item.isNew && <Badge label='New' color='bg-green-500 text-white' />}
-                                                    <FaLink color='blue' /> */}
-                                                            <p>{item.userId.organisation}</p>
+                                                            {item.isNew && <Badge label='New' color='bg-green-500 text-white' />}
+                                                    <FaLink color='blue' />
+                                                            <p>{item.projectId.projectInfo.ventureName}</p>
                                                         </div>
                                                     </td>
                                                     <td className=''>

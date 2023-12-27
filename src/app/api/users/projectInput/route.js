@@ -3,12 +3,15 @@ import { NextRequest, NextResponse } from "next/server";
 import {  upDatePMProjects } from "./upDatePMData";
 import { createNewProject } from "./createNewProject";
 import { updateUserProjects } from "./updateUserProjects";
+import projectInfoModel from "../../models/projectInfoModel";
+
 connect();
 
 export async function POST(request = NextRequest) {
     try {
         const reqData = await request.json();
         const savedProject = await createNewProject(reqData)
+        console.log(savedProject,"kkkkkkkkk")
         const userId = savedProject.userId
         const projectId = savedProject._id
         const saveUserProject = await updateUserProjects({ userId, projectId })
@@ -26,7 +29,19 @@ export async function POST(request = NextRequest) {
 }
 
 
-
+export async function GET(request=NextRequest){
+    try {
+        const projectsInformation = await projectInfoModel.find().populate("userId");;
+        console.log(projectsInformation,"ppppppppppppp");
+        return NextResponse.json({
+            message:"fetched data successfully",
+            success:true,
+            projectsInformation
+        })
+    } catch (error) {
+        return NextResponse.json({error:error.message},{status:500})
+    }
+}
 
 
 
