@@ -78,6 +78,7 @@ function uploadDetails() {
             const user = JSON.parse(userString);
             const userId = user._id
             formData.userId = userId
+            localStorage.setItem('formData', JSON.stringify(formData));
             console.log(formData, '-----------formData')
             const { data } = await axios.post("/api/users/projectInput", formData);
             toast.success(data.message)
