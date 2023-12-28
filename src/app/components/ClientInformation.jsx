@@ -50,7 +50,7 @@ function ClientInformation() {
                             <div className='py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full shadow-xl'>
                                 <p>All</p>
                             </div>
-                            <div className='py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full shadow-xl'>
+                            {/* <div className='py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full shadow-xl'>
                                 <p>Previous</p>
                             </div>
                             <div className='py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full shadow-xl'>
@@ -58,7 +58,7 @@ function ClientInformation() {
                             </div>
                             <div className='py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full shadow-xl'>
                                 <p>completed</p>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className='border shadow mt-4'>
