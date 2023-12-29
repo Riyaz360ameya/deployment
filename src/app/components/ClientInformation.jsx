@@ -106,7 +106,7 @@ function ClientInformation() {
 }
 
 export default ClientInformation;
-
+// -------------------------- new method to filter from backend everything implimented just need to map data------------
 // import React, { useState, useEffect } from 'react';
 // import axios from 'axios';
 // import { InfinitySpin } from 'react-loader-spinner';
