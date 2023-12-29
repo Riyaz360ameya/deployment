@@ -52,6 +52,7 @@ function Page() {
                 const response = await axios.post("/api/users/login", user);
                 console.log(response.data.User, '----------login response')
                 localStorage.setItem('user', JSON.stringify(response.data.User))
+                // Cookies.set('user', JSON.stringify(response.data.User), { expires: 1 });
                 toast.success("Login successful")
                 console.log("Login successful");
                 router.push("/client");
