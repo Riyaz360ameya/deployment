@@ -5,7 +5,6 @@ import { InfinitySpin } from 'react-loader-spinner';
 import { BeatLoader } from 'react-spinners';
 
 const TaskAssignModal = ({ setModal, projectId }) => {
-    const [assigned, setAssigned] = useState(false);
     const [loading, setLoading] = useState(false);
     const [task, setTask] = useState({
         designation: 'Interior',
@@ -38,7 +37,6 @@ const TaskAssignModal = ({ setModal, projectId }) => {
 
             const { data } = await axios.post('/api/projectManager/taskAssign', task);
             toast.success(data.message);
-            setAssigned(true);
             setModal(false);
             setLoading(false);
         } catch (error) {

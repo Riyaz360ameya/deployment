@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
       required: [true, "Please provide email"],
       unique: true
    },
-   organisation: {
+   organization: {
       type: String,
       required: [true, "Please provide your organisation name"],
    },
@@ -35,13 +35,30 @@ const userSchema = new mongoose.Schema({
       contentType: String, // MIME type of the file
       fileName: String, // Original file name
    },
+   notifications: [
+      {
+         projectId: {
+            type: mongoose.Types.ObjectId,
+            ref: 'projectInfo', // Update to match the actual model name
+            required: true,
+         },
+         message: {
+            type: String,
+            required: true
+         },
+         time: {
+            type: String,
+            default: Date.now,
+         },
+      }
+   ],
    forgotPassword: String,
    forgotPasswordToken: String,
    forgotPasswordTokenExpiry: Date,
    verifyToken: String,
    verifyTokenExpiry: Date,
 })
-
+delete mongoose.connection.models['users'];
 const userModel = mongoose.models.users || mongoose.model("users", userSchema)
 
 export default userModel;

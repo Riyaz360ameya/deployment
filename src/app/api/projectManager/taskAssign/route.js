@@ -5,6 +5,7 @@ import managerLoginModel from "../../models/ProjectManager/managerLoginModel";
 import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 import { leadTaskAssign } from "./leadTaskAssign";
 import { pmProjectUpdate } from "./pmProjectUpdate";
+import { userProjectUpdate } from "./userProjectUpdate";
 connect();
 export async function POST(request = NextRequest) {
     try {
@@ -26,6 +27,7 @@ export async function POST(request = NextRequest) {
         // saved data to database
         const savedTask = await leadTaskAssign({ findLead, teamLeadId, findPM, reqBody })
         const updatePm = await pmProjectUpdate({ projectId, teamLeadId, proManagerId })
+        const updateUser = await userProjectUpdate({projectId} )
         return NextResponse.json(
             { message: "Assigned task successfully" },
             { success: true },

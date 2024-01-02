@@ -28,7 +28,19 @@ const userProjectSchema = new mongoose.Schema(
                     type: mongoose.Types.ObjectId,
                     ref: Project,
                     required: true,
-                }
+                },
+                status: {
+                    type: String,
+                    required: true
+                },
+                payment: {
+                    type: String,
+                    required: true
+                },
+                startedDate: {
+                    type: Date,
+                    default: Date.now,
+                },
             }
         ],
         completedProjects: [
@@ -37,7 +49,23 @@ const userProjectSchema = new mongoose.Schema(
                     type: mongoose.Types.ObjectId,
                     ref: Project,
                     required: true,
-                }
+                },
+                status: {
+                    type: String,
+                    required: true
+                },
+                payment: {
+                    type: String,
+                    required: true
+                },
+                startedDate: {
+                    type: Date,
+                    required: true,
+                },
+                completedDate: {
+                    type: Date,
+                    default: Date.now,
+                },
             }
         ],
     }
