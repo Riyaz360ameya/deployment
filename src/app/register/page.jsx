@@ -7,7 +7,10 @@ import { BeatLoader } from 'react-spinners';
 import { Toaster, toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
 import { IoIosEye,IoIosEyeOff } from 'react-icons/io';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRegistrationData } from '../redux/userSlice';
 function Page() {
+    const dispatch = useDispatch();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState();
@@ -96,6 +99,7 @@ function Page() {
 
                 const response = await axios.post("/api/users/register", user);
                 toast.success("Registration successful!");
+                dispatch(setRegistrationData(response.data));
 
                 if (response.data.error && response.data.error.includes("email")) {
                     toast.error("Email is already registered. Please use a different email.");

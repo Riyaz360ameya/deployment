@@ -6,8 +6,11 @@ import axios from 'axios'
 import { BeatLoader } from 'react-spinners';
 import { Toaster, toast } from 'sonner';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
-
+import { useDispatch,useSelector } from 'react-redux'
+import { selectProjectmanagerLogin, setProjectManagerLoginData } from '@/app/redux/userSlice'
 function page() {
+    const dispatch = useDispatch();
+    // const projectManagerLoginData = useSelector(selectProjectmanagerLogin);
     const router = useRouter();
     const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -23,12 +26,14 @@ function page() {
         e.preventDefault();
         try {
             const { data } = await axios.post("/api/projectManager/login", user)
+            dispatch(setProjectManagerLoginData(data));
+            // dispatch(setProjectManagerLoginData(response.data));
             console.log(data, '.............data')
             toast.success(data.message)
             localStorage.setItem("PM",JSON.stringify(data.user))
             router.push("/projectManager/home")
         } catch (error) {
-            toast.error(error.response.data.error);
+            toast.error(error);
             console.log(error)
         }
     }

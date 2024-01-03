@@ -7,8 +7,10 @@ import { BeatLoader } from 'react-spinners';
 import { toast } from 'sonner';
 import Forgot from '../components/Forgot';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoginData,selectLoginData } from '../redux/userSlice';
 function Page() {
+    const dispatch = useDispatch();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState(false);
@@ -50,6 +52,7 @@ function Page() {
             try {
                 setLoading(true);
                 const response = await axios.post("/api/users/login", user);
+                dispatch(setLoginData(response.data.User));
                 console.log(response.data.User, '----------login response')
                 localStorage.setItem('user', JSON.stringify(response.data.User))
                 // Cookies.set('user', JSON.stringify(response.data.User), { expires: 1 });
@@ -57,7 +60,7 @@ function Page() {
                 console.log("Login successful");
                 router.push("/client");
             } catch (error) {
-                console.log("Login failed-----------", error.response.data.error);
+                // console.log("Login failed-----------", error.response.data.error);
                 toast.error(error.response.data.error);
             } finally {
                 setLoading(false);
