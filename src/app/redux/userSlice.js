@@ -5,6 +5,9 @@ export const userSlice = createSlice({
     registrationData: [],
     loginData:[],
     projectManagerLoginData:[],
+    projects:[],
+    clientProjectDetails:[],
+    teamLeadLogin:[],
     users:[],
     loading:false,
     error:null
@@ -18,10 +21,15 @@ export const userSlice = createSlice({
     },
     setProjectManagerLoginData:(state,action)=>{
        state.projectManagerLoginData = action.payload;
+    },
+    setclientProjectDetails:(state,action)=>{
+     state.clientProjectDetails = action.payload;
     }
     
   },
 });
+export const selectclientProjectDetails = (state)=> state.user.clientProjectDetails;
+export const {setclientProjectDetails} = userSlice.actions;
 export const selectProjectmanagerLogin = (state)=> state.user.projectManagerLoginData;
 export const {setProjectManagerLoginData} = userSlice.actions;
 export const { setRegistrationData } = userSlice.actions;
