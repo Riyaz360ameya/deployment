@@ -100,7 +100,6 @@ function Page() {
                 const response = await axios.post("/api/users/register", user);
                 toast.success("Registration successful!");
                 dispatch(setRegistrationData(response.data));
-
                 if (response.data.error && response.data.error.includes("email")) {
                     toast.error("Email is already registered. Please use a different email.");
                     return;
