@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
    },
    organization: {
       type: String,
-      required: [true, "Please provide your organisation name"],
+      // required: [true, "Please provide your organisation name"],
    },
    password: {
       type: String,

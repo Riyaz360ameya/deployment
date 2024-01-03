@@ -62,30 +62,30 @@ function Page() {
     };
 
 
-    const getOrganisationList = async (input) => {
-        try {
-            const response = await axios.get("/api/users/register");
-            const allOrganisations = response.data.organizations;
-            const filteredOrgs = allOrganisations.filter(org => org.toLowerCase().includes(input.toLowerCase()));
-            setOrgSuggestions(filteredOrgs);
-            console.log(filteredOrgs);
-        } catch (error) {
-            console.error("Failed to fetch organization list", error);
-        }
-    };
+    // const getOrganisationList = async (input) => {
+    //     try {
+    //         const response = await axios.get("/api/users/register");
+    //         const allOrganisations = response.data.organizations;
+    //         const filteredOrgs = allOrganisations.filter(org => org.toLowerCase().includes(input.toLowerCase()));
+    //         setOrgSuggestions(filteredOrgs);
+    //         console.log(filteredOrgs);
+    //     } catch (error) {
+    //         console.error("Failed to fetch organization list", error);
+    //     }
+    // };
 
-    const onOrgInputChange = (e) => {
-        const input = e.target.value;
-        setSearch(input);
-        getOrganisationList(input);
-    };
+    // const onOrgInputChange = (e) => {
+    //     const input = e.target.value;
+    //     setSearch(input);
+    //     getOrganisationList(input);
+    // };
 
-    const filterOrgList = (selectedOrg) => {
-        setSearch(selectedOrg);
-        setUser({ ...user, organisation: selectedOrg });
-        setOrgSuggestions([]);
-        setOrgSelected(true);
-    };
+    // const filterOrgList = (selectedOrg) => {
+    //     setSearch(selectedOrg);
+    //     setUser({ ...user, organisation: selectedOrg });
+    //     setOrgSuggestions([]);
+    //     setOrgSelected(true);
+    // };
 
     const onRegister = async (e) => {
         e.preventDefault();
