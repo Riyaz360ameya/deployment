@@ -15,9 +15,9 @@ const Package = () => {
                             </div>
                             <div className='flex gap-3 items-center justify-center'>
                                 <div className='flex flex-col gap-3'>
-                                    <input type="checkbox" checked className='w-5 h-5' />
-                                    <input type="checkbox" checked className='w-5 h-5' />
-                                    <input type="checkbox" checked className='w-5 h-5' />
+                                    <input type="checkbox" checked readOnly className='w-5 h-5' />
+                                    <input type="checkbox" checked readOnly className='w-5 h-5' />
+                                    <input type="checkbox" checked readOnly className='w-5 h-5' />
                                 </div>
                                 <div>
                                     <h2 className='text-2xl font-bold '>12</h2>
@@ -45,9 +45,9 @@ const Package = () => {
                             </div>
                             <div className='flex gap-3 items-center justify-center'>
                                 <div className='flex flex-col gap-3'>
-                                    <input type="checkbox" checked className='w-5 h-5' />
-                                    <input type="checkbox" checked className='w-5 h-5' />
-                                    <input type="checkbox" checked className='w-5 h-5' />
+                                    <input type="checkbox" checked readOnly className='w-5 h-5' />
+                                    <input type="checkbox" checked readOnly className='w-5 h-5' />
+                                    <input type="checkbox" checked readOnly className='w-5 h-5' />
                                 </div>
                                 <div>
                                     <h2 className='text-2xl font-bold '>25</h2>

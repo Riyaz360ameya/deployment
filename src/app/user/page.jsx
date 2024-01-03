@@ -1,13 +1,15 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import Sidebar from '../components/sidebar'
-import UploadDetails from '../components/uploadDetails'
-import Header from '../components/Header'
+
 import { InfinitySpin } from 'react-loader-spinner'
-import Status from '../components/Status'
-import Payment from '../components/Payment'
-import View from '../components/View'
-import Package from '../components/Package'
+import Sidebar from './components/sidebar'
+import Header from './components/Header'
+import UploadDetails from './components/uploadDetails'
+import Status from './components/Status'
+import Payment from './components/Payment'
+import View from './components/View'
+import Package from './components/Package'
+
 
 function page() {
     const [loader, setLoader] = useState(false)
@@ -31,13 +33,12 @@ function page() {
                             <Header setLoader={setLoader} setMenu={setMenu} />
                             {
                                 Project === "New Project" ? <UploadDetails />
-                                        : Project === "Project Status" ? <Status />
-                                            : Project === "Payment" ? <Payment />
-                                                : Project === "View" ? <View />
-                                                    : Project === "Package" ? <Package />
-                                                        : ""
+                                    : Project === "Project Status" ? <Status />
+                                        : Project === "Payment" ? <Payment />
+                                            : Project === "View" ? <View />
+                                                : Project === "Package" ? <Package />
+                                                    : ""
                             }
-
                         </div>
                     </div>
             }

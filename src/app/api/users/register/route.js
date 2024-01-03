@@ -9,7 +9,7 @@ connect()
 export async function POST(request = NextRequest) {
     try {
         const reqBody = await request.json()
-        const { firstName, lastName, email, organisation, password } = reqBody
+        const { firstName, lastName, email, organization, password } = reqBody
 
         //check if user already exist
         const user = await userModel.findOne({ email });
@@ -24,7 +24,7 @@ export async function POST(request = NextRequest) {
             firstName,
             lastName,
             email,
-            organisation,
+            organization,
             password: hashPassword
         })
 

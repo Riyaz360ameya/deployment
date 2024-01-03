@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import projectInfoModel from "../../models/projectInfoModel";
 import pmProjectsModel from "../../models/ProjectManager/pmProjects";
+import { getDataFromToken } from "../../helpers/getDataFromToken";
 connect();
 
-export async function POST(request = NextRequest) {
+export async function GET() {
     try {
-        const reqBody = await request.json()
-        const { proManagerId } = reqBody
+        const { proManagerId } = await getDataFromToken()
         const PmProjects = await pmProjectsModel.findOne({ proManagerId })
             .populate({
                 path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.projectId completedProjects.userId completedProjects.projectId',

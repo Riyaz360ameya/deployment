@@ -7,6 +7,7 @@ import { BeatLoader } from 'react-spinners';
 import { toast } from 'sonner';
 import Forgot from '../components/Forgot';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
+import { logInApi } from '../userAPIs/authApis';
 
 function Page() {
     const router = useRouter();
@@ -15,7 +16,6 @@ function Page() {
     const [otpVerify, setOtpVerify] = useState(false)
     const [changePass, setChangePass] = useState(false)
     const [visiblePassword, setVisiblePassword] = useState(false)
-
 
     const showHiddenPassword = () => {
         setVisiblePassword(!visiblePassword);
@@ -49,14 +49,12 @@ function Page() {
         if (validateInput()) {
             try {
                 setLoading(true);
-                const response = await axios.post("/api/users/login", user);
-                console.log(response.data.User, '----------login response')
-                localStorage.setItem('user', JSON.stringify(response.data.User))
-                toast.success("Login successful")
-                console.log("Login successful");
-                router.push("/client");
+                const { data } = await logInApi(user)
+                localStorage.setItem('user', JSON.stringify(data.User))
+                toast.success(data.message)
+                // router.push("/user");
             } catch (error) {
-                console.log("Login failed-----------", error.response.data.error);
+                console.log("Login failed-----------", error);
                 toast.error(error.response.data.error);
             } finally {
                 setLoading(false);
@@ -142,7 +140,7 @@ function Page() {
                                 </div>
                                 <div className=' mt-5 text-sm'>
                                     <p className='text-gray-500 underline cursor-pointer'>
-                                        Need a new Account? <Link href='/client/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
+                                        Need a new Account? <Link href='/user/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
                                     </p>
                                 </div>
                             </>

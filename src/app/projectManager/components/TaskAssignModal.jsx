@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
 import { BeatLoader } from 'react-spinners';
+import { assignLeadTask } from '../pmAPIs/taskApis';
 
 const TaskAssignModal = ({ setModal, projectId }) => {
     const [assigned, setAssigned] = useState(false);
@@ -33,10 +33,7 @@ const TaskAssignModal = ({ setModal, projectId }) => {
         setLoading(true);
 
         try {
-            const PMDetails = JSON.parse(localStorage.getItem('PM'));
-            task.assignedBy = PMDetails._id;
-
-            const { data } = await axios.post('/api/projectManager/taskAssign', task);
+            const { data } = await assignLeadTask(task)
             toast.success(data.message);
             setAssigned(true);
             setModal(false);

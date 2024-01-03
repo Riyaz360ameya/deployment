@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 connect();
-export const GET = async (request = NextRequest) => {
+export const GET = async () => {
     try {
         // Use populate to include leadLogin details in teamLeadId
         const allTasks = await LeadTaskModel.find().populate({

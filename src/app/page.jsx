@@ -1,10 +1,10 @@
-"use client"
-import Login from '@/app/login/page'
-export default function Home() {
+// "use client"
+// import Login from '@/app/login/page'
+// export default function Home() {
   
-  return (
-  <main>
-      <Login/>
-  </main>
-  )
-}
+//   return (
+//   <main>
+//       <Login/>
+//   </main>
+//   )
+// }

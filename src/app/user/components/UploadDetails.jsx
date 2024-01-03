@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Toaster, toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
 
-function uploadDetails() {
+function UploadDetails() {
     const router = useRouter()
     const inputFileRef = useRef(null);
     const [loading, setLoading] = useState(false);
@@ -86,7 +86,7 @@ function uploadDetails() {
         } catch (error) {
             toast.error("something went wrong")
             console.log(error)
-            // setLoading(false);
+            setLoading(false);
         }
     }
 
@@ -319,6 +319,6 @@ function uploadDetails() {
     )
 }
 
-export default uploadDetails
+export default UploadDetails
 
 

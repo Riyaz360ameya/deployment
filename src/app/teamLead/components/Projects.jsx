@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { FaLink } from 'react-icons/fa6';
 import { FiAlertOctagon } from 'react-icons/fi';
 import { PiChatDotsLight } from 'react-icons/pi';
-import axios from 'axios';
 import TaskAssignModal from './TaskAssignModal';
 import { toast } from 'sonner';
 import ConfirmModal from './ConfirmModal';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
+import { getAllTasks } from '../leadAPIs/taskApi';
 const Projects = () => {
     const [projectId, setProjectId] = useState('')
-    const [Lead, setLead] = useState()
     const [modal, setModal] = useState(false);
     const [cModal, setCModal] = useState(false)
     const [newTasks, setNewTasks] = useState([])
@@ -35,10 +34,7 @@ const Projects = () => {
     }
     const fetchTasks = async () => {
         try {
-            const lead = JSON.parse(localStorage.getItem("TeamLead"));
-            const leadId = lead._id
-            setLead(leadId)
-            const { data } = await axios.post('/api/teamLead/allTasks', { leadId });
+            const { data } = await getAllTasks()
             setData(data.LeadTasks.newTasks)
             setNewTasks(data.LeadTasks.newTasks)
             setOnGoing(data.LeadTasks.onGoingTasks)
@@ -165,7 +161,7 @@ const Projects = () => {
                     modal ? <TaskAssignModal projectId={projectId} setModal={setModal} /> : ""
                 }
                 {
-                    cModal ? <ConfirmModal Lead={Lead} projectId={projectId} setCModal={setCModal} /> : ""
+                    cModal ? <ConfirmModal  projectId={projectId} setCModal={setCModal} /> : ""
                 }
             </div>
         </>

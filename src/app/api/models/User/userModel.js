@@ -1,30 +1,28 @@
 import mongoose, { Schema } from "mongoose";
-import projectInfoModel from "../projectInfoModel";
-
 
 const userSchema = new mongoose.Schema({
    firstName: {
       type: String,
-      required: [true, "Please provide firstName"],
+      required: true,
       // unique:true
    },
    lastName: {
       type: String,
-      required: [true, "Please provide lastName"],
+      required: true,
       // unique:true
    },
    email: {
       type: String,
-      required: [true, "Please provide email"],
+      required: true,
       unique: true
    },
-   organisation: {
+   organization: {
       type: String,
-      required: [true, "Please provide your organisation name"],
+      required: true,
    },
    password: {
       type: String,
-      required: [true, "Please provide your password"],
+      required: true,
    },
    isVerified: {
       type: Boolean,

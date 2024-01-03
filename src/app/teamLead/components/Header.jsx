@@ -9,16 +9,16 @@ import { PiBellLight, PiChatDotsLight } from "react-icons/pi";
 import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
 import { SlUser } from "react-icons/sl";
 // import profileImage from '../../../../public/profile3.JPG'
-import axios from 'axios';
 // import Image from 'next/image';
 import { Toaster, toast } from 'sonner';
+import { logOut } from '../leadAPIs/authApi';
 function Header({ setMenu, menu }) {
     const [data, setData] = useState({})
     const router = useRouter()
     const [drop, setDrop] = useState(false)
     const onLogout = async () => {
         try {
-            await axios.get("/api/users/logout")
+            await logOut()
             console.log("Logout success")
             toast.success("Logout successfully!")
             router.push("/login")

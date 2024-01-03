@@ -4,7 +4,8 @@ import developerModel from "../../models/Developer/developerLoginModel";
 connect();
 export const POST = async (request = NextRequest) => {
     try {
-        const reqBody = await request.json()
+        const { teamLeadId } = await getDataFromToken()
+        
         const { leadType } = reqBody
         const designation = leadType + ' Developer'
         const Developers = await developerModel.find({ designation }).select('-password -__v -email');

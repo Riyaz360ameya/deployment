@@ -8,18 +8,15 @@ connect()
 
 export async function GET(request = NextRequest) {
     try {
-        const userId = await getDataFromToken(request)
-        const user = await userModel.findOne({ _id: userId }).select("-password")
-        console.log(user,'--------------user')
-        return NextResponse.json({
-            message: "user found",
-            data: user
-        })
+        console.log('1')
+        const { userId, role } = getDataFromToken(request)
+        if (userId, role === "user") {
+            console.log(userId, '-----------decode id')
+            const user = await userModel.findOne({ _id: userId }).select("-password")
+            return NextResponse.json({ message: "user found", data: user }, { status: 200 })
+        }
     } catch (error) {
-        // console.log(error,'------------error in sidebar')
-        return NextResponse.json(
-            { error: error.message },
-            { status: 500 }
-        )
+        console.log(error.message, '------------error in sidebar')
+        return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }

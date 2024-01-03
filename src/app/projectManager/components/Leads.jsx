@@ -1,9 +1,9 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { FaLink } from "react-icons/fa6";
 import { FiAlertOctagon } from "react-icons/fi";
 import { PiChatDotsLight } from "react-icons/pi";
 import { InfinitySpin } from 'react-loader-spinner'
+import { allLeadTasks } from '../pmAPIs/taskApis';
 
 const Leads = ({ loading, setLoading }) => {
   const [show, setShow] = useState("")
@@ -11,7 +11,7 @@ const Leads = ({ loading, setLoading }) => {
   const [allTasks, setAllTasks] = useState([])
   const [data, setData] = useState([])
   const teamLeadTasks = async () => {
-    const { data } = await axios.get('/api/projectManager/allTasks')
+    const { data } = await allLeadTasks()
     setAllTasks(data.tasks)
     setData(data.tasks[0].newTasks)
     setShow("Interior")

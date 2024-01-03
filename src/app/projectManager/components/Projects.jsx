@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { FaLink } from 'react-icons/fa6';
 import { PiChatDotsLight } from 'react-icons/pi';
 import TaskAssignModal from './TaskAssignModal';
-import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner';
 import Badge from './Badge';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
+import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
 
 const Projects = ({ loading, setLoading }) => {
     const [projectId, setProjectId] = useState()
@@ -17,14 +17,10 @@ const Projects = ({ loading, setLoading }) => {
     const [completed, setCompleted] = useState([])
     const [position, setPosition] = useState("New")
     const [modal, setModal] = useState(false);
-    const [proManagerId, setProManagerId] = useState()
-
     const fetchProjects = async () => {
         try {
-            const PM = JSON.parse(localStorage.getItem("PM"))
-            const proManagerId = PM._id
-            setProManagerId(proManagerId)
-            const { data } = await axios.post('/api/projectManager/allProjects', { proManagerId });
+
+            const { data } = await pmAllProjects()
             setNewPro(data.PmProjects.newProjects)
             setAllProjects(data.projectData)
             setOnGoingProjects(data.PmProjects.onGoingProjects)
@@ -59,7 +55,7 @@ const Projects = ({ loading, setLoading }) => {
     };
     const handleUpdate = async (projectId) => {
         try {
-            const { data } = await axios.post('/api/projectManager/complete', { projectId, proManagerId })
+            const { data } = await projectCompleted(projectId)
             toast.success(data.message)
         } catch (error) {
             console.log(error.message)
@@ -141,7 +137,7 @@ const Projects = ({ loading, setLoading }) => {
                                                         <div className='flex items-center gap-2 ml-5' >
                                                             {/* {item.isNew && <Badge label='New' color='bg-green-500 text-white' />}
                                                     <FaLink color='blue' /> */}
-                                                            <p>{item.userId.organisation}</p>
+                                                            <p>{item.userId?.organization}</p>
                                                         </div>
                                                     </td>
                                                     <td className=''>
