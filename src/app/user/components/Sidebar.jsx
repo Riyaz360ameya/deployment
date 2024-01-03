@@ -4,6 +4,7 @@ import { FaRegPenToSquare, FaIndianRupeeSign, FaStreetView } from 'react-icons/f
 import { IoIosListBox } from "react-icons/io";
 import { ImStatsDots } from 'react-icons/im';
 import { FcOrganization } from 'react-icons/fc';
+import { GrProjects } from "react-icons/gr";
 
 import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
@@ -23,6 +24,7 @@ const Sidebar = ({ menu, setProject }) => {
     }, [])
     const icons = [
         { icon: <FaRegPenToSquare />, name: 'New Project' },
+        { icon: <GrProjects />  , name: 'Project Details' },
         { icon: <ImStatsDots />, name: 'Project Status' },
         { icon: <FaIndianRupeeSign />, name: 'Payment' },
         { icon: <IoIosListBox />, name: 'Package' },

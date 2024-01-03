@@ -62,5 +62,4 @@ const userSchema = new mongoose.Schema({
 })
 delete mongoose.connection.models['users'];
 const userModel = mongoose.models.users || mongoose.model("users", userSchema)
-
 export default userModel;

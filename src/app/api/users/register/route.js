@@ -44,3 +44,20 @@ export async function POST(request = NextRequest) {
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }
+
+export async function GET(request = NextRequest) {
+    try {
+        // Retrieve distinct organization names
+        const organizations = await userModel.find().distinct('organisation');
+        console.log(organizations);
+
+        return NextResponse.json({ organizations });
+    } catch (error) {
+        return NextResponse.json(
+            {
+                error: error.message
+            },
+            { status: 500 }
+        );
+    }
+}
