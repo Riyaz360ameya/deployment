@@ -7,8 +7,10 @@ import { InfinitySpin } from 'react-loader-spinner';
 import Badge from './Badge';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
-
+import { useDispatch,useSelector } from 'react-redux'
+import { setProjectManagerProjects,selectProjectManagerProjects } from '@/app/redux/userSlice';
 const Projects = ({ loading, setLoading }) => {
+    const dispatch = useDispatch();
     const [projectId, setProjectId] = useState()
     const [projects, setProjects] = useState([]);
     const [allProjects, setAllProjects] = useState([])
@@ -25,6 +27,7 @@ const Projects = ({ loading, setLoading }) => {
             const proManagerId = PM._id
             setProManagerId(proManagerId)
             const { data } = await axios.post('/api/projectManager/allProjects', { proManagerId });
+            dispatch(setProjectManagerProjects(data));
             setNewPro(data.PmProjects.newProjects)
             setAllProjects(data.projectData)
             setOnGoingProjects(data.PmProjects.onGoingProjects)

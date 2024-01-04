@@ -4,8 +4,10 @@ import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import { Toaster, toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
-
+import { useDispatch,useSelector } from 'react-redux'
+import { setclientProjectDetails,selectclientProjectDetails } from '../redux/userSlice';
 function uploadDetails() {
+    const dispatch = useDispatch();
     const router = useRouter()
     const inputFileRef = useRef(null);
     const [loading, setLoading] = useState(false);
@@ -81,6 +83,7 @@ function uploadDetails() {
             localStorage.setItem('formData', JSON.stringify(formData));
             console.log(formData, '-----------formData')
             const { data } = await axios.post("/api/users/projectInput", formData);
+            dispatch(setclientProjectDetails(data));
             toast.success(data.message)
             setLoading(false)
             router.push("/proceed");
