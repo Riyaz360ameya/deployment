@@ -5,7 +5,10 @@ import { MdFileDownload } from "react-icons/md";
 import axios from 'axios';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
+import { useDispatch,useSelector } from 'react-redux';
+import { setDeveloperProjectTask,selectDeveloperProjectTask } from '@/app/redux/userSlice';
 const Tasks = ({ devTasks, task, Project }) => {
+    const dispatch = useDispatch();
     const [dev, setDev] = useState()
     useEffect(() => {
         devTasks()
@@ -23,6 +26,7 @@ const Tasks = ({ devTasks, task, Project }) => {
             const developerId = dev._id
             console.log(developerId, '----------devDetails')
             const { data } = await axios.post('/api/developer/startTask', { projectId, developerId })
+            dispatch(setDeveloperProjectTask(data));
             toast.success(data.message)
         } catch (error) {
             console.log(error.message)

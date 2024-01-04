@@ -13,6 +13,7 @@ export const userSlice = createSlice({
     projectManagerTaskAssign:[],
     teamLeadProjectsDetails:[],
     teamLeadTaskAssign:[],
+    developerProjectsTask:[],
     users:[],
     loading:false,
     error:null
@@ -47,10 +48,15 @@ export const userSlice = createSlice({
     },
     setTeamLeadTaskAssign:(state,action)=>{
       state.teamLeadTaskAssign = action.payload;
+    },
+    setDeveloperProjectTask:(state,action)=>{
+      state.developerProjectsTask = action.payload;
     }
     
   },
 });
+export const selectDeveloperProjectTask = (state)=> state.user.developerProjectsTask;
+export const {setDeveloperProjectTask} = userSlice.actions;
 export const selectTeamLeadTaskassign = (state)=>state.user.teamLeadTaskAssign;
 export const {setTeamLeadTaskAssign} = userSlice.actions;
 export const selectTeamLeadsProjectDetails = (state)=>state.user.teamLeadProjectsDetails;
