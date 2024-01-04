@@ -7,7 +7,10 @@ import TaskAssignModal from './TaskAssignModal';
 import { toast } from 'sonner';
 import ConfirmModal from './ConfirmModal';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
+import { useDispatch,useSelector } from 'react-redux'
+import { setTeamLeadProjectDetails,selectTeamLeadsProjectDetails } from '@/app/redux/userSlice';
 const Projects = () => {
+    const dispatch = useDispatch();
     const [projectId, setProjectId] = useState('')
     const [Lead, setLead] = useState()
     const [modal, setModal] = useState(false);
@@ -39,6 +42,7 @@ const Projects = () => {
             const leadId = lead._id
             setLead(leadId)
             const { data } = await axios.post('/api/teamLead/allTasks', { leadId });
+            dispatch(setTeamLeadProjectDetails(data));
             setData(data.LeadTasks.newTasks)
             setNewTasks(data.LeadTasks.newTasks)
             setOnGoing(data.LeadTasks.onGoingTasks)

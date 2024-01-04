@@ -9,6 +9,7 @@ export const userSlice = createSlice({
     clientProjectDetails:[],
     projectManagerProjects:[],
     projectManagerTaskAssign:[],
+    teamLeadProjectsDetails:[],
     users:[],
     loading:false,
     error:null
@@ -28,10 +29,20 @@ export const userSlice = createSlice({
     },
     setProjectManagerProjects:(state,action)=>{
       state.projectManagerProjects = action.payload;
+    },
+    setProjectManagerTaskAssign:(state,action)=>{
+      state.projectManagerTaskAssign = action.payload;
+    },
+    setTeamLeadProjectDetails:(state,action)=>{
+      state.teamLeadProjectsDetails = action.payload;
     }
     
   },
 });
+export const selectTeamLeadsProjectDetails = (state)=>state.user.teamLeadProjectsDetails;
+export const {setTeamLeadProjectDetails} = userSlice.actions;
+export const selectProjectTaskAssign = (state)=> state.user.projectManagerTaskAssign;
+export const {setProjectManagerTaskAssign} = userSlice.actions;
 export const selectProjectManagerProjects = (state)=> state.user.projectManagerProjects;
 export const {setProjectManagerProjects} = userSlice.actions;
 export const selectclientProjectDetails = (state)=> state.user.clientProjectDetails;

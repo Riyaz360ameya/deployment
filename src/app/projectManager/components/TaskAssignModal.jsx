@@ -3,8 +3,10 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
 import { BeatLoader } from 'react-spinners';
-
+import { useDispatch,useSelector } from 'react-redux'
+import { setProjectManagerTaskAssign,selectProjectTaskAssign } from '@/app/redux/userSlice';
 const TaskAssignModal = ({ setModal, projectId }) => {
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [task, setTask] = useState({
         designation: 'Interior',
@@ -36,6 +38,7 @@ const TaskAssignModal = ({ setModal, projectId }) => {
             task.assignedBy = PMDetails._id;
 
             const { data } = await axios.post('/api/projectManager/taskAssign', task);
+            dispatch(setProjectManagerTaskAssign(data));
             toast.success(data.message);
             setModal(false);
             setLoading(false);
