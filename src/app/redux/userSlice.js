@@ -5,11 +5,14 @@ export const userSlice = createSlice({
     registrationData: [],
     loginData:[],
     projectManagerLoginData:[],
+    teamLeadLoginData:[],
+    developerLoginData:[],
     projects:[],
     clientProjectDetails:[],
     projectManagerProjects:[],
     projectManagerTaskAssign:[],
     teamLeadProjectsDetails:[],
+    teamLeadTaskAssign:[],
     users:[],
     loading:false,
     error:null
@@ -24,6 +27,12 @@ export const userSlice = createSlice({
     setProjectManagerLoginData:(state,action)=>{
        state.projectManagerLoginData = action.payload;
     },
+    setTeamLeadLoginData:(state,action)=>{
+      state.teamLeadLoginData = action.payload;
+    },
+    setDeveloperLoginData:(state,action)=>{
+      state.developerLoginData = action.payload;
+    },
     setclientProjectDetails:(state,action)=>{
      state.clientProjectDetails = action.payload;
     },
@@ -35,10 +44,15 @@ export const userSlice = createSlice({
     },
     setTeamLeadProjectDetails:(state,action)=>{
       state.teamLeadProjectsDetails = action.payload;
+    },
+    setTeamLeadTaskAssign:(state,action)=>{
+      state.teamLeadTaskAssign = action.payload;
     }
     
   },
 });
+export const selectTeamLeadTaskassign = (state)=>state.user.teamLeadTaskAssign;
+export const {setTeamLeadTaskAssign} = userSlice.actions;
 export const selectTeamLeadsProjectDetails = (state)=>state.user.teamLeadProjectsDetails;
 export const {setTeamLeadProjectDetails} = userSlice.actions;
 export const selectProjectTaskAssign = (state)=> state.user.projectManagerTaskAssign;
@@ -47,6 +61,10 @@ export const selectProjectManagerProjects = (state)=> state.user.projectManagerP
 export const {setProjectManagerProjects} = userSlice.actions;
 export const selectclientProjectDetails = (state)=> state.user.clientProjectDetails;
 export const {setclientProjectDetails} = userSlice.actions;
+export const {setDeveloperLoginData} = userSlice.actions;
+export const selectDeveloperLoginData = (state)=>state.action.developerLoginData;
+export const selectTeamLeadLoginData = (state)=>state.user.teamLeadLoginData;
+export const {setTeamLeadLoginData} = userSlice.actions;
 export const selectProjectmanagerLogin = (state)=> state.user.projectManagerLoginData;
 export const {setProjectManagerLoginData} = userSlice.actions;
 export const { setRegistrationData } = userSlice.actions;

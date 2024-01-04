@@ -6,8 +6,10 @@ import { toast } from 'sonner'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
-
+import { useDispatch,useSelector } from 'react-redux'
+import { setDeveloperLoginData,selectDeveloperLoginData } from '@/app/redux/userSlice'
 function page() {
+    const dispatch = useDispatch();
     const router = useRouter();
     const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -23,7 +25,8 @@ function page() {
         e.preventDefault()
         try {
             console.log(user, '----------login details')
-            const { data } = await axios.post("/api/developer/login", user)
+            const { data } = await axios.post("/api/developer/login", user);
+            dispatch(setDeveloperLoginData(data))
             toast.success(data.message)
             localStorage.setItem("Dev",JSON.stringify(data.user))
             router.push("/developer/home")

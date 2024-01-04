@@ -6,7 +6,10 @@ import axios from 'axios'
 import { BeatLoader } from 'react-spinners'
 import { Toaster, toast } from 'sonner';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTeamLeadLoginData,selectTeamLeadLoginData } from '@/app/redux/userSlice'
 function page() {
+    const dispatch = useDispatch();
     const router = useRouter();
     const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -22,6 +25,7 @@ function page() {
         e.preventDefault()
         try {
             const { data } = await axios.post("/api/teamLead/login", user)
+            dispatch(setTeamLeadLoginData(data));
             toast.success(data.message)
             console.log(data.user, '--------------data.user')
             localStorage.setItem('TeamLead', JSON.stringify(data.user))
