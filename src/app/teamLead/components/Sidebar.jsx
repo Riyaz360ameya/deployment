@@ -10,7 +10,6 @@ import { SiTraefikproxy } from "react-icons/si";
 import { IoKeyOutline } from "react-icons/io5";
 import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
-import axios from 'axios';
 const Sidebar = ({ menu, setProject, Projects }) => {
     const [selectedItem, setSelectedItem] = useState(Projects);
     //fetching user details from token

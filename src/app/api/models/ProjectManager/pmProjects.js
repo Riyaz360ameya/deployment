@@ -1,14 +1,13 @@
 import mongoose from "mongoose";
 import leadLoginModel from "../TeamLead/leadLoginModel";
 import managerLoginModel from "./managerLoginModel";
-import projectInfoModel from "../projectInfoModel";
 import userModel from "../User/userModel";
-const moment = require('moment');
+import projectInfoModel from "../projectInfoModel";
 
 const PM = mongoose.models.managerLogin || managerLoginModel;
-const Lead = mongoose.models.leadLogins || leadLoginModel;
-const User = mongoose.models.users || userModel;
 const Project = mongoose.models.projectInfo || projectInfoModel;
+const Lead = mongoose.models.leadLogins || leadLoginModel;
+const user = mongoose.models.users || userModel;
 
 const proManagerProjectSchema = new mongoose.Schema({
     proManagerId: {
@@ -20,7 +19,7 @@ const proManagerProjectSchema = new mongoose.Schema({
         {
             userId: {
                 type: mongoose.Types.ObjectId,
-                ref: User, // Use the registered 'users' model here
+                ref: user, // Use the registered 'users' model here
                 required: true,
             },
             projectId: {
@@ -46,7 +45,7 @@ const proManagerProjectSchema = new mongoose.Schema({
         {
             userId: {
                 type: mongoose.Types.ObjectId,
-                ref: User, // Use the registered 'users' model here
+                ref: user, // Use the registered 'users' model here
                 required: true,
             },
             projectId: {
@@ -77,7 +76,7 @@ const proManagerProjectSchema = new mongoose.Schema({
         {
             userId: {
                 type: mongoose.Types.ObjectId,
-                ref: User, // Use the registered 'users' model here
+                ref: user, // Use the registered 'users' model here
                 required: true,
             },
             projectId: {

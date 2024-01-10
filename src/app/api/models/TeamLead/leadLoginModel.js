@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-const moment = require('moment');
 const leadCredentialSchema = new mongoose.Schema({
     firstName: {
         type: String,
@@ -41,8 +40,8 @@ const leadCredentialSchema = new mongoose.Schema({
                 required: true
             },
             time: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
         }
     ],

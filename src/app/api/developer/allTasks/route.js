@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import devTaskModel from "../../models/Developer/developerTask";
+import { getDataFromToken } from "../../helpers/getDataFromToken";
+import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 connect()
-export async function POST(request = NextRequest) {
+export async function GET() {
     try {
-        const reqBody = await request.json()
-        const developerId = reqBody.devId
+        const { developerId } = await getDataFromToken()
+        if (!developerId) {
+            console.log('.....NO Dev Id present');
+            return removeTokenCookie();
+        }
         console.log(developerId, '----55-----developerId')
         const devTasks = await devTaskModel.findOne({ developerId }).sort({})
         if (!devTasks) {

@@ -3,11 +3,17 @@ import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 import { upDateLeadTask } from "./upDateTask";
 import devTaskModel from "../../models/Developer/developerTask";
 import { upDatePmProjects } from "./upDatePmProjects";
+import { getDataFromToken } from "../../helpers/getDataFromToken";
+import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 
 export const POST = async (request = NextRequest) => {
     try {
+        const { teamLeadId } = await getDataFromToken()
+        if (!teamLeadId) {
+            console.log('.....NO Lead Id present');
+            return removeTokenCookie();
+        }
         const reqBody = await request.json()
-        const teamLeadId = reqBody.Lead
         const projectId = reqBody.projectId
         const findLeadTask = await LeadTaskModel.findOne({ teamLeadId })
         if (!findLeadTask) {

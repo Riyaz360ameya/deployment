@@ -8,33 +8,39 @@ import { Toaster, toast } from 'sonner';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch,useSelector } from 'react-redux'
 import { selectProjectmanagerLogin, setProjectManagerLoginData } from '@/app/redux/userSlice'
+import { pmLogInApi } from '../pmAPIs/authApis'
+
 function page() {
     const dispatch = useDispatch();
     // const projectManagerLoginData = useSelector(selectProjectmanagerLogin);
     const router = useRouter();
     const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [visiblePassword, setvisiblePassword] = useState(false)
+    const [visiblePassword, setVisiblePassword] = useState(false)
     const [user, setUser] = useState({
         email: '',
         password: ''
     })
     const showHiddenPassword = () => {
-        setvisiblePassword(!visiblePassword)
+        setVisiblePassword(!visiblePassword)
     }
     const managerLogin = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try {
-            const { data } = await axios.post("/api/projectManager/login", user)
+            const { data } = await pmLogInApi(user)
             dispatch(setProjectManagerLoginData(data));
             // dispatch(setProjectManagerLoginData(response.data));
             console.log(data, '.............data')
             toast.success(data.message)
-            localStorage.setItem("PM",JSON.stringify(data.user))
+            localStorage.setItem("PM", JSON.stringify(data.User))
+            localStorage.setItem("token", JSON.stringify(data.token))
             router.push("/projectManager/home")
+            setLoading(false)
         } catch (error) {
             toast.error(error);
             console.log(error)
+            setLoading(false)
         }
     }
     const managerHandleForgot = () => {
@@ -72,22 +78,22 @@ function page() {
                             </div>
                             <div className='text-left text-sm'>
                                 <label className='font-bold' htmlFor="password">Password</label>
-                              <div className="relative">
-                              <input
-                                    type={visiblePassword ? "text" : "password"}
-                                    className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md 
+                                <div className="relative">
+                                    <input
+                                        type={visiblePassword ? "text" : "password"}
+                                        className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md 
                                 `}
-                                    id="password"
-                                    value={user.password}
-                                    onChange={(e) => setUser({ ...user, password: e.target.value })}
-                                />
-                                <div
-                                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                                 onClick={showHiddenPassword}
-                                >
-                                 {visiblePassword ? <IoIosEye/> : <IoIosEyeOff/>}
+                                        id="password"
+                                        value={user.password}
+                                        onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                    />
+                                    <div
+                                        className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                                        onClick={showHiddenPassword}
+                                    >
+                                        {visiblePassword ? <IoIosEye /> : <IoIosEyeOff />}
+                                    </div>
                                 </div>
-                              </div>
                             </div>
                             <div>
                                 <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' onClick={managerLogin}>
@@ -99,11 +105,7 @@ function page() {
                                     Forgot Password
                                 </p>
                             </div>
-                            <div className=' mt-5 text-sm'>
-                                <p className='text-black font-bold underline cursor-pointer'>
-                                    Need a new Account? <Link href='/rolebased/manager/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
-                                </p>
-                            </div>
+
                         </>
                     ) : (
                         <>

@@ -1,8 +1,7 @@
 import projectInfoModel from "../../models/projectInfoModel"
 
-export const createNewProject = async (reqData) => {
+export const createNewProject = async ({ reqData, userId }) => {
     const {
-        userId,
         ventureName,
         projectPlace,
         email,
@@ -52,6 +51,5 @@ export const createNewProject = async (reqData) => {
         },
     });
     const savedData = await newProject.save();
-
     return savedData;
 }

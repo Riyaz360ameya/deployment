@@ -2,30 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { FiAlertOctagon } from "react-icons/fi";
 import { PiChatDotsLight } from "react-icons/pi";
 import { MdFileDownload } from "react-icons/md";
-import axios from 'axios';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
 import { useDispatch,useSelector } from 'react-redux';
 import { setDeveloperProjectTask,selectDeveloperProjectTask } from '@/app/redux/userSlice';
+import { completeTask, startTask } from '../devApis/taskApi';
 const Tasks = ({ devTasks, task, Project }) => {
     const dispatch = useDispatch();
     const [dev, setDev] = useState()
     useEffect(() => {
         devTasks()
-        devDetails()
     }, []);
-    const devDetails = () => {
-        const devDetails = JSON.parse(localStorage.getItem("Dev"))
-        setDev(devDetails)
-        const developerId = devDetails._id
-        console.log(developerId, '----------devDetails')
-    }
     const handleStartClick = async (projectId) => {
         try {
-            console.log(projectId, 'Its Started')
-            const developerId = dev._id
-            console.log(developerId, '----------devDetails')
-            const { data } = await axios.post('/api/developer/startTask', { projectId, developerId })
+            console.log(projectId, '..............Its Started')
+            const { data } = await startTask(projectId)
             dispatch(setDeveloperProjectTask(data));
             toast.success(data.message)
         } catch (error) {
@@ -35,9 +26,8 @@ const Tasks = ({ devTasks, task, Project }) => {
     }
     const handleCompleted = async (projectId) => {
         try {
-            console.log(projectId, 'Its Completed')
-            const developerId = dev._id
-            const { data } = await axios.post('/api/developer/complete', { projectId, developerId })
+            console.log(projectId, '...........Its Completed')
+            const { data } = await completeTask(projectId)
             toast.success(data.message)
         } catch (error) {
             console.log(error.message)

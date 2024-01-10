@@ -3,12 +3,19 @@ import pmProjectsModel from "../../models/ProjectManager/pmProjects"
 import { upDatePmProject } from "./upDateProject"
 import { upDateClientProject } from "./clientProject"
 import LeadTaskModel from "../../models/TeamLead/leadTaskModel"
+import { getDataFromToken } from "../../helpers/getDataFromToken"
+import { removeTokenCookie } from "../../helpers/removeTokenCookie"
 
-export const POST = async (request = NextRequest) => {
+export const PUT = async (request = NextRequest) => {
     try {
         const reqBody = await request.json()
         console.log(reqBody, '-----------reqBody')
-        const { projectId, proManagerId } = reqBody
+        const { projectId } = reqBody
+        const { proManagerId } = await getDataFromToken()
+        if (!proManagerId) {
+            console.log('.....NO PM Id present');
+            return removeTokenCookie();
+        }
         const findPmProjects = await pmProjectsModel.findOne({ proManagerId })
         if (!findPmProjects) {
             console.log(error.message, '---error--------')

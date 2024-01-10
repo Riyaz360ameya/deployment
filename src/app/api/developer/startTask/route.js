@@ -2,11 +2,18 @@ import { NextRequest, NextResponse } from "next/server"
 import devTaskModel from "../../models/Developer/developerTask"
 import { upDateTask } from "./upDateTask";
 import { upDateOnLead } from "./upDateOnLead";
+import { getDataFromToken } from "../../helpers/getDataFromToken";
+import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 
 export const POST = async (request = NextRequest) => {
     try {
+        const { developerId } = await getDataFromToken()
+        if (!developerId) {
+            console.log('.....NO Dev Id present');
+            return removeTokenCookie();
+        }
         const reqBody = await request.json()
-        const { projectId, developerId } = reqBody
+        const { projectId } = reqBody
         console.log(reqBody, '------22----reqBody')
         const findDevTask = await devTaskModel.findOne({ developerId })
         if (!findDevTask) {

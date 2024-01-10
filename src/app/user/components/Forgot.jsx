@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { toast } from 'sonner';
 import { BeatLoader } from 'react-spinners';
-import axios from 'axios';
+import { changePassOK, confirmOTPs, forgotPassOTP, resendOTP } from '../userAPIs/authApis';
 const Forgot = ({ setPassword }) => {
     const [loading, setLoading] = useState(false);
     const [otpVerify, setOtpVerify] = useState(false)
@@ -22,7 +22,7 @@ const Forgot = ({ setPassword }) => {
                 return toast.error('Please enter Registered email');
             }
             setLoading(true);
-            const response = await axios.post("/api/users/forgotPass", { otpEmail });
+            const response = await forgotPassOTP(otpEmail)
             if (response.data.success) {
                 toast.success(response.data.message);
             }
@@ -40,7 +40,7 @@ const Forgot = ({ setPassword }) => {
         try {
             if (otp) {
                 setLoading(true);
-                const response = await axios.post("/api/users/forgotPass/checkOtp", { otp, otpEmail });
+                const response = await confirmOTPs(otp, otpEmail)
                 if (response.data.success) {
                     toast.success(response.data.message);
                 }
@@ -71,7 +71,7 @@ const Forgot = ({ setPassword }) => {
         e.preventDefault()
         try {
             if (validatePassword()) {
-                const response = await axios.post("/api/users/forgotPass/changePass", { otpEmail, pass });
+                const response = await changePassOK(otpEmail, pass)
                 toast.success(response.data.message);
                 setPass({
                     password: '',
@@ -89,7 +89,7 @@ const Forgot = ({ setPassword }) => {
         try {
             setOtp('')
             setLoading(true);
-            const response = await axios.post("/api/users/forgotPass", { otpEmail });
+            const response = await resendOTP(otpEmail)
             if (response.data.success) {
                 toast.success(response.data.message);
             }

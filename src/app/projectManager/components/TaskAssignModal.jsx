@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
 import { BeatLoader } from 'react-spinners';
 import { useDispatch,useSelector } from 'react-redux'
-import { setProjectManagerTaskAssign,selectProjectTaskAssign } from '@/app/redux/userSlice';
+import { setProjectManagerTaskAssign,selectProjectTaskAssign } from '@/app/redux/userSlice';import { assignLeadTask } from '../pmAPIs/taskApis';
+
 const TaskAssignModal = ({ setModal, projectId }) => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -34,10 +34,7 @@ const TaskAssignModal = ({ setModal, projectId }) => {
         setLoading(true);
 
         try {
-            const PMDetails = JSON.parse(localStorage.getItem('PM'));
-            task.assignedBy = PMDetails._id;
-
-            const { data } = await axios.post('/api/projectManager/taskAssign', task);
+            const { data } = await assignLeadTask(task)
             dispatch(setProjectManagerTaskAssign(data));
             toast.success(data.message);
             setModal(false);

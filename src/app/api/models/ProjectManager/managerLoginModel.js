@@ -1,4 +1,3 @@
-import moment from "moment";
 import mongoose from "mongoose";
 import projectInfoModel from "../projectInfoModel";
 
@@ -44,8 +43,8 @@ const managerLoginSchema = new mongoose.Schema({
                 required: true
             },
             time: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
         }
     ],

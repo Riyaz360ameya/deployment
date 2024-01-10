@@ -6,24 +6,31 @@ import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 import { leadTaskAssign } from "./leadTaskAssign";
 import { pmProjectUpdate } from "./pmProjectUpdate";
 import { userProjectUpdate } from "./userProjectUpdate";
+import { getDataFromToken } from "../../helpers/getDataFromToken";
+import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 connect();
 export async function POST(request = NextRequest) {
     try {
         const reqBody = await request.json()
-        const { designation, assignedBy, projectId } = reqBody
+        const { proManagerId } = await getDataFromToken()
+        if (!proManagerId) {
+            console.log('.....NO PM Id present');
+            return removeTokenCookie();
+        }
+        const { designation, projectId } = reqBody
         const findLead = await leadLoginModel.findOne({ designation })
         console.log(findLead, '----findLead')
         if (!findLead) {
             console.log(error, '---error=')
             return NextResponse.json({ error: error.message }, { status: 404 })
         }
-        const findPM = await managerLoginModel.findById(assignedBy);
+        const findPM = await managerLoginModel.findById(proManagerId);
         if (!findPM) {
             console.log(error.message, '--Lead tAsk Assign-error=')
             return NextResponse.json({ error: error.message }, { status: 404 })
         }
         const teamLeadId = findLead._id
-        const proManagerId = findPM._id
+        // const proManagerId = findPM._id
         // saved data to database
         const savedTask = await leadTaskAssign({ findLead, teamLeadId, findPM, reqBody })
         const updatePm = await pmProjectUpdate({ projectId, teamLeadId, proManagerId })

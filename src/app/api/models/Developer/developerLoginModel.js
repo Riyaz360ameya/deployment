@@ -1,25 +1,24 @@
 import mongoose from "mongoose";
-const moment = require('moment');
 const developerSchema = new mongoose.Schema({
-    firstName:{
-        type:String,
-        required:true
+    firstName: {
+        type: String,
+        required: true
     },
-    lastName:{
-        type:String,
-        required:true
+    lastName: {
+        type: String,
+        required: true
     },
-    email:{
-        type:String,
-        required:true
+    email: {
+        type: String,
+        required: true
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
     },
-    designation:{
-        type:String,
-        required:true
+    designation: {
+        type: String,
+        required: true
     },
     notifications: [
         {
@@ -33,8 +32,8 @@ const developerSchema = new mongoose.Schema({
                 required: true
             },
             time: {
-                type: String,
-                default: () => moment().format('DD/MM/YY hh:mm A'),
+                type: Date,
+                default: Date.now,
             },
         }
     ],
@@ -44,5 +43,5 @@ const developerSchema = new mongoose.Schema({
     verifyToken: String,
     verifyTokenExpiry: Date,
 })
-const developerModel = mongoose.models.developerLogins || mongoose.model("developerLogins",developerSchema);
+const developerModel = mongoose.models.developerLogins || mongoose.model("developerLogins", developerSchema);
 export default developerModel

@@ -10,15 +10,10 @@ import { SiTraefikproxy } from "react-icons/si";
 import { IoKeyOutline } from "react-icons/io5";
 import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
-import axios from 'axios';
 const Sidebar = ({ menu, setProject, Project,setLoading }) => {
     const [selectedItem, setSelectedItem] = useState(Project);
     //fetching user details from token
     const [data, setData] = useState("")
-    // const userDetails = async () => {
-    //     const res = await axios.get("/api/users/userdata")
-    //     setData(res.data.data)
-    // }
     const icons = [
         { icon: <LuLayoutDashboard />, name: 'Dashboard' },
         { icon: <SiTraefikproxy />, name: 'Projects' },

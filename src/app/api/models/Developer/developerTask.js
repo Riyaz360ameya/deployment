@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import developerModel from "./developerLoginModel";
 import leadLoginModel from "../TeamLead/leadLoginModel";
 import projectInfoModel from "../projectInfoModel";
-const moment = require('moment');
 
 const Dev = mongoose.models.developerLogins || developerModel;
 const Lead = mongoose.models.leadLogins || leadLoginModel;

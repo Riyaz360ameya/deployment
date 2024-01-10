@@ -7,7 +7,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch,useSelector } from 'react-redux'
-import { setDeveloperLoginData,selectDeveloperLoginData } from '@/app/redux/userSlice'
+import { setDeveloperLoginData,selectDeveloperLoginData } from '@/app/redux/userSlice'import { devLogInApi } from '../devApis/authApi'
+
 function page() {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -25,10 +26,10 @@ function page() {
         e.preventDefault()
         try {
             console.log(user, '----------login details')
-            const { data } = await axios.post("/api/developer/login", user);
+            const { data } = await devLogInApi(user);
             dispatch(setDeveloperLoginData(data))
             toast.success(data.message)
-            localStorage.setItem("Dev",JSON.stringify(data.user))
+            localStorage.setItem("Dev", JSON.stringify(data.user))
             router.push("/developer/home")
         } catch (error) {
             console.log(error)
@@ -67,25 +68,25 @@ function page() {
                             </div>
                             <div className='text-left text-sm'>
                                 <label className='font-bold' htmlFor="password">Password</label>
-                             <div className="relative">
-                             <input
-                                    type={ visiblepassword ? "text":"password"}
-                                    className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
+                                <div className="relative">
+                                    <input
+                                        type={visiblepassword ? "text" : "password"}
+                                        className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
                                 `}
-                                    id="password"
-                                    value={user.password}
-                                    onChange={(e) => setUser({ ...user, password: e.target.value })}
-                                />
-                                <div
-                                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                                onClick={showHiddenPassword}
-                                >
-                                   {visiblepassword ? 
-                                   <IoIosEye/>:
-                                   <IoIosEyeOff/>
-                                   }
+                                        id="password"
+                                        value={user.password}
+                                        onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                    />
+                                    <div
+                                        className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                                        onClick={showHiddenPassword}
+                                    >
+                                        {visiblepassword ?
+                                            <IoIosEye /> :
+                                            <IoIosEyeOff />
+                                        }
+                                    </div>
                                 </div>
-                             </div>
                             </div>
                             <div>
                                 <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' onClick={developerLogin}>

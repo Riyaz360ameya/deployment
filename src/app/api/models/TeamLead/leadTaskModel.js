@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-const moment = require('moment');
 import leadLoginModel from "./leadLoginModel";
 import developerModel from "../Developer/developerLoginModel";
 import projectInfoModel from "../projectInfoModel";

@@ -16,10 +16,10 @@ function Charts({ loading, setLoading }) {
   };
   const cancelLoading = () => {
     setLoading(false)
-}
-useEffect(() => {
+  }
+  useEffect(() => {
     cancelLoading()
-}, [])
+  }, [])
 
   return (
     <>

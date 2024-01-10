@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import { toast } from 'sonner'
 import { InfinitySpin } from 'react-loader-spinner'
 import { BeatLoader } from 'react-spinners'
 import { useDispatch,useSelector } from 'react-redux'
 import { setTeamLeadTaskAssign,selectTeamLeadTaskassign } from '@/app/redux/userSlice'
+import { devUnderLead, taskAssign } from '../leadAPIs/taskApi'
 const TaskAssignModal = ({ setModal, projectId }) => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false)
@@ -34,7 +34,7 @@ const TaskAssignModal = ({ setModal, projectId }) => {
             const LeadDetails = JSON.parse(localStorage.getItem('TeamLead'));
             task.assignedBy = LeadDetails._id
             console.log(task, '---------task assigned')
-            const { data } = await axios.post("/api/teamLead/taskAssign", task)
+            const { data } = await taskAssign(task)
             dispatch(setTeamLeadTaskAssign(data));
             console.log(data, '--------------response')
             toast.success(data.message)
@@ -47,9 +47,7 @@ const TaskAssignModal = ({ setModal, projectId }) => {
         setModal(false)
     }
     const leadData = async () => {
-        const Lead = JSON.parse(localStorage.getItem("TeamLead"))
-        const leadType = Lead.designation
-        const { data } = await axios.post('/api/teamLead/getDev', { leadType });
+        const { data } = await devUnderLead()
         setDevelopers(data.Developers, '-------------data')
     }
     useEffect(() => {
