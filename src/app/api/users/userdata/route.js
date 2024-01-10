@@ -3,13 +3,18 @@ import { getDataFromToken } from "../../helpers/getDataFromToken";
 
 import { NextRequest, NextResponse } from "next/server";
 import userModel from "../../models/User/userModel";
+import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 
 connect()
 
 export async function GET(request = NextRequest) {
     try {
         console.log('1')
-        const { userId, role } = getDataFromToken(request)
+        const { userId, role } = getDataFromToken()
+        if (!userId) {
+            console.log('.....NO User Id present');
+            return removeTokenCookie();
+        }
         if (userId, role === "user") {
             console.log(userId, '-----------decode id')
             const user = await userModel.findOne({ _id: userId }).select("-password")

@@ -56,7 +56,7 @@ function Page() {
         if (validateInput()) {
             try {
                 setLoading(true);
-                const data = await signUpApi(user)
+                const { data } = await signUpApi(user)
                 console.log(data, '-------------------data')
                 toast.success(data.message)
                 // Proceed with user registration

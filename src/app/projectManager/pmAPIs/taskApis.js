@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const API = axios.create({ baseURL: "/api" })
+const API = axios.create({ baseURL: "/api/projectManager" })
 
 API.interceptors.request.use((req) => {
     try {
@@ -16,5 +16,5 @@ API.interceptors.request.use((req) => {
     }
 });
 
-export const assignLeadTask = (task) => API.post('/projectManager/taskAssign', task);
-export const allLeadTasks = ()=>API.get("/projectManager/allTasks")
+export const allLeadTasks = ()=>API.get("/allTasks")
+export const assignLeadTask = (task) => API.post('/taskAssign', task);

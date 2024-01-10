@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from 'react'
 
 import { InfinitySpin } from 'react-loader-spinner'
-import Sidebar from './components/sidebar'
-import Header from './components/Header'
-import UploadDetails from './components/uploadDetails'
-import Status from './components/Status'
-import Payment from './components/Payment'
-import View from './components/View'
-import Package from './components/Package'
+import Sidebar from '../components/sidebar'
+import Header from '../components/Header'
+import UploadDetails from '../components/uploadDetails'
+import Status from '../components/Status'
+import Payment from '../components/Payment'
+import View from '../components/View'
+import Package from '../components/Package'
 
 
 function page() {

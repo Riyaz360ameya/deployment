@@ -87,11 +87,15 @@ const Projects = () => {
                                         </>
                                     )
                                 }
-
+                                {
+                                    position === "New Task" &&
+                                    <>
+                                        <th>status</th>
+                                    </>
+                                }
                                 {
                                     (position !== "Completed") &&
                                     <>
-                                        {/* <th>status</th> */}
                                         <th>Options</th>
                                     </>
                                 }
@@ -161,7 +165,7 @@ const Projects = () => {
                     modal ? <TaskAssignModal projectId={projectId} setModal={setModal} /> : ""
                 }
                 {
-                    cModal ? <ConfirmModal  projectId={projectId} setCModal={setCModal} /> : ""
+                    cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""
                 }
             </div>
         </>

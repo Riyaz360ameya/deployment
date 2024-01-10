@@ -21,7 +21,7 @@ function Header({ setMenu, menu }) {
             await logOut()
             console.log("Logout success")
             toast.success("Logout successfully!")
-            router.push("/login")
+            router.push("/teamLead/login")
         } catch (error) {
             console.log(error.message)
         }

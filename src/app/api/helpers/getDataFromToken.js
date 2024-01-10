@@ -5,11 +5,9 @@ import Jwt from "jsonwebtoken";
 const secret = process.env.SECRET_TOKEN
 export const getDataFromToken = async () => {
     try {
-        console.log('2')
+        console.log('............value from getDataFromToken ')
         const cookieStore = cookies()
         const token = cookieStore.get("token")?.value || "";
-        // console.log(token, '--------token from the cookie store')
-        // const token = request.cookies.get("token")?.value || "";
         if (!token) {
             console.log('NO token pls Login Again')
             return null

@@ -5,10 +5,10 @@ import { IoIosListBox } from "react-icons/io";
 import { ImStatsDots } from 'react-icons/im';
 import { FcOrganization } from 'react-icons/fc';
 import { GrProjects } from "react-icons/gr";
+import { GoProjectSymlink } from "react-icons/go";
 
 import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
-import axios from 'axios';
 
 const Sidebar = ({ menu, setProject }) => {
     //fetching user details from token
@@ -24,7 +24,7 @@ const Sidebar = ({ menu, setProject }) => {
     }, [])
     const icons = [
         { icon: <FaRegPenToSquare />, name: 'New Project' },
-        { icon: <GrProjects />  , name: 'Project Details' },
+        { icon: <GoProjectSymlink />  , name: 'Project Details' },
         { icon: <ImStatsDots />, name: 'Project Status' },
         { icon: <FaIndianRupeeSign />, name: 'Payment' },
         { icon: <IoIosListBox />, name: 'Package' },
@@ -66,7 +66,7 @@ const Sidebar = ({ menu, setProject }) => {
             <div className='p-3 bg-gray-800'>
                 <div className="flex items-center ml-5 text-xl bottom-0">
                     <FcOrganization />
-                    {menu && <span className="ml-2 text-sm font-bold ">{data.organization}</span>}
+                    {menu && <span className="ml-2 text-sm font-bold ">{data?.organization}</span>}
                 </div>
             </div>
         </div>

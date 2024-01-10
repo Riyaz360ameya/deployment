@@ -6,11 +6,16 @@ import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 import { leadTaskAssign } from "./leadTaskAssign";
 import { pmProjectUpdate } from "./pmProjectUpdate";
 import { getDataFromToken } from "../../helpers/getDataFromToken";
+import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 connect();
 export async function POST(request = NextRequest) {
     try {
         const reqBody = await request.json()
         const { proManagerId } = await getDataFromToken()
+        if (!proManagerId) {
+            console.log('.....NO PM Id present');
+            return removeTokenCookie();
+        }
         const { designation, projectId } = reqBody
         const findLead = await leadLoginModel.findOne({ designation })
         console.log(findLead, '----findLead')

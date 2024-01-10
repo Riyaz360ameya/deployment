@@ -1,21 +1,14 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { LuLayoutDashboard } from "react-icons/lu";
-import { SlCalender } from "react-icons/sl";
-import { MdDeviceHub } from "react-icons/md";
-import { FaRegBuilding } from "react-icons/fa";
-import { IoStatsChartSharp } from "react-icons/io5";
 import { FaUserGear } from "react-icons/fa6";
 import { SiTraefikproxy } from "react-icons/si";
-import { IoKeyOutline } from "react-icons/io5";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
-import { CiLogout } from "react-icons/ci";
 import { MdLogout } from "react-icons/md";
 // import profileImage from '../../../../public/profile3.JPG'
 // import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
-import axios from 'axios';
-const Sidebar = ({ menu, setProject,Project }) => {
+import { logOut } from '../devApis/authApi';
+const Sidebar = ({ menu, setProject, Project }) => {
     const [selectedItem, setSelectedItem] = useState(Project);
     //fetching user details from token
     const [data, setData] = useState("")
@@ -37,8 +30,8 @@ const Sidebar = ({ menu, setProject,Project }) => {
     useEffect(() => {
         userDetails()
     }, [])
-    const handleLogout = () => {
-        localStorage.setItem("Dev", "")
+    const handleLogout = async () => {
+        await logOut()
     }
     return (
         <div className={`w-${menu ? '72' : '24'} bg-[#2A2A2A] h-screen text-white md:flex flex-col justify-between p-2`}>

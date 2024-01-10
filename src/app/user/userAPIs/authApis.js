@@ -1,7 +1,12 @@
 import axios from "axios";
 
+const API = axios.create({ baseURL: "/api/users" })
 
-export const logInApi = (formData) => axios.post("/api/users/login", formData);
-export const signUpApi = (formData) => axios.post("/api/users/register", formData);
+export const logInApi = (formData) => API.post("/login", formData);
+export const signUpApi = (formData) => API.post("/register", formData);
 
-export const otpVerify = (data)=>axios.post('/api/users/otpVerify',data)
+// export const otpVerify = (data)=>API.post('/users/otpVerify',data)
+export const forgotPassOTP = (otpEmail) => API.post('/forgotPass', { otpEmail })
+export const resendOTP = (otpEmail) => API.post('/forgotPass', { otpEmail })
+export const confirmOTPs = ( otp, otpEmail) => API.post('/forgotPass/checkOtp', { otp, otpEmail })
+export const changePassOK = ( otpEmail, pass) => API.post('/forgotPass/changePass', { otpEmail, pass })

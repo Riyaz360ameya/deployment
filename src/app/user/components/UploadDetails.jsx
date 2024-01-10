@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
 import { useRouter } from 'next/navigation';
 import 'react-toastify/dist/ReactToastify.css';
 import { Toaster, toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
+import { uploadProject } from '../userAPIs/projectApis';
 
 function UploadDetails() {
     const router = useRouter()
@@ -74,12 +74,8 @@ function UploadDetails() {
             return
         }
         try {
-            const userString = localStorage.getItem('user');
-            const user = JSON.parse(userString);
-            const userId = user._id
-            formData.userId = userId
-            console.log(formData, '-----------formData')
-            const { data } = await axios.post("/api/users/projectInput", formData);
+            console.log(formData, '------550-----formData')
+            const { data } = await uploadProject(formData)
             toast.success(data.message)
             setLoading(false)
             router.push("/proceed");

@@ -22,8 +22,8 @@ export async function POST(request = NextRequest) {
             }
             //create token data
             const developerTokenData = {
-                id: user._id,
-                email: user.email,
+                developerId: user._id,
+                role: "developer",
             }
             const { password, __v, ...others } = user._doc
             //create token

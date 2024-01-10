@@ -52,7 +52,7 @@ function Page() {
                 const { data } = await logInApi(user)
                 localStorage.setItem('user', JSON.stringify(data.User))
                 toast.success(data.message)
-                // router.push("/user");
+                router.push("/user/home");
             } catch (error) {
                 console.log("Login failed-----------", error);
                 toast.error(error.response.data.error);

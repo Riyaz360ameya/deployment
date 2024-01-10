@@ -43,9 +43,7 @@ const TaskAssignModal = ({ setModal, projectId }) => {
         setModal(false)
     }
     const leadData = async () => {
-        const Lead = JSON.parse(localStorage.getItem("TeamLead"))
-        const leadType = Lead.designation
-        const { data } = await devUnderLead(leadType)
+        const { data } = await devUnderLead()
         setDevelopers(data.Developers, '-------------data')
     }
     useEffect(() => {

@@ -29,7 +29,7 @@ export async function POST(request = NextRequest) {
             if (!validPassword) {
                 return NextResponse.json({ error: "Login failed Check your credentials." }, { status: 403 })
             } else {
-                const { password, __v, ...others } = user._doc
+                const { password, __v,forgotPasswordToken,forgotPasswordTokenExpiry,isAdmin,isVerified, ...others } = user._doc
                 //create token data
                 const tokenData = {
                     userId: others._id,

@@ -2,17 +2,23 @@ import { NextRequest, NextResponse } from "next/server"
 import { upDateTask } from "./upDateTask"
 import { upDateOnLead } from "./upDateOnLead"
 import devTaskModel from "../../models/Developer/developerTask"
+import { getDataFromToken } from "../../helpers/getDataFromToken"
+import { removeTokenCookie } from "../../helpers/removeTokenCookie"
 
 export const POST = async (request = NextRequest) => {
     try {
+        const { developerId } = await getDataFromToken()
+        if (!developerId) {
+            console.log('.....NO Dev Id present');
+            return removeTokenCookie();
+        }
         const reqBody = await request.json()
-        const { projectId, developerId } = reqBody
+        const { projectId } = reqBody
         const findDevTask = await devTaskModel.findOne({ developerId })
         if (!findDevTask) {
             console.log(error, '---error--------')
             return NextResponse.json({ error: error.message }, { status: 404 })
         }
-
         const data = findDevTask.onGoingTasks.find(task => task.projectId.toString() === projectId.toString());
         if (!data) {
             console.log('Task not found for projectId:', projectId);

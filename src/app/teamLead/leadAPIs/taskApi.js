@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const API = axios.create({ baseURL: "/api" })
+const API = axios.create({ baseURL: "/api/teamLead" })
 
 API.interceptors.request.use((req) => {
     try {
@@ -15,9 +15,9 @@ API.interceptors.request.use((req) => {
         console.log(error.message, '---------error in api')
     }
 });
-export const getAllTasks = () => API.get('/teamLead/allTasks')
-export const taskAssign = (task) => API.post("/teamLead/taskAssign", task)
-export const reAssignTask = (projectId) => API.post('/teamLead/reAssign', { projectId })
-export const forwardTask = (projectId) => API.post('/teamLead/reAssign', { projectId })
+export const getAllTasks = () => API.get('/allTasks')
+export const taskAssign = (task) => API.post("/taskAssign", task)
+export const forwardTask = (projectId) => API.post('/forward', { projectId })
+export const reAssignTask = (projectId) => API.post('/reAssign', { projectId })
 
-export const devUnderLead = (leadType) => API.put('/teamLead/getDev',{leadType})
+export const devUnderLead = (leadType) => API.get('/getDev')

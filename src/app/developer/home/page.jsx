@@ -5,6 +5,7 @@ import Sidebar from '../components/Sidebar'
 import Tasks from '../components/Tasks'
 import axios from 'axios'
 import _ from 'lodash';
+import { devAllTasks } from '../devApis/taskApi'
 const page = () => {
     const [loader, setLoader] = useState(false)
     const [menu, setMenu] = useState(true)
@@ -18,7 +19,7 @@ const page = () => {
             const devData = JSON.parse(dev)
             const devId = devData._id
             console.log(devId, '************devData')
-            const { data } = await axios.post("/api/developer/allTasks", { devId });
+            const { data } = await devAllTasks()
             setNewTasks(data.devTasks.newTasks)
             setOnGoing(data.devTasks.onGoingTasks)
             setCompleted(data.devTasks.completedTasks)

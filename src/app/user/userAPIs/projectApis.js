@@ -1,10 +1,10 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
-const API = axios.create({ baseURL: "/api/projectManager" })
+const API = axios.create({ baseURL: "/api/users" })
 
 API.interceptors.request.use((req) => {
     try {
+
         const token = localStorage.getItem("token");
         if (token) {
             req.headers.Authorization = `Bearer ${token}`;
@@ -15,5 +15,5 @@ API.interceptors.request.use((req) => {
         console.log(error.message, '---------error in api')
     }
 });
-export const pmAllProjects = () => API.get('/allProjects');
-export const projectCompleted = (projectId) => API.put('/complete', { projectId })
+
+export const uploadProject = (formData) => API.post("/projectInput", formData);
