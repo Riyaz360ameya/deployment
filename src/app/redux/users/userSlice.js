@@ -18,11 +18,20 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = { userDetails: {} }
 
 const userSlice = createSlice({
   name: "user",
   initialState,
+
+export const userSlice = createSlice({
+  name: "users",
+  initialState: {
+    userLogins: [],
+    clientProjectDetails:[],
+  },
+
   reducers: {
     userDetails: (state, action) => {
       state.userDetails = action.payload;
@@ -31,8 +40,19 @@ const userSlice = createSlice({
     accessToken: (state, action) => {
       state.accessToken = action.payload
     },
+    setclientProjectDetails:(state,action)=>{
+        state.clientProjectDetails = action.payload;
+       },
   },
 });
 
+
 export const { userDetails, resetUser, accessToken } = userSlice.actions;
 export default userSlice.reducer;
+
+export const selectclientProjectDetails = (state)=>state.user.userLogins
+export const {setclientProjectDetails} = userSlice.actions;
+export const { setUsersLogin } = userSlice.actions; 
+export const selectLoginData = (state) => state.user.userLogins;
+export default userSlice.reducer;
+

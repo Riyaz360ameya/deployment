@@ -3,7 +3,9 @@ import { toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
 import { BeatLoader } from 'react-spinners';
 import { useDispatch,useSelector } from 'react-redux'
-import { setProjectManagerTaskAssign,selectProjectTaskAssign } from '@/app/redux/userSlice';import { assignLeadTask } from '../pmAPIs/taskApis';
+// import { setProjectManagerTaskAssign,selectProjectTaskAssign } from '@/app/redux/userSlice';
+import { selectProjectmanagerTaskAssign, setProjectManagerTaskAssign } from '@/app/redux/projectManager/managerSlice';
+import { assignLeadTask } from '../pmAPIs/taskApis';
 
 const TaskAssignModal = ({ setModal, projectId }) => {
     const dispatch = useDispatch();

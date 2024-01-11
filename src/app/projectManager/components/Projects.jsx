@@ -7,7 +7,10 @@ import Badge from './Badge';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
 import { useDispatch,useSelector } from 'react-redux'
-import { setProjectManagerProjects,selectProjectManagerProjects } from '@/app/redux/userSlice';import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
+// import { setProjectManagerProjects,selectProjectManagerProjects } from '@/app/redux/userSlice';
+// import {} from '@/app/redux/projectManager/managerSlice'
+import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
+import { setProjectManagerProjects,selectProjectManagerProjects } from '@/app/redux/projectManager/managerSlice';
 
 const Projects = ({ loading, setLoading }) => {
     const dispatch = useDispatch();

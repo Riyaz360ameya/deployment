@@ -21,14 +21,12 @@ export async function GET(request = NextRequest) {
                 success: false,
             }, { status: 404 });
         }
-
         // Fetch user's projects with project information populated
         const projectsInformation = await userProjectsModel.findOne({ userId })
             .populate('NewProjects.ProjectId')
             .populate('onGoingProjects.ProjectId')
             .populate('completedProjects.ProjectId');
         console.log(projectsInformation, ".................ppp");
-
         return NextResponse.json({
             message: "fetched data successfully",
             success: true,
