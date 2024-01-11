@@ -4,6 +4,7 @@ import userProjectsModel from "../../models/User/userProjectModel";
 import { getDataFromToken } from "../../helpers/getDataFromToken";
 import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 connect();
+
 export async function GET(request = NextRequest) {
     try {
         const { userId, role } = await getDataFromToken()

@@ -10,8 +10,12 @@ import profileImage from '../../../../public/Profile.jpeg'
 import axios from 'axios';
 import Image from 'next/image';
 import { Toaster, toast } from 'sonner';
+import { useSelector } from 'react-redux';
 
 function Header({ setMenu, menu }) {
+
+    const user = useSelector((state) => state.user.userDetails)
+
     const [data, setData] = useState({})
     const router = useRouter()
     const [drop, setDrop] = useState(false)
@@ -24,16 +28,13 @@ function Header({ setMenu, menu }) {
         } catch (error) {
             console.log(error.message, '------------Header Error')
         }
-
     }
     const handleDropdown = () => {
         setDrop((prev) => !prev)
     }
-    //fetching user details from token
+    //fetching user details from store
     const userDetails = () => {
-        const res = localStorage.getItem('user')
-        const user = JSON.parse(res);
-        setData(user)
+        user ? setData(user) : router.push("/user/login")
     }
 
     useEffect(() => {

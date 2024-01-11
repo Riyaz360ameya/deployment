@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import Forgot from '../components/Forgot';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { logInApi } from '../userAPIs/authApis';
-import { setUsersLogin } from '@/app/redux/users/userSlice';
+import { accessToken, setUsersLogin, userDetails } from '@/app/redux/users/userSlice';
 import { useDispatch,useSelector} from 'react-redux';
 function Page() {
     const dispatch = useDispatch();
@@ -52,7 +52,8 @@ function Page() {
             try {
                 setLoading(true);
                 const { data } = await logInApi(user)
-                dispatch(setUsersLogin(data));
+                // dispatch(setUsersLogin(data));
+                dispatch(userDetails(data.User))
                 localStorage.setItem('user', JSON.stringify(data.User))
                 toast.success(data.message)
                 router.push("/user/home");

@@ -26,11 +26,12 @@ function ClientInformation() {
             const completedProjects = data.projectsInformation.completedProjects;
             setCompleted(completedProjects)
             setProjects(NewProjects)
-            //showing badges afer 24 hours
+
             // const updatedTasks = details.map((project) => {
             //     const isNew = new Date(project.date) > new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
             //     return { ...project, isNew };
             // });
+
             // setTasks(NewProjects);
             // console.log(updatedTasks, 'projectdata');
             setLoading(false);
@@ -47,6 +48,7 @@ function ClientInformation() {
                 : name === "Completed" ? setProjects(completed)
                     : "";
     };
+
     useEffect(() => {
         fetchTasks();
     }, []);

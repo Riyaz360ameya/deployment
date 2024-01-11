@@ -1,19 +1,44 @@
+// import { combineReducers, configureStore } from '@reduxjs/toolkit';
+// import projectDetail from './userSlice';
+// import { persistReducer } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage';
+
+// const persistConfig = {
+//   key: 'root',
+//   storage,
+// };
+
+// const rootReducer = combineReducers({
+//   app: projectDetail,
+// });
+
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// export const store = configureStore({
+//   reducer: persistedReducer, 
+// });
+
+
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import projectDetail from './userSlice';
-import { persistReducer } from 'redux-persist';
+import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import userSlice from './users/userSlice';
+import userProSlice from './users/userProSlice';
 
 const persistConfig = {
   key: 'root',
+  version: 1,
   storage,
+  whitelist: ['userProjects', 'user']
 };
-
-const rootReducer = combineReducers({
-  app: projectDetail,
+const reducer = combineReducers({
+  user: userSlice,
+  userProjects: userProSlice,
+})
+const persistedReducer = persistReducer(persistConfig, reducer);
+const store = configureStore({
+  reducer: persistedReducer
 });
+const persister = persistStore(store);
+export { store, persister };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-export const store = configureStore({
-  reducer: persistedReducer, 
-});

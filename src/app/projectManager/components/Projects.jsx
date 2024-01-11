@@ -33,11 +33,11 @@ const Projects = ({ loading, setLoading }) => {
             setCompleted(data.PmProjects.completedProjects)
             console.log(data.PmProjects.completedProjects, '-------------data.PmProjects.completedProjects')
             setProjects(data.PmProjects.newProjects)
-            const updatedTasks = details.map((project) => {
-                const isNew = new Date(project.date) > new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
-                return { ...project, isNew };
-            });
-            setTasks(updatedTasks);
+            // const updatedTasks = details.map((project) => {
+            //     const isNew = new Date(project.date) > new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
+            //     return { ...project, isNew };
+            // });
+            // setTasks(updatedTasks);
             console.log(updatedTasks, 'projectdata');
         } catch (error) {
             console.error('Error fetching tasks:', error.message);
