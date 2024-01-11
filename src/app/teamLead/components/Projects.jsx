@@ -7,7 +7,8 @@ import { toast } from 'sonner';
 import ConfirmModal from './ConfirmModal';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { useDispatch,useSelector } from 'react-redux'
-import { setTeamLeadProjectDetails,selectTeamLeadsProjectDetails } from '@/app/redux/userSlice';
+// import { setTeamLeadProjectDetails,selectTeamLeadsProjectDetails } from '@/app/redux/userSlice';
+import { setTeamLeadProjectDetails,selectTeamLeadsProjectDetails } from '@/app/redux/teamLead/leadSlice';
 import { getAllTasks } from '../leadAPIs/taskApi';
 const Projects = () => {
     const dispatch = useDispatch();

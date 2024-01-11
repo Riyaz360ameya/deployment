@@ -6,7 +6,8 @@ import { BeatLoader } from 'react-spinners'
 import { Toaster, toast } from 'sonner';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTeamLeadLoginData,selectTeamLeadLoginData } from '@/app/redux/userSlice'
+// import { setTeamLeadLoginData,selectTeamLeadLoginData } from '@/app/redux/userSlice'
+import { setTeamLeadLogin,selectTeamLeadLoginData } from '@/app/redux/teamLead/leadSlice'
 import { logInApi } from '../leadAPIs/authApi'
 function page() {
     const dispatch = useDispatch();
@@ -25,7 +26,7 @@ function page() {
         e.preventDefault()
         try {
             const { data } = await logInApi(user)
-            dispatch(setTeamLeadLoginData(data));
+            dispatch(setTeamLeadLogin(data));
             toast.success(data.message)
             console.log(data.user, '--------------data.user')
             localStorage.setItem('TeamLead', JSON.stringify(data.user))

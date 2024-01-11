@@ -3,7 +3,8 @@ import { toast } from 'sonner'
 import { InfinitySpin } from 'react-loader-spinner'
 import { BeatLoader } from 'react-spinners'
 import { useDispatch,useSelector } from 'react-redux'
-import { setTeamLeadTaskAssign,selectTeamLeadTaskassign } from '@/app/redux/userSlice'
+// import { setTeamLeadTaskAssign,selectTeamLeadTaskassign } from '@/app/redux/userSlice'
+import { setTeamLeadTaskAssign,selectTeamLeadsProjectDetails } from '@/app/redux/teamLead/leadSlice'
 import { devUnderLead, taskAssign } from '../leadAPIs/taskApi'
 const TaskAssignModal = ({ setModal, projectId }) => {
     const dispatch = useDispatch();

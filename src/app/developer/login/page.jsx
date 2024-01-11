@@ -7,7 +7,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch,useSelector } from 'react-redux'
-import { setDeveloperLoginData,selectDeveloperLoginData } from '@/app/redux/userSlice'
+// import { setDeveloperLoginData,selectDeveloperLoginData } from '@/app/redux/userSlice'
+import { setDeveloperLogins,selectDevelopersLoginData } from '@/app/redux/developer/developerSlice'
 import { devLogInApi } from '../devApis/authApi'
 
 function page() {
@@ -28,7 +29,7 @@ function page() {
         try {
             console.log(user, '----------login details')
             const { data } = await devLogInApi(user);
-            dispatch(setDeveloperLoginData(data))
+            dispatch(setDeveloperLogins(data))
             toast.success(data.message)
             localStorage.setItem("Dev", JSON.stringify(data.user))
             router.push("/developer/home")

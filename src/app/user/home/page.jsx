@@ -9,6 +9,7 @@ import Status from '../components/Status'
 import Payment from '../components/Payment'
 import View from '../components/View'
 import Package from '../components/Package'
+import ClientInformation from '../components/ClientInformation'
 
 
 function page() {
@@ -33,6 +34,7 @@ function page() {
                             <Header setLoader={setLoader} setMenu={setMenu} />
                             {
                                 Project === "New Project" ? <UploadDetails />
+                                : Project === "Project Details" ? <ClientInformation/>
                                     : Project === "Project Status" ? <Status />
                                         : Project === "Payment" ? <Payment />
                                             : Project === "View" ? <View />
