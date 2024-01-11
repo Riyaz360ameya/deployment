@@ -13,6 +13,7 @@ export function middleware(req) {
             if (user && path !== '/user/login') {
                 console.log('its user')
                 return NextResponse.redirect(new URL('/user/login', req.nextUrl));
+                // return NextResponse.rewrite(new URL('/login', req.nextUrl));
             }
             else if (pm && path !== '/projectManager/login') {
                 console.log('its pm login')

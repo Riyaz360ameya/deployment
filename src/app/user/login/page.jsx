@@ -8,8 +8,10 @@ import { toast } from 'sonner';
 import Forgot from '../components/Forgot';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { logInApi } from '../userAPIs/authApis';
-
+import { setLoginData,selectLoginData } from '@/app/redux/users/userSlice';
+import { useDispatch,useSelector} from 'react-redux';
 function Page() {
+    const dispatch = useDispatch();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState(false);
@@ -50,12 +52,13 @@ function Page() {
             try {
                 setLoading(true);
                 const { data } = await logInApi(user)
+                dispatch(setLoginData(data));
                 localStorage.setItem('user', JSON.stringify(data.User))
                 toast.success(data.message)
                 router.push("/user/home");
             } catch (error) {
                 console.log("Login failed-----------", error);
-                toast.error(error.response.data.error);
+                toast.error(error);
             } finally {
                 setLoading(false);
             }

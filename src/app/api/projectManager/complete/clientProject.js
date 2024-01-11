@@ -34,6 +34,7 @@ export const upDateClientProject = async ({ projectId, userId }) => {
         // Update data and move it to completedProjects
         userDATA.completedProjects.push({
             ProjectId: data.ProjectId,
+            startedDate:data.startedDate,
             status: "Completed",
             payment: "Payment Completed",
         })
@@ -43,6 +44,7 @@ export const upDateClientProject = async ({ projectId, userId }) => {
         // Remove the item from onGoingProjects
         userUpdate.onGoingProjects = userUpdate.onGoingProjects.filter(task => task.ProjectId.toString() !== projectId.toString());
         const userPro = await userUpdate.save();
+        const userProject = await projectInfoModel.findById(projectId)
         user.notifications.push({
             message: `Your Project ${userProject.projectInfo.ventureName} is Completed`,
             projectId: projectId,
