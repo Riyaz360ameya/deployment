@@ -14,8 +14,9 @@ import { Toaster, toast } from 'sonner';
 import { logOut } from '../leadAPIs/authApi';
 import { useSelector } from 'react-redux';
 function Header({ setMenu, menu }) {
-    
-    const user = useSelector((state) => state.teamLead.teamLeadDetails)
+
+    const user = useSelector((state) => state.lead.leadDetails);
+    console.log(user, '---------store--------lead')
 
     const [data, setData] = useState({})
     const router = useRouter()

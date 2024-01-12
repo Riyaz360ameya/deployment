@@ -6,12 +6,15 @@ import TaskAssignModal from './TaskAssignModal';
 import { toast } from 'sonner';
 import ConfirmModal from './ConfirmModal';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
-import { useDispatch,useSelector } from 'react-redux'
-// import { setTeamLeadProjectDetails,selectTeamLeadsProjectDetails } from '@/app/redux/userSlice';
-import { setTeamLeadProjectDetails,selectTeamLeadsProjectDetails } from '@/app/redux/teamLead/leadSlice';
+import { useDispatch, useSelector } from 'react-redux'
 import { getAllTasks } from '../leadAPIs/taskApi';
+import { teamLeadNewProjectsStore } from '@/app/redux/teamLead/leadProSlice';
+// import { teamLeadNewProjectsStore } from '@/app/redux/teamLead/leadProSlice';
 const Projects = () => {
+    const users = useSelector((state) => state.lead.leadDetails);
+    console.log(users,"projects data")
     const dispatch = useDispatch();
+    const [project, setProject] = useState({});
     const [projectId, setProjectId] = useState('')
     const [modal, setModal] = useState(false);
     const [cModal, setCModal] = useState(false)
@@ -39,13 +42,16 @@ const Projects = () => {
     const fetchTasks = async () => {
         try {
             const { data } = await getAllTasks()
-            dispatch(setTeamLeadProjectDetails(data));
+            // dispatch(setTeamLeadProjectDetails(data));
             setData(data.LeadTasks.newTasks)
             setNewTasks(data.LeadTasks.newTasks)
+            dispatch(teamLeadNewProjectsStore(data.LeadTasks.newTasks))
             setOnGoing(data.LeadTasks.onGoingTasks)
+            dispatch(teamLeadNewProjectsStore(data.LeadTasks.onGoingTasks))
             setCompleted(data.LeadTasks.completedTasks)
+            dispatch(teamLeadNewProjectsStore(data.LeadTasks.completedTasks))
         } catch (error) {
-            console.error(error, '--------------allTasks error 1122');
+            console.error(error.message);
             toast.error(error)
         }
     };

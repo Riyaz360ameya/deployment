@@ -24,16 +24,20 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userSlice from './users/userSlice';
 import userProSlice from './users/userProSlice';
+import leadSlice from './teamLead/leadSlice';
+import leadProSlice from './teamLead/leadProSlice';
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['userProjects', 'user']
+  whitelist: ['userProjects', 'user','lead','leadProjects']
 };
 const reducer = combineReducers({
   user: userSlice,
   userProjects: userProSlice,
+  lead: leadSlice,
+  leadProjects: leadProSlice,
 })
 const persistedReducer = persistReducer(persistConfig, reducer);
 const store = configureStore({

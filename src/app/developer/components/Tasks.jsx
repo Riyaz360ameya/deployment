@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { FiAlertOctagon } from "react-icons/fi";
 import { PiChatDotsLight } from "react-icons/pi";
-import { MdFileDownload } from "react-icons/md";
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
 import { useDispatch,useSelector } from 'react-redux';
-import { setDeveloperProjectTask,selectDeveloperProjectTask } from '@/app/redux/userSlice';
 import { completeTask, startTask } from '../devApis/taskApi';
+import { developerCompletedProjectsStore, developerOngoingProjectsStore } from '@/app/redux/developer/developerProSlice';
 const Tasks = ({ devTasks, task, Project }) => {
     const dispatch = useDispatch();
     const [dev, setDev] = useState()
@@ -17,7 +16,7 @@ const Tasks = ({ devTasks, task, Project }) => {
         try {
             console.log(projectId, '..............Its Started')
             const { data } = await startTask(projectId)
-            dispatch(setDeveloperProjectTask(data));
+            dispatch(developerOngoingProjectsStore(data));
             toast.success(data.message)
         } catch (error) {
             console.log(error.message)
@@ -27,7 +26,8 @@ const Tasks = ({ devTasks, task, Project }) => {
     const handleCompleted = async (projectId) => {
         try {
             console.log(projectId, '...........Its Completed')
-            const { data } = await completeTask(projectId)
+            const { data } = await completeTask(projectId);
+            dispatch(developerCompletedProjectsStore(data));
             toast.success(data.message)
         } catch (error) {
             console.log(error.message)

@@ -4,6 +4,7 @@ const initialState = {
   teamLeadNewProjects: [],
   teamLeadOngoingProjects: [],
   teamLeadCompletedProjects: [],
+  taskAssiginedByTeamLead:[]
 };
 
 const teamLeadProSlice = createSlice({
@@ -18,6 +19,9 @@ const teamLeadProSlice = createSlice({
     },
     teamLeadCompletedProjectsStore: (state, action) => {
       state.teamLeadCompletedProjects = action.payload;
+    },
+    teamLeadTaskAssign:(state,action)=>{
+      state.taskAssiginedByTeamLead = action.payload;
     },
     addNewteamLeadProject: (state, action) => {
       state.teamLeadNewProjects.unshift(action.payload);
@@ -38,6 +42,7 @@ export const {
   teamLeadNewProjectsStore,
   teamLeadOngoingProjectsStore,
   teamLeadCompletedProjectsStore,
+  teamLeadTaskAssign,
   addNewteamLeadProject,
   removeteamLeadProject,
   updateteamLeadProject,

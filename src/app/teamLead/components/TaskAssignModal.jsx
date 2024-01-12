@@ -6,6 +6,7 @@ import { useDispatch,useSelector } from 'react-redux'
 // import { setTeamLeadTaskAssign,selectTeamLeadTaskassign } from '@/app/redux/userSlice'
 import { setTeamLeadTaskAssign,selectTeamLeadsProjectDetails } from '@/app/redux/teamLead/leadSlice'
 import { devUnderLead, taskAssign } from '../leadAPIs/taskApi'
+import { teamLeadNewProjectsStore, teamLeadTaskAssign } from '@/app/redux/teamLead/leadProSlice'
 const TaskAssignModal = ({ setModal, projectId }) => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false)
@@ -36,7 +37,7 @@ const TaskAssignModal = ({ setModal, projectId }) => {
             task.assignedBy = LeadDetails._id
             console.log(task, '---------task assigned')
             const { data } = await taskAssign(task)
-            dispatch(setTeamLeadTaskAssign(data));
+            dispatch(teamLeadTaskAssign(data));
             console.log(data, '--------------response')
             toast.success(data.message)
             setLoading(false)
