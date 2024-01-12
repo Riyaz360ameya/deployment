@@ -35,5 +35,5 @@ const userProSlice = createSlice({
     }
 })
 
-export const {  userNewProjectsStore, addNewUserProject, removeUserProject, updateUserProject } = userProSlice.actions;
+export const {userNewProjectsStore, addNewUserProject, removeUserProject, updateUserProject } = userProSlice.actions;
 export default userProSlice.reducer;

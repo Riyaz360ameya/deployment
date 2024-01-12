@@ -12,7 +12,11 @@ import { SlUser } from "react-icons/sl";
 // import Image from 'next/image';
 import { Toaster, toast } from 'sonner';
 import { logOut } from '../leadAPIs/authApi';
+import { useSelector } from 'react-redux';
 function Header({ setMenu, menu }) {
+    
+    const user = useSelector((state) => state.teamLead.teamLeadDetails)
+
     const [data, setData] = useState({})
     const router = useRouter()
     const [drop, setDrop] = useState(false)
@@ -31,9 +35,7 @@ function Header({ setMenu, menu }) {
     }
     //fetching user details from token
     const userDetails = () => {
-        const res = localStorage.getItem('TeamLead')
-        const user = JSON.parse(res);
-        setData(user)
+        user._id ? setData(user) : router.push("/teamLead/login")
     }
     useEffect(() => {
         userDetails()

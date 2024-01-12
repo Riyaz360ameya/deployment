@@ -3,6 +3,7 @@ import bcryptjs from 'bcryptjs'
 import Jwt from "jsonwebtoken";
 import { connect } from "../../dbConfig/dbConfig";
 import leadLoginModel from "../../models/TeamLead/leadLoginModel";
+import { setTokenCookie } from "../../helpers/setTokenCookie";
 connect();
 export async function POST(request = NextRequest) {
     try {
@@ -29,14 +30,15 @@ export async function POST(request = NextRequest) {
             //create token
             const { password, __v, haveAccess, isVerified, ...others } = user._doc
             const token = Jwt.sign(leadTokenData, process.env.SECRET_TOKEN, { expiresIn: '1d' })
-            const response = NextResponse.json({
-                message: "Login successfully",
-                success: true,
-                user: others
-            })
-            response.cookies.set("token", token, {
-                httpOnly: true
-            })
+            console.log(token, '.............its here')
+            const response = NextResponse.json(
+                { message: "Login successfully" },
+                { success: true },
+                { user: others },
+                { token }
+                , { staus: 200 })
+            await setTokenCookie({ token, response })
+            console.log('its success login and token ')
             return response;
         }
     } catch (error) {

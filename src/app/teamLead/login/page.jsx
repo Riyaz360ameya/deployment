@@ -7,8 +7,9 @@ import { Toaster, toast } from 'sonner';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 // import { setTeamLeadLoginData,selectTeamLeadLoginData } from '@/app/redux/userSlice'
-import { setTeamLeadLogin,selectTeamLeadLoginData } from '@/app/redux/teamLead/leadSlice'
+// import { setTeamLeadLogin,selectTeamLeadLoginData } from '@/app/redux/teamLead/leadSlice'
 import { logInApi } from '../leadAPIs/authApi'
+import { teamLeadDetails } from '@/app/redux/teamLead/leadSlice'
 function page() {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -26,14 +27,16 @@ function page() {
         e.preventDefault()
         try {
             const { data } = await logInApi(user)
-            dispatch(setTeamLeadLogin(data));
+            console.log(data, '...............data')
+
+            dispatch(teamLeadDetails(data.user));
             toast.success(data.message)
             console.log(data.user, '--------------data.user')
             localStorage.setItem('TeamLead', JSON.stringify(data.user))
             router.push("/teamLead/home")
         } catch (error) {
-            console.log(error, '---error in login PM')
-            toast.error(error.response.data.error)
+            console.log(error.message, '---error in login Lead')
+            toast.error(error)
         }
     }
     return (

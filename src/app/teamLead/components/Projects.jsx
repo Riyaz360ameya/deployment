@@ -46,7 +46,7 @@ const Projects = () => {
             setCompleted(data.LeadTasks.completedTasks)
         } catch (error) {
             console.error(error, '--------------allTasks error 1122');
-            toast.error(error.response.data.error)
+            toast.error(error)
         }
     };
     useEffect(() => {
