@@ -1,7 +1,9 @@
 // import { combineReducers, configureStore } from '@reduxjs/toolkit';
-// import projectDetail from './userSlice';
 // import { persistReducer } from 'redux-persist';
 // import storage from 'redux-persist/lib/storage';
+// import userSlice from './users/userSlice';
+// import userProSlice from './users/userProSlice';
+// import persistStore from 'redux-persist/es/persistStore';
 
 // const persistConfig = {
 //   key: 'root',
@@ -9,36 +11,82 @@
 // };
 
 // const rootReducer = combineReducers({
-//   app: projectDetail,
+//   user: userSlice,
+//   userProjects: userProSlice,
 // });
 
 // const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// export const store = configureStore({
-//   reducer: persistedReducer, 
+// const store = configureStore({
+//   reducer: persistedReducer,
 // });
+// const persister = persistStore(store);
+// export { store, persister };
 
 
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { persistStore, persistReducer } from 'redux-persist';
+
+
+
+// import { combineReducers, configureStore } from '@reduxjs/toolkit';
+// import { persistStore, persistReducer } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage';
+// import userSlice from './users/userSlice';
+// import userProSlice from './users/userProSlice';
+
+// const persistConfig = {
+//   key: 'root',
+//   version: 1,
+//   storage,
+//   whitelist: ['userProjects', 'user']
+// };
+// const reducer = combineReducers({
+//   user: userSlice,
+//   userProjects: userProSlice,
+// })
+// const persistedReducer = persistReducer(persistConfig, reducer);
+// const store = configureStore({
+//   reducer: persistedReducer
+// });
+// const persister = persistStore(store);
+// export { store, persister };
+
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import userSlice from './users/userSlice'
+import userProSlice from './users/userProSlice'
+import {
+    persistStore,
+    persistReducer,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+} from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
-import userSlice from './users/userSlice';
-import userProSlice from './users/userProSlice';
 
 const persistConfig = {
-  key: 'root',
-  version: 1,
-  storage,
-  whitelist: ['userProjects', 'user']
+    key: 'root',
+    // version: 1,
+    storage,
+    whitelist: ['user']
 };
-const reducer = combineReducers({
-  user: userSlice,
-  userProjects: userProSlice,
-})
-const persistedReducer = persistReducer(persistConfig, reducer);
-const store = configureStore({
-  reducer: persistedReducer
-});
-const persister = persistStore(store);
-export { store, persister };
 
+const rootReducer = combineReducers({
+    user: userSlice,
+    userProjects: userProSlice,
+},)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),
+});
+
+let persistor = persistStore(store)
+export { store, persistor };

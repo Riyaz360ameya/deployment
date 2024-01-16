@@ -7,10 +7,8 @@ import { toast } from 'sonner';
 import ConfirmModal from './ConfirmModal';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { useDispatch,useSelector } from 'react-redux'
-import { setTeamLeadProjectDetails,selectTeamLeadsProjectDetails } from '@/app/redux/userSlice';
 import { getAllTasks } from '../leadAPIs/taskApi';
 const Projects = () => {
-    const dispatch = useDispatch();
     const [projectId, setProjectId] = useState('')
     const [modal, setModal] = useState(false);
     const [cModal, setCModal] = useState(false)
@@ -38,7 +36,6 @@ const Projects = () => {
     const fetchTasks = async () => {
         try {
             const { data } = await getAllTasks()
-            dispatch(setTeamLeadProjectDetails(data));
             setData(data.LeadTasks.newTasks)
             setNewTasks(data.LeadTasks.newTasks)
             setOnGoing(data.LeadTasks.onGoingTasks)

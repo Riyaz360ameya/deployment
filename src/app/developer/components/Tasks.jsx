@@ -5,10 +5,8 @@ import { MdFileDownload } from "react-icons/md";
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
 import { useDispatch,useSelector } from 'react-redux';
-import { setDeveloperProjectTask,selectDeveloperProjectTask } from '@/app/redux/userSlice';
 import { completeTask, startTask } from '../devApis/taskApi';
 const Tasks = ({ devTasks, task, Project }) => {
-    const dispatch = useDispatch();
     const [dev, setDev] = useState()
     useEffect(() => {
         devTasks()
@@ -17,7 +15,6 @@ const Tasks = ({ devTasks, task, Project }) => {
         try {
             console.log(projectId, '..............Its Started')
             const { data } = await startTask(projectId)
-            dispatch(setDeveloperProjectTask(data));
             toast.success(data.message)
         } catch (error) {
             console.log(error.message)

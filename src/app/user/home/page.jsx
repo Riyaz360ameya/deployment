@@ -10,12 +10,22 @@ import Payment from '../components/Payment'
 import View from '../components/View'
 import Package from '../components/Package'
 import ClientInformation from '../components/ClientInformation'
+import { useSelector } from 'react-redux'
 
 
 function page() {
     const [loader, setLoader] = useState(false)
     const [menu, setMenu] = useState(true)
     const [Project, setProject] = useState("New Project")
+    const user = useSelector((state) => state.user.userDetails)
+    const stopLoading = () => {
+        console.log(user,'---------------._id')
+        user._id ? setLoader(false) : ''
+    }
+    useEffect(() => {
+        stopLoading()
+    }, [user._id])
+
     return (
 
         <>

@@ -9,7 +9,7 @@ connect();
 
 export async function POST(request = NextRequest) {
     try {
-        const { userId } = await getDataFromToken()
+        const { userId,role } = await getDataFromToken()
         console.log(userId, '--------------userId')
         if (!userId) {
             console.log('.....NO Lead Id present');

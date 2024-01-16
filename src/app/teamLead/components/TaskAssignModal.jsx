@@ -3,10 +3,8 @@ import { toast } from 'sonner'
 import { InfinitySpin } from 'react-loader-spinner'
 import { BeatLoader } from 'react-spinners'
 import { useDispatch,useSelector } from 'react-redux'
-import { setTeamLeadTaskAssign,selectTeamLeadTaskassign } from '@/app/redux/userSlice'
 import { devUnderLead, taskAssign } from '../leadAPIs/taskApi'
 const TaskAssignModal = ({ setModal, projectId }) => {
-    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false)
     const [developers, setDevelopers] = useState([])
     const [task, setTask] = useState({
@@ -35,7 +33,6 @@ const TaskAssignModal = ({ setModal, projectId }) => {
             task.assignedBy = LeadDetails._id
             console.log(task, '---------task assigned')
             const { data } = await taskAssign(task)
-            dispatch(setTeamLeadTaskAssign(data));
             console.log(data, '--------------response')
             toast.success(data.message)
             setLoading(false)

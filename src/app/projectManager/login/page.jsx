@@ -7,11 +7,9 @@ import { BeatLoader } from 'react-spinners';
 import { Toaster, toast } from 'sonner';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch,useSelector } from 'react-redux'
-import { selectProjectmanagerLogin, setProjectManagerLoginData } from '@/app/redux/userSlice'
 import { pmLogInApi } from '../pmAPIs/authApis'
 
 function page() {
-    const dispatch = useDispatch();
     // const projectManagerLoginData = useSelector(selectProjectmanagerLogin);
     const router = useRouter();
     const [password, setPassword] = useState(false)
@@ -29,8 +27,6 @@ function page() {
         setLoading(true)
         try {
             const { data } = await pmLogInApi(user)
-            dispatch(setProjectManagerLoginData(data));
-            // dispatch(setProjectManagerLoginData(response.data));
             console.log(data, '.............data')
             toast.success(data.message)
             localStorage.setItem("PM", JSON.stringify(data.User))

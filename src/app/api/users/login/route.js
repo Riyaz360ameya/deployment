@@ -29,16 +29,20 @@ export async function POST(request = NextRequest) {
             if (!validPassword) {
                 return NextResponse.json({ error: "Login failed Check your credentials." }, { status: 403 })
             } else {
-                const { password, __v,forgotPasswordToken,forgotPasswordTokenExpiry,isAdmin,isVerified, ...others } = user._doc
+                const { password, __v, forgotPasswordToken, forgotPasswordTokenExpiry, isAdmin, isVerified, ...others } = user._doc
                 //create token data
                 const tokenData = {
                     userId: others._id,
                     role: "user"
                 }
-                const response = NextResponse.json({
-                    message: "Login Successful", User: others, success: true
-                }, { status: 200 })
-                await setTokenCookie({ tokenData, response })
+                const secret = process.env.SECRET_TOKEN
+                const token = Jwt.sign(tokenData, secret, { expiresIn: '1d' })
+                const response = NextResponse.json(
+                    { message: "Login Successful"
+                    , user: others, token},
+                    { success: true },
+                    { status: 200 })
+                await setTokenCookie({ token, response })
                 return response;
             }
         }
