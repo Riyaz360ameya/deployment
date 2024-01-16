@@ -10,10 +10,13 @@ import profileImage from '../../../../public/Profile.jpeg'
 import axios from 'axios';
 import Image from 'next/image';
 import { Toaster, toast } from 'sonner';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetProject } from '@/app/redux/users/userProSlice';
+import { resetUser } from '@/app/redux/users/userSlice';
+
 
 function Header({ setMenu, menu }) {
-
+    const dispatch = useDispatch()
     const user = useSelector((state) => state.user.userDetails)
 
     const [data, setData] = useState({})
@@ -21,9 +24,11 @@ function Header({ setMenu, menu }) {
     const [drop, setDrop] = useState(false)
     const onLogout = async () => {
         try {
-            await axios.get("/api/users/logout")
-            console.log("Logout success")
-            toast.success("Logout successfully!")
+            const { data } = await axios.get("/api/users/logout")
+            dispatch(resetUser())
+            dispatch(resetProject())
+            console.log(data.message)
+            toast.success(data.message)
             router.push("/user/login")
         } catch (error) {
             console.log(error.message, '------------Header Error')

@@ -5,35 +5,31 @@ import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner';
 import Badge from './Badge';
 import { userProjects } from '../userAPIs/projectApis';
+import { useDispatch, useSelector } from 'react-redux';
+import { IoMdCut } from "react-icons/io";
+import { IoTrashBinOutline } from "react-icons/io5";
+
+import { userCompletedProjects, userNewProjects, userOngoingProjects } from '@/app/redux/users/userProSlice';
+
 function ClientInformation() {
-    const [projectId, setProjectId] = useState()
+    const userNewPro = useSelector((state) => state.userProjects.userNewProjects)
+    const userOnGoPro = useSelector((state) => state.userProjects.userOngoingProjects)
+    const userCompPro = useSelector((state) => state.userProjects.userCompletedProjects)
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
-    const [tasks, setTasks] = useState([]);
-    const [newPro, setNewPro] = useState([])
-    const [onGoing, setOnGoing] = useState([])
-    const [completed, setCompleted] = useState([])
     const [position, setPosition] = useState("New")
     const [projects, setProjects] = useState([]);
-    const [modal, setModal] = useState(false);
     const fetchTasks = async () => {
         setLoading(true);
         try {
             const { data } = await userProjects()
             const NewProjects = data.projectsInformation.NewProjects;
-            setNewPro(NewProjects)
+            dispatch(userNewProjects(NewProjects))
             const onGoingProjects = data.projectsInformation.onGoingProjects;
-            setOnGoing(onGoingProjects)
+            dispatch(userOngoingProjects(onGoingProjects))
             const completedProjects = data.projectsInformation.completedProjects;
-            setCompleted(completedProjects)
+            dispatch(userCompletedProjects(completedProjects))
             setProjects(NewProjects)
-
-            // const updatedTasks = details.map((project) => {
-            //     const isNew = new Date(project.date) > new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
-            //     return { ...project, isNew };
-            // });
-
-            // setTasks(NewProjects);
-            // console.log(updatedTasks, 'projectdata');
             setLoading(false);
         } catch (error) {
             console.error('Error fetching tasks:', error.message);
@@ -42,10 +38,9 @@ function ClientInformation() {
     };
     const handleData = (name) => {
         setPosition(name)
-        console.log(projects, '-----------------projects')
-        name === "New" ? setProjects(newPro)
-            : name === "OnGoing" ? setProjects(onGoing)
-                : name === "Completed" ? setProjects(completed)
+        name === "New" ? setProjects(userNewPro)
+            : name === "OnGoing" ? setProjects(userOnGoPro)
+                : name === "Completed" ? setProjects(userCompPro)
                     : "";
     };
 
@@ -86,6 +81,10 @@ function ClientInformation() {
                                     <th>Venture Type</th>
                                     <th>Description</th>
                                     <th>Deadline</th>
+                                    {
+                                        position !== "Completed" &&
+                                        <th>Options</th>
+                                    }
                                 </tr>
                                 <tr className='h-5'></tr>
                                 {
@@ -112,6 +111,14 @@ function ClientInformation() {
                                                         {item.ProjectId.projectInfo.ventureDescription}
                                                     </td>
                                                     <td className='bg-red-200 rounded text-red-600'>{item.ProjectId.projectInfo.estimatedDeliveryDate}</td>
+                                                    {
+                                                        position !== "Completed" &&
+                                                        <td className='flex items-center justify-around'>
+                                                            <button className=' text-blue-900 p-2 text-lg'><IoMdCut /></button>
+                                                            <button className=' text-red-900 p-2 text-lg'><IoTrashBinOutline /></button>
+                                                        </td>
+                                                    }
+
                                                 </tr>
                                             );
                                         })}

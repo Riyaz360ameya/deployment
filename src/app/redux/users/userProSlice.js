@@ -31,9 +31,10 @@ const userProSlice = createSlice({
                 state.userOngoingProjects[updatedProjectIndex] = action.payload.updatedProject
                 state.books[projectIndex] = action.payload.updatedProject
             }
-        }
+        },
+        resetProject: () => initialState,
     }
 })
 
-export const { userNewProjects, userOngoingProjects, userCompletedProjects, addNewUserProject, removeUserProject, updateUserProject } = userProSlice.actions;
+export const { userNewProjects, userOngoingProjects, userCompletedProjects, addNewUserProject, removeUserProject, updateUserProject,resetProject } = userProSlice.actions;
 export default userProSlice.reducer;
