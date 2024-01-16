@@ -23,6 +23,7 @@ function page() {
         e.preventDefault()
         try {
             const { data } = await logInApi(user)
+            dispatch(setTeamLeadLoginData(data));
             toast.success(data.message)
             console.log(data.user, '--------------data.user')
             localStorage.setItem('TeamLead', JSON.stringify(data.user))

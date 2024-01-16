@@ -27,6 +27,8 @@ function page() {
         setLoading(true)
         try {
             const { data } = await pmLogInApi(user)
+            dispatch(setProjectManagerLoginData(data));
+            // dispatch(setProjectManagerLoginData(response.data));
             console.log(data, '.............data')
             toast.success(data.message)
             localStorage.setItem("PM", JSON.stringify(data.User))

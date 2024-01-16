@@ -18,3 +18,4 @@ API.interceptors.request.use((req) => {
 
 export const uploadProject = (formData) => API.post("/projectInput", formData);
 export const userProjects = () => API.get("/projectData");
+

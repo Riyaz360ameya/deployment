@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner';
-
+import { setclientProjectDetails,selectclientProjectDetails } from '../redux/userSlice';
+import { useDispatch,useSelector } from 'react-redux';
 function ClientInformation() {
+    const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [projectData, setProjectData] = useState([]);
     const [ongoing, setOngoing] = useState([]);
@@ -24,6 +26,7 @@ function ClientInformation() {
                 (project) => project.ProjectId.userId === _id
             );
             console.log(userProjects,"---------------user")
+            dispatch(setclientProjectDetails(userProjects));
             setProjectData(userProjects);
             setLoading(false);
         } catch (error) {
@@ -79,6 +82,7 @@ function ClientInformation() {
                 (project) => project.ProjectId.userId === _id
             );
             console.log(userProjects,"---------------user")
+            dispatch(setclientProjectDetails(userProjects))
             setProjectData(userProjects);
             setLoading(false);
         } catch (error) {

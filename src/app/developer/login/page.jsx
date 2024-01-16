@@ -26,6 +26,7 @@ function page() {
         try {
             console.log(user, '----------login details')
             const { data } = await devLogInApi(user);
+            dispatch(setDeveloperLoginData(data))
             toast.success(data.message)
             localStorage.setItem("Dev", JSON.stringify(data.user))
             router.push("/developer/home")
