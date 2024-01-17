@@ -21,7 +21,8 @@ export const pmProjectUpdate = async ({ projectId, latestNewTaskId, teamLeadId, 
     // Remove the item from newProjects
     pmNewProject.newProjects = pmNewProject.newProjects.filter(task => task.projectId.toString() !== projectId);
     const pmTasks = await pmNewProject.save();
+    const newOngoing = pmNewProject.onGoingProjects.find(task => task.projectId.toString() === projectId);
     console.log(pmNewProject, '-------after changes');
-    return pmTasks
+    return newOngoing
     // leadTasks
 }

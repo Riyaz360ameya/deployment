@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
 import { BeatLoader } from 'react-spinners';
-import { useDispatch,useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { assignLeadTask } from '../pmAPIs/taskApis';
+import { addNewOnGoProject, leadTaskAssign } from '@/app/redux/projectManager/pmProSlice';
 
-const TaskAssignModal = ({ setModal, projectId }) => {
+const TaskAssignModal = ({ setModal, projectId, item, moveONgoing }) => {
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
     const [task, setTask] = useState({
         designation: 'Interior',
@@ -33,12 +36,15 @@ const TaskAssignModal = ({ setModal, projectId }) => {
 
         try {
             const { data } = await assignLeadTask(task)
+            dispatch(leadTaskAssign(item))
+            dispatch(addNewOnGoProject(data.newOngoing))
             toast.success(data.message);
+            moveONgoing()
             setModal(false);
             setLoading(false);
         } catch (error) {
             toast.error('Something went wrong!');
-            console.log(error);
+            console.error(error);
             setLoading(false);
         }
     };

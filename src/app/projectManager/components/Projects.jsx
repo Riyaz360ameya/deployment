@@ -6,53 +6,58 @@ import { InfinitySpin } from 'react-loader-spinner';
 import Badge from './Badge';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
-import { useDispatch,useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { pmAllProjects } from '../pmAPIs/projectApis';
+import { leadTaskAssign, pmCompletedProjects, pmNewProjects, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
 
 const Projects = ({ loading, setLoading }) => {
+    const dispatch = useDispatch()
     const [projectId, setProjectId] = useState()
-    const [projects, setProjects] = useState([]);
-    const [allProjects, setAllProjects] = useState([])
-    const [newPro, setNewPro] = useState([])
-    const [onGoingProjects, setOnGoingProjects] = useState([])
-    const [completed, setCompleted] = useState([])
     const [position, setPosition] = useState("New")
+    const [item, setItem] = useState()
     const [modal, setModal] = useState(false);
+    const pmNewPro = useSelector((state) => state.pmProjects.pmNewProjects)
+    const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
+    const pmComPro = useSelector((state) => state.pmProjects.pmCompletedProjects)
+    console.log(pmNewPro, '------store----projects--------pmNewPro')
+    const [projects, setProjects] = useState(pmNewPro);
     const fetchProjects = async () => {
+        setLoading(true);
         try {
-
             const { data } = await pmAllProjects()
-            setNewPro(data.PmProjects.newProjects)
-            setAllProjects(data.projectData)
-            setOnGoingProjects(data.PmProjects.onGoingProjects)
-            setCompleted(data.PmProjects.completedProjects)
-            console.log(data.PmProjects.completedProjects, '-------------data.PmProjects.completedProjects')
-            setProjects(data.PmProjects.newProjects)
-            // const updatedTasks = details.map((project) => {
-            //     const isNew = new Date(project.date) > new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
-            //     return { ...project, isNew };
-            // });
-            // setTasks(updatedTasks);
-            console.log(updatedTasks, 'projectdata');
+            dispatch(pmNewProjects(data.PmProjects.newProjects))
+            dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
+            dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
+            // setProjects(data.PmProjects.newProjects)
+            console.log(data.PmProjects.newProjects[0], '------------------new One')
+            setLoading(false);
         } catch (error) {
             console.error('Error fetching tasks:', error.message);
+            setLoading(false);
         }
     };
     useEffect(() => {
         fetchProjects();
-        setLoading(false);
+        setProjects(pmNewPro)
+        // handleData("New")
     }, []);
-    const handleAssign = (id) => {
+    const handleAssign = ({ projectId, itemId }) => {
         setModal(true);
-        setProjectId(id)
+        setProjectId(projectId)
+        setItem(itemId)
+        // dispatch(leadTaskAssign(itemId))
     };
     const handleData = (name) => {
         setPosition(name)
-        name === "All" ? setProjects(allProjects)
-            : name === "New" ? setProjects(newPro)
-                : name === "OnGoing" ? setProjects(onGoingProjects)
-                    : name === "Completed" ? setProjects(completed)
-                        : "";
+        name === "New" ? setProjects(pmNewPro)
+            : name === "OnGoing" ? setProjects(pmOnGoPro)
+                : name === "Completed" ? setProjects(pmComPro)
+                    : "";
     };
+    const moveONgoing = () => {
+        setPosition('OnGoing')
+        setProjects(pmOnGoPro)
+    }
     const handleUpdate = async (projectId) => {
         try {
             const { data } = await projectCompleted(projectId)
@@ -75,9 +80,6 @@ const Projects = ({ loading, setLoading }) => {
                     <div>
                         <h1 className='text-2xl font-bold p-2'>PROJECTS</h1>
                         <div className='flex gap-4 ml-2'>
-                            {/* <div className='py-2 px-8 bg-indigo-100 text-indigo-700 rounded-full shadow-xl' onClick={() => handleProject("All")}>
-                                <p>All</p>
-                            </div> */}
                             <div onClick={() => handleData("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
                                 <p>New</p>
                             </div>
@@ -87,7 +89,6 @@ const Projects = ({ loading, setLoading }) => {
                             <div onClick={() => handleData("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
                                 <p>Completed</p>
                             </div>
-
                             {/* <div className='py-2 px-8 hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl' onClick={() => handleProject("Pending")}>
                                 <p>Pending</p>
                             </div> */}
@@ -159,7 +160,7 @@ const Projects = ({ loading, setLoading }) => {
                                                         {
                                                             position !== "Completed" ?
                                                                 item.payment === "Payment is Done" ?
-                                                                    <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item.projectId._id)} >Assign Task to</button>
+                                                                    <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign({ projectId: item.projectId._id, itemId: item._id })} >Assign Task to</button>
                                                                     :
                                                                     item.status === "Assigned" ?
                                                                         <>
@@ -181,7 +182,7 @@ const Projects = ({ loading, setLoading }) => {
                             </tbody>
                         </table>
                     </div>
-                    {modal ? <TaskAssignModal projectId={projectId} setModal={setModal} /> : ''}
+                    {modal ? <TaskAssignModal projectId={projectId} setModal={setModal} item={item} moveONgoing={moveONgoing} /> : ''}
                 </div>
             )}
         </>

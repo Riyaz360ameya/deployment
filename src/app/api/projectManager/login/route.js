@@ -29,10 +29,13 @@ export async function POST(request = NextRequest) {
             const secret = process.env.SECRET_TOKEN
             const { password, __v, haveAccess, isVerified, ...others } = pm._doc
             const token = Jwt.sign(tokenData, secret, { expiresIn: '1d' })
-            const response = NextResponse.json({ message: "Login Successful", User: others, token, success: true }, { status: 200 })
-            // Setting token in the cookies
-            response.cookies.set("token", token, { httpOnly: true })
-            return response
+            const response = NextResponse.json(
+                { message: "Login Successful"
+                , user: others, token},
+                { success: true },
+                { status: 200 })
+            await setTokenCookie({ token, response })
+            return response;
         }
     } catch (error) {
         console.log(error.message, '------------------error in login')
