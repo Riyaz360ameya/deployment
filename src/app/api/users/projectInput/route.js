@@ -9,7 +9,7 @@ connect();
 
 export async function POST(request = NextRequest) {
     try {
-        const { userId } = await getDataFromToken()
+        const { userId,role } = await getDataFromToken()
         console.log(userId, '--------------userId')
         if (!userId) {
             console.log('.....NO Lead Id present');
@@ -32,22 +32,6 @@ export async function POST(request = NextRequest) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
-
-
-// export async function GET(request=NextRequest){
-//     try {
-//         const projectsInformation = await projectInfoModel.find().populate("userId");
-//         console.log(projectsInformation,"ppppppppppppp");
-//         return NextResponse.json({
-//             message:"fetched data successfully",
-//             success:true,
-//             projectsInformation
-//         })
-//     } catch (error) {
-//         return NextResponse.json({error:error.message},{status:500})
-//     }
-// }
-
 
 
 

@@ -11,8 +11,8 @@ import { logInApi } from '../userAPIs/authApis';
 import { accessToken, setUsersLogin, userDetails } from '@/app/redux/users/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 function Page() {
-    const dispatch = useDispatch();
     const router = useRouter();
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState(false);
     const [otpVerify, setOtpVerify] = useState(false)
@@ -55,7 +55,6 @@ function Page() {
                 console.log(data, '---------------------user')
                 dispatch(userDetails(data.user))
                 dispatch(accessToken(data.token))
-                localStorage.setItem('user', JSON.stringify(data.User))
                 toast.success(data.message)
                 router.push("/user/home");
             } catch (error) {

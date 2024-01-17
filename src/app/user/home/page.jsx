@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-
 import { InfinitySpin } from 'react-loader-spinner'
 import Sidebar from '../components/sidebar'
 import Header from '../components/Header'
@@ -10,12 +9,22 @@ import Payment from '../components/Payment'
 import View from '../components/View'
 import Package from '../components/Package'
 import ClientInformation from '../components/ClientInformation'
+import { useSelector } from 'react-redux'
 
 
 function page() {
     const [loader, setLoader] = useState(false)
     const [menu, setMenu] = useState(true)
-    const [Project, setProject] = useState("New Project")
+    const [Project, setProject] = useState("Project Details")
+    const user = useSelector((state) => state.user.userDetails)
+    const stopLoading = () => {
+        console.log(user, '---------------._id')
+        user._id && setLoader(false) 
+    }
+    useEffect(() => {
+        stopLoading()
+    }, [user._id])
+
     return (
 
         <>
@@ -29,12 +38,12 @@ function page() {
                     </div>
                     :
                     <div className='h-screen flex w-full '>
-                        <Sidebar setProject={setProject} menu={menu} />
+                        <Sidebar setProject={setProject} menu={menu} Project={Project}/>
                         <div className="flex flex-col flex-1">
                             <Header setLoader={setLoader} setMenu={setMenu} />
                             {
-                                Project === "New Project" ? <UploadDetails />
-                                    : Project === "Project Details" ? <ClientInformation />
+                                Project === "Project Details" ? <ClientInformation />
+                                    : Project === "New Project" ? <UploadDetails />
                                         : Project === "Project Status" ? <Status />
                                             : Project === "Payment" ? <Payment />
                                                 : Project === "View" ? <View />

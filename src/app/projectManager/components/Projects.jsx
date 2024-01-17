@@ -7,13 +7,8 @@ import Badge from './Badge';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
 import { useDispatch,useSelector } from 'react-redux'
-// import { setProjectManagerProjects,selectProjectManagerProjects } from '@/app/redux/userSlice';
-// import {} from '@/app/redux/projectManager/managerSlice'
-import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
-import { setProjectManagerProjects,selectProjectManagerProjects } from '@/app/redux/projectManager/managerSlice';
 
 const Projects = ({ loading, setLoading }) => {
-    const dispatch = useDispatch();
     const [projectId, setProjectId] = useState()
     const [projects, setProjects] = useState([]);
     const [allProjects, setAllProjects] = useState([])
@@ -26,7 +21,6 @@ const Projects = ({ loading, setLoading }) => {
         try {
 
             const { data } = await pmAllProjects()
-            dispatch(setProjectManagerProjects(data));
             setNewPro(data.PmProjects.newProjects)
             setAllProjects(data.projectData)
             setOnGoingProjects(data.PmProjects.onGoingProjects)

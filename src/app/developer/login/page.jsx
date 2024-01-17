@@ -13,7 +13,6 @@ import { devLogInApi } from '../devApis/authApi'
 import { developerDetails } from '@/app/redux/developer/developerSlice'
 
 function page() {
-    const dispatch = useDispatch();
     const router = useRouter();
     const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)

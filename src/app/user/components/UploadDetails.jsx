@@ -4,8 +4,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Toaster, toast } from 'sonner';
 import { InfinitySpin } from 'react-loader-spinner';
 import { uploadProject } from '../userAPIs/projectApis';
+import { useDispatch } from 'react-redux';
+import { addNewUserProject } from '@/app/redux/users/userProSlice';
+
 
 function UploadDetails() {
+    const dispatch = useDispatch()
     const router = useRouter()
     const inputFileRef = useRef(null);
     const [loading, setLoading] = useState(false);
@@ -74,8 +78,8 @@ function UploadDetails() {
             return
         }
         try {
-            console.log(formData, '------550-----formData')
             const { data } = await uploadProject(formData)
+            dispatch(addNewUserProject(data.savedProject))
             toast.success(data.message)
             setLoading(false)
             router.push("/proceed");
@@ -85,7 +89,6 @@ function UploadDetails() {
             setLoading(false);
         }
     }
-
     return (
         <>
             {
@@ -311,10 +314,8 @@ function UploadDetails() {
                 )
             }
         </>
-
     )
 }
-
 export default UploadDetails
 
 

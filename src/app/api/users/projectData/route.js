@@ -26,7 +26,7 @@ export async function GET(request = NextRequest) {
             .populate('NewProjects.ProjectId')
             .populate('onGoingProjects.ProjectId')
             .populate('completedProjects.ProjectId');
-        console.log(projectsInformation, ".................ppp");
+        // console.log(projectsInformation, ".................ppp");
         return NextResponse.json({
             message: "fetched data successfully",
             success: true,

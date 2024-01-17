@@ -8,31 +8,17 @@ import { GoProjectSymlink } from "react-icons/go";
 import { useSelector } from 'react-redux';
 import logo from '../../../../public/ameyaLogo.png';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 
-const Sidebar = ({ menu, setProject }) => {
-    const user = useSelector((state) => state?.lead)
-    console.log(user, 'data from store')
-    const users = useSelector((state) => state?.user.userDetails);
-    console.log(users,"data org for sidebar")
-    const [selectedItem, setSelectedItem] = useState("New Project");
-    const [data, setData] = useState({});
-  
-     //fetching user details from store
-     const userDetails = () => {
-        if (!users) {
-            router.push("/user/login");
-        } else {
-            setData(users);
-            console.log(users,"kkkkkkk")
-        }
-    };
-    useEffect(() => {
-        userDetails();
-    }, [users]);
+const Sidebar = ({ menu, setProject, Project }) => {
+    const user = useSelector((state) => state.user.userDetails)
 
+    console.log(user,'--------------its user sidebar')
+    //fetching user details from token
+    const [selectedItem, setSelectedItem] = useState(Project);
     const icons = [
-        { icon: <FaRegPenToSquare />, name: 'New Project' },
         { icon: <GoProjectSymlink />, name: 'Project Details' },
+        { icon: <FaRegPenToSquare />, name: 'New Project' },
         { icon: <ImStatsDots />, name: 'Project Status' },
         { icon: <FaIndianRupeeSign />, name: 'Payment' },
         { icon: <IoIosListBox />, name: 'Package' },
@@ -72,7 +58,7 @@ const Sidebar = ({ menu, setProject }) => {
             <div className='p-3 bg-gray-800'>
                 <div className="flex items-center ml-5 text-xl bottom-0">
                     <FcOrganization />
-                    {menu && <span className="ml-2 text-sm font-bold ">{users?.organization}</span>}
+                    {menu && <span className="ml-2 text-sm font-bold ">{user?.organization}</span>}
                 </div>
             </div>
         </div>
