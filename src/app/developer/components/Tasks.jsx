@@ -8,6 +8,8 @@ import { completeTask, startTask } from '../devApis/taskApi';
 import { developerCompletedProjectsStore, developerOngoingProjectsStore } from '@/app/redux/developer/developerProSlice';
 const Tasks = ({ devTasks, task, Project }) => {
     const dispatch = useDispatch();
+    const user = useSelector((state => state))
+    console.log(user,"data from developer")
     const [dev, setDev] = useState()
     useEffect(() => {
         devTasks()

@@ -32,6 +32,7 @@ function Header({ setMenu, menu }) {
     const userDetails = () => {
         const res = localStorage.getItem('PM')
         const user = JSON.parse(res);
+        console.log(user,"from pm")
         setData(user)
     }
     useEffect(() => {

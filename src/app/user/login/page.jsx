@@ -9,7 +9,7 @@ import Forgot from '../components/Forgot';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { logInApi } from '../userAPIs/authApis';
 import { accessToken, setUsersLogin, userDetails } from '@/app/redux/users/userSlice';
-import { useDispatch,useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 function Page() {
     const dispatch = useDispatch();
     const router = useRouter();
@@ -52,8 +52,9 @@ function Page() {
             try {
                 setLoading(true);
                 const { data } = await logInApi(user)
-                // dispatch(setUsersLogin(data));
-                dispatch(userDetails(data.User))
+                console.log(data, '---------------------user')
+                dispatch(userDetails(data.user))
+                dispatch(accessToken(data.token))
                 localStorage.setItem('user', JSON.stringify(data.User))
                 toast.success(data.message)
                 router.push("/user/home");

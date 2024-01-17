@@ -31,7 +31,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['userProjects', 'user','lead','leadProjects']
+  whitelist: ['userProjects', 'user','lead','leadProjects','developers','developersProjects']
 };
 const reducer = combineReducers({
   user: userSlice,

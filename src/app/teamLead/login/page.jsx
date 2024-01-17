@@ -6,8 +6,6 @@ import { BeatLoader } from 'react-spinners'
 import { Toaster, toast } from 'sonner';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
-// import { setTeamLeadLoginData,selectTeamLeadLoginData } from '@/app/redux/userSlice'
-// import { setTeamLeadLogin,selectTeamLeadLoginData } from '@/app/redux/teamLead/leadSlice'
 import { logInApi } from '../leadAPIs/authApi'
 import { leadDetails } from '@/app/redux/teamLead/leadSlice'
 function page() {
@@ -27,10 +25,11 @@ function page() {
         e.preventDefault()
         try {
             const { data } = await logInApi(user)
-            console.log(data, '...............data')
+            console.log(data)
             dispatch(leadDetails(data.user));
+            dispatch(accessToken(data.token))
             toast.success(data.message)
-            console.log(data.user, '--------------data.user')
+            console.log(data.user)
             localStorage.setItem('TeamLead', JSON.stringify(data.user))
             router.push("/teamLead/home")
         } catch (error) {

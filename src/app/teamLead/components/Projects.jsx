@@ -9,10 +9,11 @@ import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllTasks } from '../leadAPIs/taskApi';
 import { teamLeadNewProjectsStore } from '@/app/redux/teamLead/leadProSlice';
-// import { teamLeadNewProjectsStore } from '@/app/redux/teamLead/leadProSlice';
 const Projects = () => {
-    const users = useSelector((state) => state.lead.leadDetails);
-    console.log(users,"projects data")
+    const users = useSelector((state) => state?.leadProjects.teamLeadNewProjects);
+    const onGoingTask = useSelector((state)=> state)
+    console.log(onGoingTask,"onGoingTask")
+    console.log(users,"projects data from teamLead")
     const dispatch = useDispatch();
     const [project, setProject] = useState({});
     const [projectId, setProjectId] = useState('')
@@ -42,7 +43,6 @@ const Projects = () => {
     const fetchTasks = async () => {
         try {
             const { data } = await getAllTasks()
-            // dispatch(setTeamLeadProjectDetails(data));
             setData(data.LeadTasks.newTasks)
             setNewTasks(data.LeadTasks.newTasks)
             dispatch(teamLeadNewProjectsStore(data.LeadTasks.newTasks))
@@ -182,4 +182,4 @@ const Projects = () => {
         </>
     );
 };
-export default Projects;
+export default Projects

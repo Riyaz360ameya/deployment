@@ -13,9 +13,10 @@ import { Toaster, toast } from 'sonner';
 import { useSelector } from 'react-redux';
 
 function Header({ setMenu, menu }) {
-
-    const user = useSelector((state) => state.user.userDetails)
-
+    // const users = useSelector((state) => state?.user.userDetails)
+    //  console.log(users)
+    const user = useSelector((state) => state?.lead)
+    // console.log(user, 'data from store')
     const [data, setData] = useState({})
     const router = useRouter()
     const [drop, setDrop] = useState(false)
@@ -34,12 +35,18 @@ function Header({ setMenu, menu }) {
     }
     //fetching user details from store
     const userDetails = () => {
-        user ? setData(user) : router.push("/user/login")
-    }
+        if (!user) {
+            router.push("/user/login");
+        } else {
+            setData(user);
+            console.log(user,"kkkkkkk")
+        }
+    };
 
     useEffect(() => {
-        userDetails()
-    }, [])
+        userDetails();
+    }, [user]);
+
 
     return (
         <div className="flex items-center justify-between px-4 py-4 bg-black border-b border-b-[#D9EAFF] h-14 w-full">
@@ -65,7 +72,7 @@ function Header({ setMenu, menu }) {
                 </div>
                 <div className='flex items-center justify-center gap-3 bg-gray-800 p-1 rounded-full '>
                     <Image src={profileImage} alt="" width={40} height={50} className='rounded-full ring-green-500 ring-2' />
-                    <p className="text-base text-white font-bold tracking-">{data?.firstName}</p>
+                    <p className="text-base text-white font-bold tracking-">{user?.leadDetails.firstName}</p>
                     <FaAngleDown className="text-lg cursor-pointer text-white" onClick={handleDropdown} />
                 </div>
                 {drop && (
