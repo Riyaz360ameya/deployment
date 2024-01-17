@@ -64,17 +64,21 @@ import {
     REGISTER,
 } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
+import pmSlice from './projectManager/pmSlice';
+import pmProSlice from './projectManager/pmProSlice';
 
 const persistConfig = {
     key: 'root',
     // version: 1,
     storage,
-    whitelist: ['user']
+    whitelist: ['user','pm','pmProjects']
 };
 
 const rootReducer = combineReducers({
     user: userSlice,
     userProjects: userProSlice,
+    pm: pmSlice,
+    pmProjects: pmProSlice,
 },)
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

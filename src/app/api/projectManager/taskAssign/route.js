@@ -33,10 +33,10 @@ export async function POST(request = NextRequest) {
         // const proManagerId = findPM._id
         // saved data to database
         const savedTask = await leadTaskAssign({ findLead, teamLeadId, findPM, reqBody })
-        const updatePm = await pmProjectUpdate({ projectId, teamLeadId, proManagerId })
-        const updateUser = await userProjectUpdate({projectId} )
+        const { newOngoing } = await pmProjectUpdate({ projectId, teamLeadId, proManagerId })
+        const updateUser = await userProjectUpdate({ projectId })
         return NextResponse.json(
-            { message: "Assigned task successfully" },
+            { message: "Assigned task successfully",newOngoing },
             { success: true },
             { status: 201 });
     } catch (error) {
