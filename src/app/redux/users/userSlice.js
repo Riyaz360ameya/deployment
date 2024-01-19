@@ -11,10 +11,9 @@ const userSlice = createSlice({
     },
     resetUser: () => initialState,
     accessToken: (state, action) => {
-      state.accessToken = action.payload
+      state.accessToken = action.payload;
     },
   },
 });
-
 export const { userDetails, resetUser, accessToken } = userSlice.actions;
 export default userSlice.reducer;

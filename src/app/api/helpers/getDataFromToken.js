@@ -15,7 +15,7 @@ export const getDataFromToken = async () => {
         const decodedToken = Jwt.verify(token, secret)
         return decodedToken
     } catch (error) {
-        console.log(error.message, '-----------error in getDataFromToken')
+        // console.log(error.message, '-----------error in getDataFromToken')
         throw new Error(error.message)
     }
 }

@@ -20,7 +20,7 @@ const Projects = ({ loading, setLoading }) => {
     const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
     const pmComPro = useSelector((state) => state.pmProjects.pmCompletedProjects)
     console.log(pmNewPro, '------store----projects--------pmNewPro')
-    const [projects, setProjects] = useState(pmNewPro);
+    const [projects, setProjects] = useState([]);
     const fetchProjects = async () => {
         setLoading(true);
         try {
@@ -28,7 +28,7 @@ const Projects = ({ loading, setLoading }) => {
             dispatch(pmNewProjects(data.PmProjects.newProjects))
             dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
             dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
-            // setProjects(data.PmProjects.newProjects)
+            setProjects(data.PmProjects.newProjects)
             console.log(data.PmProjects.newProjects[0], '------------------new One')
             setLoading(false);
         } catch (error) {

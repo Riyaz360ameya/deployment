@@ -1,6 +1,6 @@
 import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 
-export const upDateOnLead = async ({ projectId, teamLeadId }) => {
+export const upDateOnLead = async ({ projectId, teamLeadId, findLead, findDev,data }) => {
     try {
         console.log(projectId, '---99---data', teamLeadId);
 
@@ -18,8 +18,8 @@ export const upDateOnLead = async ({ projectId, teamLeadId }) => {
         );
         // console.log(updatedTask, '-----Updated Task');
         findLead.notifications.push({
-            message: `Project Manager ${findPM.firstName} Assigned New a Task`,
-            projectId: latestNewTaskId,
+            message: `Developer ${findDev.firstName} Started ${data.projectTitle}`,
+            projectId: data.projectId,
         })
         return updatedTask
     } catch (error) {

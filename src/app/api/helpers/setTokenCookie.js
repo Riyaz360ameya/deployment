@@ -1,4 +1,3 @@
-import Jwt from "jsonwebtoken";
 
 const secret = process.env.SECRET_TOKEN
 export const setTokenCookie = async ({ token, response }) => {

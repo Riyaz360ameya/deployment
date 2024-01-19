@@ -4,6 +4,8 @@ import { upDateTask } from "./upDateTask";
 import { upDateOnLead } from "./upDateOnLead";
 import { getDataFromToken } from "../../helpers/getDataFromToken";
 import { removeTokenCookie } from "../../helpers/removeTokenCookie";
+import leadLoginModel from "../../models/TeamLead/leadLoginModel";
+import developerModel from "../../models/Developer/developerLoginModel";
 
 export const POST = async (request = NextRequest) => {
     try {
@@ -28,10 +30,16 @@ export const POST = async (request = NextRequest) => {
         }
         console.log(data, '------data');
         // Update data and move it to onGoingTasks
+        const leadId = data.assignedLeadId
+        console.log(leadId, '--------------leadId')
+        const findLead = await leadLoginModel.findOne({ _id: leadId })
+        console.log(findLead, '-------------------findLead')
+        const findDev = await developerModel.findById(developerId)
+        console.log(findDev, '=--------------------------findDev')
         const upDatedDev = await upDateTask({ data, findDevTask, projectId })
         const teamLeadId = data.assignedLeadId
-        const upDatedLead = await upDateOnLead({ projectId, teamLeadId })
-        return NextResponse.json({ message: "Task Started", success: true }, { upDatedDev }, { status: 200 });
+        const upDatedLead = await upDateOnLead({ projectId, teamLeadId, findLead, findDev, data })
+        return NextResponse.json({ message: "Task Started", success: true, upDatedDev }, { status: 200 });
     } catch (error) {
         console.error(error.message, '------------POST error');
         return NextResponse.json({ error: error.message }, { status: 500 });

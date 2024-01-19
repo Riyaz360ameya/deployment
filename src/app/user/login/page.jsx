@@ -8,8 +8,8 @@ import { toast } from 'sonner';
 import Forgot from '../components/Forgot';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { logInApi } from '../userAPIs/authApis';
+import { accessToken, setUsersLogin, userDetails } from '@/app/redux/users/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { accessToken, userDetails } from '@/app/redux/users/userSlice';
 function Page() {
     const router = useRouter();
     const dispatch = useDispatch()
@@ -52,7 +52,7 @@ function Page() {
             try {
                 setLoading(true);
                 const { data } = await logInApi(user)
-                console.log(data, '------------in login data')
+                console.log(data, '---------------------user')
                 dispatch(userDetails(data.user))
                 dispatch(accessToken(data.token))
                 toast.success(data.message)

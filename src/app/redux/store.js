@@ -1,55 +1,3 @@
-// import { combineReducers, configureStore } from '@reduxjs/toolkit';
-// import { persistReducer } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
-// import userSlice from './users/userSlice';
-// import userProSlice from './users/userProSlice';
-// import persistStore from 'redux-persist/es/persistStore';
-
-// const persistConfig = {
-//   key: 'root',
-//   storage,
-// };
-
-// const rootReducer = combineReducers({
-//   user: userSlice,
-//   userProjects: userProSlice,
-// });
-
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-// const store = configureStore({
-//   reducer: persistedReducer,
-// });
-// const persister = persistStore(store);
-// export { store, persister };
-
-
-
-
-
-// import { combineReducers, configureStore } from '@reduxjs/toolkit';
-// import { persistStore, persistReducer } from 'redux-persist';
-// import storage from 'redux-persist/lib/storage';
-// import userSlice from './users/userSlice';
-// import userProSlice from './users/userProSlice';
-
-// const persistConfig = {
-//   key: 'root',
-//   version: 1,
-//   storage,
-//   whitelist: ['userProjects', 'user']
-// };
-// const reducer = combineReducers({
-//   user: userSlice,
-//   userProjects: userProSlice,
-// })
-// const persistedReducer = persistReducer(persistConfig, reducer);
-// const store = configureStore({
-//   reducer: persistedReducer
-// });
-// const persister = persistStore(store);
-// export { store, persister };
-
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import userSlice from './users/userSlice'
 import userProSlice from './users/userProSlice'
@@ -66,13 +14,17 @@ import {
 import storage from 'redux-persist/lib/storage';
 import pmSlice from './projectManager/pmSlice';
 import pmProSlice from './projectManager/pmProSlice';
+import leadSlice from './teamLead/leadSlice';
+import leadProSlice from './teamLead/leadProSlice';
+import developerSlice from './developer/developerSlice';
+import developerProSlice from './developer/developerProSlice';
 
 const persistConfig = {
     // version: 1,
     timeout: 500,
     key: 'root',
     storage,
-    whitelist: ['user','pm','pmProjects']
+    whitelist: ['user','pm','pmProjects','lead','leadTasks','developer','devloperTaskUpdates']
 };
 
 const rootReducer = combineReducers({
@@ -80,6 +32,10 @@ const rootReducer = combineReducers({
     userProjects: userProSlice,
     pm: pmSlice,
     pmProjects: pmProSlice,
+    lead:leadSlice,
+    leadTasks:leadProSlice,
+    developer:developerSlice,
+    devloperTaskUpdates:developerProSlice,
 },)
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
