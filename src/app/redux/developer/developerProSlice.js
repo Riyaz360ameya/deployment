@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  developerNewProjects: [],
-  developerOngoingProjects: [],
-  developerCompletedProjects: [],
+  developerNewTasks: [],
+  developerOngoingTasks: [],
+  developerCompletedTasks: [],
 };
 
 const developerProSlice = createSlice({
@@ -11,27 +11,15 @@ const developerProSlice = createSlice({
   initialState,
   reducers: {
     developerNewProjectsStore: (state, action) => {
-      state.developerNewProjects = action.payload;
+      state.developerNewTasks = action.payload;
     },
     developerOngoingProjectsStore: (state, action) => {
-      state.developerOngoingProjects = action.payload;
+      state.developerOngoingTasks = action.payload;
     },
     developerCompletedProjectsStore: (state, action) => {
-      state.developerCompletedProjects = action.payload;
+      state.developerCompletedTasks = action.payload;
     },
-
-    addNewDeveloperProject: (state, action) => {
-      state.developerNewProjects.unshift(action.payload);
-    },
-    removeDeveloperProject: (state, action) => {
-      state.developerNewProjects = state.developerNewProjects.filter((project) => project._id !== action.payload);
-    },
-    updateDeveloperProject: (state, action) => {
-      const updatedProjectIndex = state.developerOngoingProjects.findIndex((project) => project._id === action.payload.id);
-      if (updatedProjectIndex !== -1) {
-        state.developerOngoingProjects[updatedProjectIndex] = action.payload.updatedProject;
-      }
-    },
+    resetDevTasks: () => initialState,
   },
 });
 
@@ -39,10 +27,7 @@ export const {
   developerNewProjectsStore,
   developerOngoingProjectsStore,
   developerCompletedProjectsStore,
-  teamLeadTaskAssign,
-  addNewDeveloperProject,
-  removeDeveloperProject,
-  updateDeveloperProject,
+  resetDevTasks
 } = developerProSlice.actions;
 
 export default developerProSlice.reducer;

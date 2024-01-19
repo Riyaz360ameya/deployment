@@ -4,11 +4,20 @@ import { FaUserGear } from "react-icons/fa6";
 import { SiTraefikproxy } from "react-icons/si";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
 import { MdLogout } from "react-icons/md";
-// import profileImage from '../../../../public/profile3.JPG'
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner'
+
+// import profileImage from ''
 // import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
 import { logOut } from '../devApis/authApi';
+import { resetDev } from '@/app/redux/developer/developerSlice';
+import { resetDevTasks } from '@/app/redux/developer/developerProSlice';
+import { useRouter } from 'next/navigation'
 const Sidebar = ({ menu, setProject, Project }) => {
+    const dispatch = useDispatch()
+    const router = useRouter();
+    const user = useSelector((state) => state.developer.developerDetails)
     const [selectedItem, setSelectedItem] = useState(Project);
     //fetching user details from token
     const [data, setData] = useState("")
@@ -22,16 +31,12 @@ const Sidebar = ({ menu, setProject, Project }) => {
         setProject(name)
         setSelectedItem(name)
     }
-    const userDetails = () => {
-        const res = localStorage.getItem('Dev')
-        const user = JSON.parse(res);
-        setData(user)
-    }
-    useEffect(() => {
-        userDetails()
-    }, [])
     const handleLogout = async () => {
         await logOut()
+        dispatch(resetDev())
+        dispatch(resetDevTasks())
+        toast.success("Logout success")
+        router.push("/developer/login")
     }
     return (
         <div className={`w-${menu ? '72' : '24'} bg-[#2A2A2A] h-screen text-white md:flex flex-col justify-between p-2`}>
@@ -46,7 +51,7 @@ const Sidebar = ({ menu, setProject, Project }) => {
                     /> */}
                 </div>
                 <div>
-                    <h1 className={`text-${menu ? '2xl' : 'md'} text-center font-bold`}>{data.firstName} {data.lastName}</h1>
+                    <h1 className={`text-${menu ? '2xl' : 'md'} text-center font-bold`}>{user?.firstName} {user?.lastName}</h1>
                     <h1 className={`text-${menu ? 'lg' : 'sm'} text-center font-bold text-gray-500`}>Developer</h1>
                 </div>
             </div>
@@ -68,9 +73,9 @@ const Sidebar = ({ menu, setProject, Project }) => {
                     })}
                 </div>
                 <div className='ml-2'>
-                    <div onClick={handleLogout}
+                    <div
                         className={`flex gap-2 mt-2 items-center ${menu ? "" : "justify-center"} text-base p-2 cursor-pointer rounded duration-300 ease-in-out  hover:bg-slate-600`} >
-                        <p className='flex items-center gap-2'><MdLogout />{menu && <span className=" ">Logout</span>}</p>
+                        <p className='flex items-center gap-2'><MdLogout />{menu && <span className=" " onClick={handleLogout}>Logout</span>}</p>
                     </div>
                 </div>
             </div>

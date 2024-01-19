@@ -8,7 +8,6 @@ import { GoProjectSymlink } from "react-icons/go";
 import { useSelector } from 'react-redux';
 import logo from '../../../../public/ameyaLogo.png';
 import Image from 'next/image';
-import { useSelector } from 'react-redux';
 
 const Sidebar = ({ menu, setProject, Project }) => {
     const user = useSelector((state) => state.user.userDetails)

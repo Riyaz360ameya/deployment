@@ -12,7 +12,7 @@ export async function GET() {
             return removeTokenCookie();
         }
         console.log(developerId, '----55-----developerId')
-        const devTasks = await devTaskModel.findOne({ developerId }).sort({})
+        const devTasks = await devTaskModel.findOne({ developerId })
         if (!devTasks) {
             return NextResponse.json({ error: error.message }, { status: 404 });
         }

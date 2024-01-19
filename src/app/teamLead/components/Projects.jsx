@@ -7,14 +7,15 @@ import { toast } from 'sonner';
 import ConfirmModal from './ConfirmModal';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { useDispatch, useSelector } from 'react-redux'
-import { useDispatch,useSelector } from 'react-redux'
 import { getAllTasks } from '../leadAPIs/taskApi';
-import { teamLeadNewProjectsStore } from '@/app/redux/teamLead/leadProSlice';
+import { teamLeadCompletedProjectsStore, teamLeadNewProjectsStore, teamLeadOngoingProjectsStore } from '@/app/redux/teamLead/leadProSlice';
 const Projects = () => {
-    const users = useSelector((state) => state?.leadProjects.teamLeadNewProjects);
-    const onGoingTask = useSelector((state)=> state)
-    console.log(onGoingTask,"onGoingTask")
-    console.log(users,"projects data from teamLead")
+    const leadOnGoingTask = useSelector((state) => state.leadTasks.teamLeadOngoingProjects)
+    const leadnewTasks = useSelector((state) => state.leadTasks.teamLeadNewProjects)
+    console.log(leadnewTasks, "leadnewTasks--------------")
+    const leadCompletedTasks = useSelector((state) => state.leadTasks.teamLeadCompletedProjects)
+    console.log(leadCompletedTasks, "leadCompletedTasks--------------")
+    console.log(leadOnGoingTask, "------------------------onGoingTask")
     const dispatch = useDispatch();
     const [project, setProject] = useState({});
     const [projectId, setProjectId] = useState('')
@@ -24,6 +25,7 @@ const Projects = () => {
     const [onGoing, setOnGoing] = useState([])
     const [completed, setCompleted] = useState([])
     const [data, setData] = useState([])
+    const [leadData, setLeadData] = useState(leadOnGoingTask)
     const [position, setPosition] = useState("New Task")
     const handleAssign = (id) => {
         setModal(true);
@@ -32,13 +34,13 @@ const Projects = () => {
     const handleData = (name) => {
         if (name === "New Task") {
             setPosition(name)
-            setData(newTasks)
+            setData(leadnewTasks)
         } else if (name === "OnGoing") {
             setPosition(name)
-            setData(onGoing)
+            setData(leadOnGoingTask)
         } else if (name === "Completed") {
             setPosition(name)
-            setData(completed)
+            setData(leadCompletedTasks)
         }
     }
     const fetchTasks = async () => {
@@ -48,9 +50,9 @@ const Projects = () => {
             setNewTasks(data.LeadTasks.newTasks)
             dispatch(teamLeadNewProjectsStore(data.LeadTasks.newTasks))
             setOnGoing(data.LeadTasks.onGoingTasks)
-            dispatch(teamLeadNewProjectsStore(data.LeadTasks.onGoingTasks))
+            dispatch(teamLeadOngoingProjectsStore(data.LeadTasks.onGoingTasks))
             setCompleted(data.LeadTasks.completedTasks)
-            dispatch(teamLeadNewProjectsStore(data.LeadTasks.completedTasks))
+            dispatch(teamLeadCompletedProjectsStore(data.LeadTasks.completedTasks))
         } catch (error) {
             console.error(error.message);
             toast.error(error)
@@ -58,7 +60,13 @@ const Projects = () => {
     };
     useEffect(() => {
         fetchTasks();
-    }, []);
+        setLeadData(leadOnGoingTask)
+
+    }, [leadOnGoingTask]);
+    const onGoingFurthur = () => {
+        setPosition('OnGoing')
+        setLeadData(leadOnGoingTask);
+    }
     const handleUpdate = (id) => {
         setCModal(true)
         setProjectId(id)
@@ -174,7 +182,7 @@ const Projects = () => {
                     </table>
                 </div>
                 {
-                    modal ? <TaskAssignModal projectId={projectId} setModal={setModal} /> : ""
+                    modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurthur={onGoingFurthur} fetchTasks={fetchTasks} /> : ""
                 }
                 {
                     cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""

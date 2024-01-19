@@ -8,7 +8,9 @@ import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import { logInApi } from '../leadAPIs/authApi'
 import { leadDetails } from '@/app/redux/teamLead/leadSlice'
+import { accessToken } from '@/app/redux/developer/developerSlice'
 function page() {
+    const dispatch = useDispatch()
     const router = useRouter();
     const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -27,7 +29,6 @@ function page() {
             console.log(data)
             dispatch(leadDetails(data.user));
             dispatch(accessToken(data.token))
-            // dispatch(setTeamLeadLoginData(data));
             toast.success(data.message)
             console.log(data.user)
             localStorage.setItem('TeamLead', JSON.stringify(data.user))

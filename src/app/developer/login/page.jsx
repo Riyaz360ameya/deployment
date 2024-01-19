@@ -10,9 +10,10 @@ import { useDispatch,useSelector } from 'react-redux'
 // import { setDeveloperLoginData,selectDeveloperLoginData } from '@/app/redux/userSlice'
 // import { setDeveloperLogins,selectDevelopersLoginData } from '@/app/redux/developer/developerSlice'
 import { devLogInApi } from '../devApis/authApi'
-import { developerDetails } from '@/app/redux/developer/developerSlice'
+import { accessToken, developerDetails } from '@/app/redux/developer/developerSlice'
 
 function page() {
+    const dispatch = useDispatch();
     const router = useRouter();
     const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -27,15 +28,14 @@ function page() {
     const developerLogin = async (e) => {
         e.preventDefault()
         try {
-            console.log(user, '----------login details')
             const { data } = await devLogInApi(user);
-            dispatch(developerDetails(data))
+            dispatch(developerDetails(data.user))
+            dispatch(accessToken(data.token));
             toast.success(data.message)
-            localStorage.setItem("Dev", JSON.stringify(data.user))
             router.push("/developer/home")
         } catch (error) {
             console.log(error)
-            toast.error(error.response.data.error);
+            toast.error(error);
         }
     }
     return (

@@ -16,10 +16,9 @@ import { resetUser } from '@/app/redux/users/userSlice';
 
 
 function Header({ setMenu, menu }) {
-    // const users = useSelector((state) => state?.user.userDetails)
+    const dispatch = useDispatch();
+    const users = useSelector((state) => state?.user.userDetails)
     //  console.log(users)
-    const user = useSelector((state) => state?.lead)
-    // console.log(user, 'data from store')
     const [data, setData] = useState({})
     const router = useRouter()
     const [drop, setDrop] = useState(false)
@@ -40,17 +39,17 @@ function Header({ setMenu, menu }) {
     }
     //fetching user details from store
     const userDetails = () => {
-        if (!user) {
+        if (!users) {
             router.push("/user/login");
         } else {
-            setData(user);
-            console.log(user,"kkkkkkk")
+            setData(users);
+            console.log(users,"kkkkkkk")
         }
     };
 
     useEffect(() => {
         userDetails();
-    }, [user]);
+    }, [users]);
 
 
     return (
@@ -77,7 +76,7 @@ function Header({ setMenu, menu }) {
                 </div>
                 <div className='flex items-center justify-center gap-3 bg-gray-800 p-1 rounded-full '>
                     <Image src={profileImage} alt="" width={40} height={50} className='rounded-full ring-green-500 ring-2' />
-                    <p className="text-base text-white font-bold tracking-">{user?.leadDetails.firstName}</p>
+                    <p className="text-base text-white font-bold tracking-">{data.firstName}</p>
                     <FaAngleDown className="text-lg cursor-pointer text-white" onClick={handleDropdown} />
                 </div>
                 {drop && (

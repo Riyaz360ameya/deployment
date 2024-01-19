@@ -40,7 +40,8 @@ const leadCredentialSchema = new mongoose.Schema({
                 required: true
             },
             time: {
-                type: Date,
+                type: String, // Change the type to String
+                required: true,
                 default: Date.now,
             },
         }

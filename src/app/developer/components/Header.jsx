@@ -12,8 +12,10 @@ import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
 import Image from 'next/image';
 import { Toaster, toast } from 'sonner';
 import { logOut } from '../devApis/authApi';
+import { useDispatch, useSelector } from 'react-redux';
 function Header({ setMenu, menu }) {
-    const [data, setData] = useState({})
+    const user = useSelector((state) => state.developer.developerDetails)
+    const dispatch = useDispatch();
     const router = useRouter()
     const [drop, setDrop] = useState(false)
     const onLogout = async () => {
@@ -30,14 +32,8 @@ function Header({ setMenu, menu }) {
         setDrop((prev) => !prev)
     }
     //fetching user details
-    const userDetails = () => {
-        const res = localStorage.getItem('Dev')
-        const user = JSON.parse(res);
-        setData(user)
-    }
-    useEffect(() => {
-        userDetails()
-    }, [])
+
+
     return (
         <div className="flex items-center justify-between  px-4 py-4 bg-white  h-16 w-full shadow-xl">
             <div className="hidden md:flex text-2xl cursor-pointer" >
@@ -71,7 +67,7 @@ function Header({ setMenu, menu }) {
                 <div className='flex items-center gap-3'>
                     <div className='text-right'>
                         <p className="text-base">Ameya360</p>
-                        <p className="text-sm text-gray-500">{data.designation}</p>
+                        <p className="text-sm text-gray-500">{user.designation}</p>
                     </div>
                     <div className='h-12 w-12 '>
                         {/* <Image src={logo} className='object-contain rounded-full' alt="" width={100} height={100} /> */}
@@ -82,7 +78,7 @@ function Header({ setMenu, menu }) {
                 <div className="p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <AiOutlineMenuUnfold className="text-white text-xl" onClick={() => setMenu((prev) => !prev)} />
                 </div>
-                <p className="text-lg">firstName</p>
+                <p className="text-lg">{user.firstName}</p>
                 <div className="relative p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <PiBellLight className="text-white text-xl" />
                     <div className="w-2 h-2 bg-red-500 rounded-full absolute top-2 right-2"></div>

@@ -48,7 +48,7 @@ export const leadTaskAssign = async ({ findLead, teamLeadId, findPM, projectId, 
         const saveNotification = await findLead.save()
         return savedTask
     } catch (error) {
-        console.log(error.message, '----------error ')
+        console.log(error.message, '------lead task assign ----error ')
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }

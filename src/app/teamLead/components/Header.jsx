@@ -16,9 +16,6 @@ import { useSelector } from 'react-redux';
 function Header({ setMenu, menu }) {
 
     const user = useSelector((state) => state.lead.leadDetails);
-    console.log(user, '---------store--------lead')
-
-    const [data, setData] = useState({})
     const router = useRouter()
     const [drop, setDrop] = useState(false)
     const onLogout = async () => {
@@ -35,12 +32,7 @@ function Header({ setMenu, menu }) {
         setDrop((prev) => !prev)
     }
     //fetching user details from token
-    const userDetails = () => {
-        user._id ? setData(user) : router.push("/teamLead/login")
-    }
-    useEffect(() => {
-        userDetails()
-    }, [])
+
     return (
         <div className="flex items-center justify-between  px-4 py-4 bg-white  h-16 w-full shadow-xl">
             <div className="hidden md:flex text-2xl cursor-pointer" >
@@ -73,8 +65,8 @@ function Header({ setMenu, menu }) {
                 </div>
                 <div className='flex items-center gap-3'>
                     <div className='text-right'>
-                        <p className="text-base">{data.firstName} {data.lastName}</p>
-                        <p className="text-sm text-gray-500">{data.designation}</p>
+                        <p className="text-base">{user.firstName} {user.lastName}</p>
+                        <p className="text-sm text-gray-500">{user.designation}</p>
                     </div>
                     <div className=''>
                         <SlUser className='h-8 w-8 ' />
@@ -93,7 +85,7 @@ function Header({ setMenu, menu }) {
                 <div className="p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <AiOutlineMenuUnfold className="text-white text-xl" onClick={() => setMenu((prev) => !prev)} />
                 </div>
-                <p className="text-lg">{data.firstName}</p>
+                <p className="text-lg">{user.firstName}</p>
                 <div className="relative p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <BiBell className="text-white text-xl" />
                     <div className="w-2 h-2 bg-red-500 rounded-full absolute top-2 right-2"></div>

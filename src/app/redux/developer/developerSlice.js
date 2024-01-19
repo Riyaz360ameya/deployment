@@ -7,13 +7,13 @@ const developerSlice = createSlice({
     developerDetails: (state, action) => {
       state.developerDetails = action.payload;
     },
-    resetUser: () => initialState,
+    resetDev: () => initialState,
     accessToken: (state, action) => {
       state.accessToken = action.payload;
     },
   },
 });
-export const { developerDetails, resetUser, accessToken } = developerSlice.actions;
+export const { developerDetails, resetDev, accessToken } = developerSlice.actions;
 export default developerSlice.reducer;
 
 
