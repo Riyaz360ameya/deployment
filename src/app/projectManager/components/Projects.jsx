@@ -38,14 +38,11 @@ const Projects = ({ loading, setLoading }) => {
     };
     useEffect(() => {
         fetchProjects();
-        setProjects(pmNewPro)
-        // handleData("New")
     }, []);
     const handleAssign = ({ projectId, itemId }) => {
         setModal(true);
         setProjectId(projectId)
         setItem(itemId)
-        // dispatch(leadTaskAssign(itemId))
     };
     const handleData = (name) => {
         setPosition(name)

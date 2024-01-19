@@ -20,9 +20,9 @@ const Status = () => {
         "Payment II",
     ]
     return (
-        <div className='p-2' >
-            <div className='text-center bg-slate-400 p-2 flex flex-col items-center border border-red-400'>
-                <h1 className='text-xl  font-semibold md:text-3xl'>Project 6 Status</h1>
+        <div className='p-2 h-full' >
+            <div className='text-center bg-gray-800 p-2 flex flex-col items-center border  h-full'>
+                <h1 className='text-xl  font-semibold md:text-3xl text-white'>Project 6 Status</h1>
                 <div className='flex gap-10 w-full'>
                     <div className='flex max-h-[300px] md:max-h-[480px] overflow-hidden ' >
                         <div className='space-y-5 cursor-pointer p-2 overflow-x-hidden ' >
@@ -73,7 +73,7 @@ const Status = () => {
                                         return (
                                             <div key={i} className='flex gap-2 text-lg'>
                                                 <input type="checkbox" />
-                                                <label htmlFor="">{item}</label>
+                                                <label htmlFor="" className=' text-white'>{item}</label>
                                             </div>
                                         )
                                     })
@@ -85,7 +85,7 @@ const Status = () => {
                                         return (
                                             <div key={i} className='flex gap-2 text-lg'>
                                                 <input type="checkbox" />
-                                                <label htmlFor="">{item}</label>
+                                                <label htmlFor="" className=' text-white'>{item}</label>
                                             </div>
                                         )
                                     })
@@ -97,7 +97,7 @@ const Status = () => {
                                         return (
                                             <div key={i} className='flex gap-2 text-lg'>
                                                 <input type="checkbox" />
-                                                <label htmlFor="">{item}</label>
+                                                <label htmlFor="" className=' text-white'>{item}</label>
                                             </div>
                                         )
                                     })

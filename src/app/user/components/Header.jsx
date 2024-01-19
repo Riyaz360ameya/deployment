@@ -37,15 +37,6 @@ function Header({ setMenu, menu }) {
     const handleDropdown = () => {
         setDrop((prev) => !prev)
     }
-    //fetching user details from store
-    const userDetails = () => {
-        user ? setData(user) : router.push("/user/login")
-    }
-
-    useEffect(() => {
-        userDetails()
-    }, [])
-
     return (
         <div className="flex items-center justify-between px-4 py-4 bg-black border-b border-b-[#D9EAFF] h-14 w-full">
             <div className="hidden md:flex text-2xl cursor-pointer" >
@@ -70,7 +61,7 @@ function Header({ setMenu, menu }) {
                 </div>
                 <div className='flex items-center justify-center gap-3 bg-gray-800 p-1 rounded-full '>
                     <Image src={profileImage} alt="" width={40} height={50} className='rounded-full ring-green-500 ring-2' />
-                    <p className="text-base text-white font-bold tracking-">{data?.firstName}</p>
+                    <p className="text-base text-white font-bold tracking-">{user?.firstName}</p>
                     <FaAngleDown className="text-lg cursor-pointer text-white" onClick={handleDropdown} />
                 </div>
                 {drop && (
@@ -86,7 +77,7 @@ function Header({ setMenu, menu }) {
                 <div className="p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <AiOutlineMenuUnfold className="text-white text-xl" onClick={() => setMenu((prev) => !prev)} />
                 </div>
-                <p className="text-lg">{data?.firstName}</p>
+                <p className="text-lg">{user?.firstName}</p>
                 <div className="relative p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <BiBell className="text-white text-xl" />
                     <div className="w-2 h-2 bg-red-500 rounded-full absolute top-2 right-2"></div>

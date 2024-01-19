@@ -15,10 +15,9 @@ import { useSelector } from 'react-redux'
 function page() {
     const [loader, setLoader] = useState(false)
     const [menu, setMenu] = useState(true)
-    const [Project, setProject] = useState("Project Details")
+    const [Project, setProject] = useState("New Project")
     const user = useSelector((state) => state.user.userDetails)
     const stopLoading = () => {
-        console.log(user, '---------------._id')
         user._id && setLoader(false) 
     }
     useEffect(() => {

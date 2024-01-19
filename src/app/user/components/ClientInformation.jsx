@@ -12,30 +12,39 @@ import { IoTrashBinOutline } from "react-icons/io5";
 import { userCompletedProjects, userNewProjects, userOngoingProjects } from '@/app/redux/users/userProSlice';
 
 function ClientInformation() {
-    const userNewPro = useSelector((state) => state.userProjects.userNewProjects)
-    const userOnGoPro = useSelector((state) => state.userProjects.userOngoingProjects)
-    const userCompPro = useSelector((state) => state.userProjects.userCompletedProjects)
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
     const [position, setPosition] = useState("New")
     const [projects, setProjects] = useState([]);
+    const userNewPro = useSelector((state) => state.userProjects.userNewProjects)
+    const userOnGoPro = useSelector((state) => state.userProjects.userOngoingProjects)
+    const userCompPro = useSelector((state) => state.userProjects.userCompletedProjects)
     const fetchTasks = async () => {
-        setLoading(true);
-        try {
-            const { data } = await userProjects()
-            const NewProjects = data.projectsInformation.NewProjects;
-            dispatch(userNewProjects(NewProjects))
-            const onGoingProjects = data.projectsInformation.onGoingProjects;
-            dispatch(userOngoingProjects(onGoingProjects))
-            const completedProjects = data.projectsInformation.completedProjects;
-            dispatch(userCompletedProjects(completedProjects))
-            setProjects(NewProjects)
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching tasks:', error.message);
-            setLoading(false);
+        if (!userNewPro) {
+            setLoading(true);
+            try {
+                const { data } = await userProjects()
+                const NewProjects = data.projectsInformation.NewProjects;
+                dispatch(userNewProjects(NewProjects))
+                const onGoingProjects = data.projectsInformation.onGoingProjects;
+                dispatch(userOngoingProjects(onGoingProjects))
+                const completedProjects = data.projectsInformation.completedProjects;
+                dispatch(userCompletedProjects(completedProjects))
+                // setProjects(NewProjects)
+                handleData("New")
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching tasks:', error.message);
+                setLoading(false);
+            }
         }
     };
+    useEffect(() => {
+        fetchTasks();
+    }, [])
+    useEffect(() => {
+        handleData("New")
+    }, [userNewPro, userOnGoPro, userCompPro]);
     const handleData = (name) => {
         setPosition(name)
         name === "New" ? setProjects(userNewPro)
@@ -44,9 +53,6 @@ function ClientInformation() {
                     : "";
     };
 
-    useEffect(() => {
-        fetchTasks();
-    }, []);
     return (
         <>
             {loading ? (
@@ -61,13 +67,13 @@ function ClientInformation() {
                         <h1 className='text-xl p-2 flex justify-center items-center shadow-lg bg-gray-200'>Your Projects Details</h1>
                         <div className='flex gap-4 ml-2 py-4'>
                             <div onClick={() => handleData("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
-                                <p>New</p>
+                                <p className='font-bold shadow'>New</p>
                             </div>
                             <div onClick={() => handleData("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
-                                <p>OnGoing</p>
+                                <p className='font-bold shadow'>OnGoing</p>
                             </div>
                             <div onClick={() => handleData("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
-                                <p>Completed</p>
+                                <p className='font-bold shadow'>Completed</p>
                             </div>
                         </div>
                     </div>

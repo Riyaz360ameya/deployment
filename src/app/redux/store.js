@@ -68,8 +68,9 @@ import pmSlice from './projectManager/pmSlice';
 import pmProSlice from './projectManager/pmProSlice';
 
 const persistConfig = {
-    key: 'root',
     // version: 1,
+    timeout: 500,
+    key: 'root',
     storage,
     whitelist: ['user','pm','pmProjects']
 };
