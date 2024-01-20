@@ -28,14 +28,17 @@ function page() {
     const developerLogin = async (e) => {
         e.preventDefault()
         try {
+            setLoading(true)
             const { data } = await devLogInApi(user);
             dispatch(developerDetails(data.user))
             dispatch(accessToken(data.token));
             toast.success(data.message)
             router.push("/developer/home")
+            setLoading(false)
         } catch (error) {
             console.log(error)
             toast.error(error);
+            setLoading(false)
         }
     }
     return (

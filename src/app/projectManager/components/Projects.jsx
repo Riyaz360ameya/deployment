@@ -19,50 +19,54 @@ const Projects = ({ loading, setLoading }) => {
     const pmNewPro = useSelector((state) => state.pmProjects.pmNewProjects)
     const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
     const pmComPro = useSelector((state) => state.pmProjects.pmCompletedProjects)
-    console.log(pmNewPro, '------store----projects--------pmNewPro')
+    // console.log(pmNewPro, '------store----projects--------pmNewPro')
     const [projects, setProjects] = useState([]);
-    const fetchProjects = async () => {
-        setLoading(true);
-        try {
-            const { data } = await pmAllProjects()
-            dispatch(pmNewProjects(data.PmProjects.newProjects))
-            dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
-            dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
-            setProjects(data.PmProjects.newProjects)
-            console.log(data.PmProjects.newProjects[0], '------------------new One')
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching tasks:', error.message);
-            setLoading(false);
-        }
+    const handleData = (position) => {
+        // setPosition(name)
+        position === "New" ? setProjects(pmNewPro)
+            : position === "OnGoing" ? setProjects(pmOnGoPro)
+                : position === "Completed" ? setProjects(pmComPro)
+                    : "";
     };
     useEffect(() => {
-        fetchProjects();
-    }, []);
+        handleData(position)
+        console.log('........position.........')
+
+    }, [position]);
+    useEffect(() => {
+        setProjects(pmComPro)
+        setPosition("Completed")
+        console.log('........pmComPro.........its calling')
+    }, [pmComPro]);
+    useEffect(() => {
+        setProjects(pmOnGoPro)
+        setPosition("OnGoing")
+        console.log('........pmOnGoPro.........its calling')
+    }, [pmOnGoPro]);
+    useEffect(() => {
+        setProjects(pmNewPro)
+        setPosition("New")
+        console.log('........pmNewPro.........its calling')
+    }, [pmNewPro]);
+
     const handleAssign = ({ projectId, itemId }) => {
         setModal(true);
         setProjectId(projectId)
         setItem(itemId)
     };
-    const handleData = (name) => {
-        setPosition(name)
-        name === "New" ? setProjects(pmNewPro)
-            : name === "OnGoing" ? setProjects(pmOnGoPro)
-                : name === "Completed" ? setProjects(pmComPro)
-                    : "";
-    };
-    const moveONgoing = () => {
-        setPosition('OnGoing')
-        setProjects(pmOnGoPro)
-    }
+
+    // const moveONgoing = () => {
+    //     setPosition('OnGoing')
+    //     setProjects(pmOnGoPro)
+    // }
     const handleUpdate = async (projectId) => {
-        try {
-            const { data } = await projectCompleted(projectId)
-            toast.success(data.message)
-        } catch (error) {
-            console.log(error.message)
-            toast.error(error.response.data.error);
-        }
+        // try {
+        //     const { data } = await projectCompleted(projectId)
+        //     toast.success(data.message)
+        // } catch (error) {
+        //     console.log(error.message)
+        //     toast.error(error.response.data.error);
+        // }
     }
     return (
         <>
@@ -77,13 +81,16 @@ const Projects = ({ loading, setLoading }) => {
                     <div>
                         <h1 className='text-2xl font-bold p-2'>PROJECTS</h1>
                         <div className='flex gap-4 ml-2'>
-                            <div onClick={() => handleData("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
+                            {/* <div onClick={() => handleData("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
+                                <p>New</p>
+                            </div> */}
+                            <div onClick={() => setPosition("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
                                 <p>New</p>
                             </div>
-                            <div onClick={() => handleData("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
+                            <div onClick={() => setPosition("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
                                 <p>OnGoing</p>
                             </div>
-                            <div onClick={() => handleData("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
+                            <div onClick={() => setPosition("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
                                 <p>Completed</p>
                             </div>
                             {/* <div className='py-2 px-8 hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl' onClick={() => handleProject("Pending")}>
@@ -179,7 +186,7 @@ const Projects = ({ loading, setLoading }) => {
                             </tbody>
                         </table>
                     </div>
-                    {modal ? <TaskAssignModal projectId={projectId} setModal={setModal} item={item} moveONgoing={moveONgoing} /> : ''}
+                    {modal ? <TaskAssignModal projectId={projectId} setModal={setModal} item={item} /> : ''}
                 </div>
             )}
         </>

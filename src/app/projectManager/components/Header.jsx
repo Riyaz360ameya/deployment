@@ -12,8 +12,10 @@ import { SlUser } from "react-icons/sl";
 import Image from 'next/image';
 import { Toaster, toast } from 'sonner';
 import { logOut } from '../pmAPIs/authApis';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetPmProject } from '@/app/redux/projectManager/pmProSlice';
 function Header({ setMenu, menu }) {
+    const dispatch = useDispatch()
     const user = useSelector((state) => state.pm.pmDetails)
     const router = useRouter()
     const [drop, setDrop] = useState(false)
@@ -23,6 +25,7 @@ function Header({ setMenu, menu }) {
             console.log("Logout success")
             toast.success("Logout successfully!")
             router.push("/projectManager/login")
+            dispatch(resetPmProject())
         } catch (error) {
             console.log(error.message)
         }

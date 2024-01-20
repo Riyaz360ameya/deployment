@@ -16,8 +16,10 @@ const page = () => {
     const [onGoing, setOnGoing] = useState([])
     const [completed, setCompleted] = useState([])
     const [Project, setProject] = useState("New Tasks")
+    const [loading, setLoading] = useState(false);
     const devTasks = async () => {
         try {
+            setLoading(true)
             const { data } = await devAllTasks()
             console.log(data.devTasks, '-----------------dev task back incoming')
             setNewTasks(data.devTasks.newTasks)
@@ -26,6 +28,7 @@ const page = () => {
             dispatch(developerNewProjectsStore(data.devTasks.newTasks))
             dispatch(developerOngoingProjectsStore(data.devTasks.onGoingTasks))
             dispatch(developerCompletedProjectsStore(data.devTasks.completedTasks))
+            setLoading(false)
         } catch (error) {
             console.error("Error fetching tasks:", error);
         }
@@ -39,7 +42,7 @@ const page = () => {
                 <Sidebar setProject={setProject} menu={menu} Project={Project} />
                 <div className="flex flex-col flex-1">
                     <Header setLoader={setLoader} menu={menu} setMenu={setMenu} />
-                    <Tasks Project={Project} />
+                    <Tasks Project={Project} loading={loading} setLoading={setLoading} />
                     
                     {/* {
                         Project === "New Tasks" ? <Tasks devTasks={devTasks} Project={Project} />

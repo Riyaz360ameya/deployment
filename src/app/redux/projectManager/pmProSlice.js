@@ -41,9 +41,9 @@ const pmProSlice = createSlice({
                 state.books[projectIndex] = action.payload.updatedProject
             }
         },
-        resetProject: () => initialState,
+        resetPmProject: () => initialState,
     }
 })
 
-export const { pmNewProjects, pmOngoingProjects, pmCompletedProjects, addNewOnGoProject, removePmProject, updatePmProject, resetProject, leadTaskAssign } = pmProSlice.actions;
+export const { pmNewProjects, pmOngoingProjects, pmCompletedProjects, addNewOnGoProject, removePmProject, updatePmProject, resetPmProject, leadTaskAssign } = pmProSlice.actions;
 export default pmProSlice.reducer;
