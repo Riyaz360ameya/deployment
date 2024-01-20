@@ -35,8 +35,9 @@ export const upDateLeadTask = async ({ devName, devId, teamLeadId, projectId }) 
         // Remove the item from newTasks
         upDatedLeadTask.newTasks = upDatedLeadTask.newTasks.filter(task => task.projectId.toString() !== projectId);
         const leadTasks = await upDatedLeadTask.save();
-        console.log(leadTasks, '-------after changes');
-        return leadTasks
+        const latestOnGoingTask = upDatedLeadTask.onGoingTasks[upDatedLeadTask.onGoingTasks.length - 1];
+        console.log(latestOnGoingTask, '-------latest added onGoing project');
+        return latestOnGoingTask;
     } catch (error) {
         console.error(error.message,'--------------error.message');
         return NextResponse.json({ error: error.message }, { status: 500 });

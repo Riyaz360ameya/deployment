@@ -12,67 +12,77 @@ import { teamLeadCompletedProjectsStore, teamLeadNewProjectsStore, teamLeadOngoi
 const Projects = () => {
     const leadOnGoingTask = useSelector((state) => state.leadTasks.teamLeadOngoingProjects)
     const leadnewTasks = useSelector((state) => state.leadTasks.teamLeadNewProjects)
-    console.log(leadnewTasks, "leadnewTasks--------------")
     const leadCompletedTasks = useSelector((state) => state.leadTasks.teamLeadCompletedProjects)
-    console.log(leadCompletedTasks, "leadCompletedTasks--------------")
-    console.log(leadOnGoingTask, "------------------------onGoingTask")
+    console.log(leadnewTasks.length, '---------11----------leadnewTasks')
+    console.log(leadOnGoingTask.length, '---------22----------leadOnGoingTask')
     const dispatch = useDispatch();
-    const [project, setProject] = useState({});
+    // setting Store data in a state
+    const [leadNew, setLeadNew] = useState(leadnewTasks)
+    const [leadOn, setLeadOn] = useState(leadOnGoingTask)
+    const [leadCom, setLeadCom] = useState(leadCompletedTasks)
+
     const [projectId, setProjectId] = useState('')
     const [modal, setModal] = useState(false);
     const [cModal, setCModal] = useState(false)
-    const [newTasks, setNewTasks] = useState([])
-    const [onGoing, setOnGoing] = useState([])
-    const [completed, setCompleted] = useState([])
-    const [data, setData] = useState([])
-    const [leadData, setLeadData] = useState(leadOnGoingTask)
+    const [leadData, setLeadData] = useState([])
     const [position, setPosition] = useState("New Task")
-    const handleAssign = (id) => {
-        setModal(true);
-        setProjectId(id)
-    };
-    const handleData = (name) => {
-        if (name === "New Task") {
-            setPosition(name)
-            setData(leadnewTasks)
-        } else if (name === "OnGoing") {
-            setPosition(name)
-            setData(leadOnGoingTask)
-        } else if (name === "Completed") {
-            setPosition(name)
-            setData(leadCompletedTasks)
-        }
-    }
+
     const fetchTasks = async () => {
         try {
             const { data } = await getAllTasks()
-            setData(data.LeadTasks.newTasks)
-            setNewTasks(data.LeadTasks.newTasks)
             dispatch(teamLeadNewProjectsStore(data.LeadTasks.newTasks))
-            setOnGoing(data.LeadTasks.onGoingTasks)
+            setLeadNew(data.LeadTasks.newTasks)
             dispatch(teamLeadOngoingProjectsStore(data.LeadTasks.onGoingTasks))
-            setCompleted(data.LeadTasks.completedTasks)
+            setLeadOn(data.LeadTasks.onGoingTasks)
             dispatch(teamLeadCompletedProjectsStore(data.LeadTasks.completedTasks))
+            setLeadCom(data.LeadTasks.completedTasks)
         } catch (error) {
             console.error(error.message);
             toast.error(error)
         }
     };
-    // useEffect(() => {
-    //     fetchTasks();
-    //     setLeadData(leadOnGoingTask)
-
-    // }, [leadOnGoingTask]);
+    const settingLeadData = (position) => {
+        if (position === "New Task") {
+            console.log(position, '----', leadnewTasks.length, '................leadnewTasks')
+            setLeadData(leadNew)
+        } else if (position === "OnGoing") {
+            console.log(position, '----', leadOnGoingTask, '................leadOnGoingTask')
+            setLeadData(leadOn)
+        } else if (position === "Completed") {
+            console.log(position, '----', leadCompletedTasks.length, '................leadCompletedTasks')
+            setLeadData(leadCom)
+        }
+    }
     useEffect(() => {
         fetchTasks();
+        settingLeadData(position)
     }, []);
     useEffect(() => {
-        setLeadData(leadOnGoingTask);
-    }, [leadOnGoingTask]);
-        
+        settingLeadData(position)
+    }, [position]);
+
+    // Assigning Task................
+    const handleAssign = (id) => {
+        setModal(true);
+        setProjectId(id)
+    };
+    // when new task asiigned .........
+    useEffect(() => {
+        settingLeadData(position)
+    }, [leadnewTasks, leadOnGoingTask]);
+
+    // When update on each store data
+    useEffect(() => {
+        setLeadNew(leadnewTasks)
+        setLeadOn(leadOnGoingTask)
+        setLeadCom(leadCompletedTasks)
+    }, [leadnewTasks,leadOnGoingTask, leadCompletedTasks]);
+
+
+
     const onGoingFurthur = () => {
         setPosition('OnGoing')
-        setLeadData(leadOnGoingTask);
+        console.log(leadOnGoingTask, '---------------------------leadOnGoingTask')
     }
     const handleUpdate = (id) => {
         setCModal(true)
@@ -84,13 +94,13 @@ const Projects = () => {
                 <div className=''>
                     <h1 className='text-xl p-2'>Projects</h1>
                     <div className='flex gap-4 ml-2'>
-                        <div onClick={() => handleData("New Task")} className={`py-2 px-8  ${position === "New Task" && "bg-indigo-100"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl`}>
+                        <div onClick={() => setPosition("New Task")} className={`py-2 px-8  ${position === "New Task" && "bg-indigo-100"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl`}>
                             <p className=''>New Task</p>
                         </div>
-                        <div onClick={() => handleData("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
+                        <div onClick={() => setPosition("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
                             <p>OnGoing</p>
                         </div>
-                        <div onClick={() => handleData("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
+                        <div onClick={() => setPosition("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
                             <p>Completed</p>
                         </div>
                     </div>
@@ -126,16 +136,15 @@ const Projects = () => {
                                         <th>Options</th>
                                     </>
                                 }
-
                             </tr>
                             <tr className='h-5'></tr>
                             {
-                                data.length === 0 ? (
+                                leadData.length === 0 ? (
                                     <tr className="text-center mt-10 shadow-xl border">
                                         <td colSpan="8" className='text-2xl text-blue-600'>No Tasks</td>
                                     </tr>
                                 ) :
-                                    data.map((item, i) => {
+                                    leadData.map((item, i) => {
                                         return (
                                             <tr key={i} className='text-center mt-10 shadow-xl border'>
                                                 <td>{i + 1}</td>
@@ -147,37 +156,37 @@ const Projects = () => {
                                                 <td className="">
                                                     <div className="flex items-center gap-2  ml-5">
                                                         <FaLink color='blue' />
-                                                        <p className="text-base font-medium  text-gray-700 ">{item.projectTitle}</p>
+                                                        <p className="text-base font-medium  text-gray-700 ">{item?.projectTitle}</p>
                                                     </div>
                                                 </td>
                                                 <td className="">
                                                     <div className="flex items-center justify-center">
                                                         <FiAlertOctagon color='red' />
-                                                        <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
+                                                        <p className="text-sm text-gray-600 ml-2">{item?.importance}</p>
                                                     </div>
                                                 </td>
-                                                <td className='text-center'>{dateConverter(item.assignedDate)}</td>
-                                                <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.instruction}</td>
-                                                <td className='bg-red-200 rounded text-red-600'>{item.endDate}</td>
-                                                {position !== "New Task" && <td>{item.assignedDeveloperName}</td>}
-                                                <td>{item.status}</td>
+                                                <td className='text-center'>{dateConverter(item?.assignedDate)}</td>
+                                                <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item?.instruction}</td>
+                                                <td className='bg-red-200 rounded text-red-600'>{item?.endDate}</td>
+                                                {position !== "New Task" && <td>{item?.assignedDeveloperName}</td>}
+                                                <td>{item?.status}</td>
                                                 <td className='flex gap-2 items-center justify-center'>
                                                     {
-                                                        item.status === "New Task" ?
+                                                        item?.status === "New Task" ?
 
-                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item.projectId)} >
+                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item?.projectId)} >
                                                                 Assign Task to
                                                             </button>
                                                             :
-                                                            item.status === "Assigned" ?
+                                                            item?.status === "Assigned" ?
                                                                 <>
                                                                     <button className='px-3 bg-blue-600 text-white rounded'>E</button>
                                                                     <button className='px-3 bg-red-600 text-white rounded'>D</button>
                                                                 </>
                                                                 :
                                                                 position !== "Completed" &&
-                                                                    item.status === "Completed" ?
-                                                                    <button className='px-3 bg-blue-600 text-white rounded' onClick={() => handleUpdate(item.projectId)}>Update</button>
+                                                                    item?.status === "Completed" ?
+                                                                    <button className='px-3 bg-blue-600 text-white rounded' onClick={() => handleUpdate(item?.projectId)}>Update</button>
                                                                     : ""
                                                     }
                                                 </td>
@@ -189,7 +198,7 @@ const Projects = () => {
                     </table>
                 </div>
                 {
-                    modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurthur={onGoingFurthur} fetchTasks={fetchTasks} /> : ""
+                    modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurthur={onGoingFurthur}  /> : ""
                 }
                 {
                     cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""

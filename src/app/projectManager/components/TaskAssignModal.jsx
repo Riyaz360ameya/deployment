@@ -4,9 +4,9 @@ import { InfinitySpin } from 'react-loader-spinner';
 import { BeatLoader } from 'react-spinners';
 import { useDispatch, useSelector } from 'react-redux'
 import { assignLeadTask } from '../pmAPIs/taskApis';
-import { addNewOnGoProject, leadTaskAssign } from '@/app/redux/projectManager/pmProSlice';
+import { addNewOnGoProject, leadTaskAssign, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
 
-const TaskAssignModal = ({ setModal, projectId, item }) => {
+const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing }) => {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
     const [task, setTask] = useState({
@@ -19,27 +19,24 @@ const TaskAssignModal = ({ setModal, projectId, item }) => {
         endDate: '',
         projectId: projectId
     });
-
     const onClose = () => {
         setModal(false);
     };
-
     const handleClose = (e) => {
         if (e.target.id === 'container') {
             onClose();
         }
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-
         try {
             const { data } = await assignLeadTask(task)
-            dispatch(leadTaskAssign(item));
-            dispatch(addNewOnGoProject(data.newOngoing))
+            console.log(data, '.................data on asiigning')
+            dispatch(leadTaskAssign(itemId));
+            dispatch(pmOngoingProjects(data.newOngoing))
             toast.success(data.message);
-            // moveONgoing()
+            moveONgoing()
             setModal(false);
             setLoading(false);
         } catch (error) {

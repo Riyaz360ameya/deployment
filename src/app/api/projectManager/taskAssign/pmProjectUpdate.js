@@ -1,4 +1,5 @@
 import pmProjectsModel from "../../models/ProjectManager/pmProjects"
+import projectInfoModel from "../../models/projectInfoModel";
 
 export const pmProjectUpdate = async ({ projectId, latestNewTaskId, teamLeadId, proManagerId }) => {
     try {
@@ -25,11 +26,19 @@ export const pmProjectUpdate = async ({ projectId, latestNewTaskId, teamLeadId, 
         // Remove the item from newProjects
         pmNewProject.newProjects = pmNewProject.newProjects.filter(task => task.projectId.toString() !== projectId);
         const pmTasks = await pmNewProject.save();
-        const newOngoing = pmNewProject.onGoingProjects.find(task => task.projectId.toString() === projectId);
-        console.log(pmNewProject, '-------after changes');
-        return newOngoing
+        let newOngoing = pmNewProject.onGoingProjects.find(task => task.projectId.toString() === projectId);
+        console.log(newOngoing, '----------------------newOngoing')
+        // await newOngoing.populate('projectId')
+        // console.log(newOngoing, '--------------finalData');
+        const PmProjects = await pmProjectsModel.findOne({ proManagerId })
+            .populate({
+                path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.projectId completedProjects.userId completedProjects.projectId',
+                select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry',
+            }).sort({ projectReachedOn: -1 });
+            console.log(PmProjects,'--------------------PmProjects')
+        const dataOngoing = PmProjects.onGoingProjects
+        return dataOngoing
     } catch (error) {
         console.log(error.message, '-----------------------pm Project Update')
     }
-    // leadTasks
 }

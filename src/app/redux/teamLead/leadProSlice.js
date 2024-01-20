@@ -20,11 +20,11 @@ const teamLeadProSlice = createSlice({
       state.teamLeadCompletedProjects = action.payload;
     },
     teamLeadTaskAssign: (state, action) => {
-      console.log(action.payload, '---------redux--------teamLeadTaskAssign')
-      // state.taskAssiginedByTeamLead = action.payload;
+      // by assignung it remove the perticular project from its array
+      state.teamLeadNewProjects = state.teamLeadNewProjects.filter((item) => item.projectId !== action.payload);
     },
-    addNewteamLeadProject: (state, action) => {
-      state.teamLeadNewProjects.unshift(action.payload);
+    addNewLeadTaskProject: (state, action) => {
+      state.teamLeadOngoingProjects.push(action.payload);
     },
     removeteamLeadProject: (state, action) => {
       state.teamLeadNewProjects = state.teamLeadNewProjects.filter((project) => project._id !== action.payload);
@@ -43,7 +43,7 @@ export const {
   teamLeadOngoingProjectsStore,
   teamLeadCompletedProjectsStore,
   teamLeadTaskAssign,
-  addNewteamLeadProject,
+  addNewLeadTaskProject,
   removeteamLeadProject,
   updateteamLeadProject,
 } = teamLeadProSlice.actions;

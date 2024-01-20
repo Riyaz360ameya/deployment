@@ -7,66 +7,96 @@ import Badge from './Badge';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux'
-import { pmAllProjects } from '../pmAPIs/projectApis';
-import { leadTaskAssign, pmCompletedProjects, pmNewProjects, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
+import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
+import { completePmProject, pmCompletedProjects, pmNewProjects, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
 
 const Projects = ({ loading, setLoading }) => {
-    const dispatch = useDispatch()
-    const [projectId, setProjectId] = useState()
-    const [position, setPosition] = useState("New")
-    const [item, setItem] = useState()
-    const [modal, setModal] = useState(false);
     const pmNewPro = useSelector((state) => state.pmProjects.pmNewProjects)
     const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
     const pmComPro = useSelector((state) => state.pmProjects.pmCompletedProjects)
-    // console.log(pmNewPro, '------store----projects--------pmNewPro')
+    console.log(pmNewPro.length, '---------------new-----------pmNewPro')
+    console.log(pmOnGoPro, '--------------ON------------pmOnGoPro')
+    console.log(pmComPro.length, '----------------comp----------pmComPro')
+    const dispatch = useDispatch()
+    // setting store values in a state
+    const [pmNew, setPmNew] = useState(pmNewPro)
+    const [pmOn, setPmOn] = useState(pmOnGoPro)
+    const [pmCom, setPmCom] = useState(pmComPro)
+
+    const [projectId, setProjectId] = useState()
+    const [modal, setModal] = useState(false);
     const [projects, setProjects] = useState([]);
-    const handleData = (position) => {
-        // setPosition(name)
-        position === "New" ? setProjects(pmNewPro)
-            : position === "OnGoing" ? setProjects(pmOnGoPro)
-                : position === "Completed" ? setProjects(pmComPro)
-                    : "";
-    };
-    useEffect(() => {
-        handleData(position)
-        console.log('........position.........')
+    const [position, setPosition] = useState("New")
+    const [item, setItem] = useState()
 
-    }, [position]);
+    const getAllPmProjects = async () => {
+        setLoading(true);
+        try {
+            const { data } = await pmAllProjects()
+            dispatch(pmNewProjects(data.PmProjects.newProjects))
+            setPmNew(data.PmProjects.newProjects)
+            dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
+            setPmOn(data.PmProjects.onGoingProjects)
+            dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
+            setPmCom(data.PmProjects.completedProjects)
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching tasks:', error.message);
+            setLoading(false);
+        }
+    }
+    const settingAllPmProjects = (position) => {
+        if (position === "New") {
+            console.log(position, '----', pmNewPro.length, '................pmNewPro')
+            setProjects(pmNew)
+        } else if (position === "OnGoing") {
+            console.log(position, '----', pmOnGoPro, '................pmOnGoPro')
+            setProjects(pmOnGoPro)
+        } else if (position === "Completed") {
+            console.log(position, '----', pmComPro.length, '................pmComPro')
+            setProjects(pmCom)
+        }
+    }
     useEffect(() => {
-        setProjects(pmComPro)
-        setPosition("Completed")
-        console.log('........pmComPro.........its calling')
-    }, [pmComPro]);
+        getAllPmProjects()
+        settingAllPmProjects(position)
+    }, [])
     useEffect(() => {
-        setProjects(pmOnGoPro)
-        setPosition("OnGoing")
-        console.log('........pmOnGoPro.........its calling')
-    }, [pmOnGoPro]);
-    useEffect(() => {
-        setProjects(pmNewPro)
-        setPosition("New")
-        console.log('........pmNewPro.........its calling')
-    }, [pmNewPro]);
+        settingAllPmProjects(position)
+    }, [position])
 
+    // Assigning New Task to Lead............
     const handleAssign = ({ projectId, itemId }) => {
         setModal(true);
         setProjectId(projectId)
         setItem(itemId)
     };
+    // when a new task is assigned...................
+    useEffect(() => {
+        settingAllPmProjects(position)
+    }, [pmNewPro, pmOnGoPro]);
 
-    // const moveONgoing = () => {
-    //     setPosition('OnGoing')
-    //     setProjects(pmOnGoPro)
-    // }
-    const handleUpdate = async (projectId) => {
-        // try {
-        //     const { data } = await projectCompleted(projectId)
-        //     toast.success(data.message)
-        // } catch (error) {
-        //     console.log(error.message)
-        //     toast.error(error.response.data.error);
-        // }
+    // When update on each store data
+    useEffect(() => {
+        setPmNew(pmNewPro)
+        setPmOn(pmOnGoPro)
+        setPmCom(pmComPro)
+    }, [pmNewPro, pmOnGoPro, pmComPro])
+
+    const moveONgoing = () => {
+        setPosition('OnGoing')
+        console.log(pmOnGoPro, '---------------------------pmOnGoPro')
+    }
+    const handleUpdate = async ({ projectId, itemId }) => {
+        try {
+            const { data } = await projectCompleted(projectId)
+            // dispatch(completePmProject(itemId));
+            // dispatch(pmCompletedProjects(data.upDatedPmPro))
+            toast.success(data.message)
+        } catch (error) {
+            console.log(error.message)
+            toast.error(error.response.data.error);
+        }
     }
     return (
         <>
@@ -146,7 +176,7 @@ const Projects = ({ loading, setLoading }) => {
                                                         </div>
                                                     </td>
                                                     <td className=''>
-                                                        <p>{item.projectId._id.slice(14, 23)}</p>
+                                                        <p>{item.projectId._id}</p>
                                                     </td>
                                                     <td className='text-center'>{item.projectId.projectInfo.ventureType}</td>
                                                     <td className='flex items-center justify-center gap-2'>
@@ -173,7 +203,7 @@ const Projects = ({ loading, setLoading }) => {
                                                                         </>
                                                                         :
                                                                         item.status === "Completed" ?
-                                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleUpdate(item.projectId._id)} >Update</button>
+                                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id })} >Update</button>
                                                                             : <p className='text-red-600'>
                                                                                 Not Payed
                                                                             </p>
@@ -186,7 +216,7 @@ const Projects = ({ loading, setLoading }) => {
                             </tbody>
                         </table>
                     </div>
-                    {modal ? <TaskAssignModal projectId={projectId} setModal={setModal} item={item} /> : ''}
+                    {modal ? <TaskAssignModal projectId={projectId} setModal={setModal} itemId={item} moveONgoing={moveONgoing} /> : ''}
                 </div>
             )}
         </>

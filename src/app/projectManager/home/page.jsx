@@ -15,36 +15,18 @@ import { useDispatch } from 'react-redux'
 import { pmCompletedProjects, pmNewProjects, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice'
 const page = () => {
     const dispatch = useDispatch()
-    const [loader, setLoader] = useState(false)
     const [menu, setMenu] = useState(true)
     const [Project, setProject] = useState("Projects")
     const [loading, setLoading] = useState(true);
 
-    const getAllPmProjects = async() => {
-        setLoading(true);
-        try {
-            const { data } = await pmAllProjects()
-            dispatch(pmNewProjects(data.PmProjects.newProjects))
-            dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
-            dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
-            // setProjects(data.PmProjects.newProjects)
-            console.log(data.PmProjects.newProjects[0], '------------------new One')
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching tasks:', error.message);
-            setLoading(false);
-        }
-    }
-    useEffect(() => {
-        getAllPmProjects()
-    }, [])
+    
 
     return (
         <>
             <div className='h-screen flex w-full '>
                 <Sidebar setLoading={setLoading} Project={Project} setProject={setProject} menu={menu} />
                 <div className="flex flex-col flex-1">
-                    <Header setLoader={setLoader} menu={menu} setMenu={setMenu} />
+                    <Header menu={menu} setMenu={setMenu} />
                     {
                         Project === "Dashboard" ? <Dashboard loading={loading} setLoading={setLoading} />
                             : Project === "Projects" ? <Projects loading={loading} setLoading={setLoading} />
