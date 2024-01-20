@@ -20,20 +20,22 @@ function ClientInformation() {
     const [position, setPosition] = useState("New")
     const [projects, setProjects] = useState([]);
     const fetchTasks = async () => {
-        setLoading(true);
-        try {
-            const { data } = await userProjects()
-            const NewProjects = data.projectsInformation.NewProjects;
-            dispatch(userNewProjects(NewProjects))
-            const onGoingProjects = data.projectsInformation.onGoingProjects;
-            dispatch(userOngoingProjects(onGoingProjects))
-            const completedProjects = data.projectsInformation.completedProjects;
-            dispatch(userCompletedProjects(completedProjects))
-            setProjects(NewProjects)
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching tasks:', error.message);
-            setLoading(false);
+        if (userNewPro.length === 0) {
+            setLoading(true);
+            try {
+                const { data } = await userProjects()
+                const NewProjects = data.projectsInformation.NewProjects;
+                dispatch(userNewProjects(NewProjects))
+                const onGoingProjects = data.projectsInformation.onGoingProjects;
+                dispatch(userOngoingProjects(onGoingProjects))
+                const completedProjects = data.projectsInformation.completedProjects;
+                dispatch(userCompletedProjects(completedProjects))
+                setProjects(NewProjects)
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching tasks:', error.message);
+                setLoading(false);
+            }
         }
     };
     const handleData = (name) => {

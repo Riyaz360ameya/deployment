@@ -58,11 +58,18 @@ const Projects = () => {
             toast.error(error)
         }
     };
+    // useEffect(() => {
+    //     fetchTasks();
+    //     setLeadData(leadOnGoingTask)
+
+    // }, [leadOnGoingTask]);
     useEffect(() => {
         fetchTasks();
-        setLeadData(leadOnGoingTask)
-
+    }, []);
+    useEffect(() => {
+        setLeadData(leadOnGoingTask);
     }, [leadOnGoingTask]);
+        
     const onGoingFurthur = () => {
         setPosition('OnGoing')
         setLeadData(leadOnGoingTask);

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { assignLeadTask } from '../pmAPIs/taskApis';
 import { addNewOnGoProject, leadTaskAssign } from '@/app/redux/projectManager/pmProSlice';
 
-const TaskAssignModal = ({ setModal, projectId, item, moveONgoing }) => {
+const TaskAssignModal = ({ setModal, projectId, item }) => {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
     const [task, setTask] = useState({
@@ -39,7 +39,7 @@ const TaskAssignModal = ({ setModal, projectId, item, moveONgoing }) => {
             dispatch(leadTaskAssign(item));
             dispatch(addNewOnGoProject(data.newOngoing))
             toast.success(data.message);
-            moveONgoing()
+            // moveONgoing()
             setModal(false);
             setLoading(false);
         } catch (error) {
@@ -58,13 +58,11 @@ const TaskAssignModal = ({ setModal, projectId, item, moveONgoing }) => {
             <div className='bg-white p-8 rounded'>
                 <h1 className='text-center text-xl'>Task Assigning</h1>
 
-                {loading && (
+                {loading ?
                     <div className='flex items-center justify-center'>
                         <InfinitySpin width='200' color='black' />
                     </div>
-                )}
-
-                {!loading && (
+                    :
                     <form onSubmit={handleSubmit} className='space-y-2'>
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="">Select Team</label>
@@ -167,7 +165,7 @@ const TaskAssignModal = ({ setModal, projectId, item, moveONgoing }) => {
                             </button>
                         </div>
                     </form>
-                )}
+                }
             </div>
         </div>
     );
