@@ -20,10 +20,12 @@ function ClientInformation() {
     const userOnGoPro = useSelector((state) => state.userProjects.userOngoingProjects)
     const userCompPro = useSelector((state) => state.userProjects.userCompletedProjects)
     const fetchTasks = async () => {
-        if (!userNewPro) {
+        console.log(userNewPro, '------------------------userNewPro')
+        if (userNewPro.length === 0) {
             setLoading(true);
             try {
                 const { data } = await userProjects()
+                console.log(data, '---------------------data')
                 const NewProjects = data.projectsInformation.NewProjects;
                 dispatch(userNewProjects(NewProjects))
                 const onGoingProjects = data.projectsInformation.onGoingProjects;
