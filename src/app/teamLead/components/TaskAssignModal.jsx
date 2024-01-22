@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import { InfinitySpin } from 'react-loader-spinner'
 import { BeatLoader } from 'react-spinners'
-import { useDispatch,useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { devUnderLead, taskAssign } from '../leadAPIs/taskApi'
-import { teamLeadNewProjectsStore, teamLeadTaskAssign } from '@/app/redux/teamLead/leadProSlice'
-const TaskAssignModal = ({ setModal, projectId ,onGoingFurthur,fetchTasks}) => {
+import { addNewLeadTaskProject, teamLeadTaskAssign } from '@/app/redux/teamLead/leadProSlice'
+const TaskAssignModal = ({ setModal, projectId, onGoingFurthur }) => {
+    const dispatch = useDispatch()
+    const user = useSelector((state) => state.lead.leadDetails);
     const [loading, setLoading] = useState(false)
     const [developers, setDevelopers] = useState([])
     const [task, setTask] = useState({
@@ -30,14 +32,13 @@ const TaskAssignModal = ({ setModal, projectId ,onGoingFurthur,fetchTasks}) => {
         e.preventDefault();
         setLoading(true);
         try {
-            const LeadDetails = JSON.parse(localStorage.getItem('TeamLead'));
-            task.assignedBy = LeadDetails._id
-            console.log(task, '---------task assigned')
+            task.assignedBy = user._id
+            console.log(task, '---------given task')
             const { data } = await taskAssign(task)
-            // dispatch(teamLeadTaskAssign(data));
-            console.log(data, '--------------response')
+            console.log(data, '-------return message-------response')
+            dispatch(teamLeadTaskAssign(projectId));
+            dispatch(addNewLeadTaskProject(data.updateTask)); // Access the 'updateTask' property
             toast.success(data.message)
-            fetchTasks();
             onGoingFurthur()
             setLoading(false)
         } catch (error) {

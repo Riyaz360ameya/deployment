@@ -10,7 +10,7 @@ export const userProjectUpdate = async ({ projectId }) => {
         const user = await userModel.findById(userId)
         const userDATA = await userProjectsModel.findOne({ userId })
         const data = userDATA.NewProjects.find(task => task.ProjectId.toString() === projectId);
-        console.log(data, '------------.toString()')
+        // console.log(data, '------------.toString()')
         if (!data) {
             console.log(error.message, '---error data=')
             return NextResponse.json({ error: "Project is Not found" }, { status: 404 })
@@ -21,9 +21,9 @@ export const userProjectUpdate = async ({ projectId }) => {
             status: "Started",
             payment: "50% Payed",
         })
-        console.log(user,'...........user')
+        // console.log(user,'...........user')
         const userUpdate = await userDATA.save();
-        console.log(userUpdate, '................updated user')
+        // console.log(userUpdate, '................updated user')
         // Remove the item from NewProjects
         userUpdate.NewProjects = userUpdate.NewProjects.filter(task => task.ProjectId.toString() !== projectId);
         const userPro = await userUpdate.save();

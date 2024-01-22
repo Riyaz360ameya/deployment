@@ -30,7 +30,6 @@ function page() {
             const { data } = await pmLogInApi(user)
             dispatch(pmDetails(data.user));
             dispatch(accessToken(data.token));
-            console.log(data, '.............data')
             toast.success(data.message)
             router.push("/projectManager/home")
             setLoading(false)

@@ -19,19 +19,15 @@ const pmProSlice = createSlice({
             state.pmCompletedProjects = action.payload
         },
         leadTaskAssign: (state, action) => {
+            // its mean need to remove the a specific project from the newProjects
             console.log(action.payload, '-----------projectIdToRemove')
-            console.log('Before Removal:---', state.pmNewProjects.map(project => ({ ...project, projectId: { ...project.projectId } }))); // Log a copy of the state before removal
-            const projectIdToRemove = action.payload;
-            state.pmNewProjects = state.pmNewProjects.filter((project) => project._id !== projectIdToRemove);
-            console.log('after Removal:---', state.pmNewProjects.map(project => ({ ...project, projectId: { ...project.projectId } }))); // Log a copy of the state before removal
-            // state.pmNewProjects = state.pmNewProjects.filter((std) => std.projectId._id !== action.payload)
-            // console.log(s,'-------------2')
+            state.pmNewProjects = state.pmNewProjects.filter((data) => data._id !== action.payload)
         },
         addNewOnGoProject: (state, action) => {
             state.pmOngoingProjects.push(action.payload)
         },
-        removePmProject: (state, action) => {
-            state.pmNewProjects = state.pmNewProjects.filter((std) => std._id !== action.payload)
+        completePmProject: (state, action) => {
+            state.pmOngoingProjects = state.pmNewProjects.filter((data) => data._id  !== action.payload)
         },
         updatePmProject: (state, action) => {
             const updatedProjectIndex = state.pmOngoingProjects.findIndex(project => project._id === action.payload.id);
@@ -45,5 +41,5 @@ const pmProSlice = createSlice({
     }
 })
 
-export const { pmNewProjects, pmOngoingProjects, pmCompletedProjects, addNewOnGoProject, removePmProject, updatePmProject, resetPmProject, leadTaskAssign } = pmProSlice.actions;
+export const { pmNewProjects, pmOngoingProjects, pmCompletedProjects, addNewOnGoProject, completePmProject, updatePmProject, resetPmProject, leadTaskAssign } = pmProSlice.actions;
 export default pmProSlice.reducer;

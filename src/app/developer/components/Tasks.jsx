@@ -5,15 +5,19 @@ import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux';
 import { completeTask, startTask } from '../devApis/taskApi';
-import { developerCompletedProjectsStore, developerOngoingProjectsStore } from '@/app/redux/developer/developerProSlice';
+import { developerCompletedProjectsStore, developerOngoingProjectsStore ,developerNewProjectsStore} from '@/app/redux/developer/developerProSlice';
 import { InfinitySpin } from 'react-loader-spinner';
+
 const Tasks = ({ Project, loading, setLoading }) => {
-    const [tasks, setTasks] = useState([])
     const dispatch = useDispatch();
+    const [tasks, setTasks] = useState([])
     const devNewTasks = useSelector((state) => state.devloperTaskUpdates.developerNewTasks);
+    console.log(devNewTasks,'-----------new task-------------')
     const devOnGoTasks = useSelector((state) => state.devloperTaskUpdates.developerOngoingTasks);
     console.log(devOnGoTasks, '--------devOnGoTasks-----------')
     const devCompTasks = useSelector((state) => state.devloperTaskUpdates.developerCompletedTasks);
+    const newTasks = useSelector((state) => state.devloperTaskUpdates.developerNewTasks);
+
     // console.log(devCompTasks, '----devCompTasks-----------------')
     const setProjects = (Project) => {
         console.log(Project, '-------------------------Project');
@@ -31,6 +35,10 @@ const Tasks = ({ Project, loading, setLoading }) => {
         setProjects(Project);
         console.log('its............. Project.............. effect')
     }, [Project]);
+    // useEffect(() => {
+    //     setProjects(newTasks);
+    //     console.log('its............. newTasks.............. effect');
+    // }, [newTasks]);
     useEffect(() => {
         setProjects(Project);
         console.log('its ...........devCompTasks........... effect')
@@ -43,7 +51,7 @@ const Tasks = ({ Project, loading, setLoading }) => {
         setProjects(Project);
         console.log('its.......... New............. effect')
     }, [devNewTasks]);
-
+   
     const handleStartClick = async (projectId) => {
         try {
             setLoading(true);
@@ -54,7 +62,13 @@ const Tasks = ({ Project, loading, setLoading }) => {
             if (updatedDev) {
                 const ongoingWork = updatedDev.onGoingTasks;
                 console.log(ongoingWork, 'ongoingWork----------');
-                dispatch(developerOngoingProjectsStore(ongoingWork));
+                // dispatch(developerOngoingProjectsStore(ongoingWork));
+               // Update ongoing tasks in the Redux store
+        dispatch(developerOngoingProjectsStore(ongoingWork));
+
+        // Filter out the started task from devNewTasks
+        const updatedNewTasks = devNewTasks.filter(task => task.projectId !== projectId);
+        dispatch(developerNewProjectsStore(updatedNewTasks));
                 toast.success(data.message);
                 // onGoingFurthur()
                 setLoading(false);

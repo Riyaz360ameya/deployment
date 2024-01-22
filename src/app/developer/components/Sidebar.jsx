@@ -6,7 +6,8 @@ import { VscWorkspaceTrusted } from "react-icons/vsc";
 import { MdLogout } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner'
-import profileImage from '../../../../public/profileImage.jpg'
+
+import profileImage from '../../../../public/devImag.png'
 // import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
 import { logOut } from '../devApis/authApi';
@@ -48,7 +49,6 @@ const Sidebar = ({ menu, setProject, Project }) => {
                         width={menu ? 200 : 100}
                         height={menu ? 200 : 100}
                     />
-                    {/* <img src={profileImage}/> */}
                 </div>
                 <div>
                     <h1 className={`text-${menu ? '2xl' : 'md'} text-center font-bold`}>{user?.firstName} {user?.lastName}</h1>

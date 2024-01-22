@@ -34,8 +34,7 @@ export const PUT = async (request = NextRequest) => {
         const upDatedPmPro = await upDatePmProject({ data, findPmProjects, projectId })
         const userId = data.userId.toString()
         const upDatedLead = await upDateClientProject({ projectId, userId })
-
-        return NextResponse.json({ message: "Project Completed", success: true }, { upDatedPmPro }, { status: 200 });
+        return NextResponse.json({ message: "Project Completed", success: true, upDatedPmPro }, { status: 200 });
     } catch (error) {
         console.error(error.message, '--------error message');
         return NextResponse.json({ error:error.message }, { status: 500 });
