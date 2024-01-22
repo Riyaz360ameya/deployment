@@ -43,13 +43,6 @@ const page = () => {
                 <div className="flex flex-col flex-1">
                     <Header setLoader={setLoader} menu={menu} setMenu={setMenu} />
                     <Tasks Project={Project} loading={loading} setLoading={setLoading} />
-                    
-                    {/* {
-                        Project === "New Tasks" ? <Tasks devTasks={devTasks} Project={Project} />
-                            : Project === "Ongoing Tasks" ? <Tasks devTasks={devTasks} Project={Project} />
-                                : Project === "Completed" ? <Tasks devTasks={devTasks} Project={Project} />
-                                    : ""
-                    } */}
                 </div>
             </div>
         </>

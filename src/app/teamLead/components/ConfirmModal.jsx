@@ -3,9 +3,11 @@ import { GiCycle } from "react-icons/gi";
 import { IoPlayForwardSharp } from "react-icons/io5";
 import { toast } from 'sonner';
 import { forwardTask, reAssignTask } from '../leadAPIs/taskApi';
-
+import { useDispatch } from 'react-redux';
+import { teamLeadCompletedProjectsStore, teamLeadOngoingProjectsStore, updateteamLeadProject } from '@/app/redux/teamLead/leadProSlice';
 
 const ConfirmModal = ({ projectId, setCModal }) => {
+    const dispatch = useDispatch();
     const onClose = () => {
         setCModal(false)
     }
@@ -17,12 +19,17 @@ const ConfirmModal = ({ projectId, setCModal }) => {
     const handleAssign = async (projectId) => {
         console.log('Reassign-------iid')
         const { data } = await reAssignTask(projectId)
+        console.log(data,'--------re-assign')
+        dispatch(teamLeadOngoingProjectsStore(data.updatedTask.onGoingTasks))
         onClose()
         toast.success(data.message)
     }
     const handleForward = async (projectId) => {
         console.log(projectId, '-------id')
         const { data } = await forwardTask(projectId)
+        console.log(data.upDatedLead.onGoingTasks ,'----------data in move forward---------')
+        dispatch(teamLeadOngoingProjectsStore(data.upDatedLead.onGoingTasks))
+        dispatch(teamLeadCompletedProjectsStore(data.upDatedLead.completedTasks))
         toast.success(data.message)
         onClose()
     }

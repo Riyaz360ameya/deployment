@@ -9,15 +9,16 @@ import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux'
 import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
 import { completePmProject, pmCompletedProjects, pmNewProjects, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
+import { BeatLoader } from 'react-spinners';
 
 const Projects = ({ loading, setLoading }) => {
+    const dispatch = useDispatch()
     const pmNewPro = useSelector((state) => state.pmProjects.pmNewProjects)
     const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
     const pmComPro = useSelector((state) => state.pmProjects.pmCompletedProjects)
     console.log(pmNewPro.length, '---------------new-----------pmNewPro')
-    console.log(pmOnGoPro, '--------------ON------------pmOnGoPro')
+    console.log(pmOnGoPro.length, '--------------ON------------pmOnGoPro')
     console.log(pmComPro.length, '----------------comp----------pmComPro')
-    const dispatch = useDispatch()
     // setting store values in a state
     const [pmNew, setPmNew] = useState(pmNewPro)
     const [pmOn, setPmOn] = useState(pmOnGoPro)
@@ -28,17 +29,18 @@ const Projects = ({ loading, setLoading }) => {
     const [projects, setProjects] = useState([]);
     const [position, setPosition] = useState("New")
     const [item, setItem] = useState()
+    const [selectedItemIndex, setSelectedItemIndex] = useState(null);
 
     const getAllPmProjects = async () => {
         setLoading(true);
         try {
             const { data } = await pmAllProjects()
             dispatch(pmNewProjects(data.PmProjects.newProjects))
-            setPmNew(data.PmProjects.newProjects)
+            // setPmNew(data.PmProjects.newProjects)
             dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
-            setPmOn(data.PmProjects.onGoingProjects)
+            // setPmOn(data.PmProjects.onGoingProjects)
             dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
-            setPmCom(data.PmProjects.completedProjects)
+            // setPmCom(data.PmProjects.completedProjects)
             setLoading(false);
         } catch (error) {
             console.error('Error fetching tasks:', error.message);
@@ -48,13 +50,13 @@ const Projects = ({ loading, setLoading }) => {
     const settingAllPmProjects = (position) => {
         if (position === "New") {
             console.log(position, '----', pmNewPro.length, '................pmNewPro')
-            setProjects(pmNew)
+            setProjects(pmNewPro)
         } else if (position === "OnGoing") {
             console.log(position, '----', pmOnGoPro, '................pmOnGoPro')
             setProjects(pmOnGoPro)
         } else if (position === "Completed") {
             console.log(position, '----', pmComPro.length, '................pmComPro')
-            setProjects(pmCom)
+            setProjects(pmComPro)
         }
     }
     useEffect(() => {
@@ -74,28 +76,26 @@ const Projects = ({ loading, setLoading }) => {
     // when a new task is assigned...................
     useEffect(() => {
         settingAllPmProjects(position)
-    }, [pmNewPro, pmOnGoPro]);
-
-    // When update on each store data
-    useEffect(() => {
-        setPmNew(pmNewPro)
-        setPmOn(pmOnGoPro)
-        setPmCom(pmComPro)
-    }, [pmNewPro, pmOnGoPro, pmComPro])
+    }, [pmNewPro, pmOnGoPro, pmComPro]);
 
     const moveONgoing = () => {
         setPosition('OnGoing')
         console.log(pmOnGoPro, '---------------------------pmOnGoPro')
     }
-    const handleUpdate = async ({ projectId, itemId }) => {
+    const handleUpdate = async ({ projectId, itemId, index }) => {
         try {
+            console.log(itemId, '-----------item id')
+            setSelectedItemIndex(index);
             const { data } = await projectCompleted(projectId)
-            // dispatch(completePmProject(itemId));
-            // dispatch(pmCompletedProjects(data.upDatedPmPro))
+            console.log(data.allComProject, '------------------------data.allComProject')
+            dispatch(completePmProject(itemId));
+            dispatch(pmCompletedProjects(data.allComProject))
             toast.success(data.message)
+            setSelectedItemIndex(null); 
         } catch (error) {
             console.log(error.message)
             toast.error(error.response.data.error);
+            setSelectedItemIndex(null); 
         }
     }
     return (
@@ -203,7 +203,8 @@ const Projects = ({ loading, setLoading }) => {
                                                                         </>
                                                                         :
                                                                         item.status === "Completed" ?
-                                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id })} >Update</button>
+                                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id, index: i })} >{selectedItemIndex === i ? <BeatLoader color='white' /> : 'Update'}</button>
+
                                                                             : <p className='text-red-600'>
                                                                                 Not Payed
                                                                             </p>

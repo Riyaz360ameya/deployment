@@ -29,7 +29,7 @@ export const POST = async (request = NextRequest) => {
         const upDatedLead = await upDateLeadTask({ data, findLeadTask, projectId })
         const proManagerId = data.assignedPersonId
         const upDatePm = await upDatePmProjects({ data, proManagerId, projectId })
-        return NextResponse.json({ message: "Update Sent To Project Manager", success: true }, { upDatedLead }, { status: 200 });
+        return NextResponse.json({ message: "Update Sent To Project Manager", success: true,upDatedLead }, { status: 200 });
     } catch (error) {
         console.error(error.message, '------------POST error');
         return NextResponse.json({ error: error.message }, { status: 500 });

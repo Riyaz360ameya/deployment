@@ -19,5 +19,4 @@ export const getAllTasks = () => API.get('/allTasks')
 export const taskAssign = (task) => API.post("/taskAssign", task)
 export const forwardTask = (projectId) => API.post('/forward', { projectId })
 export const reAssignTask = (projectId) => API.post('/reAssign', { projectId })
-
 export const devUnderLead = (leadType) => API.get('/getDev')

@@ -36,7 +36,7 @@ export async function POST(request = NextRequest) {
             return NextResponse.json({ error: error.message }, { status: 404 })
         }
         const upDatedDev = await upDateDevTask({ findDevTask, projectId })
-        return NextResponse.json({ message: "Task Re-Assigned", success: true }, { updatedTask }, { status: 202 });
+        return NextResponse.json({ message: "Task Re-Assigned", success: true,updatedTask }, { status: 202 });
     } catch (error) {
         console.error(error.message, '------------POST error');
         return NextResponse.json({ error: error.message }, { status: 500 });

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Projects from '../components/Projects'
 import Developers from '../components/Developers'
 import Calender from '../components/Calender'
@@ -9,7 +9,9 @@ import Header from '../components/Header'
 const page = () => {
     const [loader, setLoader] = useState(false)
     const [menu, setMenu] = useState(true)
+
     const [Project, setProject] = useState("Projects")
+    
     return (
         <>
             <div className='h-screen flex w-full '>
@@ -17,8 +19,7 @@ const page = () => {
                 <div className="flex flex-col flex-1">
                     <Header setLoader={setLoader} menu={menu} setMenu={setMenu} />
                     {
-
-                        Project === "Projects" ? <Projects />
+                        Project === "Projects" ? <Projects  />
                             : Project === "Developers" ? <Developers />
                                 : Project === "Calender" ? <Calender />
                                     : ""
