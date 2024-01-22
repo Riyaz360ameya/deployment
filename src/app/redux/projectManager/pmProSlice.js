@@ -28,7 +28,7 @@ const pmProSlice = createSlice({
             // console.log(s,'-------------2')
         },
         addNewOnGoProject: (state, action) => {
-            state.pmOngoingProjects.unshift(action.payload)
+            state.pmOngoingProjects.push(action.payload)
         },
         removePmProject: (state, action) => {
             state.pmNewProjects = state.pmNewProjects.filter((std) => std._id !== action.payload)

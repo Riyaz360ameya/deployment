@@ -19,7 +19,6 @@ const page = () => {
     const [menu, setMenu] = useState(true)
     const [Project, setProject] = useState("Projects")
     const [loading, setLoading] = useState(true);
-
     const getAllPmProjects = async() => {
         setLoading(true);
         try {
@@ -27,7 +26,6 @@ const page = () => {
             dispatch(pmNewProjects(data.PmProjects.newProjects))
             dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
             dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
-            // setProjects(data.PmProjects.newProjects)
             console.log(data.PmProjects.newProjects[0], '------------------new One')
             setLoading(false);
         } catch (error) {
@@ -47,7 +45,7 @@ const page = () => {
                     <Header setLoader={setLoader} menu={menu} setMenu={setMenu} />
                     {
                         Project === "Dashboard" ? <Dashboard loading={loading} setLoading={setLoading} />
-                            : Project === "Projects" ? <Projects loading={loading} setLoading={setLoading} />
+                            : Project === "Projects" ? <Projects loading={loading} setLoading={setLoading} getAllPmProjects={getAllPmProjects} />
                                 : Project === "Team Leads" ? <Leads loading={loading} setLoading={setLoading} />
                                     : Project === "Developers" ? <Developers loading={loading} setLoading={setLoading} />
                                         : Project === "Calender" ? <Calender loading={loading} setLoading={setLoading} />

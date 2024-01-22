@@ -20,7 +20,7 @@ function ClientInformation() {
     const userOnGoPro = useSelector((state) => state.userProjects.userOngoingProjects)
     const userCompPro = useSelector((state) => state.userProjects.userCompletedProjects)
     const fetchTasks = async () => {
-        console.log(userNewPro, '------------------------userNewPro')
+        console.log(userNewPro[0], '------------------------userNewPro')
         if (userNewPro.length === 0) {
             setLoading(true);
             try {
@@ -84,7 +84,7 @@ function ClientInformation() {
                             <tbody>
                                 <tr tabIndex='0' className='focus:outline-none h-16 border border-gray-100 rounded shadow-xl'>
                                     <th>No</th>
-                                    <th>Builder Name</th>
+                                    <th>Venture Name</th>
                                     <th>Project No</th>
                                     <th>Venture Type</th>
                                     <th>Description</th>
