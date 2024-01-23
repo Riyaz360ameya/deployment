@@ -26,7 +26,7 @@ function page() {
         setvisiblePassword(!visiblepassword);
     }
     const developerLogin = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
             setLoading(true)
             const { data } = await devLogInApi(user);

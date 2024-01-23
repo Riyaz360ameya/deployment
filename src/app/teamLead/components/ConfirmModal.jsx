@@ -1,13 +1,14 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { GiCycle } from "react-icons/gi";
 import { IoPlayForwardSharp } from "react-icons/io5";
 import { toast } from 'sonner';
 import { forwardTask, reAssignTask } from '../leadAPIs/taskApi';
 import { useDispatch } from 'react-redux';
 import { teamLeadCompletedProjectsStore, teamLeadOngoingProjectsStore, updateteamLeadProject } from '@/app/redux/teamLead/leadProSlice';
-
+import { BeatLoader } from 'react-spinners';
 const ConfirmModal = ({ projectId, setCModal }) => {
     const dispatch = useDispatch();
+    const [loading, setloading] = useState(false);
     const onClose = () => {
         setCModal(false)
     }
@@ -17,21 +18,34 @@ const ConfirmModal = ({ projectId, setCModal }) => {
         }
     }
     const handleAssign = async (projectId) => {
-        console.log('Reassign-------iid')
-        const { data } = await reAssignTask(projectId)
-        console.log(data,'--------re-assign')
-        dispatch(teamLeadOngoingProjectsStore(data.updatedTask.onGoingTasks))
-        onClose()
-        toast.success(data.message)
+        try {
+            const { data } = await reAssignTask(projectId)
+            dispatch(teamLeadOngoingProjectsStore(data.updatedTask.onGoingTasks))
+            onClose()
+            toast.success(data.message)
+        } catch (error) {
+            console.log(error)
+        }
     }
     const handleForward = async (projectId) => {
-        console.log(projectId, '-------id')
-        const { data } = await forwardTask(projectId)
-        console.log(data.upDatedLead.onGoingTasks ,'----------data in move forward---------')
-        dispatch(teamLeadOngoingProjectsStore(data.upDatedLead.onGoingTasks))
-        dispatch(teamLeadCompletedProjectsStore(data.upDatedLead.completedTasks))
-        toast.success(data.message)
-        onClose()
+        try {
+            const { data } = await forwardTask(projectId);
+            // console.log(data.upDatedLead.onGoingTasks, '----------data in move forward---------');
+            dispatch(teamLeadOngoingProjectsStore(data.upDatedLead.onGoingTasks));
+            dispatch(teamLeadCompletedProjectsStore(data.upDatedLead.completedTasks));
+            toast.success(data.message);
+            onClose();
+        } catch (error) {
+            console.error('Error in handleForward:', error);
+        }
+        // setloading(true); 
+        // console.log(projectId, '-------id')
+        // const { data } = await forwardTask(projectId)
+        // console.log(data.upDatedLead.onGoingTasks ,'----------data in move forward---------')
+        // dispatch(teamLeadOngoingProjectsStore(data.upDatedLead.onGoingTasks))
+        // dispatch(teamLeadCompletedProjectsStore(data.upDatedLead.completedTasks))
+        // toast.success(data.message)
+        // onClose()
     }
     return (
         <div
@@ -50,9 +64,12 @@ const ConfirmModal = ({ projectId, setCModal }) => {
                         <GiCycle className='text-2xl' />
                     </button>
                     <button className='bg-green-800 rounded-md px-3 py-2 text-white flex flex-col items-center' onClick={() => handleForward(projectId)}>
-                        Move Forward
-                        <IoPlayForwardSharp className='text-2xl' />
+                       Move Forward <IoPlayForwardSharp className='text-2xl' />
                     </button>
+                    {/* <button className='bg-green-800  text-white rounded-md p-2 w-full mt-5 font-bold' onClick={() => handleForward(projectId)}>
+                                    {loading ? <BeatLoader color='white' /> : 'Move Forward'}
+                    </button> */}
+                    
                 </div>
             </div>
         </div>
