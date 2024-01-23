@@ -37,15 +37,13 @@ function Page() {
         onSubmit: async (values, action) => {
             setLoading(true)
             try {
-                console.log(values, '-----------------LoginForm values')
+                console.log(values, '----------hh-------LoginForm values')
                 const { data } = await logInApi(values)
+                console.log(data.user, '-------------data')
                 toast.success(data.message)
-                const success = data.success
-                if (success) {
-                    dispatch(userDetails(data.user));
-                    dispatch(accessToken(data.token));
-                    router.push("/user/home");
-                }
+                dispatch(userDetails(data.user));
+                dispatch(accessToken(data.token));
+                router.push("/user/home");
             } catch (error) {
                 console.log(error.response.data.error, '-----------LoginForm failed');
                 toast.error(error.response.data.error)

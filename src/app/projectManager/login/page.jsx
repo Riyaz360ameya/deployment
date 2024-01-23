@@ -34,7 +34,7 @@ function page() {
             router.push("/projectManager/home")
             setLoading(false)
         } catch (error) {
-            toast.error(error);
+            toast.error(error.response.data.error)
             console.log(error)
             setLoading(false)
         }

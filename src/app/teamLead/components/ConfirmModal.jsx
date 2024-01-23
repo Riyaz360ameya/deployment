@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { forwardTask, reAssignTask } from '../leadAPIs/taskApi';
 import { useDispatch } from 'react-redux';
 import { teamLeadCompletedProjectsStore, teamLeadOngoingProjectsStore } from '@/app/redux/teamLead/leadProSlice';
+import { InfinitySpin } from 'react-loader-spinner';
 
 const ConfirmModal = ({ projectId, setCModal }) => {
     const dispatch = useDispatch();
@@ -19,33 +20,33 @@ const ConfirmModal = ({ projectId, setCModal }) => {
     }
     const handleAssign = async (projectId) => {
         try {
+            setloading(true)
             const { data } = await reAssignTask(projectId)
             dispatch(teamLeadOngoingProjectsStore(data.updatedTask.onGoingTasks))
+            setloading(false)
             onClose()
             toast.success(data.message)
         } catch (error) {
+            setloading(false)
             console.log(error)
+            toast.error(error.response.data.error)
         }
     }
     const handleForward = async (projectId) => {
         try {
+            setloading(true)
             const { data } = await forwardTask(projectId);
             // console.log(data.upDatedLead.onGoingTasks, '----------data in move forward---------');
             dispatch(teamLeadOngoingProjectsStore(data.upDatedLead.onGoingTasks));
             dispatch(teamLeadCompletedProjectsStore(data.upDatedLead.completedTasks));
             toast.success(data.message);
             onClose();
+            setloading(false)
         } catch (error) {
+            setloading(false)
             console.error('Error in handleForward:', error);
+            toast.error(error.response.data.error)
         }
-        // setloading(true); 
-        // console.log(projectId, '-------id')
-        // const { data } = await forwardTask(projectId)
-        // console.log(data.upDatedLead.onGoingTasks ,'----------data in move forward---------')
-        // dispatch(teamLeadOngoingProjectsStore(data.upDatedLead.onGoingTasks))
-        // dispatch(teamLeadCompletedProjectsStore(data.upDatedLead.completedTasks))
-        // toast.success(data.message)
-        // onClose()
     }
     return (
         <div
@@ -58,15 +59,27 @@ const ConfirmModal = ({ projectId, setCModal }) => {
                     <h1 className='text-center text-2xl font-extrabold'>OR</h1>
                     <h1 className='text-center text-2xl'>  <span className='text-green-800 font-bold cursor-pointer'>Move forward</span> with This Task</h1>
                 </div>
-                <div className='flex justify-around mt-5'>
-                    <button className='bg-red-600 rounded-md px-3 py-2 text-white flex flex-col items-center' onClick={() => handleAssign(projectId)}>
-                        Re-Assign To Dev
-                        <GiCycle className='text-2xl' />
-                    </button>
-                    <button className='bg-green-800 rounded-md px-3 py-2 text-white flex flex-col items-center' onClick={() => handleForward(projectId)}>
-                        Move Forward <IoPlayForwardSharp className='text-2xl' />
-                    </button>
-                </div>
+                {
+                    !loading ?
+                        <>
+                            <div className='flex justify-around mt-5'>
+                                <button className='bg-red-600 rounded-md px-3 py-2 text-white flex flex-col items-center' onClick={() => handleAssign(projectId)}>
+                                    Re-Assign To Dev
+                                    <GiCycle className='text-2xl' />
+                                </button>
+                                <button className='bg-green-800 rounded-md px-3 py-2 text-white flex flex-col items-center' onClick={() => handleForward(projectId)}>
+                                    Move Forward <IoPlayForwardSharp className='text-2xl' />
+                                </button>
+                            </div>
+                        </>
+                        :
+                        <div className='flex justify-center items-center'>
+                            <InfinitySpin
+                                width='200'
+                                color="black"
+                            />
+                        </div>
+                }
             </div>
         </div>
     )

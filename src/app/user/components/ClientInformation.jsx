@@ -78,7 +78,7 @@ function ClientInformation() {
                     <div className='border shadow mt-4'>
                         <table className='w-full whitespace-nowrap shadow p-3 '>
                             <tbody>
-                                <tr className='h-16 border border-gray-950 text-white font-bold text-xl rounded shadow-xl sticky top-0 bg-gray-500 z-10'>
+                                <tr className='h-16 border border-gray-950 text-white font-bold text-xl rounded shadow-xl  bg-gray-500'>
                                     <th>No</th>
                                     <th>Venture Name</th>
                                     <th>Project No</th>

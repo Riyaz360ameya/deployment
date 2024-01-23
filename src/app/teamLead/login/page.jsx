@@ -25,6 +25,7 @@ function page() {
     const leadRegister = async (e) => {
         e.preventDefault()
         try {
+            setLoading(true)
             const { data } = await logInApi(user)
             console.log(data)
             dispatch(leadDetails(data.user));
@@ -32,10 +33,12 @@ function page() {
             toast.success(data.message)
             console.log(data.user)
             localStorage.setItem('TeamLead', JSON.stringify(data.user))
+            setLoading(false)
             router.push("/teamLead/home")
         } catch (error) {
             console.log(error.message, '---error in login Lead')
-            toast.error(error)
+            toast.error(error.response.data.error)
+            setLoading(false)
         }
     }
     return (
