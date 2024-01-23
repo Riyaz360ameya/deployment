@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
@@ -8,74 +7,56 @@ import { toast } from 'react-toastify';
 import Forgot from '../components/Forgot';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { logInApi } from '../userAPIs/authApis';
-import { accessToken, setUsersLogin, userDetails } from '@/app/redux/users/userSlice';
+import { accessToken, userDetails } from '@/app/redux/users/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from 'formik';
+import { loginSchema } from '@/app/schemas/authSchema';
 function Page() {
     const router = useRouter();
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
     const [password, setPassword] = useState(false);
-    const [otpVerify, setOtpVerify] = useState(false)
-    const [changePass, setChangePass] = useState(false)
     const [visiblePassword, setVisiblePassword] = useState(false)
 
     const showHiddenPassword = () => {
         setVisiblePassword(!visiblePassword);
     }
-
-    const [pass, setPass] = useState({
-        password: '',
-        confirmPassword: ''
-    })
-    const [otp, setOtp] = useState("")
-    const [otpEmail, setOtpEmail] = useState("")
-    const [user, setUser] = useState({
+    // const [formValues, setFormValues] = useState({
+    //     email: '',
+    //     password: '',
+    // });
+    const formValues = {
         email: '',
         password: '',
-    });
-    const [errors, setErrors] = useState({});
-    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-    const validateInput = () => {
-        const newErrors = {};
-        if (!user.email.match(emailRegex)) {
-            newErrors.email = 'Please enter a valid email address';
-        }
-        if (!user.password) {
-            newErrors.password = 'Please enter your password';
-        }
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
     };
-    const onLogin = async (e) => {
-        e.preventDefault()
-        if (validateInput()) {
+    const initialValues = formValues
+    const validationSchema = loginSchema
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+        initialValues,
+        validationSchema,
+        onSubmit: async (values, action) => {
+            setLoading(true)
             try {
-                setLoading(true);
-                const { data } = await logInApi(user)
-                console.log(data, '---------------------user')
-                dispatch(userDetails(data.user))
-                dispatch(accessToken(data.token))
+                console.log(values, '-----------------LoginForm values')
+                const { data } = await logInApi(values)
                 toast.success(data.message)
-                router.push("/user/home");
+                const success = data.success
+                if (success) {
+                    dispatch(userDetails(data.user));
+                    dispatch(accessToken(data.token));
+                    router.push("/user/home");
+                }
             } catch (error) {
-                console.log("Login failed-----------", error);
-                toast.error(error);
-            } finally {
-                setLoading(false);
+                console.log(error.response.data.error, '-----------LoginForm failed');
+                toast.error(error.response.data.error)
             }
-        } else {
-            toast.error('Please correct the form errors.');
+            action.resetForm();
+            setLoading(false)
         }
-    };
+    })
     const handleForgot = () => {
         setPassword((prev) => !prev);
-        setOtpVerify(false)
         setLoading(false);
-        setChangePass(false)
-        setUser({
-            email: '',
-            password: ''
-        })
     };
     return (
         <>
@@ -96,29 +77,35 @@ function Page() {
                             <h1 className='text-2xl font-bold mb-4'>AMEYA360 World</h1>
                         </div>
                         {!password ? (
-                            <>
+                            <form onSubmit={handleSubmit} id='signUpForm'>
                                 <div className='text-left text-sm'>
                                     <label className='font-bold' htmlFor="email">Email</label>
                                     <input
-                                        type="text"
+                                        value={values.email}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+
+                                        type="email"
                                         className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.email ? 'border-red-500' : ''
                                             }`}
                                         id="email"
-                                        value={user.email}
-                                        onChange={(e) => setUser({ ...user, email: e.target.value })}
                                     />
-                                    {errors.email && <p className='text-red-500'>{errors.email}</p>}
                                 </div>
-                                <div className='text-left text-sm'>
+                                {errors.email && touched.email ? (
+                                    <p className="text-red-600 text-start text-sm">{errors.email}</p>
+                                ) : null}
+                                <div className='text-left text-sm relative'>
                                     <label className='font-bold' htmlFor="password">Password</label>
                                     <div className='relative'>
                                         <input
+                                            value={values.password}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+
                                             type={visiblePassword ? "text" : "password"}
                                             className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.password ? 'border-red-500' : ''
                                                 }`}
                                             id="password"
-                                            value={user.password}
-                                            onChange={(e) => setUser({ ...user, password: e.target.value })}
                                         />
                                         <div
                                             className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
@@ -130,10 +117,13 @@ function Page() {
                                             }
                                         </div>
                                     </div>
-                                    {errors.password && <p className='text-red-500'>{errors.password}</p>}
                                 </div>
+                                {errors.password && touched.password ? (
+                                    <p className="text-red-600 text-start text-sm">{errors.password}</p>
+                                ) : null}
+
                                 <div>
-                                    <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' onClick={onLogin}>
+                                    <button type='submit' className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' aria-label="Login Button">
                                         {loading ? <BeatLoader color='white' /> : 'Login'}
                                     </button>
                                 </div>
@@ -142,12 +132,12 @@ function Page() {
                                         Forgot Password
                                     </p>
                                 </div>
-                                <div className=' mt-5 text-sm'>
+                                <div className=' mt-5'>
                                     <p className='text-gray-500 underline cursor-pointer'>
                                         Need a new Account? <Link href='/user/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
                                     </p>
                                 </div>
-                            </>
+                            </form>
                         ) : (
                             <Forgot setPassword={setPassword} />
                         )}

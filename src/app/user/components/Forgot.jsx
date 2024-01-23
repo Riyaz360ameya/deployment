@@ -51,6 +51,7 @@ const Forgot = ({ setPassword }) => {
                 toast.error("Please enter OTP");
             }
         } catch (error) {
+            setOtp("")
             toast.error(error.response.data.error);
             console.log(error, '-----------error')
             setLoading(false);
