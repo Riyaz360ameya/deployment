@@ -7,10 +7,10 @@ import { AiOutlineMenuUnfold, AiOutlineMenuFold } from 'react-icons/ai';
 import { useRouter } from 'next/navigation'
 import { PiBellLight, PiChatDotsLight } from "react-icons/pi";
 import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
-// import profileImage from '../../../../public/profile3.JPG'
+import profileImage from '../../../../public/pmImage.png'
 import { SlUser } from "react-icons/sl";
 import Image from 'next/image';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { logOut } from '../pmAPIs/authApis';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPmProject } from '@/app/redux/projectManager/pmProSlice';
@@ -69,8 +69,8 @@ function Header({ setMenu, menu }) {
                         <p className="text-sm text-gray-500">{user.designation}</p>
                     </div>
                     <div className=''>
-                        <SlUser className='h-8 w-8 ' />
-                        {/* <Image src={profileImage} className='object-contain rounded-full' alt="" width={100} height={100} /> */}
+                        {/* <SlUser className='h-8 w-8 ' /> */}
+                        <Image src={profileImage} className='object-contain rounded-full' alt="" width={50} height={50} />
                     </div>
                     <FaAngleDown className="text-lg cursor-pointer" onClick={handleDropdown} />
                 </div>
@@ -85,7 +85,7 @@ function Header({ setMenu, menu }) {
                 <div className="p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <AiOutlineMenuUnfold className="text-white text-xl" onClick={() => setMenu((prev) => !prev)} />
                 </div>
-                {/* <p className="text-lg">{user.firstName}</p> */}
+                <p className="text-lg">{user.firstName}</p>
                 <div className="relative p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <BiBell className="text-white text-xl" />
                     <div className="w-2 h-2 bg-red-500 rounded-full absolute top-2 right-2"></div>

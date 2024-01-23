@@ -18,7 +18,6 @@ function page() {
     const [Project, setProject] = useState("Project Details")
     const user = useSelector((state) => state.user.userDetails)
     const stopLoading = () => {
-        console.log(user, '---------------._id')
         user._id && setLoader(false) 
     }
     useEffect(() => {

@@ -1,14 +1,13 @@
 "use client"
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { FaUserGear } from "react-icons/fa6";
 import { SiTraefikproxy } from "react-icons/si";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
 import { MdLogout } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'sonner'
+import { toast } from 'react-toastify';
 
 import profileImage from '../../../../public/devImag.png'
-// import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
 import { logOut } from '../devApis/authApi';
 import { resetDev } from '@/app/redux/developer/developerSlice';
@@ -20,7 +19,6 @@ const Sidebar = ({ menu, setProject, Project }) => {
     const user = useSelector((state) => state.developer.developerDetails)
     const [selectedItem, setSelectedItem] = useState(Project);
     //fetching user details from token
-    const [data, setData] = useState("")
     const icons = [
         { icon: <SiTraefikproxy />, name: 'New Tasks' },
         { icon: <FaUserGear />, name: 'Ongoing Tasks' },

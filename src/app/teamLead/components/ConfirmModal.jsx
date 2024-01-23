@@ -1,11 +1,11 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import { GiCycle } from "react-icons/gi";
 import { IoPlayForwardSharp } from "react-icons/io5";
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { forwardTask, reAssignTask } from '../leadAPIs/taskApi';
 import { useDispatch } from 'react-redux';
-import { teamLeadCompletedProjectsStore, teamLeadOngoingProjectsStore, updateteamLeadProject } from '@/app/redux/teamLead/leadProSlice';
-import { BeatLoader } from 'react-spinners';
+import { teamLeadCompletedProjectsStore, teamLeadOngoingProjectsStore } from '@/app/redux/teamLead/leadProSlice';
+
 const ConfirmModal = ({ projectId, setCModal }) => {
     const dispatch = useDispatch();
     const [loading, setloading] = useState(false);
@@ -64,12 +64,8 @@ const ConfirmModal = ({ projectId, setCModal }) => {
                         <GiCycle className='text-2xl' />
                     </button>
                     <button className='bg-green-800 rounded-md px-3 py-2 text-white flex flex-col items-center' onClick={() => handleForward(projectId)}>
-                       Move Forward <IoPlayForwardSharp className='text-2xl' />
+                        Move Forward <IoPlayForwardSharp className='text-2xl' />
                     </button>
-                    {/* <button className='bg-green-800  text-white rounded-md p-2 w-full mt-5 font-bold' onClick={() => handleForward(projectId)}>
-                                    {loading ? <BeatLoader color='white' /> : 'Move Forward'}
-                    </button> */}
-                    
                 </div>
             </div>
         </div>

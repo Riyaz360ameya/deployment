@@ -48,7 +48,7 @@ export const upDatePMProjects = async ({ userId, projectId }) => {
         const savePm = await findPm.save()
         return savedProject
     } catch (error) {
-        console.log(error)
+        console.log(error.message,'-----------error in pm update')
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 

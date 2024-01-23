@@ -1,11 +1,11 @@
 import React from 'react'
 const Package = () => {
     return (
-        <div className='p-2' >
-            <div className='text-center bg-[#2C0B3D] p-2 flex flex-col items-center border border-red-400 gap-2'>
+        <div className='p-2 bg-gray h-full' >
+            <div className='text-center bg-gray-800 p-2 flex flex-col items-center border border-red-400 gap-2 h-full'>
                 <h1 className='text-xl  font-semibold md:text-3xl text-white'>Price List</h1>
                 <div className="flex justify-between items-center gap-3">
-                    <div className="bg-gradient-to-r from-yellow-500 to-green-500 rounded p-3 w-[350px]  text-center flex flex-col items-center justify-around">
+                    <div className="bg-gradient-to-r from-blue-900 to-gray-500 rounded p-3 w-[350px]  text-center flex flex-col items-center justify-around">
                         <h1 className='text-xl  font-semibold md:text-3xl'>Basic</h1>
                         <div className='h-1 w-full rounded-full bg-white shadow-2xl shadow-red-500'></div>
                         <div>
@@ -33,9 +33,9 @@ const Package = () => {
                         </div>
                         <button className='px-5 py-2 rounded-full font-extrabold mt-2 bg-white'
                             style={{ boxShadow: '0 0 5px 0px rgba(255, 255, 255, 1)' }}
-                        >Buy Now </button>
+                        >Get Stated</button>
                     </div>
-                    <div className="bg-gradient-to-r from-yellow-500 to-green-500 rounded p-3 w-[350px]  text-center flex flex-col items-center justify-around">
+                    <div className="bg-gradient-to-r from-blue-900 to-gray-500 rounded p-3 w-[350px]  text-center flex flex-col items-center justify-around">
                         <h1 className='text-xl  font-semibold md:text-3xl'>Standard</h1>
                         <div className='h-1 w-full rounded-full bg-white shadow-2xl shadow-red-500'></div>
                         <div>
@@ -63,9 +63,9 @@ const Package = () => {
                         </div>
                         <button className='px-5 py-2 rounded-full font-extrabold mt-2 bg-white'
                             style={{ boxShadow: '0 0 5px 0px rgba(255, 255, 255, 1)' }}
-                        >Buy Now </button>
+                        >Get Stated</button>
                     </div>
-                    <div className="bg-gradient-to-r from-yellow-500 to-green-500 rounded p-3 w-[350px] h-[358px]  text-center flex flex-col items-center ">
+                    <div className="bg-gradient-to-r from-blue-900 to-gray-500 rounded p-3 w-[350px] h-[358px]  text-center flex flex-col items-center ">
                         <h1 className='text-xl  font-semibold md:text-3xl'>Premium</h1>
                         <div className='h-1 w-full rounded-full bg-white shadow-2xl shadow-red-500'></div>
                         <div className='flex flex-col justify-between h-full'>
@@ -74,21 +74,21 @@ const Package = () => {
                                 <h1 className='text-4xl font-bold  '>*** <br /> <span className='text-sm text-white'>special price</span></h1>
                             </div>
                             <div className='flex gap-3 items-center justify-center'>
-                                <h1 className='text-red-800 font-bold text-4xl'>Customize</h1>
+                                <h1 className='text-red-500 font-bold text-4xl'>Customize</h1>
                             </div>
                             <div>
                                 <button className='px-5 py-2 rounded-full font-extrabold mt-2 bottom-0 bg-white'
                                     style={{ boxShadow: '0 0 5px 0px rgba(255, 255, 255, 1)' }}
-                                >Buy Now </button>
+                                >Get Stated</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="bg-orange-500 rounded p-3 mt-3">
+                {/* <div className="bg-orange-500 rounded p-3 mt-3">
                     <div>
                         <h2 className='text-white'>Choose What You Need</h2>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )

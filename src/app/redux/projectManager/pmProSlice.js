@@ -24,7 +24,7 @@ const pmProSlice = createSlice({
             state.pmNewProjects = state.pmNewProjects.filter((data) => data._id !== action.payload)
         },
         addNewOnGoProject: (state, action) => {
-            state.pmOngoingProjects.unshift(action.payload)
+            state.pmOngoingProjects.push(action.payload)
         },
         completePmProject: (state, action) => {
             state.pmOngoingProjects = state.pmOngoingProjects.filter((data) => data._id !== action.payload)

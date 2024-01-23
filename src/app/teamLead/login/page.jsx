@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { BeatLoader } from 'react-spinners'
-import { Toaster, toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import { logInApi } from '../leadAPIs/authApi'

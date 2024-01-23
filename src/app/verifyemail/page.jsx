@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import Link from "next/link"
-import { Toaster, toast } from 'sonner';
+import { toast } from 'react-toastify';
 
 export default function verifyEmaiUsers() {
     const [token, setToken] = useState("");

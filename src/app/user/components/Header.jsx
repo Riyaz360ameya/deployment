@@ -16,9 +16,9 @@ import { resetUser } from '@/app/redux/users/userSlice';
 
 
 function Header({ setMenu, menu }) {
-    const dispatch = useDispatch();
-    const users = useSelector((state) => state?.user.userDetails)
-    //  console.log(users)
+    const dispatch = useDispatch()
+    const user = useSelector((state) => state.user.userDetails)
+
     const [data, setData] = useState({})
     const router = useRouter()
     const [drop, setDrop] = useState(false)
@@ -37,21 +37,6 @@ function Header({ setMenu, menu }) {
     const handleDropdown = () => {
         setDrop((prev) => !prev)
     }
-    //fetching user details from store
-    const userDetails = () => {
-        if (!users) {
-            router.push("/user/login");
-        } else {
-            setData(users);
-            console.log(users,"kkkkkkk")
-        }
-    };
-
-    useEffect(() => {
-        userDetails();
-    }, [users]);
-
-
     return (
         <div className="flex items-center justify-between px-4 py-4 bg-black border-b border-b-[#D9EAFF] h-14 w-full">
             <div className="hidden md:flex text-2xl cursor-pointer" >
@@ -74,25 +59,26 @@ function Header({ setMenu, menu }) {
                         <span className=" h-2 w-2 animate-ping rounded-full bg-red-500 opacity-75"></span>
                     </span>
                 </div>
-                <div className='flex items-center justify-center gap-3 bg-gray-800 p-1 rounded-full '>
+                <div className='flex items-center justify-center gap-3 bg-gray-800 p-1 rounded-full cursor-pointer'>
                     <Image src={profileImage} alt="" width={40} height={50} className='rounded-full ring-green-500 ring-2' />
-                    <p className="text-base text-white font-bold tracking-">{data.firstName}</p>
+                    <p className="text-base text-white font-bold tracking-" onClick={handleDropdown} >{user?.firstName}</p>
                     <FaAngleDown className="text-lg cursor-pointer text-white" onClick={handleDropdown} />
                 </div>
                 {drop && (
-                    <div className="absolute mt-44 right-5 w-36 text-sm text-center bg-white border border-gray-400 rounded-md shadow-md ">
+                    <div className="absolute mt-44 right-5 w-36 text-sm text-center bg-white border border-gray-400 rounded-md shadow-md z-50">
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={handleDropdown} >Profile</p>
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={handleDropdown} >All Projects</p>
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={handleDropdown} >Transactions</p>
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={onLogout} >Logout</p>
                     </div>
+
                 )}
             </div>
             <div className="md:hidden flex justify-between px-3 w-full items-center">
                 <div className="p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <AiOutlineMenuUnfold className="text-white text-xl" onClick={() => setMenu((prev) => !prev)} />
                 </div>
-                <p className="text-lg">{data?.firstName}</p>
+                <p className="text-lg">{user?.firstName}</p>
                 <div className="relative p-2 bg-gray-400 bg-opacity-60 rounded-2xl">
                     <BiBell className="text-white text-xl" />
                     <div className="w-2 h-2 bg-red-500 rounded-full absolute top-2 right-2"></div>

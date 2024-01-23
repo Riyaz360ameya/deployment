@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { InfinitySpin } from 'react-loader-spinner';
 import { BeatLoader } from 'react-spinners';
 import { useDispatch, useSelector } from 'react-redux'
@@ -32,7 +32,7 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing }) => {
         setLoading(true);
         try {
             const { data } = await assignLeadTask(task)
-            console.log(data, '.................data on asiigning')
+            console.log(data, '.................data on assigning')
             dispatch(leadTaskAssign(itemId));
             dispatch(pmOngoingProjects(data.newOngoing))
             toast.success(data.message);

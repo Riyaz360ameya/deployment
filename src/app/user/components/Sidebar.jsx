@@ -11,8 +11,6 @@ import Image from 'next/image';
 
 const Sidebar = ({ menu, setProject, Project }) => {
     const user = useSelector((state) => state.user.userDetails)
-
-    console.log(user,'--------------its user sidebar')
     //fetching user details from token
     const [selectedItem, setSelectedItem] = useState(Project);
     const icons = [

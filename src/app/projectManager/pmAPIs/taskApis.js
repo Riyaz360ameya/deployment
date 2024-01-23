@@ -18,3 +18,6 @@ const API = axios.create({ baseURL: "/api/projectManager" })
 
 export const allLeadTasks = ()=>API.get("/allTasks")
 export const assignLeadTask = (task) => API.post('/taskAssign', task);
+
+export const addTeamLead = (user) => API.post('/addTeamLead', user);
+export const addDev = (user) => API.post('/addDeveloper', user);

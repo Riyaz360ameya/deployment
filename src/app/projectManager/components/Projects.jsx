@@ -5,7 +5,7 @@ import TaskAssignModal from './TaskAssignModal';
 import { InfinitySpin } from 'react-loader-spinner';
 import Badge from './Badge';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux'
 import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
 import { completePmProject, pmCompletedProjects, pmNewProjects, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
@@ -19,10 +19,6 @@ const Projects = ({ loading, setLoading }) => {
     console.log(pmNewPro.length, '---------------new-----------pmNewPro')
     console.log(pmOnGoPro.length, '--------------ON------------pmOnGoPro')
     console.log(pmComPro.length, '----------------comp----------pmComPro')
-    // setting store values in a state
-    const [pmNew, setPmNew] = useState(pmNewPro)
-    const [pmOn, setPmOn] = useState(pmOnGoPro)
-    const [pmCom, setPmCom] = useState(pmComPro)
 
     const [projectId, setProjectId] = useState()
     const [modal, setModal] = useState(false);
@@ -36,11 +32,8 @@ const Projects = ({ loading, setLoading }) => {
         try {
             const { data } = await pmAllProjects()
             dispatch(pmNewProjects(data.PmProjects.newProjects))
-            // setPmNew(data.PmProjects.newProjects)
             dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
-            // setPmOn(data.PmProjects.onGoingProjects)
             dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
-            // setPmCom(data.PmProjects.completedProjects)
             setLoading(false);
         } catch (error) {
             console.error('Error fetching tasks:', error.message);
@@ -111,9 +104,6 @@ const Projects = ({ loading, setLoading }) => {
                     <div>
                         <h1 className='text-2xl font-bold p-2'>PROJECTS</h1>
                         <div className='flex gap-4 ml-2'>
-                            {/* <div onClick={() => handleData("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
-                                <p>New</p>
-                            </div> */}
                             <div onClick={() => setPosition("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
                                 <p>New</p>
                             </div>
@@ -131,7 +121,7 @@ const Projects = ({ loading, setLoading }) => {
                     <div className='border shadow mt-4'>
                         <table className='w-full whitespace-nowrap shadow p-3 '>
                             <tbody>
-                                <tr tabIndex='0' className='focus:outline-none h-16 border border-gray-100 rounded shadow-xl'>
+                                <tr className='h-16 border border-gray-950 text-white font-bold text-lg rounded shadow-xl sticky top-0 bg-gray-500 z-10'>
                                     <th>No</th>
                                     <th>Select</th>
                                     <th>Builder Name</th>
@@ -223,5 +213,4 @@ const Projects = ({ loading, setLoading }) => {
         </>
     );
 };
-
 export default Projects;
