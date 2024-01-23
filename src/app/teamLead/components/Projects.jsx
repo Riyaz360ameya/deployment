@@ -10,17 +10,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllTasks } from '../leadAPIs/taskApi';
 import { teamLeadCompletedProjectsStore, teamLeadNewProjectsStore, teamLeadOngoingProjectsStore } from '@/app/redux/teamLead/leadProSlice';
 const Projects = () => {
-    const leadOnGoingTask = useSelector((state) => state.leadTasks.teamLeadOngoingProjects)
+    const dispatch = useDispatch();
     const leadnewTasks = useSelector((state) => state.leadTasks.teamLeadNewProjects)
+    const leadOnGoingTask = useSelector((state) => state.leadTasks.teamLeadOngoingProjects)
     const leadCompletedTasks = useSelector((state) => state.leadTasks.teamLeadCompletedProjects)
     console.log(leadnewTasks.length, '---------11----------leadnewTasks')
     console.log(leadOnGoingTask.length, '---------22----------leadOnGoingTask')
-    const dispatch = useDispatch();
-    // setting Store data in a state
-    const [leadNew, setLeadNew] = useState(leadnewTasks)
-    const [leadOn, setLeadOn] = useState(leadOnGoingTask)
-    const [leadCom, setLeadCom] = useState(leadCompletedTasks)
-
     const [projectId, setProjectId] = useState('')
     const [modal, setModal] = useState(false);
     const [cModal, setCModal] = useState(false)
@@ -31,11 +26,8 @@ const Projects = () => {
         try {
             const { data } = await getAllTasks()
             dispatch(teamLeadNewProjectsStore(data.LeadTasks.newTasks))
-            setLeadNew(data.LeadTasks.newTasks)
             dispatch(teamLeadOngoingProjectsStore(data.LeadTasks.onGoingTasks))
-            setLeadOn(data.LeadTasks.onGoingTasks)
             dispatch(teamLeadCompletedProjectsStore(data.LeadTasks.completedTasks))
-            setLeadCom(data.LeadTasks.completedTasks)
         } catch (error) {
             console.error(error.message);
             toast.error(error)
@@ -44,13 +36,13 @@ const Projects = () => {
     const settingLeadData = (position) => {
         if (position === "New Task") {
             console.log(position, '----', leadnewTasks.length, '................leadnewTasks')
-            setLeadData(leadNew)
+            setLeadData(leadnewTasks)
         } else if (position === "OnGoing") {
             console.log(position, '----', leadOnGoingTask, '................leadOnGoingTask')
-            setLeadData(leadOn)
+            setLeadData(leadOnGoingTask)
         } else if (position === "Completed") {
             console.log(position, '----', leadCompletedTasks.length, '................leadCompletedTasks')
-            setLeadData(leadCom)
+            setLeadData(leadCompletedTasks)
         }
     }
     useEffect(() => {
@@ -69,16 +61,7 @@ const Projects = () => {
     // when new task asiigned .........
     useEffect(() => {
         settingLeadData(position)
-    }, [leadnewTasks, leadOnGoingTask]);
-
-    // When update on each store data
-    useEffect(() => {
-        setLeadNew(leadnewTasks)
-        setLeadOn(leadOnGoingTask)
-        setLeadCom(leadCompletedTasks)
-    }, [leadnewTasks,leadOnGoingTask, leadCompletedTasks]);
-
-
+    }, [leadnewTasks, leadOnGoingTask, leadCompletedTasks]);
 
     const onGoingFurthur = () => {
         setPosition('OnGoing')
@@ -198,7 +181,7 @@ const Projects = () => {
                     </table>
                 </div>
                 {
-                    modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurthur={onGoingFurthur}  /> : ""
+                    modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurthur={onGoingFurthur} /> : ""
                 }
                 {
                     cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""

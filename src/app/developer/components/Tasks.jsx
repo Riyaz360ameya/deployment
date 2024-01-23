@@ -5,20 +5,18 @@ import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { completeTask, startTask } from '../devApis/taskApi';
-import { developerCompletedProjectsStore, developerOngoingProjectsStore ,developerNewProjectsStore} from '@/app/redux/developer/developerProSlice';
+import { developerCompletedProjectsStore, developerOngoingProjectsStore, developerNewProjectsStore } from '@/app/redux/developer/developerProSlice';
 import { InfinitySpin } from 'react-loader-spinner';
 
 const Tasks = ({ Project, loading, setLoading }) => {
     const dispatch = useDispatch();
     const [tasks, setTasks] = useState([])
     const devNewTasks = useSelector((state) => state.devloperTaskUpdates.developerNewTasks);
-    console.log(devNewTasks,'-----------new task-------------')
+    console.log(devNewTasks, '-----------new task-------------')
     const devOnGoTasks = useSelector((state) => state.devloperTaskUpdates.developerOngoingTasks);
     console.log(devOnGoTasks, '--------devOnGoTasks-----------')
     const devCompTasks = useSelector((state) => state.devloperTaskUpdates.developerCompletedTasks);
     const newTasks = useSelector((state) => state.devloperTaskUpdates.developerNewTasks);
-
-    // console.log(devCompTasks, '----devCompTasks-----------------')
     const setProjects = (Project) => {
         console.log(Project, '-------------------------Project');
         if (Project === 'New Tasks') {
@@ -35,10 +33,7 @@ const Tasks = ({ Project, loading, setLoading }) => {
         setProjects(Project);
         console.log('its............. Project.............. effect')
     }, [Project]);
-    // useEffect(() => {
-    //     setProjects(newTasks);
-    //     console.log('its............. newTasks.............. effect');
-    // }, [newTasks]);
+
     useEffect(() => {
         setProjects(Project);
         console.log('its ...........devCompTasks........... effect')
@@ -51,7 +46,7 @@ const Tasks = ({ Project, loading, setLoading }) => {
         setProjects(Project);
         console.log('its.......... New............. effect')
     }, [devNewTasks]);
-   
+
     const handleStartClick = async (projectId) => {
         try {
             setLoading(true);
@@ -63,14 +58,12 @@ const Tasks = ({ Project, loading, setLoading }) => {
                 const ongoingWork = updatedDev.onGoingTasks;
                 console.log(ongoingWork, 'ongoingWork----------');
                 // dispatch(developerOngoingProjectsStore(ongoingWork));
-               // Update ongoing tasks in the Redux store
-        dispatch(developerOngoingProjectsStore(ongoingWork));
+                // Update ongoing tasks in the Redux store
+                dispatch(developerOngoingProjectsStore(ongoingWork));
 
-        // Filter out the started task from devNewTasks
-        const updatedNewTasks = devNewTasks.filter(task => task.projectId !== projectId);
-        dispatch(developerNewProjectsStore(updatedNewTasks));
+                const updatedNewTasks = devNewTasks.filter(task => task.projectId !== projectId);
+                dispatch(developerNewProjectsStore(updatedNewTasks));
                 toast.success(data.message);
-                // onGoingFurthur()
                 setLoading(false);
             } else {
                 toast.error("Unexpected response format from startTask API");
@@ -82,22 +75,6 @@ const Tasks = ({ Project, loading, setLoading }) => {
             setLoading(false);
         }
     };
-
-    // const handleCompleted = async (projectId) => {
-    //     try {
-    //         console.log(projectId, '...........Its Completed')
-    //         const { data } = await completeTask(projectId);
-    //         console.log(data.upDatedDev.completedTasks, 'completed project in developer')
-    //         const developerCompletedTask = data.upDatedDev.completedTasks
-    //         console.log(developerCompletedTask,'------------developerCompletedTask completed-----------------')
-    //         dispatch(developerCompletedProjectsStore(developerCompletedTask));
-
-    //          toast.success(data.message)
-    //     } catch (error) {
-    //         console.log(error.message)
-    //         toast.error(error);
-    //     }
-    // }
     const handleCompleted = async (projectId) => {
         try {
             setLoading(true);

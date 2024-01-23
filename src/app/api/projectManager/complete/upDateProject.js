@@ -21,7 +21,7 @@ export const upDatePmProject = async ({ data, findPmProjects, projectId }) => {
         // Remove the item from newTasks
         newPm.onGoingProjects = newPm.onGoingProjects.filter(task => task.projectId.toString() !== projectId.toString());
         const Projects = await newPm.save();
-        return Projects.completedProjects
+        return Projects
     } catch (error) {
         console.log(error.message, '----------error')
     }
