@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { BeatLoader } from 'react-spinners'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';

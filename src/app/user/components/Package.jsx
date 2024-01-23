@@ -74,7 +74,7 @@ const Package = () => {
                                 <h1 className='text-4xl font-bold  '>*** <br /> <span className='text-sm text-white'>special price</span></h1>
                             </div>
                             <div className='flex gap-3 items-center justify-center'>
-                                <h1 className='text-red-800 font-bold text-4xl'>Customize</h1>
+                                <h1 className='text-red-500 font-bold text-4xl'>Customize</h1>
                             </div>
                             <div>
                                 <button className='px-5 py-2 rounded-full font-extrabold mt-2 bottom-0 bg-white'

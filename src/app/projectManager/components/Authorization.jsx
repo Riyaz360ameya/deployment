@@ -33,7 +33,7 @@ import { useState } from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { BeatLoader } from 'react-spinners';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 const Authorization = () => {
     const [loading, setLoading] = useState(false);

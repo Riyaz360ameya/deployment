@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { toast } from 'sonner'
+import { toast } from 'react-toastify';
 import { InfinitySpin } from 'react-loader-spinner'
 import { BeatLoader } from 'react-spinners'
 import { useDispatch, useSelector } from 'react-redux'

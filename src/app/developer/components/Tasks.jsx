@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FiAlertOctagon } from "react-icons/fi";
 import { PiChatDotsLight } from "react-icons/pi";
 import { dateConverter } from '@/app/api/helpers/dateConverter';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { completeTask, startTask } from '../devApis/taskApi';
 import { developerCompletedProjectsStore, developerOngoingProjectsStore ,developerNewProjectsStore} from '@/app/redux/developer/developerProSlice';

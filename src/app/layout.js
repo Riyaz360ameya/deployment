@@ -1,6 +1,10 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { Toaster, toast } from 'sonner';
+// import { Toaster, toast } from 'sonner';
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Providers from './providers';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,7 +23,7 @@ export default function RootLayout({ children }) {
         <div key="root">
           <Providers>
             {children}
-            <Toaster richColors position='top-right' />
+            <ToastContainer />
           </Providers>
         </div>
       </body>

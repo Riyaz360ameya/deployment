@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import Forgot from '../components/Forgot';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { logInApi } from '../userAPIs/authApis';

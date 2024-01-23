@@ -3,7 +3,7 @@ import { FaLink } from 'react-icons/fa6';
 import { FiAlertOctagon } from 'react-icons/fi';
 import { PiChatDotsLight } from 'react-icons/pi';
 import TaskAssignModal from './TaskAssignModal';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import ConfirmModal from './ConfirmModal';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { useDispatch, useSelector } from 'react-redux'

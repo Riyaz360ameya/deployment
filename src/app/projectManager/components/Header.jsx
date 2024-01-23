@@ -10,7 +10,7 @@ import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
 // import profileImage from '../../../../public/profile3.JPG'
 import { SlUser } from "react-icons/sl";
 import Image from 'next/image';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { logOut } from '../pmAPIs/authApis';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetPmProject } from '@/app/redux/projectManager/pmProSlice';

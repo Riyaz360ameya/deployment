@@ -1,7 +1,7 @@
 import React from 'react'
 import { GiCycle } from "react-icons/gi";
 import { IoPlayForwardSharp } from "react-icons/io5";
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { forwardTask, reAssignTask } from '../leadAPIs/taskApi';
 
 

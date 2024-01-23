@@ -10,7 +10,7 @@ import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
 // import profileImage from '../../../../public/profile3.JPG'
 // import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { logOut } from '../devApis/authApi';
 import { useDispatch, useSelector } from 'react-redux';
 function Header({ setMenu, menu }) {

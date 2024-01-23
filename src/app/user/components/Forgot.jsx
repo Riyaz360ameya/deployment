@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { BeatLoader } from 'react-spinners';
 import { changePassOK, confirmOTPs, forgotPassOTP, resendOTP } from '../userAPIs/authApis';
 const Forgot = ({ setPassword }) => {

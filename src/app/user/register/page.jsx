@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
 
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { signUpApi } from '../userAPIs/authApis';
 
 

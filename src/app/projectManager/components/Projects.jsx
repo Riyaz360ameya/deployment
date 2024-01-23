@@ -5,7 +5,7 @@ import TaskAssignModal from './TaskAssignModal';
 import { InfinitySpin } from 'react-loader-spinner';
 import Badge from './Badge';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux'
 import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
 import { completePmProject, pmCompletedProjects, pmNewProjects, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
@@ -131,7 +131,7 @@ const Projects = ({ loading, setLoading }) => {
                     <div className='border shadow mt-4'>
                         <table className='w-full whitespace-nowrap shadow p-3 '>
                             <tbody>
-                                <tr tabIndex='0' className='focus:outline-none h-16 border border-gray-100 rounded shadow-xl'>
+                                <tr className='h-16 border border-gray-950 text-white font-bold text-lg rounded shadow-xl sticky top-0 bg-gray-500 z-10'>
                                     <th>No</th>
                                     <th>Select</th>
                                     <th>Builder Name</th>
@@ -247,7 +247,7 @@ export default Projects;
 //     const [projects, setProjects] = useState([]);
 //     const handleData = (position) => {
 //         // setPosition(name)
-//         // position === "New" ? setProjects(pmNewPro) 
+//         // position === "New" ? setProjects(pmNewPro)
 //         //     : position === "OnGoing" ? setProjects(pmOnGoPro)
 //         //         : position === "Completed" ? setProjects(pmComPro)
 //         //             : "";

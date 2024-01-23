@@ -17,28 +17,26 @@ function ClientInformation() {
     const [position, setPosition] = useState("New")
     const [projects, setProjects] = useState([]);
     const userNewPro = useSelector((state) => state.userProjects.userNewProjects)
+    console.log(userNewPro, '------------------userNewPro')
     const userOnGoPro = useSelector((state) => state.userProjects.userOngoingProjects)
     const userCompPro = useSelector((state) => state.userProjects.userCompletedProjects)
     const fetchTasks = async () => {
-        console.log(userNewPro[0], '------------------------userNewPro')
-        if (userNewPro.length === 0) {
-            setLoading(true);
-            try {
-                const { data } = await userProjects()
-                console.log(data, '---------------------data')
-                const NewProjects = data.projectsInformation.NewProjects;
-                dispatch(userNewProjects(NewProjects))
-                const onGoingProjects = data.projectsInformation.onGoingProjects;
-                dispatch(userOngoingProjects(onGoingProjects))
-                const completedProjects = data.projectsInformation.completedProjects;
-                dispatch(userCompletedProjects(completedProjects))
-                // setProjects(NewProjects)
-                handleData("New")
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching tasks:', error.message);
-                setLoading(false);
-            }
+        setLoading(true);
+        try {
+            const { data } = await userProjects()
+            console.log(data, '---------------------data')
+            const NewProjects = data.projectsInformation.NewProjects;
+            dispatch(userNewProjects(NewProjects))
+            const onGoingProjects = data.projectsInformation.onGoingProjects;
+            dispatch(userOngoingProjects(onGoingProjects))
+            const completedProjects = data.projectsInformation.completedProjects;
+            dispatch(userCompletedProjects(completedProjects))
+            // setProjects(NewProjects)
+            handleData("New")
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching tasks:', error.message);
+            setLoading(false);
         }
     };
     useEffect(() => {
@@ -67,7 +65,7 @@ function ClientInformation() {
                 <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden'>
                     <div>
                         <h1 className='text-xl p-2 flex justify-center items-center shadow-lg bg-gray-200'>Your Projects Details</h1>
-                        <div className='flex gap-4 ml-2 py-4'>
+                        <div className='flex gap-4 ml-2 py-4 sticky top-0'>
                             <div onClick={() => handleData("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
                                 <p className='font-bold shadow'>New</p>
                             </div>
@@ -82,7 +80,7 @@ function ClientInformation() {
                     <div className='border shadow mt-4'>
                         <table className='w-full whitespace-nowrap shadow p-3 '>
                             <tbody>
-                                <tr tabIndex='0' className='focus:outline-none h-16 border border-gray-100 rounded shadow-xl'>
+                                <tr className='h-16 border border-gray-950 text-white font-bold text-xl rounded shadow-xl sticky top-0 bg-gray-500 z-10'>
                                     <th>No</th>
                                     <th>Venture Name</th>
                                     <th>Project No</th>
@@ -94,7 +92,7 @@ function ClientInformation() {
                                         <th>Options</th>
                                     }
                                 </tr>
-                                <tr className='h-5'></tr>
+                                {/* <tr className='h-5'></tr> */}
                                 {
                                     projects.length === 0 ? (
                                         <tr className="text-center mt-10 shadow-xl border">

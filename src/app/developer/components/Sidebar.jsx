@@ -5,7 +5,7 @@ import { SiTraefikproxy } from "react-icons/si";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
 import { MdLogout } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'sonner'
+import { toast } from 'react-toastify';
 
 import profileImage from '../../../../public/devImag.png'
 // import logo from '../../../../public/ameyaLogo.png'

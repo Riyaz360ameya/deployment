@@ -59,18 +59,19 @@ function Header({ setMenu, menu }) {
                         <span className=" h-2 w-2 animate-ping rounded-full bg-red-500 opacity-75"></span>
                     </span>
                 </div>
-                <div className='flex items-center justify-center gap-3 bg-gray-800 p-1 rounded-full '>
+                <div className='flex items-center justify-center gap-3 bg-gray-800 p-1 rounded-full cursor-pointer'>
                     <Image src={profileImage} alt="" width={40} height={50} className='rounded-full ring-green-500 ring-2' />
-                    <p className="text-base text-white font-bold tracking-">{user?.firstName}</p>
+                    <p className="text-base text-white font-bold tracking-" onClick={handleDropdown} >{user?.firstName}</p>
                     <FaAngleDown className="text-lg cursor-pointer text-white" onClick={handleDropdown} />
                 </div>
                 {drop && (
-                    <div className="absolute mt-44 right-5 w-36 text-sm text-center bg-white border border-gray-400 rounded-md shadow-md ">
+                    <div className="absolute mt-44 right-5 w-36 text-sm text-center bg-white border border-gray-400 rounded-md shadow-md z-50">
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={handleDropdown} >Profile</p>
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={handleDropdown} >All Projects</p>
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={handleDropdown} >Transactions</p>
                         <p className="p-2 hover:bg-gray-400 hover:text-white w-full cursor-pointer" onClick={onLogout} >Logout</p>
                     </div>
+
                 )}
             </div>
             <div className="md:hidden flex justify-between px-3 w-full items-center">
