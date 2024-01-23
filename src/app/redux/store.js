@@ -20,8 +20,8 @@ import developerSlice from './developer/developerSlice';
 import developerProSlice from './developer/developerProSlice';
 
 const persistConfig = {
-    key: 'root',
     timeout: 500,
+    key: 'root',
     // version: 1,
     storage,
     whitelist: ['user','pm','pmProjects','lead','leadTasks','developer','devloperTaskUpdates']

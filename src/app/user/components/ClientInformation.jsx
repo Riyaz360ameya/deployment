@@ -8,36 +8,40 @@ import { userProjects } from '../userAPIs/projectApis';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoMdCut } from "react-icons/io";
 import { IoTrashBinOutline } from "react-icons/io5";
-
 import { userCompletedProjects, userNewProjects, userOngoingProjects } from '@/app/redux/users/userProSlice';
-
 function ClientInformation() {
-    const userNewPro = useSelector((state) => state.userProjects.userNewProjects)
-    const userOnGoPro = useSelector((state) => state.userProjects.userOngoingProjects)
-    const userCompPro = useSelector((state) => state.userProjects.userCompletedProjects)
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
     const [position, setPosition] = useState("New")
     const [projects, setProjects] = useState([]);
+    const userNewPro = useSelector((state) => state.userProjects.userNewProjects)
+    const userOnGoPro = useSelector((state) => state.userProjects.userOngoingProjects)
+    const userCompPro = useSelector((state) => state.userProjects.userCompletedProjects)
     const fetchTasks = async () => {
-        if (userNewPro.length === 0) {
-            setLoading(true);
-            try {
-                const { data } = await userProjects()
-                const NewProjects = data.projectsInformation.NewProjects;
-                dispatch(userNewProjects(NewProjects))
-                const onGoingProjects = data.projectsInformation.onGoingProjects;
-                dispatch(userOngoingProjects(onGoingProjects))
-                const completedProjects = data.projectsInformation.completedProjects;
-                dispatch(userCompletedProjects(completedProjects))
-                setProjects(NewProjects)
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching tasks:', error.message);
-                setLoading(false);
-            }
+        setLoading(true);
+        try {
+            const { data } = await userProjects()
+            console.log(data, '---------------------data')
+            const NewProjects = data.projectsInformation.NewProjects;
+            dispatch(userNewProjects(NewProjects))
+            const onGoingProjects = data.projectsInformation.onGoingProjects;
+            dispatch(userOngoingProjects(onGoingProjects))
+            const completedProjects = data.projectsInformation.completedProjects;
+            dispatch(userCompletedProjects(completedProjects))
+            // setProjects(NewProjects)
+            handleData("New")
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching tasks:', error.message);
+            setLoading(false);
         }
     };
+    useEffect(() => {
+        fetchTasks();
+    }, [])
+    useEffect(() => {
+        handleData("New")
+    }, [userNewPro, userOnGoPro, userCompPro]);
     const handleData = (name) => {
         setPosition(name)
         name === "New" ? setProjects(userNewPro)
@@ -45,10 +49,6 @@ function ClientInformation() {
                 : name === "Completed" ? setProjects(userCompPro)
                     : "";
     };
-
-    useEffect(() => {
-        fetchTasks();
-    }, []);
     return (
         <>
             {loading ? (

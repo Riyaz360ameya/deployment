@@ -69,6 +69,31 @@ function UploadDetails() {
         }
         return true;
     }
+    const resetForm = () => {
+        setFormData((prevState) => ({
+            ...prevState,
+            ventureName: '',
+            projectPlace: '',
+            email: '',
+            ventureType: '',
+            vision: '',
+            projectUsp: '',
+            contact: '',
+            specification: '',
+            amenities: '',
+            pages: '',
+            brochureLanguage: '',
+            brochureBudget: '',
+            leafLet: '',
+            ventureDescription: '',
+            estimatedDeliveryDate: '',
+            siteAddress: '',
+            previousVenture: '',
+            officeAddress: '',
+            location: '',
+            projectOverview: '',
+        }));
+    };
     const submitProjectDetails = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -80,6 +105,7 @@ function UploadDetails() {
         try {
             const { data } = await uploadProject(formData)
             dispatch(addNewUserProject(data.savedProject))
+            resetForm()
             toast.success(data.message)
             setLoading(false)
             router.push("/proceed");
@@ -89,6 +115,8 @@ function UploadDetails() {
             setLoading(false);
         }
     }
+
+   
     return (
         <>
             {
