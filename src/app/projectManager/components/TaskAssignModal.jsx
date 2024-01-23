@@ -32,7 +32,7 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing }) => {
         setLoading(true);
         try {
             const { data } = await assignLeadTask(task)
-            console.log(data, '.................data on asiigning')
+            console.log(data, '.................data on assigning')
             dispatch(leadTaskAssign(itemId));
             dispatch(pmOngoingProjects(data.newOngoing))
             toast.success(data.message);

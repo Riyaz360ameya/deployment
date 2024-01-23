@@ -24,7 +24,7 @@ const persistConfig = {
     timeout: 500,
     key: 'root',
     storage,
-    whitelist: ['user','pm','pmProjects','lead','leadTasks','developer','devloperTaskUpdates']
+    whitelist: ['user','pm','pmProjects','lead','leadTasks','developer','developerTaskUpdates']
 };
 
 const rootReducer = combineReducers({
@@ -35,7 +35,7 @@ const rootReducer = combineReducers({
     lead:leadSlice,
     leadTasks:leadProSlice,
     developer:developerSlice,
-    devloperTaskUpdates:developerProSlice,
+    developerTaskUpdates:developerProSlice,
 },)
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

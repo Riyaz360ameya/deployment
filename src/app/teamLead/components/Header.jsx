@@ -8,8 +8,8 @@ import { useRouter } from 'next/navigation'
 import { PiBellLight, PiChatDotsLight } from "react-icons/pi";
 import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
 import { SlUser } from "react-icons/sl";
-// import profileImage from '../../../../public/profile3.JPG'
-// import Image from 'next/image';
+import profileImage from '../../../../public/leadImage.png'
+import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { logOut } from '../leadAPIs/authApi';
 import { useSelector } from 'react-redux';
@@ -69,8 +69,8 @@ function Header({ setMenu, menu }) {
                         <p className="text-sm text-gray-500">{user.designation}</p>
                     </div>
                     <div className=''>
-                        <SlUser className='h-8 w-8 ' />
-                        {/* <Image src={profileImage} className='object-contain rounded-full' alt="" width={100} height={100} /> */}
+                        {/* <SlUser className='h-8 w-8 ' /> */}
+                        <Image src={profileImage} className='object-contain rounded-full' alt="" width={50} height={50} />
                     </div>
                     <FaAngleDown className="text-lg cursor-pointer" onClick={handleDropdown} />
                 </div>

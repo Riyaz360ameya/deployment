@@ -1,40 +1,10 @@
-// import React from 'react'
-// import { useEffect } from 'react'
-// import { InfinitySpin } from 'react-loader-spinner'
-
-// function Authorization({ loading, setLoading }) {
-
-//     const cancelLoading = () => {
-//         setLoading(false)
-//     }
-//     useEffect(() => {
-//         cancelLoading()
-//     }, [])
-
-//     return (
-//         <>
-//             {loading ?
-//                 <div className='  h-full flex items-center justify-center '>
-//                     <div><InfinitySpin
-//                         width='200'
-//                         color="black"
-//                     /></div>
-//                 </div>
-//                 :
-//                 <div>Authorization</div>
-//             }
-//         </>
-//     )
-// }
-
-// export default Authorization
 import React from 'react'
 import { useState } from 'react';
 import { FaPlus } from "react-icons/fa6";
 import { BeatLoader } from 'react-spinners';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { toast } from 'react-toastify';
-import axios from 'axios';
+import { addDev, addTeamLead } from '../pmAPIs/taskApis';
 const Authorization = () => {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -80,12 +50,7 @@ const Authorization = () => {
         if (validateInput()) {
             try {
                 setLoading(true);
-                const { data } = await axios.post(
-                    post === "Team Lead"
-                        ? "/api/projectManager/addTeamLead"
-                        : "/api/projectManager/addDeveloper",
-                    user
-                );
+                const { data } = await (post === "Team Lead" ? addTeamLead(user) : addDev(user));
                 console.log(data, '----------data')
                 toast.success(data.message)
                 setUser({
@@ -108,15 +73,6 @@ const Authorization = () => {
         setPost(name)
     }
     return (
-        // <>
-        //     {loading ?
-        //         <div className='  h-full flex items-center justify-center '>
-        //             <div><InfinitySpin
-        //                 width='200'
-        //                 color="black"
-        //             /></div>
-        //         </div>
-        //         :
         <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden' >
             <div className='flex items-center justify-around'>
                 <div className='border bg-orange-700 text-white p-5 rounded cursor-pointer' onClick={() => handlePost('Team Lead')}>

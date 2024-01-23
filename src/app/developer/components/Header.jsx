@@ -1,39 +1,14 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { CiSearch } from 'react-icons/ci';
-import { BiBell } from 'react-icons/bi';
-import { FaAngleDown } from 'react-icons/fa';
-import { AiOutlineMenuUnfold, AiOutlineMenuFold } from 'react-icons/ai';
-import { useRouter } from 'next/navigation'
+import { AiOutlineMenuUnfold, } from 'react-icons/ai';
 import { PiBellLight, PiChatDotsLight } from "react-icons/pi";
 import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
-// import profileImage from '../../../../public/profile3.JPG'
-// import logo from '../../../../public/ameyaLogo.png'
+import logo from '../../../../public/ameyaLogo.png'
 import Image from 'next/image';
-import { toast } from 'react-toastify';
-import { logOut } from '../devApis/authApi';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 function Header({ setMenu, menu }) {
     const user = useSelector((state) => state.developer.developerDetails)
-    const dispatch = useDispatch();
-    const router = useRouter()
-    const [drop, setDrop] = useState(false)
-    const onLogout = async () => {
-        try {
-            await logOut()
-            console.log("Logout success")
-            toast.success("Logout successfully!")
-            router.push("/developer/login")
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
-    const handleDropdown = () => {
-        setDrop((prev) => !prev)
-    }
-    //fetching user details
-
-
     return (
         <div className="flex items-center justify-between  px-4 py-4 bg-white  h-16 w-full shadow-xl">
             <div className="hidden md:flex text-2xl cursor-pointer" >
@@ -70,7 +45,7 @@ function Header({ setMenu, menu }) {
                         <p className="text-sm text-gray-500">{user.designation}</p>
                     </div>
                     <div className='h-12 w-12 '>
-                        {/* <Image src={logo} className='object-contain rounded-full' alt="" width={100} height={100} /> */}
+                        <Image src={logo} className='object-contain rounded-full' alt="" width={100} height={100} />
                     </div>
                 </div>
             </div>

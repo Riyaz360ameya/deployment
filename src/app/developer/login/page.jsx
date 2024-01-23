@@ -1,29 +1,25 @@
 "use client"
 import React, { useState } from 'react'
-import axios from 'axios'
 import { BeatLoader } from 'react-spinners'
 import { toast } from 'react-toastify';
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
-import { useDispatch,useSelector } from 'react-redux'
-// import { setDeveloperLoginData,selectDeveloperLoginData } from '@/app/redux/userSlice'
-// import { setDeveloperLogins,selectDevelopersLoginData } from '@/app/redux/developer/developerSlice'
+import { useDispatch } from 'react-redux'
+
 import { devLogInApi } from '../devApis/authApi'
 import { accessToken, developerDetails } from '@/app/redux/developer/developerSlice'
 
 function page() {
     const dispatch = useDispatch();
     const router = useRouter();
-    const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [visiblepassword, setvisiblePassword] = useState(false)
+    const [visiblePassword, setVisiblePassword] = useState(false)
     const [user, setUser] = useState({
         email: '',
         password: ''
     })
     const showHiddenPassword = () => {
-        setvisiblePassword(!visiblepassword);
+        setVisiblePassword(!visiblePassword);
     }
     const developerLogin = async (e) => {
         e.preventDefault()
@@ -58,76 +54,49 @@ function page() {
                         />
                         <h1 className='text-2xl font-bold mb-4'>Developer </h1>
                     </div>
-                    {!password ? (
-                        <>
-                            <div className='text-left text-sm'>
-                                <label className='font-bold' htmlFor="email">Email</label>
-                                <input
-                                    type="text"
-                                    className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
+                    <div className='text-left text-sm'>
+                        <label className='font-bold' htmlFor="email">Email</label>
+                        <input
+                            type="text"
+                            className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
                                 `}
-                                    id="email"
-                                    value={user.email}
-                                    onChange={(e) => setUser({ ...user, email: e.target.value })}
-                                />
-                            </div>
-                            <div className='text-left text-sm'>
-                                <label className='font-bold' htmlFor="password">Password</label>
-                                <div className="relative">
-                                    <input
-                                        type={visiblepassword ? "text" : "password"}
-                                        className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
+                            id="email"
+                            value={user.email}
+                            onChange={(e) => setUser({ ...user, email: e.target.value })}
+                        />
+                    </div>
+                    <div className='text-left text-sm'>
+                        <label className='font-bold' htmlFor="password">Password</label>
+                        <div className="relative">
+                            <input
+                                type={visiblePassword ? "text" : "password"}
+                                className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
                                 `}
-                                        id="password"
-                                        value={user.password}
-                                        onChange={(e) => setUser({ ...user, password: e.target.value })}
-                                    />
-                                    <div
-                                        className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                                        onClick={showHiddenPassword}
-                                    >
-                                        {visiblepassword ?
-                                            <IoIosEye /> :
-                                            <IoIosEyeOff />
-                                        }
-                                    </div>
-                                </div>
+                                id="password"
+                                value={user.password}
+                                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                            />
+                            <div
+                                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                                onClick={showHiddenPassword}
+                            >
+                                {visiblePassword ?
+                                    <IoIosEye /> :
+                                    <IoIosEyeOff />
+                                }
                             </div>
-                            <div>
-                                <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' onClick={developerLogin}>
-                                    {loading ? <BeatLoader color='white' /> : 'Login'}
-                                </button>
-                            </div>
-                            <div className=' mt-5 text-sm'>
-                                <p className='text-black underline font-bold cursor-pointer' >
-                                    Forgot Password
-                                </p>
-                            </div>
-                            <div className=' mt-5 text-sm'>
-                                <p className='text-black font-bold underline cursor-pointer'>
-                                    Need a new Account? <Link href='/rolebased/developer/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
-                                </p>
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <div className='text-left text-sm'>
-                                <label className='font-bold' htmlFor="email">Email</label>
-                                <input
-                                    type="text"
-                                    className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
-                                    name="email"
-                                    id="email"
-                                />
-                            </div>
-                            <div className='flex justify-between mt-5 text-sm'>
-                                <p className='text-black font-bold underline cursor-pointer'>Resend OTP</p>
-                                <p className='text-black font-bold underline cursor-pointer' >
-                                    Cancel
-                                </p>
-                            </div>
-                        </>
-                    )}
+                        </div>
+                    </div>
+                    <div>
+                        <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' onClick={developerLogin}>
+                            {loading ? <BeatLoader color='white' /> : 'Login'}
+                        </button>
+                    </div>
+                    <div className=' mt-5 text-sm'>
+                        <p className='text-black underline font-bold cursor-pointer' >
+                            Forgot Password
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

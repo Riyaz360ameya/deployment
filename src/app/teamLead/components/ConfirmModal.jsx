@@ -4,7 +4,7 @@ import { IoPlayForwardSharp } from "react-icons/io5";
 import { toast } from 'react-toastify';
 import { forwardTask, reAssignTask } from '../leadAPIs/taskApi';
 import { useDispatch } from 'react-redux';
-import { teamLeadCompletedProjectsStore, teamLeadOngoingProjectsStore, updateteamLeadProject } from '@/app/redux/teamLead/leadProSlice';
+import { teamLeadCompletedProjectsStore, teamLeadOngoingProjectsStore } from '@/app/redux/teamLead/leadProSlice';
 
 const ConfirmModal = ({ projectId, setCModal }) => {
     const dispatch = useDispatch();
