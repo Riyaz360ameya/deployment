@@ -15,7 +15,7 @@ function ClientInformation() {
     const [position, setPosition] = useState("New")
     const [projects, setProjects] = useState([]);
     const userNewPro = useSelector((state) => state.userProjects.userNewProjects)
-    console.log(userNewPro, '------------------userNewPro')
+    console.log(userNewPro[0], '------------------userNewPro')
     const userOnGoPro = useSelector((state) => state.userProjects.userOngoingProjects)
     const userCompPro = useSelector((state) => state.userProjects.userCompletedProjects)
     const fetchTasks = async () => {
@@ -82,6 +82,7 @@ function ClientInformation() {
                                     <th>No</th>
                                     <th>Venture Name</th>
                                     <th>Project No</th>
+                                    <th>Project No</th>
                                     <th>Venture Type</th>
                                     <th>Description</th>
                                     <th>Deadline</th>
@@ -108,7 +109,8 @@ function ClientInformation() {
                                                             <p>{item.ProjectId.projectInfo.ventureName}</p>
                                                         </div>
                                                     </td>
-                                                    <td className=''>{item.ProjectId.userId.slice(0, 8)}</td>
+                                                    <td className=''>{item.ProjectId._id.slice(0, 8)}</td>
+                                                    <td className=''>{item.ProjectId._id.slice(0, 8)}</td>
                                                     <td className='text-center'>{item.ProjectId.projectInfo.ventureType}</td>
                                                     <td className='flex items-center justify-center gap-2'>
                                                         <PiChatDotsLight />

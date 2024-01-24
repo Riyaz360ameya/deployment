@@ -14,10 +14,10 @@ const Sidebar = ({ menu, setProject, Project }) => {
     //fetching user details from token
     const [selectedItem, setSelectedItem] = useState(Project);
     const icons = [
-        { icon: <GoProjectSymlink />, name: 'Project Details' },
         { icon: <FaRegPenToSquare />, name: 'New Project' },
+        { icon: <GoProjectSymlink />, name: 'Project Details' },
         { icon: <ImStatsDots />, name: 'Project Status' },
-        { icon: <FaIndianRupeeSign />, name: 'Payment' },
+        { icon: <FaIndianRupeeSign />, name: 'Transactions' },
         { icon: <IoIosListBox />, name: 'Package' },
         { icon: <FaStreetView />, name: 'View' },
     ];
