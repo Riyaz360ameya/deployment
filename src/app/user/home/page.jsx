@@ -10,7 +10,7 @@ import View from '../components/View'
 import Package from '../components/Package'
 import ClientInformation from '../components/ClientInformation'
 import { useSelector } from 'react-redux'
-
+import Transaction from '../components/Transaction'
 
 function page() {
     const [loader, setLoader] = useState(false)
@@ -18,14 +18,13 @@ function page() {
     const [Project, setProject] = useState("Project Details")
     const user = useSelector((state) => state.user.userDetails)
     const stopLoading = () => {
-        user._id && setLoader(false) 
+        user._id && setLoader(false)
     }
     useEffect(() => {
         stopLoading()
     }, [user._id])
 
     return (
-
         <>
             {
                 loader ?
@@ -37,17 +36,17 @@ function page() {
                     </div>
                     :
                     <div className='h-screen flex w-full '>
-                        <Sidebar setProject={setProject} menu={menu} Project={Project}/>
+                        <Sidebar setProject={setProject} menu={menu} Project={Project} />
                         <div className="flex flex-col flex-1">
                             <Header setLoader={setLoader} setMenu={setMenu} />
                             {
-                                Project === "Project Details" ? <ClientInformation />
-                                    : Project === "New Project" ? <UploadDetails />
+                                   Project === "New Project" ? <UploadDetails />
+                                    : Project === "Project Details" ? <ClientInformation />
                                         : Project === "Project Status" ? <Status />
-                                            : Project === "Payment" ? <Payment />
+                                            : Project === "Transaction" ? <Transaction />
                                                 : Project === "View" ? <View />
-                                                    : Project === "Package" ? <Package />
-                                                        : ""
+                                                    // : Project === "Package" ? <Package />
+                                                    : ""
                             }
                         </div>
                     </div>
