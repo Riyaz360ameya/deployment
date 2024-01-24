@@ -2,7 +2,7 @@ import * as Yup from "yup"
 const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 const nameRegex = /^[A-Za-z\s]+$/;
 export const loginSchema = Yup.object({
-    email: Yup.string().email().required("Please Enter Email"),
+    email: Yup.string().email().required("Please Enter your Email"),
     password: Yup.string()
         .min(8, "Password must be at least 8 characters")
         .matches(

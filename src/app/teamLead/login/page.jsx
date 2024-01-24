@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logInApi } from '../leadAPIs/authApi'
 import { leadDetails } from '@/app/redux/teamLead/leadSlice'
 import { accessToken } from '@/app/redux/developer/developerSlice'
+import { useFormik } from 'formik';
+import { loginSchema } from '@/app/schemas/authSchema';
 function page() {
     const dispatch = useDispatch()
     const router = useRouter();
@@ -19,28 +21,56 @@ function page() {
         email: '',
         password: ''
     })
+    const formValues = {
+        email: '',
+        password: '',
+    };
+    const initialValues = formValues
+    const validationSchema = loginSchema
     const showHiddenPassword = () => {
         setvisiblePassword(!visiblePassword)
     }
-    const leadRegister = async (e) => {
-        e.preventDefault()
-        try {
-            setLoading(true)
-            const { data } = await logInApi(user)
-            console.log(data)
-            dispatch(leadDetails(data.user));
-            dispatch(accessToken(data.token))
-            toast.success(data.message)
-            console.log(data.user)
-            localStorage.setItem('TeamLead', JSON.stringify(data.user))
-            setLoading(false)
-            router.push("/teamLead/home")
-        } catch (error) {
-            console.log(error.message, '---error in login Lead')
-            toast.error(error.response.data.error)
-            setLoading(false)
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+        initialValues,
+        validationSchema,
+        onSubmit: async (values, action) => {
+            try {
+                setLoading(true);
+                const { data } = await logInApi(values)
+                console.log(data)
+                dispatch(leadDetails(data.user));
+                dispatch(accessToken(data.token))
+                toast.success(data.message)
+                console.log(data.user)
+                localStorage.setItem('TeamLead', JSON.stringify(data.user))
+                setLoading(false)
+                router.push("/teamLead/home")
+            } catch (error) {
+                console.log(error.message, '---error in login Lead')
+                toast.error(error.response.data.error)
+                setLoading(false)
+            }
         }
-    }
+    })
+    // const leadRegister = async (e) => {
+    //     e.preventDefault()
+    //     try {
+    //         setLoading(true)
+    //         const { data } = await logInApi(user)
+    //         console.log(data)
+    //         dispatch(leadDetails(data.user));
+    //         dispatch(accessToken(data.token))
+    //         toast.success(data.message)
+    //         console.log(data.user)
+    //         localStorage.setItem('TeamLead', JSON.stringify(data.user))
+    //         setLoading(false)
+    //         router.push("/teamLead/home")
+    //     } catch (error) {
+    //         console.log(error.message, '---error in login Lead')
+    //         toast.error(error.response.data.error)
+    //         setLoading(false)
+    //     }
+    // }
     return (
         <div className='h-screen bg-black text-center flex items-center justify-end'>
             <img
@@ -59,18 +89,22 @@ function page() {
                         <h1 className='text-2xl font-bold mb-4'>Team Lead</h1>
                     </div>
                     {!password ? (
-                        <>
+                        <form onSubmit={handleSubmit} id='signUpForm'>
                             <div className='text-left text-sm'>
                                 <label className='font-bold' htmlFor="email">Email</label>
                                 <input
-                                    type="text"
+                                    type="email"
                                     className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
                                 `}
                                     id="email"
-                                    value={user.email}
-                                    onChange={(e) => setUser({ ...user, email: e.target.value })}
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                 />
                             </div>
+                            {errors.email && touched.email ? (
+                                    <p className="text-red-600 text-start text-sm">{errors.email}</p>
+                                ) : null}
                             <div className='text-left text-sm'>
                                 <label className='font-bold' htmlFor="password">Password</label>
                                 <div className="relative">
@@ -79,8 +113,9 @@ function page() {
                                         className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
                                 `}
                                         id="password"
-                                        value={user.password}
-                                        onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                        value={values.password}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
                                     />
                                     <div
                                         className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
@@ -90,8 +125,11 @@ function page() {
                                     </div>
                                 </div>
                             </div>
+                            {errors.password && touched.password ? (
+                                    <p className="text-red-600 text-start text-sm">{errors.password}</p>
+                                ) : null}
                             <div>
-                                <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' onClick={leadRegister}>
+                                <button type='submit' className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold'>
                                     {loading ? <BeatLoader color='white' /> : 'Login'}
                                 </button>
                             </div>
@@ -105,7 +143,7 @@ function page() {
                                     Need a new Account? <Link href='/rolebased/teamLead/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
                                 </p>
                             </div>
-                        </>
+                        </form>
                     ) : (
                         <>
                             <div className='text-left text-sm'>

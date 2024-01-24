@@ -82,7 +82,6 @@ function Page() {
                                         value={values.email}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-
                                         type="email"
                                         className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.email ? 'border-red-500' : ''
                                             }`}

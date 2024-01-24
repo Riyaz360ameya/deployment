@@ -5,43 +5,54 @@ import Link from 'next/link'
 import axios from 'axios'
 import { BeatLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
-import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux'
 import { pmLogInApi } from '../pmAPIs/authApis'
+import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { accessToken, pmDetails } from '@/app/redux/projectManager/pmSlice'
+import { useFormik } from 'formik';
+import { loginSchema } from '@/app/schemas/authSchema';
 
 function page() {
     const dispatch = useDispatch()
     const router = useRouter();
     const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [visiblePassword, setVisiblePassword] = useState(false)
+    const [visiblePassword, setVisiblePassword] = useState(false);
     const [user, setUser] = useState({
         email: '',
         password: ''
     })
+    //formik
+    const formValues = {
+        email: '',
+        password: '',
+    };
+    const initialValues = formValues
+    const validationSchema = loginSchema
+
     const showHiddenPassword = () => {
         setVisiblePassword(!visiblePassword)
     }
-    const managerLogin = async (e) => {
-        e.preventDefault();
-        setLoading(true)
-        try {
-            const { data } = await pmLogInApi(user)
-            dispatch(pmDetails(data.user));
-            dispatch(accessToken(data.token));
-            toast.success(data.message)
-            router.push("/projectManager/home")
-            setLoading(false)
-        } catch (error) {
-            toast.error(error.response.data.error)
-            console.log(error)
-            setLoading(false)
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+        initialValues,
+        validationSchema,
+        onSubmit: async (values, action) => {
+            setLoading(true)
+            try {
+                console.log(values,'formik')
+                const { data } = await pmLogInApi(values)
+                dispatch(pmDetails(data.user));
+                dispatch(accessToken(data.token));
+                toast.success(data.message)
+                router.push("/projectManager/home")
+                setLoading(false)
+            } catch (error) {
+                toast.error(error.response.data.error)
+                console.log(error)
+                setLoading(false)
+            }
         }
-    }
-    const managerHandleForgot = () => {
-
-    }
+    })
     return (
         <div className='h-screen bg-black text-center flex items-center justify-end'>
             <img
@@ -60,18 +71,22 @@ function page() {
                         <h1 className='text-2xl font-bold mb-4'>Project Manager</h1>
                     </div>
                     {!password ? (
-                        <>
+                        <form onSubmit={handleSubmit} id='signUpForm'>
                             <div className='text-left text-sm'>
                                 <label className='font-bold' htmlFor="email">Email</label>
                                 <input
-                                    type="text"
+                                    type="email"
                                     className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md 
                                 `}
                                     id="email"
-                                    value={user.email}
-                                    onChange={(e) => setUser({ ...user, email: e.target.value })}
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                 />
                             </div>
+                            {errors.email && touched.email ? (
+                                    <p className="text-red-600 text-start text-sm">{errors.email}</p>
+                                ) : null}
                             <div className='text-left text-sm'>
                                 <label className='font-bold' htmlFor="password">Password</label>
                                 <div className="relative">
@@ -80,9 +95,19 @@ function page() {
                                         className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md 
                                 `}
                                         id="password"
-                                        value={user.password}
-                                        onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                        value={values.password}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
                                     />
+                                     <div
+                                            className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                                            onClick={showHiddenPassword}
+                                        >
+                                            {visiblePassword ?
+                                                <IoIosEye />
+                                                : <IoIosEyeOff />
+                                            }
+                                        </div>
                                     <div
                                         className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
                                         onClick={showHiddenPassword}
@@ -91,18 +116,21 @@ function page() {
                                     </div>
                                 </div>
                             </div>
+                            {errors.password && touched.password ? (
+                                    <p className="text-red-600 text-start text-sm">{errors.password}</p>
+                                ) : null}
                             <div>
-                                <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' onClick={managerLogin}>
+                                <button type='submit' className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' >
                                     {loading ? <BeatLoader color='white' /> : 'Login'}
                                 </button>
                             </div>
                             <div className=' mt-5 text-sm'>
-                                <p className='text-black underline font-bold cursor-pointer' onClick={managerHandleForgot}>
+                                <p className='text-black underline font-bold cursor-pointer' >
                                     Forgot Password
                                 </p>
                             </div>
 
-                        </>
+                        </form>
                     ) : (
                         <>
                             <div className='text-left text-sm'>
