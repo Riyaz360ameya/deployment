@@ -40,10 +40,10 @@ function page() {
                         <div className="flex flex-col flex-1">
                             <Header setLoader={setLoader} setMenu={setMenu} />
                             {
-                                   Project === "New Project" ? <UploadDetails />
+                                Project === "New Project" ? <UploadDetails />
                                     : Project === "Project Details" ? <ClientInformation />
                                         : Project === "Project Status" ? <Status />
-                                            : Project === "Transaction" ? <Transaction />
+                                            : Project === "Transactions" ? <Payment />
                                                 : Project === "View" ? <View />
                                                     // : Project === "Package" ? <Package />
                                                     : ""
