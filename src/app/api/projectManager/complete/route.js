@@ -38,7 +38,7 @@ export const PUT = async (request = NextRequest) => {
         .populate({
             path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.assignedLeadId onGoingProjects.projectId completedProjects.assignedLeadId completedProjects.userId completedProjects.projectId',
             select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry -notifications',
-        }).sort({ projectReachedOn: -1 });
+        })
         const allComProject = PmProjects.completedProjects
         return NextResponse.json({ message: "Project Completed", success: true, allComProject }, { status: 200 });
     } catch (error) {
