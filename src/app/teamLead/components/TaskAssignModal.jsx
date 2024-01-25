@@ -5,7 +5,7 @@ import { BeatLoader } from 'react-spinners'
 import { useDispatch, useSelector } from 'react-redux'
 import { devUnderLead, taskAssign } from '../leadAPIs/taskApi'
 import { addNewLeadTaskProject, teamLeadTaskAssign } from '@/app/redux/teamLead/leadProSlice'
-const TaskAssignModal = ({ setModal, projectId, onGoingFurthur }) => {
+const TaskAssignModal = ({ setModal, projectId, onGoingFurther }) => {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.lead.leadDetails);
     const [loading, setLoading] = useState(false)
@@ -39,7 +39,7 @@ const TaskAssignModal = ({ setModal, projectId, onGoingFurthur }) => {
             dispatch(teamLeadTaskAssign(projectId));
             dispatch(addNewLeadTaskProject(data.updateTask)); // Access the 'updateTask' property
             toast.success(data.message)
-            onGoingFurthur()
+            onGoingFurther()
             setLoading(false)
         } catch (error) {
             console.log(error)

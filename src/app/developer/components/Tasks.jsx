@@ -11,6 +11,10 @@ import { InfinitySpin } from 'react-loader-spinner';
 const Tasks = ({ Project, loading, setLoading }) => {
     const dispatch = useDispatch();
     const [tasks, setTasks] = useState([])
+
+    const [tasksPerPage] = useState(12); // Adjust the number of projects per page
+    const [currentPage, setCurrentPage] = useState(1);
+
     const devNewTasks = useSelector((state) => state.developerTaskUpdates.developerNewTasks);
     console.log(devNewTasks, '-----------new task-------------')
     const devOnGoTasks = useSelector((state) => state.developerTaskUpdates.developerOngoingTasks);
@@ -97,6 +101,13 @@ const Tasks = ({ Project, loading, setLoading }) => {
             setLoading(false);
         }
     }
+
+    const indexOfLastTask = currentPage * tasksPerPage;
+    const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+    const currentTasks = tasks.slice(indexOfFirstTask, indexOfLastTask);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
     return (
         <>
             {loading ? (
@@ -106,7 +117,20 @@ const Tasks = ({ Project, loading, setLoading }) => {
                     </div>
                 </div>
             ) : (
+
                 <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden'>
+                    <div className="flex  justify-end">
+                        {Array.from({ length: Math.ceil(tasks.length / tasksPerPage) }).map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => paginate(index + 1)}
+                                className={`px-4 py-2 mx-1 font-extrabold shadow-xl ${currentPage === index + 1 ? 'bg-slate-600 text-white' : 'bg-white text-blue-500'
+                                    } border border-blue-500 rounded-md hover:bg-slate-600 hover:text-white`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                    </div>
                     <div className='border shadow mt-4'>
                         <table className="w-full whitespace-nowrap shadow p-3">
                             <tbody>
@@ -137,8 +161,8 @@ const Tasks = ({ Project, loading, setLoading }) => {
                                             <td colSpan="8" className='text-2xl text-blue-600'>No Tasks</td>
                                         </tr>
                                     ) : (
-                                        tasks.map((item, i) => (
-                                            <tr className='text-center mt-10 shadow-xl border' key={item._id}>
+                                        currentTasks.map((item, i) => (
+                                            <tr className='text-center mt-10 shadow-xl border h-10' key={item._id}>
                                                 <td>{i + 1}</td>
                                                 <td className="">
                                                     <p>{item.projectTitle}</p>

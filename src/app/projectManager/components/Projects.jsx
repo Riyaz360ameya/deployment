@@ -94,8 +94,8 @@ const Projects = ({ loading, setLoading }) => {
         }
     }
     const indexOfLastProject = currentPage * projectsPerPage;
-    const indexOfFirstBook = indexOfLastProject - projectsPerPage;
-    const currentProjects = projects.slice(indexOfFirstBook, indexOfLastProject);
+    const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+    const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };

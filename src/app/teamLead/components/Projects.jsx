@@ -11,16 +11,19 @@ import { getAllTasks } from '../leadAPIs/taskApi';
 import { teamLeadCompletedProjectsStore, teamLeadNewProjectsStore, teamLeadOngoingProjectsStore } from '@/app/redux/teamLead/leadProSlice';
 const Projects = () => {
     const dispatch = useDispatch();
-    const leadnewTasks = useSelector((state) => state.leadTasks.teamLeadNewProjects)
+    const leadNewTasks = useSelector((state) => state.leadTasks.teamLeadNewProjects)
     const leadOnGoingTask = useSelector((state) => state.leadTasks.teamLeadOngoingProjects)
     const leadCompletedTasks = useSelector((state) => state.leadTasks.teamLeadCompletedProjects)
-    console.log(leadnewTasks.length, '---------11----------leadnewTasks')
+    console.log(leadNewTasks.length, '---------11----------leadNewTasks')
     console.log(leadOnGoingTask.length, '---------22----------leadOnGoingTask')
     const [projectId, setProjectId] = useState('')
     const [modal, setModal] = useState(false);
     const [cModal, setCModal] = useState(false)
     const [leadData, setLeadData] = useState([])
     const [position, setPosition] = useState("New Task")
+
+    const [tasksPerPage] = useState(10); // Adjust the number of projects per page
+    const [currentPage, setCurrentPage] = useState(1);
 
     const fetchTasks = async () => {
         try {
@@ -35,8 +38,8 @@ const Projects = () => {
     };
     const settingLeadData = (position) => {
         if (position === "New Task") {
-            console.log(position, '----', leadnewTasks.length, '................leadnewTasks')
-            setLeadData(leadnewTasks)
+            console.log(position, '----', leadNewTasks.length, '................leadNewTasks')
+            setLeadData(leadNewTasks)
         } else if (position === "OnGoing") {
             console.log(position, '----', leadOnGoingTask, '................leadOnGoingTask')
             setLeadData(leadOnGoingTask)
@@ -61,9 +64,9 @@ const Projects = () => {
     // when new task asiigned .........
     useEffect(() => {
         settingLeadData(position)
-    }, [leadnewTasks, leadOnGoingTask, leadCompletedTasks]);
+    }, [leadNewTasks, leadOnGoingTask, leadCompletedTasks]);
 
-    const onGoingFurthur = () => {
+    const onGoingFurther = () => {
         setPosition('OnGoing')
         console.log(leadOnGoingTask, '---------------------------leadOnGoingTask')
     }
@@ -71,20 +74,41 @@ const Projects = () => {
         setCModal(true)
         setProjectId(id)
     }
+
+    const indexOfLastTask = currentPage * tasksPerPage;
+    const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+    const currentTasks = leadData.slice(indexOfFirstTask, indexOfLastTask);
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
     return (
         <>
             <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden' >
                 <div className=''>
                     <h1 className='text-xl p-2'>Projects</h1>
-                    <div className='flex gap-4 ml-2'>
-                        <div onClick={() => setPosition("New Task")} className={`py-2 px-8  ${position === "New Task" && "bg-indigo-100"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl`}>
-                            <p className=''>New Task</p>
+                    <div className='flex items-center justify-between'>
+                        <div className='flex gap-4 ml-2'>
+                            <div onClick={() => setPosition("New Task")} className={`py-2 px-8  ${position === "New Task" && "bg-indigo-100"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl`}>
+                                <p className=''>New Task</p>
+                            </div>
+                            <div onClick={() => setPosition("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
+                                <p>OnGoing</p>
+                            </div>
+                            <div onClick={() => setPosition("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
+                                <p>Completed</p>
+                            </div>
                         </div>
-                        <div onClick={() => setPosition("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
-                            <p>OnGoing</p>
-                        </div>
-                        <div onClick={() => setPosition("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
-                            <p>Completed</p>
+                        <div className="">
+                            {Array.from({ length: Math.ceil(leadData.length / tasksPerPage) }).map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => paginate(index + 1)}
+                                    className={`px-4 py-2 mx-1 font-extrabold shadow-xl ${currentPage === index + 1 ? 'bg-slate-600 text-white' : 'bg-white text-blue-500'
+                                        } border border-blue-500 rounded-md hover:bg-slate-600 hover:text-white`}
+                                >
+                                    {index + 1}
+                                </button>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -127,7 +151,7 @@ const Projects = () => {
                                         <td colSpan="8" className='text-2xl text-blue-600'>No Tasks</td>
                                     </tr>
                                 ) :
-                                    leadData.map((item, i) => {
+                                    currentTasks.map((item, i) => {
                                         return (
                                             <tr key={i} className='text-center mt-10 shadow-xl border'>
                                                 <td>{i + 1}</td>
@@ -181,7 +205,7 @@ const Projects = () => {
                     </table>
                 </div>
                 {
-                    modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurthur={onGoingFurthur} /> : ""
+                    modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} /> : ""
                 }
                 {
                     cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""

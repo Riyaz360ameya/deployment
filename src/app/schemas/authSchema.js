@@ -28,7 +28,7 @@ export const uploadProjectDetailsSchema = Yup.object({
     ventureType: Yup.string().min(3).max(40).required("Please enter your ventureType"),
     vision: Yup.string().min(3).max(40).required("Please enter your vision"),
     projectUsp:Yup.string().min(3).max(40).required("Please enter your projectUsp"),
-    contact: Yup.string().min(3).max(40).required("Please enter your contact"),
+    contact: Yup.string().matches(/^[0-9]{10}$/, "Contact must be a 10-digit number").required("Please enter your contact"),
     specification: Yup.string().min(3).max(40).required("Please enter your specification"),
     amenities:Yup.string().min(3).max(40).required("Please enter your amenities"),
     pages: Yup.string().min(1).max(40).required("Please enter your pages"),
