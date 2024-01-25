@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation'
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch } from 'react-redux'
-
+import { useFormik } from 'formik';
+import { loginSchema } from '@/app/schemas/authSchema';
 import { devLogInApi } from '../devApis/authApi'
 import { accessToken, developerDetails } from '@/app/redux/developer/developerSlice'
 
@@ -18,25 +19,36 @@ function page() {
         email: '',
         password: ''
     })
+    const formValues = {
+        email: '',
+        password: '',
+    };
+    const initialValues = formValues
+    const validationSchema = loginSchema
+
     const showHiddenPassword = () => {
         setVisiblePassword(!visiblePassword);
     }
-    const developerLogin = async (e) => {
-        e.preventDefault();
-        try {
-            setLoading(true)
-            const { data } = await devLogInApi(user);
-            dispatch(developerDetails(data.user))
-            dispatch(accessToken(data.token));
-            toast.success(data.message)
-            router.push("/developer/home")
-            setLoading(false)
-        } catch (error) {
-            console.log(error)
-            toast.error(error);
-            setLoading(false)
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+        initialValues,
+        validationSchema,
+        onSubmit: async (values, action) => {
+            try {
+                setLoading(true)
+                const { data } = await devLogInApi(values);
+                dispatch(developerDetails(data.user))
+                dispatch(accessToken(data.token));
+                toast.success(data.message)
+                router.push("/developer/home")
+                setLoading(false)
+            } catch (error) {
+                console.log(error)
+                toast.error(error.response.data.error)
+                setLoading(false)
+            }
         }
-    }
+    })
+  
     return (
         <div className='h-screen bg-black text-center flex items-center justify-end'>
             <img
@@ -54,17 +66,22 @@ function page() {
                         />
                         <h1 className='text-2xl font-bold mb-4'>Developer </h1>
                     </div>
-                    <div className='text-left text-sm'>
+                  <form onSubmit={handleSubmit} id='signUpForm'>
+                  <div className='text-left text-sm'>
                         <label className='font-bold' htmlFor="email">Email</label>
                         <input
                             type="text"
                             className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
                                 `}
                             id="email"
-                            value={user.email}
-                            onChange={(e) => setUser({ ...user, email: e.target.value })}
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
                         />
                     </div>
+                    {errors.email && touched.email ? (
+                                    <p className="text-red-600 text-start text-sm">{errors.email}</p>
+                                ) : null}
                     <div className='text-left text-sm'>
                         <label className='font-bold' htmlFor="password">Password</label>
                         <div className="relative">
@@ -73,8 +90,9 @@ function page() {
                                 className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
                                 `}
                                 id="password"
-                                value={user.password}
-                                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                                value={values.password}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
                             />
                             <div
                                 className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
@@ -87,8 +105,11 @@ function page() {
                             </div>
                         </div>
                     </div>
+                    {errors.password && touched.password ? (
+                                    <p className="text-red-600 text-start text-sm">{errors.password}</p>
+                                ) : null}
                     <div>
-                        <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' onClick={developerLogin}>
+                        <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold'>
                             {loading ? <BeatLoader color='white' /> : 'Login'}
                         </button>
                     </div>
@@ -97,6 +118,7 @@ function page() {
                             Forgot Password
                         </p>
                     </div>
+                  </form>
                 </div>
             </div>
         </div>

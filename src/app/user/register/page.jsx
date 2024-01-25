@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
-
 import { toast } from 'react-toastify';
 import { signUpApi } from '../userAPIs/authApis';
 import { useFormik } from 'formik';
