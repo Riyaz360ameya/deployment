@@ -17,7 +17,7 @@ const Sidebar = ({ menu, setProject, Project }) => {
         { icon: <FaRegPenToSquare />, name: 'New Project' },
         { icon: <GoProjectSymlink />, name: 'Project Details' },
         { icon: <ImStatsDots />, name: 'Project Status' },
-        { icon: <FaIndianRupeeSign />, name: 'Transactions' },
+        // { icon: <FaIndianRupeeSign />, name: 'Transactions' },
         { icon: <IoIosListBox />, name: 'Package' },
         { icon: <FaStreetView />, name: 'View' },
     ];
