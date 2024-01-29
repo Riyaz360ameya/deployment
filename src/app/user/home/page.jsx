@@ -11,6 +11,7 @@ import Package from '../components/Package'
 import ProjectInformation from '../components/ProjectInformation'
 import { useSelector } from 'react-redux'
 import Transaction from '../components/Transaction'
+import DataUpload from '../components/DataUpload'
 
 function page() {
     const [loader, setLoader] = useState(false)
@@ -41,12 +42,13 @@ function page() {
                             <Header setLoader={setLoader} setMenu={setMenu} />
                             {
                                 Project === "New Project" ? <UploadDetails />
+                                // Project === "New Project" ? <DataUpload />
                                     : Project === "Project Details" ? <ProjectInformation />
                                         : Project === "Project Status" ? <Status />
                                             : Project === "Transactions" ? <Payment />
                                                 : Project === "View" ? <View />
                                                     : Project === "Package" ? <Package />
-                                                    : ""
+                                                        : ""
                             }
                         </div>
                     </div>
