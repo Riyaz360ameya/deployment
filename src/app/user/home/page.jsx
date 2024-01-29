@@ -5,13 +5,13 @@ import Sidebar from '../components/sidebar'
 import Header from '../components/Header'
 import UploadDetails from '../components/uploadDetails'
 import Status from '../components/Status'
-import Payment from '../components/Payment'
 import View from '../components/View'
 import Package from '../components/Package'
 import ProjectInformation from '../components/ProjectInformation'
 import { useSelector } from 'react-redux'
 import Transaction from '../components/Transaction'
 import DataUpload from '../components/DataUpload'
+import Payment from '../components/Payment'
 
 function page() {
     const [loader, setLoader] = useState(false)
@@ -41,8 +41,8 @@ function page() {
                         <div className="flex flex-col flex-1">
                             <Header setLoader={setLoader} setMenu={setMenu} />
                             {
-                                Project === "New Project" ? <UploadDetails />
-                                // Project === "New Project" ? <DataUpload />
+                                // Project === "New Project" ? <UploadDetails />
+                                Project === "New Project" ? <DataUpload />
                                     : Project === "Project Details" ? <ProjectInformation />
                                         : Project === "Project Status" ? <Status />
                                             : Project === "Transactions" ? <Payment />
