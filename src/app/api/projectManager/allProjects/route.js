@@ -15,8 +15,8 @@ export async function GET(req = NextRequest, res = NextResponse) {
         }
         const PmProjects = await pmProjectsModel.findOne({ proManagerId })
             .populate({
-                path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.projectId completedProjects.userId completedProjects.projectId',
-                select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry',
+                path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.assignedLeadId onGoingProjects.projectId completedProjects.assignedLeadId completedProjects.userId completedProjects.projectId',
+                select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry -notifications',
             }).sort({ projectReachedOn: -1 });
             // .populate({
             //     path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.projectId completedProjects.userId completedProjects.projectId',

@@ -1,8 +1,10 @@
 "use client"
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const page = () => {
+  const inputFileRef = useRef(null);
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -10,27 +12,59 @@ const page = () => {
     setFile(selectedFile);
   };
 
-  const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append('cadFile', file);
-    console.log(file,'---------file------------')
+  // const handleUpload = async () => {
+  //   const formData = new FormData();
+  //   formData.append('cadFile', file);
+  //   console.log(file, '---------file------------')
 
+  //   try {
+  //     await axios.post('/api/upload', formData, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //       },
+  //     });
+  //     console.log('success')
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // };
+  const handleSubmit = async (e) => {
     try {
-      await axios.post('/api/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-    console.log('success')  
-  } catch (error) {
-        console.log(error) 
-   }
-  };
+      e.preventDefault();
+      if (file) {
+        console.log('here');
+        const formData = new FormData();
+        // formData.append('file', file);
+        formData.set('file', file);
+        const response = await axios.post('/api/upload', formData)
+        inputFileRef.current.value = '';
+        setFile(null);
+        toast.success(response.data)
+      }
+      else {
+        toast.error('Please Select any file')
+      }
+    } catch (error) {
+      toast.error(error.response.data.error)
+    }
 
+  };
   return (
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
+    <div className='h-screen  flex justify-center items-center'>
+      {/* <input type="file" onChange={handleFileChange} />
+      <button className='bg-blue-600 text-white rounded p-2' onClick={handleUpload}>Upload</button> */}
+      <form onSubmit={handleSubmit}>
+        <input
+          ref={inputFileRef}
+          id="inputField"
+          type="file"
+          name="file"
+          onChange={handleFileChange}
+        />
+        <button className="bg-blue-600 p-2 rounded text-white" type="submit">
+          Upload
+        </button>
+      </form>
     </div>
   );
 };

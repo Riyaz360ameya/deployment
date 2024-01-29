@@ -36,8 +36,8 @@ export const PUT = async (request = NextRequest) => {
         const upDatedLead = await upDateClientProject({ projectId, userId })
         const PmProjects = await pmProjectsModel.findOne({ proManagerId })
         .populate({
-            path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.projectId completedProjects.userId completedProjects.projectId',
-            select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry',
+            path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.assignedLeadId onGoingProjects.projectId completedProjects.assignedLeadId completedProjects.userId completedProjects.projectId',
+            select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry -notifications',
         })
         const allComProject = PmProjects.completedProjects
         return NextResponse.json({ message: "Project Completed", success: true, allComProject }, { status: 200 });

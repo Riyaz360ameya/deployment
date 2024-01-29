@@ -8,14 +8,15 @@ import Status from '../components/Status'
 import Payment from '../components/Payment'
 import View from '../components/View'
 import Package from '../components/Package'
-import ClientInformation from '../components/ClientInformation'
+import ProjectInformation from '../components/ProjectInformation'
 import { useSelector } from 'react-redux'
 import Transaction from '../components/Transaction'
+import DataUpload from '../components/DataUpload'
 
 function page() {
     const [loader, setLoader] = useState(false)
     const [menu, setMenu] = useState(true)
-    const [Project, setProject] = useState("Project Details")
+    const [Project, setProject] = useState("New Project")
     const user = useSelector((state) => state.user.userDetails)
     const stopLoading = () => {
         user._id && setLoader(false)
@@ -41,12 +42,13 @@ function page() {
                             <Header setLoader={setLoader} setMenu={setMenu} />
                             {
                                 Project === "New Project" ? <UploadDetails />
-                                    : Project === "Project Details" ? <ClientInformation />
+                                // Project === "New Project" ? <DataUpload />
+                                    : Project === "Project Details" ? <ProjectInformation />
                                         : Project === "Project Status" ? <Status />
                                             : Project === "Transactions" ? <Payment />
                                                 : Project === "View" ? <View />
-                                                    // : Project === "Package" ? <Package />
-                                                    : ""
+                                                    : Project === "Package" ? <Package />
+                                                        : ""
                             }
                         </div>
                     </div>
