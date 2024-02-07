@@ -9,11 +9,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { IoMdCut } from "react-icons/io";
 import { IoTrashBinOutline } from "react-icons/io5";
 import { userCompletedProjects, userNewProjects, userOngoingProjects } from '@/app/redux/users/userProSlice';
+import DataView from './DataView';
 function ProjectInformation() {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
     const [position, setPosition] = useState("New")
     const [projects, setProjects] = useState([]);
+    const [allData, setAllData] = useState()
+    const [view, setView] = useState(false)
 
     const [projectsPerPage] = useState(12); // Adjust the number of projects per page
     const [currentPage, setCurrentPage] = useState(1);
@@ -61,6 +64,12 @@ function ProjectInformation() {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+    const handleShowData = (data) => {
+        setView(true)
+        setAllData(data)
+        console.log('....................................its showing')
+        console.log(data, '....................................its showing')
+    }
     return (
         <>
             {loading ? (
@@ -70,89 +79,93 @@ function ProjectInformation() {
                     </div>
                 </div>
             ) : (
-                <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden'>
-                    <div>
-                        <h1 className='text-xl p-2 flex justify-center items-center shadow-lg bg-gray-200'>Your Projects Details</h1>
-                        <div className='flex items-center justify-between'>
-                            <div className='flex gap-4 ml-2 py-4 sticky top-0'>
-                                <div onClick={() => handleData("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
-                                    <p className='font-bold shadow'>New</p>
+
+                <>
+                    <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden'>
+                        <div>
+                            <h1 className='text-xl p-2 flex justify-center items-center shadow-lg bg-gray-200'>Your Projects Details</h1>
+                            <div className='flex items-center justify-between'>
+                                <div className='flex gap-4 ml-2 py-4 sticky top-0'>
+                                    <div onClick={() => handleData("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
+                                        <p className='font-bold shadow'>New</p>
+                                    </div>
+                                    <div onClick={() => handleData("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
+                                        <p className='font-bold shadow'>OnGoing</p>
+                                    </div>
+                                    <div onClick={() => handleData("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
+                                        <p className='font-bold shadow'>Completed</p>
+                                    </div>
                                 </div>
-                                <div onClick={() => handleData("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
-                                    <p className='font-bold shadow'>OnGoing</p>
+                                <div className="">
+                                    {Array.from({ length: Math.ceil(projects.length / projectsPerPage) }).map((_, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => paginate(index + 1)}
+                                            className={`px-4 py-2 mx-1 font-extrabold shadow-xl ${currentPage === index + 1 ? 'bg-slate-600 text-white' : 'bg-white text-blue-500'
+                                                } border border-blue-500 rounded-md hover:bg-slate-600 hover:text-white`}
+                                        >
+                                            {index + 1}
+                                        </button>
+                                    ))}
                                 </div>
-                                <div onClick={() => handleData("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
-                                    <p className='font-bold shadow'>Completed</p>
-                                </div>
-                            </div>
-                            <div className="">
-                                {Array.from({ length: Math.ceil(projects.length / projectsPerPage) }).map((_, index) => (
-                                    <button
-                                        key={index}
-                                        onClick={() => paginate(index + 1)}
-                                        className={`px-4 py-2 mx-1 font-extrabold shadow-xl ${currentPage === index + 1 ? 'bg-slate-600 text-white' : 'bg-white text-blue-500'
-                                            } border border-blue-500 rounded-md hover:bg-slate-600 hover:text-white`}
-                                    >
-                                        {index + 1}
-                                    </button>
-                                ))}
                             </div>
                         </div>
-                    </div>
-                    <div className='border shadow mt-4'>
-                        <table className='w-full whitespace-nowrap shadow p-3 '>
-                            <tbody>
-                                <tr className='h-16 border border-gray-950 text-white font-bold text-xl rounded shadow-xl  bg-gray-500'>
-                                    <th>No</th>
-                                    <th>Venture Name</th>
-                                    <th>Project No</th>
-                                    <th>Venture Type</th>
-                                    <th>Description</th>
-                                    <th>Deadline</th>
+                        <div className='border shadow mt-4'>
+                            <table className='w-full whitespace-nowrap shadow p-3 '>
+                                <tbody>
+                                    <tr className='h-16 border border-gray-950 text-white font-bold text-xl rounded shadow-xl  bg-gray-500'>
+                                        <th>No</th>
+                                        <th>Venture Name</th>
+                                        <th>Project No</th>
+                                        <th>Venture Type</th>
+                                        <th>Description</th>
+                                        <th>Deadline</th>
+                                        {
+                                            position !== "Completed" &&
+                                            <th>Options</th>
+                                        }
+                                    </tr>
+                                    {/* <tr className='h-5'></tr> */}
                                     {
-                                        position !== "Completed" &&
-                                        <th>Options</th>
-                                    }
-                                </tr>
-                                {/* <tr className='h-5'></tr> */}
-                                {
-                                    projects.length === 0 ? (
-                                        <tr className="text-center mt-10 shadow-xl border">
-                                            <td colSpan="10" className='text-2xl text-blue-600'>No Projects</td>
-                                        </tr>
-                                    ) :
-                                        currentProjects.map((item, i) => {
-                                            return (
-                                                <tr key={i} className='text-center mt-10 shadow-xl border'>
-                                                    <td>{i + 1}</td>
-                                                    <td className=''>
-                                                        <div className='flex items-center gap-2 ml-5' >
-                                                            {item.isNew && <Badge label='New' color='bg-green-500 text-white' />}
-                                                            <FaLink color='blue' />
-                                                            <p>{item.ProjectId.projectInfo.ventureName}</p>
-                                                        </div>
-                                                    </td>
-                                                    <td className=''>{item.ProjectId.userId.slice(0, 8)}</td>
-                                                    <td className='text-center'>{item.ProjectId.projectInfo.ventureType}</td>
-                                                    <td className='flex items-center justify-center gap-2'>
-                                                        <PiChatDotsLight />
-                                                        {item.ProjectId.projectInfo.ventureDescription}
-                                                    </td>
-                                                    <td className='bg-red-200 rounded text-red-600'>{item.ProjectId.projectInfo.estimatedDeliveryDate}</td>
-                                                    {
-                                                        position !== "Completed" &&
-                                                        <td className='flex items-center justify-around'>
-                                                            <button className=' text-blue-900 p-2 text-lg'><IoMdCut /></button>
-                                                            <button className=' text-red-900 p-2 text-lg'><IoTrashBinOutline /></button>
+                                        projects.length === 0 ? (
+                                            <tr className="text-center mt-10 shadow-xl border">
+                                                <td colSpan="10" className='text-2xl text-blue-600'>No Projects</td>
+                                            </tr>
+                                        ) :
+                                            currentProjects.map((item, i) => {
+                                                return (
+                                                    <tr key={i} className='text-center mt-10 shadow-xl border'>
+                                                        <td>{i + 1}</td>
+                                                        <td className=''>
+                                                            <div className='flex items-center gap-2 ml-5 cursor-pointer' >
+                                                                <FaLink color='blue' onClick={() => handleShowData(item)} />                                                            <p>{item.ProjectId.projectInfo.ventureName}</p>
+                                                            </div>
                                                         </td>
-                                                    }
-                                                </tr>
-                                            );
-                                        })}
-                            </tbody>
-                        </table>
+                                                        <td className=''>{item.ProjectId.userId.slice(0, 8)}</td>
+                                                        <td className='text-center'>{item.ProjectId.projectInfo.ventureType}</td>
+                                                        <td className='flex items-center justify-center gap-2'>
+                                                            <PiChatDotsLight />
+                                                            {item.ProjectId.projectInfo.ventureDescription}
+                                                        </td>
+                                                        <td className='bg-red-200 rounded text-red-600'>{item.ProjectId.projectInfo.estimatedDeliveryDate}</td>
+                                                        {
+                                                            position !== "Completed" &&
+                                                            <td className='flex items-center justify-around'>
+                                                                <button className=' text-blue-900 p-2 text-lg'><IoMdCut /></button>
+                                                                {/* <button className=' text-red-900 p-2 text-lg'><IoTrashBinOutline /></button> */}
+                                                            </td>
+                                                        }
+                                                    </tr>
+                                                );
+                                            })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                    {
+                        view ? <DataView setView={setView} allData={allData} /> : ''
+                    }
+                </>
             )}
         </>
     )

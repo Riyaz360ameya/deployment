@@ -1,13 +1,13 @@
 import React from 'react'
 import { InfinitySpin } from 'react-loader-spinner'
 
-const Loading = ({ setLocation }) => {
+const Loading = ({ resetLocation }) => {
     return (
-        <div className='h-96 flex items-center justify-center '>
+        <div className='flex items-center justify-center h-96 '>
             {/* <div> */}
             <InfinitySpin width='200' color='white' />
             {/* </div> */}
-            <button className='bg-yellow-400 p-2 rounded text-white font-bold' onClick={() => setLocation(1)} >Completed</button>
+            <button className='p-2 font-bold text-white bg-yellow-400 rounded' onClick={()=>resetLocation()} >Completed</button>
         </div>
     )
 }
