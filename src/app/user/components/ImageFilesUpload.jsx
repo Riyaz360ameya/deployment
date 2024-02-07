@@ -1,0 +1,115 @@
+import React from 'react';
+import { GrLinkNext } from 'react-icons/gr';
+
+const ImageFilesUpload = ({ addToLocation, removeFromLocation }) => {
+    // Data for file inputs
+    const fileInputs = [
+        '3DsMax - Building',
+        '3DsMax - Landscape & Textures',
+        '3DsMax - Terrace',
+        '3DsMax - Entry/Exit gate',
+        'CAD Floor plans (dwg)',
+        'CAD Elevation (dwg)',
+        'CAD Section (dwg)',
+        'Club House CAD Elevation (dwg)',
+        'Club House CAD Section (dwg)',
+        'Club house floor plans CAD (dwg)',
+        'Tower Terrace Cad (dwg)',
+        'Landscape (Dwg)',
+    ];
+
+    return (
+        <div className='p-2 mt-5 rounded'>
+            <div className='flex items-center justify-between'>
+                <div>
+                    <h1 className='text-2xl font-extrabold text-white '>Upload your Image Files.......</h1>
+                </div>
+                <div className='flex gap-4'>
+                    <button
+                        className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
+                        onClick={() => removeFromLocation(4)}
+                    >
+                        <span className='flex items-center justify-between gap-3'>
+                            <GrLinkNext className='rotate-180' />
+                            Back
+                        </span>
+                    </button>
+                    <button
+                        className='p-2 px-5 font-bold text-white border rounded bg-slate-500'
+                        onClick={() => addToLocation(5)}
+                    >
+                        <span className='flex items-center justify-between gap-3 '>Submit</span>
+                    </button>
+                </div>
+            </div>
+            <div className="grid grid-cols-2 gap-6 p-2 mx-2 my-2 mb-6 overflow-hidden bg-gray-800 rounded md:grid-cols-3">
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Material Palette</label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Exterior draft images</label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Interior draft images</label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Aerial Image, Front Building elevation image for all towers</label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">2D Floor Plan (color)</label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">2D Unit plan (color) </label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">2D Unit plan (ISO) </label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Renders of common areas</label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Tower Terrace Renders</label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Club House Terrace Renders</label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Amenities Images  </label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Master Plan of site (color) </label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Club house floor plan (2D Color)</label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Logo of project/Company </label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Landscape renders  </label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Project Broucher </label>
+                    <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file" />
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default ImageFilesUpload;

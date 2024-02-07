@@ -29,14 +29,14 @@ function page() {
         <>
             {
                 loader ?
-                    <div className='h-screen bg-white bg-opacity-5 flex items-center justify-center '>
+                    <div className='flex items-center justify-center h-screen bg-white bg-opacity-5 '>
                         <InfinitySpin
                             width='200'
                             color="black"
                         />
                     </div>
                     :
-                    <div className='h-screen flex w-full '>
+                    <div className='flex w-full h-screen '>
                         <Sidebar setProject={setProject} menu={menu} Project={Project} />
                         <div className="flex flex-col flex-1">
                             <Header setLoader={setLoader} setMenu={setMenu} />
