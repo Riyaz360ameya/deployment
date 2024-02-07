@@ -19,7 +19,7 @@ const Projects = ({ loading, setLoading }) => {
     const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
     const pmComPro = useSelector((state) => state.pmProjects.pmCompletedProjects)
     console.log(pmNewPro.length, '---------------new-----------pmNewPro')
-    console.log(pmOnGoPro[0], '--------------ON------------pmOnGoPro')
+    console.log(pmOnGoPro, '--------------ON------------pmOnGoPro')
     console.log(pmComPro.length, '----------------comp----------pmComPro')
 
     const [projectId, setProjectId] = useState()
@@ -147,7 +147,7 @@ const Projects = ({ loading, setLoading }) => {
                                     <th>No</th>
                                     {/* <th>Select</th> */}
                                     <th>Organization</th>
-                                    <th>Project No</th>
+                                    <th>Project Name</th>
                                     <th>Venture Type</th>
                                     <th>Description</th>
                                     <th>ReachedOn</th>
@@ -189,7 +189,8 @@ const Projects = ({ loading, setLoading }) => {
                                                         </div>
                                                     </td>
                                                     <td className=''>
-                                                        <p>{item.projectId._id.slice(5, 25)}</p>
+                                                        {/* <p>{item.projectId._id.slice(5, 25)}</p> */}
+                                                        <p>{item.projectId.projectInfo.ventureName}</p>
                                                     </td>
                                                     <td className='text-center'>{item.projectId.projectInfo.ventureType}</td>
                                                     <td className=''>
