@@ -82,16 +82,11 @@ const DataUpload = () => {
             // const response = await axios.post('/api/users/clientsInput', clientInputs);
             const response = await uploadProject(clientInputs)
             console.log(response, "-------data sending------------");
-            // Add any additional logic based on the response if needed
         } catch (error) {
             console.error('Error sending data to the backend:', error);
         }
     };
-    // const sentClientData = async ()=>{
-    //    const response = await axios.post('/api/users/clientsInput')
-    //    console.log(response,"-------data sending------------")
-
-    // }
+ 
     const settingWidthProgress = () => {
         const locationsLength = location.length;
         if (locationsLength === 1) {
