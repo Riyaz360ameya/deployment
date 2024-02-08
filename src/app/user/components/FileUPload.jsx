@@ -42,7 +42,8 @@ const FileUpload = ({ addToLocation, removeFromLocation }) => {
                     </button>
                 </div>
             </div>
-            <div className='grid grid-cols-2 gap-6 p-2 mx-2 my-2 mb-6 overflow-hidden bg-gray-800 rounded md:grid-cols-3'>
+            {/* <div className='h-full md:h-80  overflow-y-scroll p-3'> */}
+            <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2  bg-gray-800 rounded md:grid-cols-2'>
                 {fileInputs.map((label, index) => (
                     <div key={index}>
                         <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor={`fileInput_${index}`}>
@@ -61,3 +62,4 @@ const FileUpload = ({ addToLocation, removeFromLocation }) => {
 };
 
 export default FileUpload;
+
