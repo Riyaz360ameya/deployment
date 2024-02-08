@@ -6,14 +6,70 @@ import ContactDetails from './ContactDetails';
 import FileUPload from './FileUPload';
 import Loading from './Loading';
 import ImageFilesUpload from './ImageFilesUpload';
-
+import axios from 'axios';
+import { uploadProject } from '../userAPIs/projectApis';
 
 const DataUpload = () => {
+    const [clientInputs, setClientInputs] = useState({
+        projectName: '',
+        projectType: '',
+        specification: '',
+        aminities: '',
+        projectUsp: '',
+        projectDescription: '',
+        projectHighlights: '',
+        email: '',
+        contact: '',
+        siteLocation: '',
+        siteAddress: '',
+        mobileNO: '',
+        OfficeAddress: '',
+        architectureName: '',
+        architectureEmail: '',
+        architectureContactNo: '',
+        LandscapeName: '',
+        LandscapeEmail: '',
+        LandscapeNo: '',
+        coordinatorName: '',
+        coordinatorEmail: '',
+        coordinatorNo: '',
+    })
+    const [files, setFiles] = useState({
+        three_DsMax_Building: '',
+        three_DsMax_LandscapeTextures: '',
+        three_DsMax_Terrace: '',
+        three_DsMax_Entry_Exitgate: '',
+        CAD_Floorplans: '',
+        CAD_Elevation: '',
+        CADSection: '',
+        Club_House_CADElevation: '',
+        Club_HouseCAD_Section: '',
+        Club_house_floor_plans_CAD: '',
+        Tower_Terrace_Cad: '',
+        Landscape: '',
+        MaterialPalette: '',
+        Exterior_draft_images: '',
+        Interior_draft_images: '',
+        Aerial_Image: '',
+        twoD_Floor_Plan_color: '',
+        twoD_Unit_plan_color: '',
+        twoD_Unit_plan_iso: '',
+        RendersCA: '',
+        Tower_Terrace_Renders: '',
+        Club_House_Terrace_Renders: '',
+        AmenitiesImages: '',
+        MasterPlan_site: '',
+        Club_house_floor_plan: '',
+        logo: '',
+        LandscapeRenders: '',
+        Project_Broucher: ''
+    })
     const [location, setLocation] = useState([1])
     const [width, setWidth] = useState(15)
     const addToLocation = (newValue) => {
-        // Use the spread operator (...) to create a new array with the existing values and append the new value
         setLocation(prevLocation => [...prevLocation, newValue]);
+        sentClientData()
+        console.log(clientInputs, '-----------------all data------------')
     };
     const removeFromLocation = (valueToRemove) => {
         setLocation(prevLocation => prevLocation.filter(item => item !== valueToRemove));
@@ -21,6 +77,21 @@ const DataUpload = () => {
     const resetLocation = () => {
         setLocation([1])
     }
+    const sentClientData = async () => {
+        try {
+            // const response = await axios.post('/api/users/clientsInput', clientInputs);
+            const response = await uploadProject(clientInputs)
+            console.log(response, "-------data sending------------");
+            // Add any additional logic based on the response if needed
+        } catch (error) {
+            console.error('Error sending data to the backend:', error);
+        }
+    };
+    // const sentClientData = async ()=>{
+    //    const response = await axios.post('/api/users/clientsInput')
+    //    console.log(response,"-------data sending------------")
+
+    // }
     const settingWidthProgress = () => {
         const locationsLength = location.length;
         if (locationsLength === 1) {
@@ -81,12 +152,12 @@ const DataUpload = () => {
                 </div>
                 <div className='p-5'>
                     {
-                        location.length == 1 ? <ProjectInfo addToLocation={addToLocation} />
+                        location.length == 1 ? <ProjectInfo addToLocation={addToLocation} clientInputs={clientInputs} setClientInputs={setClientInputs} />
                             // : location.length == 2 ? <ProjectOverview addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
-                            : location.length == 2 ? <ContactDetails addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
-                                : location.length == 3 ? <FileUPload addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
-                                    : location.length == 4 ? <ImageFilesUpload addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
-                                        : location.length == 5 && <Loading resetLocation={resetLocation} />
+                            : location.length == 2 ? <ContactDetails addToLocation={addToLocation} removeFromLocation={removeFromLocation} clientInputs={clientInputs} setClientInputs={setClientInputs} />
+                                : location.length == 3 ? <FileUPload addToLocation={addToLocation} removeFromLocation={removeFromLocation} clientInputs={clientInputs} setClientInputs={setClientInputs} files={files} setFiles={setFiles} />
+                                    : location.length == 4 ? <ImageFilesUpload addToLocation={addToLocation} removeFromLocation={removeFromLocation} clientInputs={clientInputs} setClientInputs={setClientInputs} files={files} setFiles={setFiles} />
+                                        : location.length == 5 && <Loading resetLocation={resetLocation} clientInputs={clientInputs} setClientInputs={setClientInputs} files={files} setFiles={setFiles} />
                     }
                 </div>
 

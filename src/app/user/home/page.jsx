@@ -41,8 +41,8 @@ function page() {
                         <div className="flex flex-col flex-1">
                             <Header setLoader={setLoader} setMenu={setMenu} />
                             {
-                                Project === "New Project" ? <UploadDetails />
-                                // Project === "New Project" ? <DataUpload />
+                                // Project === "New Project" ? <UploadDetails />
+                                Project === "New Project" ? <DataUpload />
                                     : Project === "Project Details" ? <ProjectInformation />
                                         : Project === "Project Status" ? <Status />
                                             : Project === "Transactions" ? <Payment />
