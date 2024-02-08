@@ -1,178 +1,148 @@
+
 import React, { useState } from 'react';
 import { GrLinkNext } from 'react-icons/gr';
 
-const ContactDetails = ({ addToLocation, moveToFurthur, removeFromLocation, clientInputs, setClientInputs }) => {
-  const [coordinators, setcoordinators] = useState([{ coordinatorName: '', coordinatorEmail: '', coordinatorNo: '' }])
-  // const [coordinators, setCoordinators] = useState([{}]);
+const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, clientInputs }) => {
+    const [coordinators, setCoordinators] = useState([{}]);
 
-  const addCoordinator = () => {
-    setcoordinators([...coordinators, { coordinatorName: '', coordinatorEmail: '', coordinatorNo: '' }]);
-  };
+    const addCoordinator = () => {
+        setCoordinators([...coordinators, {}]);
+    };
+    const removeCoordinator = (index) => {
+        if (coordinators.length > 1) {
+            const updatedCoordinators = [...coordinators];
+            updatedCoordinators.splice(index, 1);
+            setCoordinators(updatedCoordinators);
+        }
+    };
 
-  const handleCoordinatorChange = (index, field, value) => {
-    const updatedCoordinators = [...coordinators];
-    updatedCoordinators[index][field] = value;
-    setcoordinators(updatedCoordinators);
-  };
+    const sections = [
+        {
+            title: "",
+            fields: [
+                { id: "clientEmail", label: "Email", type: "email" },
+                { id: "clientMobileNO", label: "Mob No", type: "number" },
+                { id: "clientSiteLocation", label: "Site Location", type: "text" },
+                { id: "clientSiteAddress", label: "Site Address", type: "text" },
+                { id: "clientOfficeAddress", label: "Office Address", type: "text" },
+            ],
+        },
+        {
+            title: "Architecture",
+            fields: [
+                { id: "architectureName", label: "Name", type: "text" },
+                { id: "architectureEmail", label: "Email", type: "email" },
+                { id: "architectureMobNo", label: "Mob No", type: "text" },
+            ],
+        },
+        {
+            title: "Landscape",
+            fields: [
+                { id: "landscapeName", label: "Name", type: "text" },
+                { id: "landscapeEmail", label: "Email", type: "email" },
+                { id: "landscapeMobNo", label: "Mob No", type: "text" },
+            ],
+        },
+    ];
 
-  return (
-    <div className='p-2 mt-5 rounded'>
-      <div className='flex items-center justify-between'>
-        <div>
-          <h1 className='text-2xl font-extrabold text-white'>Contact Details</h1>
-        </div>
-        <div className='flex gap-4'>
-          <button
-            className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
-            onClick={() => removeFromLocation(2)}
-          >
-            <span className='flex items-center justify-between gap-3'>
-              <GrLinkNext className='rotate-180' /> Back
-            </span>
-          </button>
-          <button
-            className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
-            onClick={() => addToLocation(3)}
-          >
-            <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
-          </button>
-        </div>
-      </div>
+    return (
+        <div className=' mt-5 rounded'>
+            <div className='flex items-center justify-between'>
+                <div>
+                    <h1 className='text-2xl font-extrabold text-white'>Contact Details</h1>
+                </div>
 
-      <div className="grid grid-cols-2 gap-6 p-2 mx-2 my-2 mb-6 overflow-hidden bg-gray-800 rounded md:grid-cols-3">
-        <div>
-          <label htmlFor="email" className="block mb-2 text-sm font-medium text-white ">Email</label>
-          <input
-            type="email" id="email"
-            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={clientInputs.email}
-            onChange={(e) => setClientInputs({ ...clientInputs, email: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="mobNum" className="block mb-2 text-sm font-medium text-white ">MOB No</label>
-          <input
-            type="number" id="mobNum"
-            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={clientInputs.contact}
-            onChange={(e) => setClientInputs({ ...clientInputs, contact: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="location" className="block mb-2 text-sm font-medium text-white ">Site Location</label>
-          <input
-            type="text" id="location"
-            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={clientInputs.siteLocation}
-            onChange={(e) => setClientInputs({ ...clientInputs, siteLocation: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="siteAddress" className="block mb-2 text-sm font-medium text-white ">Site Address</label>
-          <input
-            type="text" id="siteAddress"
-            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={clientInputs.siteAddress}
-            onChange={(e) => setClientInputs({ ...clientInputs, siteAddress: e.target.value })}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="officeAddress" className="block mb-2 text-sm font-medium text-white ">Office Address</label>
-          <input
-            type="text" id="officeAddress"
-            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={clientInputs.OfficeAddress}
-            onChange={(e) => setClientInputs({ ...clientInputs, OfficeAddress: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="archName" className="block mb-2 text-sm font-medium text-white ">Architecture Name</label>
-          <input
-            type="text" id="archName"
-            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={clientInputs.architectureName}
-            onChange={(e) => setClientInputs({ ...clientInputs, architectureName: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="archEmail" className="block mb-2 text-sm font-medium text-white ">Architecture Email</label>
-          <input
-            type="email" id="archEmail"
-            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={clientInputs.architectureEmail}
-            onChange={(e) => setClientInputs({ ...clientInputs, architectureEmail: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="landsName" className="block mb-2 text-sm font-medium text-white ">Landscape Name</label>
-          <input
-            type="text" id="landsName"
-            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={clientInputs.LandscapeName}
-            onChange={(e) => setClientInputs({ ...clientInputs, LandscapeName: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="landsName" className="block mb-2 text-sm font-medium text-white ">Landscape Email</label>
-          <input
-            type="text" id="landsName"
-            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={clientInputs.LandscapeEmail}
-            onChange={(e) => setClientInputs({ ...clientInputs, LandscapeEmail: e.target.value })}
-          />
-        </div>
-        <div>
-          <label htmlFor="landsName" className="block mb-2 text-sm font-medium text-white ">Landscape No</label>
-          <input
-            type="text" id="landsName"
-            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            value={clientInputs.LandscapeNo}
-            onChange={(e) => setClientInputs({ ...clientInputs, LandscapeNo: e.target.value })}
-          />
-        </div>
-        {coordinators.map((_, index) => (
-          <React.Fragment key={index}>
-            <div>
-              <label htmlFor={`coordinatorName${index}`} className="block mb-2 text-sm font-medium text-white ">Coordinator Name</label>
-              <input
-                type="text"
-                id={`coordinatorName${index}`}
-                className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                value={coordinators[index].coordinatorName || ''}
-                onChange={(e) => handleCoordinatorChange(index, 'coordinatorName', e.target.value)}
-              />
+                <div className='flex gap-4'>
+                    <button
+                        className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
+                        onClick={() => removeFromLocation(2)}
+                    >
+                        <span className='flex items-center justify-between gap-3'>
+                            <GrLinkNext className='rotate-180' /> Back
+                        </span>
+                    </button>
+                    <button
+                        className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
+                        onClick={() => addToLocation(3)}
+                    >
+                        <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
+                    </button>
+                </div>
             </div>
-            <div>
-              <label htmlFor={`coordinatorEmail${index}`} className="block mb-2 text-sm font-medium text-white ">Coordinator Email</label>
-              <input
-                type="text"
-                id={`coordinatorEmail${index}`}
-                className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                value={coordinators[index].coordinatorEmail || ''}
-                onChange={(e) => handleCoordinatorChange(index, 'coordinatorEmail', e.target.value)}
-              />
+            <div className='h-80 md:h-80  overflow-y-scroll p-3 bg-slate-800'>
+                {sections.map((section) => (
+                    <div key={section.title} className="mt-8">
+                        <p className="text-white text-2xl font-bold">{section.title}</p>
+                        <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
+                            {/* <RenderFields fields={section.fields} /> */}
+                            {
+                                section.fields.map((item, i) => (
+                                    <div key={item.id}>
+                                        <label htmlFor={item.id} className="block mb-2 text-sm font-medium text-white">
+                                            {item.label}
+                                        </label>
+                                        <input
+                                            type={item.type}
+                                            id={item.id}
+                                            value={clientInputs[item.id]}
+                                            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                            onChange={(e) => setClientInputs({ ...clientInputs, [item.id]: e.target.value })}
+                                        />
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
+                ))}
+                <div className='mt-8'>
+                    <p className='text-white text-2xl font-bold'>Coordinators</p>
+                    {coordinators.map((_, index) => (
+                        <React.Fragment key={index}>
+                            <div className='grid grid-col-2 md:grid-cols-3 gap-6 mt-5'>
+                                <div>
+                                    <label htmlFor={`coordinatorName_${index}`} className="block mb-2 text-sm font-medium text-white ">Name</label>
+                                    <input
+                                        type="text"
+                                        id={`coordinatorName_${index}`}
+                                        value={clientInputs[`coordinatorName_${index}`]}
+                                        className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorName_${index}`]: e.target.value })} />
+                                </div>
+                                <div>
+                                    <label htmlFor={`coordinatorMobile_${index}`} className="block mb-2 text-sm font-medium text-white ">Mob No</label>
+                                    <input
+                                        type="text"
+                                        id={`coordinatorMobile_${index}`}
+                                        value={clientInputs[`coordinatorName_${index}`]}
+                                        className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorMobile_${index}`]: e.target.value })}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor={`coordinatorEmail_${index}`} className="block mb-2 text-sm font-medium text-white ">Email</label>
+                                    <input
+                                        type="text"
+                                        id={`coordinatorEmail_${index}`}
+                                        value={clientInputs[`coordinatorName_${index}`]}
+                                        className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorEmail_${index}`]: e.target.value })}
+                                    />
+                                </div>
+                            </div>
+                        </React.Fragment>
+                    ))}
+                </div>
+                <div className='flex justify-between mt-5'>
+                    <button className='p-2 px-5 font-bold text-center text-white bg-gray-800 border rounded' onClick={addCoordinator}>
+                        <span className='flex items-center justify-between gap-3'>Add more coordinators </span>
+                    </button>
+                    <button className='p-2 px-5 font-bold text-center text-white bg-gray-800 border rounded' onClick={removeCoordinator}>
+                        <span className='flex items-center justify-between gap-3'>Remove coordinators </span>
+                    </button>
+                </div>
             </div>
-            <div>
-              <label htmlFor={`coordinatorNo${index}`} className="block mb-2 text-sm font-medium text-white ">Coordinator Mob No</label>
-              <input
-                type="text"
-                id={`coordinatorNo${index}`}
-                className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                value={coordinators[index].coordinatorNo || ''}
-                onChange={(e) => handleCoordinatorChange(index, 'coordinatorNo', e.target.value)}
-              />
-            </div>
-          </React.Fragment>
-        ))}
-      </div>
-      <div className='px-4'>
-        <button className='p-2 px-5 font-bold text-center text-white bg-gray-800 border rounded' onClick={addCoordinator}>
-          <span className='flex items-center justify-between gap-3'>Add more coordinators </span>
-        </button>
-      </div>
-    </div>
-  );
+        </div>
+    );
 };
 
 export default ContactDetails;
