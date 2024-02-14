@@ -17,19 +17,12 @@ export async function POST(request = NextRequest) {
         }
         const reqData = await request.json();
         console.log(reqData, '--------------reqData')
-        // const savedProject = await createNewProject({ reqData, userId })
+        const savedProject = await createNewProject({ reqData, userId })
         // const projectId = savedProject._id
-        // const saveUserProject = await updateUserProjects({ userId, projectId })
-        // const saveNotifyPM = await upDatePMProjects({ userId, projectId })
-        // return NextResponse.json({
-        //     message: "Project details added successfully",
-        //     success: true,
-        //     savedProject,
-        // }, { status: 200 });
         return NextResponse.json({
                 message: "Project details added successfully",
                 success: true,
-                // savedProject,
+                savedProject,
             }, { status: 200 });
 
     } catch (error) {
