@@ -48,8 +48,8 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
             title: "Coordinators",
             fields: [
                 { id: "coordinatorName", label: "Name", type: "text" },
-                { id: "coordinatorMobile", label: "Mob No", type: "number" },
                 { id: "coordinatorEmail", label: "Email", type: "text" },
+                { id: "coordinatorMobile", label: "Mob No", type: "number" },
             ],
         },
     ];

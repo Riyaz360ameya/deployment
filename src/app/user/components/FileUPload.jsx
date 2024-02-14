@@ -18,17 +18,18 @@ const FileUpload = ({ addToLocation, removeFromLocation }) => {
     try {
       e.preventDefault();
       const formData = new FormData();
-
+     
       files.forEach((file, index) => {
         if (file) {
           formData.append(`file[]`, file);
         }
       });
+      console.log(files,"------brief about files")
 
       const response = await axios.post('/api/upload', formData);
       inputFileRefs.forEach((ref) => (ref.current.value = ''));
 
-      setFiles(Array.from({ length: 12 }, () => null));
+      setFiles(Array.from({ length: 28 }, () => null));
       toast.success(response.data.success ? 'Files uploaded successfully' : 'Failed to upload files');
     } catch (error) {
       toast.error(error.response?.data?.error || 'Error uploading files');
