@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { GrLinkNext } from 'react-icons/gr';
 
 const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, clientInputs }) => {
-    const [coordinators, setCoordinators] = useState([{}]);
+    const [coordinators, setCoordinators] = useState([{ coordinatorName: '', coordinatorEmail: '', coordinatorMobile: '' }]);
 
     const addCoordinator = () => {
-        setCoordinators([...coordinators, {}]);
+        setCoordinators([...coordinators, { coordinatorName: '', coordinatorEmail: '', coordinatorMobile: '' }]);
     };
 
     const removeCoordinator = (index) => {
@@ -59,7 +59,6 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
             <div className='flex items-center justify-between'>
                 <div>
                     <h1 className='text-2xl font-extrabold text-white'>Contact Details</h1>
-                  
                 </div>
 
                 <div className='flex gap-4'>
@@ -92,7 +91,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                                     <input
                                         type={item.type}
                                         id={item.id}
-                                        value={clientInputs[item.id]}
+                                        value={clientInputs[item.id] || ''}
                                         className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                         onChange={(e) => setClientInputs({ ...clientInputs, [item.id]: e.target.value })}
                                     />
@@ -103,7 +102,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                 ))}
                 <div className='mt-8'>
                     <p className='text-white text-2xl font-bold'>Coordinators</p>
-                    
+
                     {coordinators.map((_, index) => (
                         <React.Fragment key={index}>
                             <div className='grid grid-cols-2 md:grid-cols-3 gap-6 mt-5'>
@@ -115,9 +114,16 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                                         <input
                                             type={item.type}
                                             id={`${item.id}_${index}`}
-                                            value={clientInputs[`${item.id}_${index}`]}
+                                            value={coordinators[index][item.id] || ''}
                                             className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                            onChange={(e) => setClientInputs({ ...clientInputs, [`${item.id}_${index}`]: e.target.value })}
+                                            onChange={(e) => {
+                                                const updatedCoordinators = [...coordinators];
+                                                updatedCoordinators[index] = {
+                                                    ...updatedCoordinators[index],
+                                                    [item.id]: e.target.value,
+                                                };
+                                                setCoordinators(updatedCoordinators);
+                                            }}
                                         />
                                     </div>
                                 ))}
@@ -139,5 +145,3 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
 };
 
 export default ContactDetails;
-
-

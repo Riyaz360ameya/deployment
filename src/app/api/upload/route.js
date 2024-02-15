@@ -6,15 +6,18 @@ export async function POST(req = NextRequest) {
   try {
     const data = await req.formData();
     const files = data.getAll('file[]');
-    console.log(files, "- received in backend ----------");
+    const projectIds = data.getAll('projectId[]');
 
-    const serverFolderPath = 'D://files';
-    const uploadFolderPath = path.join(serverFolderPath, 'uploads');
-
-    await fs.mkdir(uploadFolderPath, { recursive: true });
+    const serverFolderPath = 'Z://cad file';
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
+      const projectId = projectIds[i];
+
+      const uploadFolderPath = path.join(serverFolderPath, 'uploads', projectId.toString());
+
+      await fs.mkdir(uploadFolderPath, { recursive: true });
+
       const uniqueFilename = Date.now() + '--' + file.name;
       const filePath = path.join(uploadFolderPath, uniqueFilename);
 
@@ -33,5 +36,3 @@ export async function POST(req = NextRequest) {
     });
   }
 }
-
-

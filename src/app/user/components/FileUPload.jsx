@@ -3,14 +3,14 @@ import { GrLinkNext } from 'react-icons/gr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const FileUpload = ({ addToLocation, removeFromLocation }) => {
+const FileUpload = ({ addToLocation, removeFromLocation, projectId }) => {
   const inputFileRefs = Array.from({ length: 28 }, () => useRef(null));
   const [files, setFiles] = useState(Array.from({ length: 28 }, () => null));
 
   const handleFileChange = (index, e) => {
     const selectedFile = e.target.files[0];
     const updatedFiles = [...files];
-    updatedFiles[index] = selectedFile;
+    updatedFiles[index] = { file: selectedFile, projectId };
     setFiles(updatedFiles);
   };
 
@@ -18,13 +18,13 @@ const FileUpload = ({ addToLocation, removeFromLocation }) => {
     try {
       e.preventDefault();
       const formData = new FormData();
-     
-      files.forEach((file, index) => {
-        if (file) {
-          formData.append(`file[]`, file);
+
+      files.forEach((fileData, index) => {
+        if (fileData) {
+          formData.append(`file[]`, fileData.file);
+          formData.append(`projectId[]`, fileData.projectId);
         }
       });
-      console.log(files,"------brief about files")
 
       const response = await axios.post('/api/upload', formData);
       inputFileRefs.forEach((ref) => (ref.current.value = ''));
@@ -70,29 +70,29 @@ const FileUpload = ({ addToLocation, removeFromLocation }) => {
 
   return (
     <div className='p-2 mt-5 rounded'>
-       <div className='flex items-center justify-between'>
-                <div>
-                    <h1 className='text-2xl font-extrabold text-white'>Please Upload Your's Cad and Images Files......</h1>
-                    <hr />
-                </div>
+      <div className='flex items-center justify-between'>
+        <div>
+          <h1 className='text-2xl font-extrabold text-white'>Please Upload Your's Cad and Images Files......</h1>
+          <hr />
+        </div>
 
-                <div className='flex gap-4'>
-                    <button
-                        className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
-                        onClick={() => removeFromLocation(3)}
-                    >
-                        <span className='flex items-center justify-between gap-3'>
-                            <GrLinkNext className='rotate-180' /> Back
-                        </span>
-                    </button>
-                    <button
-                        className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
-                        onClick={() => addToLocation(4)}
-                    >
-                        <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
-                    </button>
-                </div>
-            </div>
+        <div className='flex gap-4'>
+          <button
+            className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
+            onClick={() => removeFromLocation(3)}
+          >
+            <span className='flex items-center justify-between gap-3'>
+              <GrLinkNext className='rotate-180' /> Back
+            </span>
+          </button>
+          <button
+            className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
+            onClick={() => addToLocation(4)}
+          >
+            <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
+          </button>
+        </div>
+      </div>
       <form onSubmit={handleSubmit}>
         <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-800 rounded md:grid-cols-2'>
           {inputFileRefs.map((inputRef, index) => (
