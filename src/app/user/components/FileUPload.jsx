@@ -3,14 +3,15 @@ import { GrLinkNext } from 'react-icons/gr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const FileUpload = ({ addToLocation, removeFromLocation, projectId }) => {
+const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }) => {
   const inputFileRefs = Array.from({ length: 28 }, () => useRef(null));
   const [files, setFiles] = useState(Array.from({ length: 28 }, () => null));
 
   const handleFileChange = (index, e) => {
     const selectedFile = e.target.files[0];
     const updatedFiles = [...files];
-    updatedFiles[index] = { file: selectedFile, projectId };
+    updatedFiles[index] = { file: selectedFile, projectId ,projectName};
+    // updatedFiles[index] = { file: selectedFile, projectId ,projectName: fileInputs[index]};
     setFiles(updatedFiles);
   };
 
@@ -23,9 +24,11 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId }) => {
         if (fileData) {
           formData.append(`file[]`, fileData.file);
           formData.append(`projectId[]`, fileData.projectId);
+          formData.append(`projectName[]`, fileData.projectName);
+
         }
       });
-
+      
       const response = await axios.post('/api/upload', formData);
       inputFileRefs.forEach((ref) => (ref.current.value = ''));
 
