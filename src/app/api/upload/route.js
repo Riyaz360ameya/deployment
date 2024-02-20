@@ -20,7 +20,7 @@ export async function POST(req = NextRequest) {
 
     console.log(projectIds, "format");
     console.log(projectName, '------------projectName file upload backend----------');
-    const serverFolderPath = 'D://files';
+    const serverFolderPath = 'Z://cad file';
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
