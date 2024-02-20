@@ -3,8 +3,7 @@
 import React from 'react';
 import { GrLinkNext } from 'react-icons/gr';
 
-const ImageFilesUpload = ({ addToLocation, removeFromLocation }) => {
-    // Data for file inputs
+const ImageFilesUpload = ({ addToLocation, removeFromLocation, files, setFiles }) => {
     const fileInputs = [
         "Material Palette",
         "Exterior draft images",
@@ -52,7 +51,7 @@ const ImageFilesUpload = ({ addToLocation, removeFromLocation }) => {
             <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2  bg-gray-800 rounded md:grid-cols-2'>
                 {fileInputs.map((label, index) => (
                     <div key={index}>
-                        <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor={`fileInput_${index}`}>
+                        <label className='block mb-2 text-sm font-medium text-gray-900 text-white' htmlFor={`fileInput_${index}`}>
                             {label}
                         </label>
                         <input
@@ -68,3 +67,4 @@ const ImageFilesUpload = ({ addToLocation, removeFromLocation }) => {
 };
 
 export default ImageFilesUpload;
+

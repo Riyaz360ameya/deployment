@@ -1,55 +1,87 @@
-import projectInfoModel from "../../models/projectInfoModel"
+import ClientInformationModel from "../../models/ClientInformationModel";
 
 export const createNewProject = async ({ reqData, userId }) => {
-    const {
-        ventureName,
-        projectPlace,
-        email,
-        ventureType,
-        vision,
-        projectUsp,
-        contact,
-        specification,
-        amenities,
-        pages,
-        brochureLanguage,
-        brochureBudget,
-        leafLet,
-        ventureDescription,
-        estimatedDeliveryDate,
-        siteAddress,
-        previousVenture,
-        officeAddress,
-        location,
-        projectOverview
-    } = reqData
-    const newProject = new projectInfoModel({
-        userId,
-        projectInfo:
-        {
-            ventureName,
-            projectPlace,
-            email,
-            ventureType,
-            vision,
-            projectUsp,
-            contact,
+    try {
+        const {
+            projectName,
+            projectDes,
+            projectHighlights,
+            projectType,
+            projectUSP,
             specification,
-            amenities,
-            pages,
-            brochureLanguage,
-            brochureBudget,
-            leafLet,
-            ventureDescription,
-            estimatedDeliveryDate,
-            siteAddress,
-            previousVenture,
-            officeAddress,
-            location,
-            projectOverview,
-            status: "New Project",
-        },
-    });
-    const savedData = await newProject.save();
-    return savedData;
-}
+
+            clientName,
+            clientEmail,
+            clientMobileNO,
+            clientOfficeAddress,
+            clientSiteAddress,
+            clientSiteLocation,
+
+            architectureName,
+            architectureMobNo,
+            architectureEmail,
+
+            landscapeName,
+            landscapeEmail,
+            landscapeMobNo,
+
+           
+            coordinatorName_0,
+            coordinatorEmail_0,
+            coordinatorMobile_0,
+
+            coordinatorName,
+            coordinatorMobile,
+            coordinatorEmail,
+        } = reqData;
+       
+        const newProject = new ClientInformationModel({
+            userId,
+            projectInfo: {
+                projectDetails: {
+                    projectName,
+                    projectDes,
+                    projectHighlights,
+                    projectType,
+                    projectUSP,
+                    specification,
+                },
+                contactDetails: {
+                    name:clientName,
+                    email: clientEmail,
+                    contact: clientMobileNO,
+                    siteLocation: clientSiteLocation,
+                    siteAddress: clientSiteAddress,
+                    officeAddress: clientOfficeAddress,
+                    architecture: {
+                        architectureName: architectureName,
+                        architectureEmail:architectureEmail,
+                        architectureMobNo: architectureMobNo,
+                    },
+                    landscape: {
+                        landscapeName:landscapeName,
+                        landscapeEmail:landscapeEmail,
+                        landscapeMobNo:landscapeMobNo,
+                    },
+                  
+                    coordinators: {
+                        coordinatorName: coordinatorName,
+                        coordinatorMobile:coordinatorMobile,
+                        coordinatorEmail:coordinatorEmail,
+                        coordinatorName_0:coordinatorName_0,
+                        coordinatorEmail_0: coordinatorEmail_0,
+                        coordinatorMobile_0:coordinatorMobile_0,
+                      
+                    },
+                },
+                status: "New Project",
+            },
+        });
+
+        const savedData = await newProject.save();
+        return savedData;
+    } catch (error) {
+        console.error("Error adding project details:", error.message);
+        throw new Error("Failed to create a new project. Please try again.");
+    }
+};

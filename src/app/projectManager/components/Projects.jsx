@@ -20,7 +20,7 @@ const Projects = ({ loading, setLoading }) => {
     const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
     const pmComPro = useSelector((state) => state.pmProjects.pmCompletedProjects)
     console.log(pmNewPro.length, '---------------new-----------pmNewPro')
-    console.log(pmOnGoPro[0], '--------------ON------------pmOnGoPro')
+    console.log(pmOnGoPro, '--------------ON------------pmOnGoPro')
     console.log(pmComPro.length, '----------------comp----------pmComPro')
 
     const [verify, setVerify] = useState(false)
@@ -158,6 +158,7 @@ const Projects = ({ loading, setLoading }) => {
                                     <th>No</th>
                                     {/* <th>Select</th> */}
                                     <th>Organization</th>
+                                    <th>Project Name</th>
                                     <th>Project Name</th>
                                     <th>Venture Type</th>
                                     <th>Description</th>

@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { GrLinkNext } from "react-icons/gr";
 
 const ProjectInfo = ({ addToLocation, setClientInputs, clientInputs }) => {
     const fields = [
         { id: "projectName", label: "Project Name", placeholder: "Project Name" },
         { id: "specification", label: "Specification", placeholder: "Specification" },
-        { id: "amenities", label: "Amenities", placeholder: "Amenities" },
+        // { id: "amenities", label: "Amenities", placeholder: "Amenities" },
         { id: "projectUSP", label: "Project USP", placeholder: "Project USP" },
         { id: "projectDes", label: "Project Description", placeholder: "Project Description" },
     ];
@@ -73,7 +73,7 @@ const ProjectInfo = ({ addToLocation, setClientInputs, clientInputs }) => {
             <div className='px-5'>
                 <label htmlFor="projectName" className="block mb-2 text-sm font-medium text-white ">Project highlight</label>
                 <textarea
-                    id="projectOverview" rows="3" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                    id="projectOverview" rows="6" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                     placeholder="Extent,number of units,club house sqft..."
                     value={clientInputs.projectHighlights}
                     onChange={(e) => setClientInputs({ ...clientInputs, projectHighlights: e.target.value })}

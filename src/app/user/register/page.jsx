@@ -179,7 +179,7 @@ function Page() {
                         ) : null}
                         <div>
                             <button type='submit' className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' aria-label="Login Button">
-                                {loading ? <BeatLoader color='white' /> : 'Login'}
+                                {loading ? <BeatLoader color='white' /> : 'Register'}
                             </button>
                         </div>
                         <div className=' mt-5'>

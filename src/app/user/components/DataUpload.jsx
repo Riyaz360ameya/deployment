@@ -6,43 +6,49 @@ import ContactDetails from './ContactDetails';
 import FileUPload from './FileUPload';
 import Loading from './Loading';
 import ImageFilesUpload from './ImageFilesUpload';
+import { uploadProject } from '../userAPIs/projectApis';
+import { v4 as uuidv4 } from 'uuid';
 
 const DataUpload = () => {
     const [clientInputs, setClientInputs] = useState({
-        amenities: '',
-
-        architectureMobNo: '',
-        architectureEmail: '',
-        architectureName: '',
-
-        coordinatorEmail_0: '',
-        coordinatorName_0: '',
-        coordinatorMobile_0: '',
-
-        clientEmail: '',
-        clientMobileNO: '',
-        clientOfficeAddress: '',
-        clientSiteAddress: '',
-        clientSiteLocation: '',
-
-        landscapeEmail: '',
-        landscapeName: '',
-        landscapeMobNo: '',
-
+        projectId: '', 
         projectName: '',
         projectDes: '',
         projectHighlights: '',
         projectType: '',
         projectUSP: '',
         specification: '',
+
+        clientName:'',
+        clientEmail: '',
+        clientMobileNO: '',
+        clientOfficeAddress: '',
+        clientSiteAddress: '',
+        clientSiteLocation: '',
+        
+        architectureName: '',
+        architectureMobNo: '',
+        architectureEmail: '',
+       
+        landscapeName: '',
+        landscapeEmail: '',
+        landscapeMobNo: '',
+
+        coordinatorName_0: '',
+        coordinatorEmail_0: '',
+        coordinatorMobile_0: '',
+
+      
     });
 
     const [location, setLocation] = useState([1])
     const [width, setWidth] = useState(15)
+    
     const addToLocation = (newValue) => {
         console.log(clientInputs, '-------------------clientInputs')
-        // Use the spread operator (...) to create a new array with the existing values and append the new value
         setLocation(prevLocation => [...prevLocation, newValue]);
+        sentClientData()
+        console.log(clientInputs, '-----------------all data------------')
     };
     const removeFromLocation = (valueToRemove) => {
         setLocation(prevLocation => prevLocation.filter(item => item !== valueToRemove));
@@ -50,6 +56,18 @@ const DataUpload = () => {
     const resetLocation = () => {
         setLocation([1])
     }
+    const sentClientData = async () => {
+        try {
+            const projectId = uuidv4(); 
+            setClientInputs({ ...clientInputs, projectId });
+            const response = await uploadProject({ ...clientInputs, projectId });
+            console.log(response, "-------data sending------------");
+            console.log(projectId,"--------projectId----------")
+        } catch (error) {
+            console.error('Error sending data to the backend:', error);
+        }
+    };
+
     const settingWidthProgress = () => {
         const locationsLength = location.length;
         if (locationsLength === 1) {
@@ -103,7 +121,7 @@ const DataUpload = () => {
                         location.length == 1 ? <ProjectInfo addToLocation={addToLocation} setClientInputs={setClientInputs} clientInputs={clientInputs} />
                             // : location.length == 2 ? <ProjectOverview addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
                             : location.length == 2 ? <ContactDetails addToLocation={addToLocation} removeFromLocation={removeFromLocation} setClientInputs={setClientInputs} clientInputs={clientInputs} />
-                                : location.length == 3 ? <FileUPload addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
+                                : location.length == 3 ? <FileUPload addToLocation={addToLocation} removeFromLocation={removeFromLocation} projectId={clientInputs.projectId} projectName={clientInputs.projectName}/>
                                     : location.length == 4 ? <ImageFilesUpload addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
                                         : location.length == 5 && <Loading resetLocation={resetLocation} />
                     }
