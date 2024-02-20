@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
 import { completePmProject, pmCompletedProjects, pmNewProjects, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
 import { BeatLoader } from 'react-spinners';
+import ConfirmModal from './ConfirmModal';
 
 const Projects = ({ loading, setLoading }) => {
     const dispatch = useDispatch()
@@ -22,6 +23,8 @@ const Projects = ({ loading, setLoading }) => {
     console.log(pmOnGoPro[0], '--------------ON------------pmOnGoPro')
     console.log(pmComPro.length, '----------------comp----------pmComPro')
 
+    const [verify, setVerify] = useState(false)
+    const [nextTask, setNextTask] = useState(false)
     const [projectId, setProjectId] = useState()
     const [modal, setModal] = useState(false);
     const [projects, setProjects] = useState([]);
@@ -45,12 +48,15 @@ const Projects = ({ loading, setLoading }) => {
     const settingAllPmProjects = (position) => {
         if (position === "New") {
             console.log(position, '----', pmNewPro.length, '................pmNewPro')
+            setCurrentPage(1)
             setProjects(pmNewPro)
         } else if (position === "OnGoing") {
             console.log(position, '----', pmOnGoPro, '................pmOnGoPro')
+            setCurrentPage(1)
             setProjects(pmOnGoPro)
         } else if (position === "Completed") {
             console.log(position, '----', pmComPro.length, '................pmComPro')
+            setCurrentPage(1)
             setProjects(pmComPro)
         }
     }
@@ -79,14 +85,19 @@ const Projects = ({ loading, setLoading }) => {
     }
     const handleUpdate = async ({ projectId, itemId, index }) => {
         try {
-            console.log(itemId, '-----------item id')
-            setSelectedItemIndex(index);
-            const { data } = await projectCompleted(projectId)
-            console.log(data.allComProject, '------------------------data.allComProject')
-            dispatch(completePmProject(itemId));
-            dispatch(pmCompletedProjects(data.allComProject))
-            toast.success(data.message)
-            setSelectedItemIndex(null);
+
+            setVerify(true)
+            setProjectId(projectId)
+            setItem(itemId)
+
+            // console.log(itemId, '-----------item id')
+            // setSelectedItemIndex(index);
+            // const { data } = await projectCompleted(projectId)
+            // console.log(data.allComProject, '------------------------data.allComProject')
+            // dispatch(completePmProject(itemId));
+            // dispatch(pmCompletedProjects(data.allComProject))
+            // toast.success(data.message)
+            // setSelectedItemIndex(null);
         } catch (error) {
             console.log(error.message)
             toast.error(error.response.data.error);
@@ -147,7 +158,7 @@ const Projects = ({ loading, setLoading }) => {
                                     <th>No</th>
                                     {/* <th>Select</th> */}
                                     <th>Organization</th>
-                                    <th>Project No</th>
+                                    <th>Project Name</th>
                                     <th>Venture Type</th>
                                     <th>Description</th>
                                     <th>ReachedOn</th>
@@ -194,7 +205,7 @@ const Projects = ({ loading, setLoading }) => {
                                                         </div>
                                                     </td>
                                                     <td className=''>
-                                                        <p>{item.projectId._id.slice(5, 25)}</p>
+                                                        <p>{item.projectId.projectInfo.ventureName}</p>
                                                     </td>
                                                     <td className='text-center'>{item.projectId.projectInfo.ventureType}</td>
                                                     <td className=''>
@@ -224,7 +235,8 @@ const Projects = ({ loading, setLoading }) => {
                                                                         </>
                                                                         :
                                                                         item.status === "Completed" ?
-                                                                            <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id, index: i })} >{selectedItemIndex === i ? <BeatLoader color='white' /> : 'Update'}</button>
+                                                                            // <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id, index: i })} >{selectedItemIndex === i ? <BeatLoader color='white' /> : 'Update'}</button>
+                                                                            <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id, index: i })} >Update</button>
 
                                                                             : <p className='text-red-600'>
                                                                                 Not Payed
@@ -240,6 +252,8 @@ const Projects = ({ loading, setLoading }) => {
                     </div>
 
                     {modal ? <TaskAssignModal projectId={projectId} setModal={setModal} itemId={item} moveONgoing={moveONgoing} /> : ''}
+                    {verify ? <ConfirmModal projectId={projectId} setVerify={setVerify} itemId={item} setNextTask={setNextTask} /> : ''}
+                    {nextTask ? <TaskAssignModal projectId={projectId} setModal={setModal} itemId={item} moveONgoing={moveONgoing} setNextTask={setNextTask} /> : ''}
                 </div>
             )}
         </>

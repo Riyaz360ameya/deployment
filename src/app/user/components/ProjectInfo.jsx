@@ -17,7 +17,9 @@ const ProjectInfo = ({ addToLocation, setClientInputs, clientInputs }) => {
                     <h1 className='text-2xl font-extrabold text-white '>Project Info</h1>
                 </div>
                 <button className='bg-gray-800 px-5 p-2 rounded border text-white font-bold' onClick={() => addToLocation(2)}>
-                    <span className='flex items-center justify-between gap-3'>Next<GrLinkNext color='' /></span>
+                    <span className='flex items-center justify-between gap-3'>Next<GrLinkNext className='text-white' style={{ color: 'red' }} />
+                    
+                    </span>
                 </button>
             </div>
             <div className="grid gap-6 grid-cols-2 mb-6 md:grid-cols-3 my-2 mx-2 overflow-hidden bg-gray-800 p-2 rounded">

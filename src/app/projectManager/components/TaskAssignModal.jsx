@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { assignLeadTask } from '../pmAPIs/taskApis';
 import { addNewOnGoProject, leadTaskAssign, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
 
-const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing }) => {
+const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing, setNextTask }) => {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false);
     const [task, setTask] = useState({
@@ -20,9 +20,11 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing }) => {
         projectId: projectId
     });
     const onClose = () => {
+        setNextTask(false)
         setModal(false);
     };
     const handleClose = (e) => {
+        console.log('its closing')
         if (e.target.id === 'container') {
             onClose();
         }
@@ -52,7 +54,7 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing }) => {
             onClick={handleClose}
             className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center '
         >
-            <div className='bg-white p-8 rounded'>
+            <div className='bg-white p-5 rounded border-solid border-4 border-sky-500'>
                 <h1 className='text-center text-xl'>Task Assigning</h1>
 
                 {loading ?
@@ -61,7 +63,7 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing }) => {
                     </div>
                     :
                     <form onSubmit={handleSubmit} className='space-y-2'>
-                        <div className='text-left text-sm'>
+                        {/* <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="">Select Team</label>
                             <select
                                 placeholder='Choose Team'
@@ -81,29 +83,71 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing }) => {
                                     EXTERIOR
                                 </option>
                             </select>
+                        </div> */}
+                        <div className='grid gap-2'>
+                            <label className='font-bold' htmlFor="">Select Team</label>
+                            <div className=' grid gap-2 grid-cols-2'>
+                                <div className="flex items-center">
+                                    <input id="interior-checkbox" type="checkbox" value="Interior" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                    <label htmlFor="interior-checkbox" className="ms-2 text-sm font-extrabold text-gray-900 ">Interior Team</label>
+                                </div>
+                                <div className="flex items-center">
+                                    <input id="exterior-checkbox" type="checkbox" value="Exterior" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                    <label htmlFor="exterior-checkbox" className="ms-2 text-sm font-extrabold text-gray-900 ">Exterior Team</label>
+                                </div>
+                                <div className="flex items-center">
+                                    <input id="walkthrough-checkbox" type="checkbox" value="Walk Through" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                    <label htmlFor="walkthrough-checkbox" className="ms-2 text-sm font-extrabold text-gray-900 ">Walk Through Team</label>
+                                </div>
+                            </div>
                         </div>
-                        <div className='text-left text-sm'>
-                            <label className='font-bold' htmlFor="">Importance</label>
-                            <select
-                                name='importance'
-                                id='importance'
-                                className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
-                                onChange={(e) => setTask({ ...task, importance: e.target.value })}
-                                required
-                            >
-                                <option value="Choose Team" className="uppercase" disabled >
-                                    Choose Type
-                                </option>
-                                <option value="REGULAR" className="uppercase" defaultValue>
-                                    REGULAR
-                                </option>
-                                <option value="MEDIUM" className="uppercase">
-                                    MEDIUM
-                                </option>
-                                <option value="URGENT" className="uppercase">
-                                    URGENT
-                                </option>
-                            </select>
+                        <div className='flex gap-2' >
+                            <div className='text-left text-sm w-full grid gap-2'>
+                                <label className='font-bold' htmlFor="">Choose Phase</label>
+                                <select
+                                    name='importance'
+                                    id='importance'
+                                    className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
+                                    onChange={(e) => setTask({ ...task, importance: e.target.value })}
+                                    required
+                                >
+                                    <option value="Choose Team" className="uppercase" disabled >
+                                        Choose Phase
+                                    </option>
+                                    <option value="REGULAR" className="uppercase" defaultValue>
+                                        WHITE RENDERING
+                                    </option>
+                                    <option value="MEDIUM" className="uppercase">
+                                        TEXTURE & LIGHTNING
+                                    </option>
+                                    <option value="URGENT" className="uppercase">
+                                        8K RENDERS
+                                    </option>
+                                </select>
+                            </div>
+                            <div className='text-left text-sm w-full grid gap-2'>
+                                <label className='font-bold' htmlFor="">Importance</label>
+                                <select
+                                    name='importance'
+                                    id='importance'
+                                    className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
+                                    onChange={(e) => setTask({ ...task, importance: e.target.value })}
+                                    required
+                                >
+                                    <option value="Choose Team" className="uppercase" disabled >
+                                        Choose Type
+                                    </option>
+                                    <option value="REGULAR" className="uppercase" defaultValue>
+                                        REGULAR
+                                    </option>
+                                    <option value="MEDIUM" className="uppercase">
+                                        MEDIUM
+                                    </option>
+                                    <option value="URGENT" className="uppercase">
+                                        URGENT
+                                    </option>
+                                </select>
+                            </div>
                         </div>
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="">Project Title</label>

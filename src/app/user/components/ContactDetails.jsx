@@ -46,7 +46,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
     ];
 
     return (
-        <div className=' mt-5 rounded'>
+        <div className='p-2 mt-5 rounded'>
             <div className='flex items-center justify-between'>
                 <div>
                     <h1 className='text-2xl font-extrabold text-white'>Contact Details</h1>
@@ -69,12 +69,11 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                     </button>
                 </div>
             </div>
-            <div className='h-80 md:h-80  overflow-y-scroll p-3 bg-slate-800'>
+            <div className='h-80 md:h-80  overflow-y-scroll p-3 bg-gray-800 mt-2'>
                 {sections.map((section) => (
                     <div key={section.title} className="mt-8">
                         <p className="text-white text-2xl font-bold">{section.title}</p>
                         <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
-                            {/* <RenderFields fields={section.fields} /> */}
                             {
                                 section.fields.map((item, i) => (
                                     <div key={item.id}>

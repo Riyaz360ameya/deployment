@@ -67,43 +67,35 @@ const DataUpload = () => {
     useEffect(() => {
         settingWidthProgress();
     }, [location, width]);
-    const bgColor = width < 50 ? 'bg-red-500' : width < 70 ? 'bg-yellow-500' : 'bg-green-500';
-    const handleMove1 = () => { setLocation([1]) }
-    const handleMove2 = () => { setLocation([1, 2]) }
-    const handleMove3 = () => { setLocation([1, 2, 3]) }
-    const handleMove4 = () => { setLocation([1, 2, 3, 4]) }
+    const bgColor = width < 20 ? 'bg-red-600' : width < 40 ? 'bg-orange-500' : width < 60 ? 'bg-yellow-400' : width < 80 ? 'bg-lime-400' : 'bg-green-600';
+    const handleMove = (number) => {
+        setLocation(Array.from({ length: number }, (_, index) => index + 1));
+    };
+
     return (
         <div className='h-full p-2'>
-            <div className='h-full overflow-hidden overflow-y-scroll bg-gray-800 '>
-                {/* <h1 className='text-5xl font-bold text-white'>Upload Data</h1> */}
+            <div className='h-full  bg-gray-800 '>
                 <div className='flex justify-around p-5'>
-                    <div onClick={handleMove1} className={`w-14 h-14 md:w-20 md:h-20 ${location.includes(1) ? 'text-black bg-white' : 'text-white bg-slate-600'}
-        grid place-items-center rounded-full text-sm md:text-3xl font-extrabold`}>
-                        <p>1</p>
-                    </div>
-                    <div onClick={handleMove2} className={`w-14 h-14 md:w-20 md:h-20 ${location.includes(2) ? 'text-black bg-white' : 'text-white bg-slate-600'}
-        grid place-items-center rounded-full text-sm md:text-3xl font-extrabold`}>
-                        <p>2</p>
-                    </div>
-                    <div onClick={handleMove3} className={`w-14 h-14 md:w-20 md:h-20 ${location.includes(3) ? 'text-black bg-white' : 'text-white bg-slate-600'}
-        grid place-items-center rounded-full text-sm md:text-3xl font-extrabold`}>
-                        <p>3</p>
-                    </div>
-                    <div onClick={handleMove4} className={`w-14 h-14 md:w-20 md:h-20 ${location.includes(4) ? 'text-black bg-white' : 'text-white bg-slate-600'}
-        grid place-items-center rounded-full text-sm md:text-3xl font-extrabold`}>
-                        <p>4</p>
-                    </div>
-                    <div className={`w-14 h-14 md:w-20 md:h-20 ${location.includes(5) ? 'text-black bg-white' : 'text-white bg-slate-600'}
-        grid place-items-center rounded-full text-sm md:text-3xl font-extrabold`}>
-                        <p><FaCheck /></p>
-                    </div>
+                    {[1, 2, 3, 4, 5].map((number) => (
+                        <div
+                            key={number}
+                            onClick={() => handleMove(number)}
+                            className={`w-14 h-14 md:w-20 md:h-20 cursor-pointer ${location.includes(number) ? 'text-black bg-white' : 'text-white bg-slate-600'}
+    grid place-items-center rounded-full text-sm md:text-3xl font-extrabold`}
+                        >
+                            <p>{number === 5 ? <FaCheck /> : number}</p>
+                        </div>
+                    ))}
                 </div>
                 <div className='p-5'>
-                    <div className="w-full h-1 mb-6 bg-neutral-200 dark:bg-neutral-600">
+                    <div className="w-full h-1 mb-6 bg-neutral-200 dark:bg-neutral-600 rounded-full">
                         <div
-                            className={`h-1 transition-all duration-500 ease-in-out ${bgColor}`}
-                            style={{ width: `${width}%` }}
-                        ></div>
+                            className={`h-1 transition-all duration-500 ease-in-out ${bgColor} relative grid place-items-center  rounded-full`}
+                            style={{ width: `${width}%` }}>
+                            <span className={`absolute h-4 w-4 ${bgColor} rounded-full  right-0 flex items-center justify-center`}>
+                                <span className={`h-full w-full rounded-full animate-ping  ${bgColor} opacity-75`}></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <div className='p-5 '>

@@ -41,7 +41,7 @@ const ImageFilesUpload = ({ addToLocation, removeFromLocation }) => {
                         </span>
                     </button>
                     <button
-                        className='p-2 px-5 font-bold text-white border rounded bg-slate-500'
+                        className='p-2 px-5 font-bold text-white border rounded bg-gray-800'
                         onClick={() => addToLocation(5)}
                     >
                         <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
