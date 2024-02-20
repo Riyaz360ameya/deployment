@@ -22,7 +22,6 @@ export async function POST(request = NextRequest) {
         // Parse JSON from the request body
         const reqData = await request.json();
         console.log(reqData,'------------users data----------')
-        // Uncomment the following section when you are ready to implement the actual functionality
         /*
         const savedProject = await createNewProject({ reqData, userId });
         const projectId = savedProject._id;

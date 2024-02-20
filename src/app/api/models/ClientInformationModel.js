@@ -87,20 +87,22 @@ const projectInfoSchema = new mongoose.Schema(
                         required: true,
                     }
                 },
-                coordinators:{
-                    coordinatorName: {
-                        type: String,
-                        required: true,
-                    },
-                    coordinatorEmail: {
-                        type: String,
-                        required: true,
-                    },
-                    coordinatorMobile: {
-                        type: Number,
-                        required: true,
-                    },
-                }
+                coordinators: [
+                    {
+                        coordinatorName: {
+                            type: String,
+                            required: true,
+                        },
+                        coordinatorEmail: {
+                            type: String,
+                            required: true,
+                        },
+                        coordinatorMobile: {
+                            type: Number,
+                            required: true,
+                        },
+                    }
+                ]
             },
         },
     },

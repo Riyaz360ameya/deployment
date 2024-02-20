@@ -68,59 +68,50 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
     "Club house floor plan (2D Color)",
     "Logo of project/Company",
     "Landscape renders",
-    "Project Broucher"
+    "Project Brochure"
   ];
 
-  return (
-    <div className='p-2 mt-5 rounded'>
-      <div className='flex items-center justify-between'>
-        <div>
-          <h1 className='text-2xl font-extrabold text-white'>Please Upload Your's Cad and Images Files......</h1>
-          <hr />
-        </div>
-
-        <div className='flex gap-4'>
-          <button
-            className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
-            onClick={() => removeFromLocation(3)}
-          >
-            <span className='flex items-center justify-between gap-3'>
-              <GrLinkNext className='rotate-180' /> Back
-            </span>
-          </button>
-          <button
-            className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
-            onClick={() => addToLocation(4)}
-          >
-            <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
-          </button>
-        </div>
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-800 rounded md:grid-cols-2'>
-          {inputFileRefs.map((inputRef, index) => (
-            <div key={index}>
-              <label className='block mb-2 text-sm text-white font-medium text-gray-900 dark:text-white' htmlFor={`fileInput-${index}`}>
-                {fileInputs[index]}
-              </label>
-              <input
-                className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
-                ref={inputRef}
-                id={`fileInput-${index}`}
-                type='file'
-                name={`file`}
-                onChange={(e) => handleFileChange(index, e)}
-                multiple 
-              />
+    return (
+        <div className='p-2 mt-5 rounded'>
+            <div className='flex items-center justify-between'>
+                <div>
+                    <h1 className='text-2xl font-extrabold text-white '>Upload your Cad Files...</h1>
+                </div>
+                <div className='flex gap-4'>
+                    <button
+                        className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
+                        onClick={() => removeFromLocation(3)}
+                    >
+                        <span className='flex items-center justify-between gap-3'>
+                            <GrLinkNext className='rotate-180' />
+                            Back
+                        </span>
+                    </button>
+                    <button
+                        className='p-2 px-5 font-bold text-white border rounded bg-slate-500'
+                        onClick={() => addToLocation(4)}
+                    >
+                        <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
+                    </button>
+                </div>
             </div>
-          ))}
+            {/* <div className='h-full md:h-80  overflow-y-scroll p-3'> */}
+            <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2  bg-gray-800 rounded md:grid-cols-2'>
+                {fileInputs.map((label, index) => (
+                    <div key={index}>
+                        <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor={`fileInput_${index}`}>
+                            {label}
+                        </label>
+                        <input
+                            className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                            id={`fileInput_${index}`}
+                            type='file'
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
-        <button className='p-2 px-5 font-bold text-white bg-slate-500 border rounded mt-4' type='submit'>
-          Submit
-        </button>
-      </form>
-    </div>
-  );
+    );
 };
 
 export default FileUpload;

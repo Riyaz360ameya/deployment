@@ -2,86 +2,67 @@ import ClientInformationModel from "../../models/ClientInformationModel";
 
 export const createNewProject = async ({ reqData, userId }) => {
     try {
-        const {
-            projectName,
-            projectDes,
-            projectHighlights,
-            projectType,
-            projectUSP,
-            specification,
-
-            clientName,
-            clientEmail,
-            clientMobileNO,
-            clientOfficeAddress,
-            clientSiteAddress,
-            clientSiteLocation,
-
-            architectureName,
-            architectureMobNo,
-            architectureEmail,
-
-            landscapeName,
-            landscapeEmail,
-            landscapeMobNo,
-
-           
-            coordinatorName_0,
-            coordinatorEmail_0,
-            coordinatorMobile_0,
-
-            coordinatorName,
-            coordinatorMobile,
-            coordinatorEmail,
-        } = reqData;
-       
+        const incomingData = reqData
+        let maxIndex = 0;
+        Object.keys(incomingData).forEach((key) => {
+            const match = key.match(/^coordinatorMobile_(\d+)$/);
+            if (match) {
+                const index = parseInt(match[1], 10);
+                if (index > maxIndex) {
+                    maxIndex = index;
+                }
+            }
+        });
+        const MAX_COORDINATORS = maxIndex + 1;
+        const coordinators = [];
+        for (let i = 0; i < MAX_COORDINATORS; i++) {
+            const coordinatorName = incomingData[`coordinatorName_${i}`];
+            if (coordinatorName) {
+                coordinators.push({
+                    coordinatorName: coordinatorName,
+                    coordinatorEmail: incomingData[`coordinatorEmail_${i}`],
+                    coordinatorMobile: incomingData[`coordinatorMobile_${i}`],
+                });
+            }
+        }
         const newProject = new ClientInformationModel({
             userId,
             projectInfo: {
                 projectDetails: {
-                    projectName,
-                    projectDes,
-                    projectHighlights,
-                    projectType,
-                    projectUSP,
-                    specification,
+                    projectName: incomingData.projectName,
+                    projectType: incomingData.projectType,
+                    specification: incomingData.specification,
+                    projectUSP: incomingData.projectUSP,
+                    projectDes: incomingData.projectDes,
+                    projectHighlights: incomingData.projectHighlights,
                 },
                 contactDetails: {
-                    name:clientName,
-                    email: clientEmail,
-                    contact: clientMobileNO,
-                    siteLocation: clientSiteLocation,
-                    siteAddress: clientSiteAddress,
-                    officeAddress: clientOfficeAddress,
+                    name: incomingData.clientName,
+                    email: incomingData.clientEmail,
+                    contact: incomingData.clientMobileNO,
+                    siteLocation: incomingData.clientSiteLocation,
+                    siteAddress: incomingData.clientSiteAddress,
+                    officeAddress: incomingData.clientOfficeAddress,
                     architecture: {
-                        architectureName: architectureName,
-                        architectureEmail:architectureEmail,
-                        architectureMobNo: architectureMobNo,
+                        architectureName: incomingData.architectureName,
+                        architectureEmail: incomingData.architectureEmail,
+                        architectureMobNo: incomingData.architectureMobNo,
                     },
                     landscape: {
-                        landscapeName:landscapeName,
-                        landscapeEmail:landscapeEmail,
-                        landscapeMobNo:landscapeMobNo,
+                        landscapeName: incomingData.landscapeName,
+                        landscapeEmail: incomingData.landscapeEmail,
+                        landscapeMobNo: incomingData.landscapeMobNo,
                     },
-                  
-                    coordinators: {
-                        coordinatorName: coordinatorName,
-                        coordinatorMobile:coordinatorMobile,
-                        coordinatorEmail:coordinatorEmail,
-                        coordinatorName_0:coordinatorName_0,
-                        coordinatorEmail_0: coordinatorEmail_0,
-                        coordinatorMobile_0:coordinatorMobile_0,
-                      
-                    },
+                    coordinators: coordinators,
                 },
                 status: "New Project",
             },
         });
-
+        console.log(newProject, '-------21----------newProject')
         const savedData = await newProject.save();
         return savedData;
     } catch (error) {
-        console.error("Error adding project details:", error.message);
+        console.error(error.message, "............Error adding project details:");
         throw new Error("Failed to create a new project. Please try again.");
     }
 };

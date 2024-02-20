@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const DataUpload = () => {
     const [clientInputs, setClientInputs] = useState({
-        projectId: '', 
+        // projectId: '',
         projectName: '',
         projectDes: '',
         projectHighlights: '',
@@ -19,36 +19,34 @@ const DataUpload = () => {
         projectUSP: '',
         specification: '',
 
-        clientName:'',
+        clientName: '',
         clientEmail: '',
         clientMobileNO: '',
         clientOfficeAddress: '',
         clientSiteAddress: '',
         clientSiteLocation: '',
-        
+
         architectureName: '',
         architectureMobNo: '',
         architectureEmail: '',
-       
+
         landscapeName: '',
         landscapeEmail: '',
         landscapeMobNo: '',
 
-        coordinatorName_0: '',
-        coordinatorEmail_0: '',
-        coordinatorMobile_0: '',
 
-      
     });
 
     const [location, setLocation] = useState([1])
     const [width, setWidth] = useState(15)
-    
+
     const addToLocation = (newValue) => {
         console.log(clientInputs, '-------------------clientInputs')
         setLocation(prevLocation => [...prevLocation, newValue]);
-        sentClientData()
-        console.log(clientInputs, '-----------------all data------------')
+        if (newValue == 3) {
+            sentClientData(clientInputs)
+            console.log(clientInputs, '-----------------all data------------')
+        }
     };
     const removeFromLocation = (valueToRemove) => {
         setLocation(prevLocation => prevLocation.filter(item => item !== valueToRemove));
@@ -56,13 +54,13 @@ const DataUpload = () => {
     const resetLocation = () => {
         setLocation([1])
     }
-    const sentClientData = async () => {
+    const sentClientData = async (clientInputs) => {
         try {
-            const projectId = uuidv4(); 
-            setClientInputs({ ...clientInputs, projectId });
-            const response = await uploadProject({ ...clientInputs, projectId });
+            // const projectId = uuidv4();
+            // setClientInputs({ ...clientInputs, projectId });
+            const response = await uploadProject( clientInputs );
             console.log(response, "-------data sending------------");
-            console.log(projectId,"--------projectId----------")
+            console.log(projectId, "--------projectId----------")
         } catch (error) {
             console.error('Error sending data to the backend:', error);
         }
@@ -121,7 +119,7 @@ const DataUpload = () => {
                         location.length == 1 ? <ProjectInfo addToLocation={addToLocation} setClientInputs={setClientInputs} clientInputs={clientInputs} />
                             // : location.length == 2 ? <ProjectOverview addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
                             : location.length == 2 ? <ContactDetails addToLocation={addToLocation} removeFromLocation={removeFromLocation} setClientInputs={setClientInputs} clientInputs={clientInputs} />
-                                : location.length == 3 ? <FileUPload addToLocation={addToLocation} removeFromLocation={removeFromLocation} projectId={clientInputs.projectId} projectName={clientInputs.projectName}/>
+                                : location.length == 3 ? <FileUPload addToLocation={addToLocation} removeFromLocation={removeFromLocation} projectId={clientInputs.projectId} projectName={clientInputs.projectName} />
                                     : location.length == 4 ? <ImageFilesUpload addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
                                         : location.length == 5 && <Loading resetLocation={resetLocation} />
                     }

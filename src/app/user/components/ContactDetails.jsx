@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GrLinkNext } from 'react-icons/gr';
 
 const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, clientInputs }) => {
@@ -47,9 +47,9 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
         {
             title: "Coordinators",
             fields: [
-                { id: "coordinatorName", label: "Name", type: "text" },
-                { id: "coordinatorEmail", label: "Email", type: "text" },
-                { id: "coordinatorMobile", label: "Mob No", type: "number" },
+                { id: "coordinatorName_0", label: "Name", type: "text" },
+                { id: "coordinatorEmail_0", label: "Email", type: "text" },
+                { id: "coordinatorMobile_0", label: "Mob No", type: "number" },
             ],
         },
     ];
@@ -79,56 +79,70 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                 </div>
             </div>
             <div className='h-80 md:h-80  overflow-y-scroll p-3 bg-gray-800 mt-2'>
-                {sections.map((section) => (
-                    <div key={section.title} className="mt-8">
-                        <p className="text-white text-2xl font-bold">{section.title}</p>
-                        <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
-                            {section.fields.map((item, i) => (
-                                <div key={item.id}>
-                                    <label htmlFor={item.id} className="block mb-2 text-sm font-medium text-white">
-                                        {item.label}
-                                    </label>
-                                    <input
-                                        type={item.type}
-                                        id={item.id}
-                                        value={clientInputs[item.id] || ''}
-                                        className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        onChange={(e) => setClientInputs({ ...clientInputs, [item.id]: e.target.value })}
-                                    />
+                {sections.map((section) => {
+                    if (section.title !== "Coordinators") {
+                        return (
+                            <div key={section.title} className="mt-8">
+                                <p className="text-white text-2xl font-bold">{section.title}</p>
+                                <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
+                                    {section.fields.map((item, i) => (
+                                        <div key={item.id}>
+                                            <label htmlFor={item.id} className="block mb-2 text-sm font-medium text-white">
+                                                {item.label}
+                                            </label>
+                                            <input
+                                                type={item.type}
+                                                id={item.id}
+                                                value={clientInputs[item.id] || ''}
+                                                className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                onChange={(e) => setClientInputs({ ...clientInputs, [item.id]: e.target.value })}
+                                            />
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
-                    </div>
-                ))}
+                            </div>
+                        );
+                    }
+                    return null;
+                })}
                 <div className='mt-8'>
                     <p className='text-white text-2xl font-bold'>Coordinators</p>
-
                     {coordinators.map((_, index) => (
                         <React.Fragment key={index}>
-                            <div className='grid grid-cols-2 md:grid-cols-3 gap-6 mt-5'>
-                                {sections.find(s => s.title === "Coordinators")?.fields.map((item, i) => (
-                                    <div key={item.id}>
-                                        <label htmlFor={`${item.id}_${index}`} className="block mb-2 text-sm font-medium text-white ">
-                                            {item.label}
-                                        </label>
-                                        <input
-                                            type={item.type}
-                                            id={`${item.id}_${index}`}
-                                            value={coordinators[index][item.id] || ''}
-                                            className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                            onChange={(e) => {
-                                                const updatedCoordinators = [...coordinators];
-                                                updatedCoordinators[index] = {
-                                                    ...updatedCoordinators[index],
-                                                    [item.id]: e.target.value,
-                                                };
-                                                setCoordinators(updatedCoordinators);
-                                            }}
-                                        />
-                                    </div>
-                                ))}
+                            <div className='grid grid-col-2 md:grid-cols-3 gap-6 mt-5'>
+                                <div>
+                                    <label htmlFor={`coordinatorName_${index}`} className="block mb-2 text-sm font-medium text-white ">Name</label>
+                                    <input
+                                        type="text"
+                                        id={`coordinatorName_${index}`}
+                                        value={clientInputs[`coordinatorName_${index}`] || ''}
+                                        className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorName_${index}`]: e.target.value })}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor={`coordinatorMobile_${index}`} className="block mb-2 text-sm font-medium text-white ">Mob No</label>
+                                    <input
+                                        type="number"
+                                        id={`coordinatorMobile_${index}`}
+                                        value={clientInputs[`coordinatorMobile_${index}`] || ''}
+                                        className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorMobile_${index}`]: e.target.value })}
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor={`coordinatorEmail_${index}`} className="block mb-2 text-sm font-medium text-white ">Email</label>
+                                    <input
+                                        type="email"
+                                        id={`coordinatorEmail_${index}`}
+                                        value={clientInputs[`coordinatorEmail_${index}`] || ''}
+                                        className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorEmail_${index}`]: e.target.value })}
+                                    />
+                                </div>
                             </div>
                         </React.Fragment>
+
                     ))}
                 </div>
                 <div className='flex justify-between mt-5'>
