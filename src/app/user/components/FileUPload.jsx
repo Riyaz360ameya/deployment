@@ -96,7 +96,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
                 </div>
             </div>
             {/* <div className='h-full md:h-80  overflow-y-scroll p-3'> */}
-            <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2  bg-gray-800 rounded md:grid-cols-2'>
+            {/* <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2  bg-gray-800 rounded md:grid-cols-2'>
                 {fileInputs.map((label, index) => (
                     <div key={index}>
                         <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor={`fileInput_${index}`}>
@@ -109,7 +109,30 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
                         />
                     </div>
                 ))}
+            </div> */}
+             <form onSubmit={handleSubmit}>
+        <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-800 rounded md:grid-cols-2'>
+          {inputFileRefs.map((inputRef, index) => (
+            <div key={index}>
+              <label className='block mb-2 text-sm text-white font-medium text-gray-900 dark:text-white' htmlFor={`fileInput-${index}`}>
+                {fileInputs[index]}
+              </label>
+              <input
+                className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                ref={inputRef}
+                id={`fileInput-${index}`}
+                type='file'
+                name={`file`}
+                onChange={(e) => handleFileChange(index, e)}
+                multiple 
+              />
             </div>
+          ))}
+        </div>
+        <button className='p-2 px-5 font-bold text-white bg-slate-500 border rounded mt-4' type='submit'>
+          Upload
+        </button>
+      </form>
         </div>
     );
 };

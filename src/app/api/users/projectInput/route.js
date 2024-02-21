@@ -16,11 +16,11 @@ export async function POST(request = NextRequest) {
             return removeTokenCookie();
         }
         const reqData = await request.json();
-        // const {projectName} = reqData;
+        const {projectName} = reqData;
         console.log(reqData, '--------------reqData')
-        // const ProjectId = generateUniqueCode(projectName);
-        // console.log(ProjectId,"--------uniqueCodeForProjectId-----------");
-        const savedProject = await createNewProject({ reqData, userId })
+        const ProjectId = generateUniqueCode(projectName);
+        console.log(ProjectId,"--------uniqueCodeForProjectId-----------");
+        const savedProject = await createNewProject({ reqData,userId})
         return NextResponse.json({
                 message: "Project details added successfully",
                 success: true,
