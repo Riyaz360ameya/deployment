@@ -56,8 +56,8 @@ const DataUpload = () => {
     }
     const sentClientData = async (clientInputs) => {
         try {
-            // const projectId = uuidv4();
-            // setClientInputs({ ...clientInputs, projectId });
+            const projectId = uuidv4();
+            setClientInputs({ ...clientInputs, projectId });
             const response = await uploadProject( clientInputs );
             console.log(response, "-------data sending------------");
             console.log(projectId, "--------projectId----------")

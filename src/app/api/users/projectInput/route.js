@@ -20,6 +20,7 @@ export async function POST(request = NextRequest) {
         console.log(reqData, '--------------reqData')
         const ProjectId = generateUniqueCode(projectName);
         console.log(ProjectId,"--------uniqueCodeForProjectId-----------");
+        // console.log(file,"uploaded file data")
         const savedProject = await createNewProject({ reqData,userId})
         return NextResponse.json({
                 message: "Project details added successfully",
