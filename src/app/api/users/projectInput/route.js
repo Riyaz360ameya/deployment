@@ -18,9 +18,12 @@ export async function POST(request = NextRequest) {
         const reqData = await request.json();
         const {projectName} = reqData;
         console.log(reqData, '--------------reqData')
-        const ProjectId = generateUniqueCode(projectName);
-        console.log(ProjectId,"--------uniqueCodeForProjectId-----------");
+        // const ProjectId = generateUniqueCode(projectName);
+        // console.log(ProjectId,"--------uniqueCodeForProjectId-----------");
         const savedProject = await createNewProject({ reqData,userId})
+        const projectId = savedProject._id
+        // const user  = await updateUserProjects({userId, projectId})
+        console.log(projectId,'--------55--------ProjectId')
         return NextResponse.json({
                 message: "Project details added successfully",
                 success: true,
