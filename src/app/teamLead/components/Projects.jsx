@@ -54,6 +54,7 @@ const Projects = () => {
     }, []);
     useEffect(() => {
         settingLeadData(position)
+        setCurrentPage(1);
     }, [position]);
 
     // Assigning Task................
@@ -88,13 +89,13 @@ const Projects = () => {
                     <h1 className='text-xl p-2'>Projects</h1>
                     <div className='flex items-center justify-between'>
                         <div className='flex gap-4 ml-2'>
-                            <div onClick={() => setPosition("New Task")} className={`py-2 px-8  ${position === "New Task" && "bg-indigo-100"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl`}>
+                            <div onClick={() => setPosition("New Task")} className={`py-2 px-8  ${position === "New Task" && "bg-indigo-100"} cursor-pointer  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl`}>
                                 <p className=''>New Task</p>
                             </div>
-                            <div onClick={() => setPosition("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
+                            <div onClick={() => setPosition("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-100"} cursor-pointer hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
                                 <p>OnGoing</p>
                             </div>
-                            <div onClick={() => setPosition("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-100"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
+                            <div onClick={() => setPosition("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-100"} cursor-pointer hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
                                 <p>Completed</p>
                             </div>
                         </div>
