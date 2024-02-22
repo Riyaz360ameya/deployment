@@ -36,6 +36,7 @@ const Tasks = ({ Project, loading, setLoading }) => {
     useEffect(() => {
         setProjects(Project);
         console.log('its............. Project.............. effect')
+        setCurrentPage(1)
     }, [Project]);
 
     useEffect(() => {
