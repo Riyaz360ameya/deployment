@@ -11,10 +11,12 @@ const projectInfoSchema = new mongoose.Schema(
             ref: User, // Use the registered 'users' model here
             required: true,
         },
+        ProjectUniqId: {
+            type: String,
+            required: true,
+        },
         projectInfo: {
-
             projectDetails: {
-
                 projectName: {
                     type: String,
                     required: true,
@@ -109,7 +111,7 @@ const projectInfoSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-delete mongoose.connection.models['projectInfo'];
+delete mongoose.connection.models['ClientInformation'];
 const ClientInformationModel = mongoose.models.ClientInformation || mongoose.model("ClientInformation", projectInfoSchema);
 export default ClientInformationModel;
 

@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import ClientInformationModel from "../../models/ClientInformationModel";
+import userProjectsModel from "../../models/User/userProjectModel";
 
 export const createNewProject = async ({ reqData, userId }) => {
     try {
@@ -25,8 +27,11 @@ export const createNewProject = async ({ reqData, userId }) => {
                 });
             }
         }
+        const ProjectUniqId = await generateUniqueCode(incomingData.projectName, userId);
+        console.log(ProjectUniqId, '--------------ProjectUniqId')
         const newProject = new ClientInformationModel({
             userId,
+            ProjectUniqId,
             projectInfo: {
                 projectDetails: {
                     projectName: incomingData.projectName,
@@ -66,3 +71,37 @@ export const createNewProject = async ({ reqData, userId }) => {
         throw new Error("Failed to create a new project. Please try again.");
     }
 };
+
+async function getTotalProjects(userId) {
+    try {
+        const result = await userProjectsModel.aggregate([
+            { $match: { userId: new mongoose.Types.ObjectId(userId) } }, {
+                $project: {
+                    totalProjects: {
+                        $sum: [
+                            { $size: "$NewProjects" },
+                            { $size: "$onGoingProjects" },
+                            { $size: "$completedProjects" }
+                        ]
+                    }
+                }
+            }
+        ]);
+        console.log(result, '---------------result')
+        if (result && result.length > 0) {
+            return result[0].totalProjects;
+        } else {
+            return 0; // User not found or has no projects
+        }
+    } catch (error) {
+        console.error("Error calculating total projects:", error.message);
+        throw error;
+    }
+}
+export async function generateUniqueCode(projectName, userId) {
+    const currentYear = new Date().getFullYear();
+
+    const userTotalProjects = await getTotalProjects(userId);
+    const projectSeriesNumber = userTotalProjects + 1;
+    return `Ameya360${projectName}${currentYear}${projectSeriesNumber.toString().padStart(4, '0')}`; //Ameya360Prestigious2024001
+}
