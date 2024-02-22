@@ -7,6 +7,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
   const inputFileRefs = Array.from({ length: 28 }, () => useRef(null));
   const [files, setFiles] = useState(Array.from({ length: 28 }, () => null));
   const [uploadStatus, setUploadStatus] = useState(null);
+  const [loading, setloading] = useState(false);
 
 
   const handleFileChange = (index, e) => {
@@ -20,6 +21,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+      setloading(true);
       const formData = new FormData();
       
       files.forEach((fileData, index) => {
@@ -41,6 +43,10 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
       toast.success(response.data.success ? 'Files uploaded successfully' : 'Failed to upload files');
     } catch (error) {
       toast.error(error.response?.data?.error || 'Error uploading files');
+      
+    }
+    finally {
+      setloading(false);
     }
   };
 
@@ -131,8 +137,9 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
         //   </div>
         // </div>
 
-        <div>
+        <div className='text-center justify-content-center align-items-center'>
         <h1 className='text-2xl text-center align-items-center  font-extrabold text-white'>Thank you! Files uploaded successfully.</h1>
+        <h1 className='text-2xl text-center align-items-center  font-extrabold text-white'>Please continoue Furthur!</h1>
       </div>
      
 
