@@ -20,8 +20,8 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing, setNextTask
         projectId: projectId
     });
     const onClose = () => {
-        setNextTask(false)
         setModal(false);
+        // setNextTask(false)
     };
     const handleClose = (e) => {
         console.log('its closing')

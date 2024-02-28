@@ -4,6 +4,7 @@ const API = axios.create({ baseURL: "/api/users" })
 
 export const logInApi = (formData) => API.post("/login", formData);
 export const signUpApi = (formData) => API.post("/register", formData);
+export const getAllOrg = ()=>API.get('/organization')
 
 // export const otpVerify = (data)=>API.post('/users/otpVerify',data)
 export const forgotPassOTP = (otpEmail) => API.post('/forgotPass', { otpEmail })

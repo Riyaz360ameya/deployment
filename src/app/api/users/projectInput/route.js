@@ -5,7 +5,6 @@ import { createNewProject } from "./createNewProject";
 import { updateUserProjects } from "./updateUserProjects";
 import { getDataFromToken } from "../../helpers/getDataFromToken";
 import { removeTokenCookie } from "../../helpers/removeTokenCookie";
-import { generateUniqueCode } from "../../upload/route";
 connect();
 export async function POST(request = NextRequest) {
     try {
@@ -16,19 +15,18 @@ export async function POST(request = NextRequest) {
             return removeTokenCookie();
         }
         const reqData = await request.json();
-        const {projectName} = reqData;
         console.log(reqData, '--------------reqData')
-        // const ProjectId = generateUniqueCode(projectName);
-        // console.log(ProjectId,"--------uniqueCodeForProjectId-----------");
-        const savedProject = await createNewProject({ reqData,userId})
+
+        const savedProject = await createNewProject({ reqData, userId })
         const projectId = savedProject._id
-        // const user  = await updateUserProjects({userId, projectId})
-        console.log(projectId,'--------55--------ProjectId')
+        const user = await updateUserProjects({ userId, projectId })
+        const pm = await upDatePMProjects({ userId, projectId })
+        console.log(projectId, '--------55--------ProjectId')
         return NextResponse.json({
-                message: "Project details added successfully",
-                success: true,
-                savedProject,
-            }, { status: 200 });
+            message: "Project details added successfully",
+            success: true,
+            savedProject,
+        }, { status: 200 });
     } catch (error) {
         console.log("Error adding project details-----:", error.message);
         return NextResponse.json({ error: error.message }, { status: 500 });

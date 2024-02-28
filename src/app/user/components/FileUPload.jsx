@@ -3,7 +3,7 @@ import { GrLinkNext } from 'react-icons/gr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }) => {
+const FileUpload = ({ addToLocation, removeFromLocation, projectId, projectName }) => {
   const inputFileRefs = Array.from({ length: 28 }, () => useRef(null));
   const [files, setFiles] = useState(Array.from({ length: 28 }, () => null));
   const [uploadStatus, setUploadStatus] = useState(null);
@@ -35,7 +35,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
 
         }
       });
-      
+
       const response = await axios.post('/api/upload', formData);
       inputFileRefs.forEach((ref) => (ref.current.value = ''));
       setFiles(Array.from({ length: 28 }, () => null));
@@ -147,7 +147,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
         <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-800 rounded md:grid-cols-2'>
           {inputFileRefs.map((inputRef, index) => (
             <div key={index}>
-              <label className='block mb-2 text-sm text-white font-medium text-gray-900 dark:text-white' htmlFor={`fileInput-${index}`}>
+              <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor={`fileInput-${index}`}>
                 {fileInputs[index]}
               </label>
               <input
@@ -157,7 +157,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
                 type='file'
                 name={`file`}
                 onChange={(e) => handleFileChange(index, e)}
-                multiple 
+                multiple
               />
             </div>
           ))}

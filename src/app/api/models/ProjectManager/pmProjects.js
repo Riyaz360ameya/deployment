@@ -3,9 +3,12 @@ import leadLoginModel from "../TeamLead/leadLoginModel";
 import managerLoginModel from "./managerLoginModel";
 import userModel from "../User/userModel";
 import projectInfoModel from "../projectInfoModel";
+import ClientInformationModel from "../ClientInformationModel";
 
 const PM = mongoose.models.managerLogin || managerLoginModel;
-const Project = mongoose.models.projectInfo || projectInfoModel;
+// const Project = mongoose.models.projectInfo || projectInfoModel;
+const Project = mongoose.models.ClientInformation || ClientInformationModel;
+
 const Lead = mongoose.models.leadLogins || leadLoginModel;
 const user = mongoose.models.users || userModel;
 
@@ -38,6 +41,10 @@ const proManagerProjectSchema = new mongoose.Schema({
             payment: {
                 type: String,
                 required: true,
+            },
+            projectVerified: {
+                type: Boolean,
+                default: false
             }
         }
     ],
@@ -70,6 +77,9 @@ const proManagerProjectSchema = new mongoose.Schema({
                 ref: Lead, 
                 required: true,
             },
+            projectVerified: {
+                type: Boolean,
+            }
         }
     ],
     completedProjects: [
@@ -113,6 +123,9 @@ const proManagerProjectSchema = new mongoose.Schema({
                 type: Date,
                 default: Date.now,
             },
+            projectVerified: {
+                type: Boolean,
+            }
         }
     ]
 });
