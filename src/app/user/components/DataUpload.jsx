@@ -58,9 +58,8 @@ const DataUpload = () => {
         try {
             // const projectId = uuidv4();
             // setClientInputs({ ...clientInputs, projectId });
-            const response = await uploadProject( clientInputs );
-            console.log(response, "-------data sending------------");
-            console.log(projectId, "--------projectId----------")
+            // const { data } = await uploadProject(clientInputs);
+            // console.log(data, "-------data sending------------");
         } catch (error) {
             console.error('Error sending data to the backend:', error);
         }

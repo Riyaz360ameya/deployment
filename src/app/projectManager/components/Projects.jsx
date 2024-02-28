@@ -11,7 +11,6 @@ import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
 import { completePmProject, pmCompletedProjects, pmNewProjects, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
 import { BeatLoader } from 'react-spinners';
 import ConfirmModal from './ConfirmModal';
-
 const Projects = ({ loading, setLoading }) => {
     const dispatch = useDispatch()
     const [projectsPerPage] = useState(12); // Adjust the number of projects per page
@@ -35,7 +34,8 @@ const Projects = ({ loading, setLoading }) => {
     const getAllPmProjects = async () => {
         setLoading(true);
         try {
-            const { data } = await pmAllProjects()
+            const  {data}= await pmAllProjects()
+            console.log(data,"new")
             dispatch(pmNewProjects(data.PmProjects.newProjects))
             dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
             dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
@@ -133,9 +133,7 @@ const Projects = ({ loading, setLoading }) => {
                                 <div onClick={() => setPosition("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
                                     <p>Completed</p>
                                 </div>
-                                {/* <div className='px-8 py-2 text-indigo-700 rounded-full shadow-xl hover:bg-indigo-100' onClick={() => handleProject("Pending")}>
-                                <p>Pending</p>
-                            </div> */}
+                                
                             </div>
                         </div>
                         <div className="">
@@ -156,14 +154,11 @@ const Projects = ({ loading, setLoading }) => {
                             <tbody>
                                 <tr className='sticky top-0 h-16 text-lg font-bold text-white border rounded shadow-xl border-gray-950 bg-slate-600'>
                                     <th>No</th>
-                                    {/* <th>Select</th> */}
                                     <th>Organization</th>
-                                    <th>Project Name</th>
                                     <th>Project Name</th>
                                     <th>Venture Type</th>
                                     <th>Description</th>
                                     <th>ReachedOn</th>
-                                    <th>Deadline</th>
                                     {
                                         position != "New" && <th>Assigned Lead</th>
                                     }
@@ -175,7 +170,6 @@ const Projects = ({ loading, setLoading }) => {
                                         position !== "Completed" && <th>Options</th>
                                     }
                                 </tr>
-                                {/* <tr className='h-5'></tr> */}
                                 {
                                     projects.length === 0 ? (
                                         <tr className="mt-10 text-center border shadow-xl">
@@ -186,40 +180,26 @@ const Projects = ({ loading, setLoading }) => {
                                             return (
                                                 <tr key={i} className='h-10 mt-10 text-center border shadow-xl hover:cursor-pointer hover:bg-slate-500 hover:text-white'>
                                                     <td className='sticky'>{i + 1}</td>
-                                                    {/* <td className=''>
-                                                        <div>
-                                                            <input type='checkbox' className='scale-150 accent-black' />
-                                                        </div>
-                                                    </td> */}
-                                                    {/* <td className='flex items-center justify-center h-10 text-center '>
-                                                        <div className='relative flex items-center justify-center flex-shrink-0 w-5 h-5 bg-gray-200 rounded-sm'>
-                                                            <input
-                                                                placeholder='checkbox'
-                                                                type='checkbox'
-                                                                className='absolute w-full h-full opacity-0 cursor-pointer focus:opacity-100 checkbox '
-                                                            />
-                                                        </div>
-                                                    </td> */}
+                                        
                                                     <td className=''>
                                                         <div className='flex items-center gap-2 ml-5' >
                                                             <p>{item.userId?.organization}</p>
                                                         </div>
                                                     </td>
                                                     <td className=''>
-                                                        <p>{item.projectId.projectInfo.ventureName}</p>
+                                                        <p>{item.projectId.projectInfo.projectDetails.projectName}</p>
                                                     </td>
-                                                    <td className='text-center'>{item.projectId.projectInfo.ventureType}</td>
+                                                    <td className='text-center'>{item.projectId.projectInfo.projectDetails.projectType}</td>
                                                     <td className=''>
-                                                        <span className='flex items-center gap-2'><PiChatDotsLight /> {item.projectId.projectInfo.ventureDescription}</span>
+                                                        <span className='flex items-center gap-2'><PiChatDotsLight /> {item.projectId.projectInfo.projectDetails.projectDes}</span>
                                                     </td>
                                                     <td className='font-extrabold bg-blue-00'>{dateConverter(item.projectReachedOn)}</td>
-                                                    <td className='font-extrabold bg-red-600 '>{item.projectId.projectInfo.estimatedDeliveryDate}</td>
+                                                    {/* <td className='font-extrabold bg-red-600 '>{item.projectId.projectInfo.estimatedDeliveryDate}</td> */}
                                                     {
                                                         position != "New" && <td>{item.assignedLeadId?.firstName} - <span className='font-extrabold '>{item.assignedLeadId?.designation}</span> </td>
                                                     }
                                                     <td>{item.status}</td>
 
-                                                    {/* <td>{item.projectId.projectInfo.status}</td> */}
                                                     {
                                                         position == "Completed" && <td className='font-bold bg-green-700'>{dateConverter(item.leadTaskCompletedDate)}</td>
                                                     }
@@ -236,7 +216,6 @@ const Projects = ({ loading, setLoading }) => {
                                                                         </>
                                                                         :
                                                                         item.status === "Completed" ?
-                                                                            // <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id, index: i })} >{selectedItemIndex === i ? <BeatLoader color='white' /> : 'Update'}</button>
                                                                             <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id, index: i })} >Update</button>
 
                                                                             : <p className='text-red-600'>

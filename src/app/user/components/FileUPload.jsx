@@ -3,14 +3,14 @@ import { GrLinkNext } from 'react-icons/gr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }) => {
+const FileUpload = ({ addToLocation, removeFromLocation, projectId, projectName }) => {
   const inputFileRefs = Array.from({ length: 28 }, () => useRef(null));
   const [files, setFiles] = useState(Array.from({ length: 28 }, () => null));
 
   const handleFileChange = (index, e) => {
     const selectedFile = e.target.files[0];
     const updatedFiles = [...files];
-    updatedFiles[index] = { file: selectedFile, projectId ,projectName};
+    updatedFiles[index] = { file: selectedFile, projectId, projectName };
     // updatedFiles[index] = { file: selectedFile, projectId ,projectName: fileInputs[index]};
     setFiles(updatedFiles);
   };
@@ -28,7 +28,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
 
         }
       });
-      
+
       const response = await axios.post('/api/upload', formData);
       inputFileRefs.forEach((ref) => (ref.current.value = ''));
 
@@ -71,32 +71,32 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
     "Project Brochure"
   ];
 
-    return (
-        <div className='p-2 mt-5 rounded'>
-            <div className='flex items-center justify-between'>
-                <div>
-                    <h1 className='text-2xl font-extrabold text-white '>Upload your Cad Files...</h1>
-                </div>
-                <div className='flex gap-4'>
-                    <button
-                        className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
-                        onClick={() => removeFromLocation(3)}
-                    >
-                        <span className='flex items-center justify-between gap-3'>
-                            <GrLinkNext className='rotate-180' />
-                            Back
-                        </span>
-                    </button>
-                    <button
-                        className='p-2 px-5 font-bold text-white border rounded bg-slate-500'
-                        onClick={() => addToLocation(4)}
-                    >
-                        <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
-                    </button>
-                </div>
-            </div>
-            {/* <div className='h-full md:h-80  overflow-y-scroll p-3'> */}
-            {/* <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2  bg-gray-800 rounded md:grid-cols-2'>
+  return (
+    <div className='p-2 mt-5 rounded'>
+      <div className='flex items-center justify-between'>
+        <div>
+          <h1 className='text-2xl font-extrabold text-white '>Upload your Cad Files...</h1>
+        </div>
+        <div className='flex gap-4'>
+          <button
+            className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
+            onClick={() => removeFromLocation(3)}
+          >
+            <span className='flex items-center justify-between gap-3'>
+              <GrLinkNext className='rotate-180' />
+              Back
+            </span>
+          </button>
+          <button
+            className='p-2 px-5 font-bold text-white border rounded bg-slate-500'
+            onClick={() => addToLocation(4)}
+          >
+            <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
+          </button>
+        </div>
+      </div>
+      {/* <div className='h-full md:h-80  overflow-y-scroll p-3'> */}
+      {/* <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2  bg-gray-800 rounded md:grid-cols-2'>
                 {fileInputs.map((label, index) => (
                     <div key={index}>
                         <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor={`fileInput_${index}`}>
@@ -110,11 +110,11 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
                     </div>
                 ))}
             </div> */}
-             <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-800 rounded md:grid-cols-2'>
           {inputFileRefs.map((inputRef, index) => (
             <div key={index}>
-              <label className='block mb-2 text-sm text-white font-medium text-gray-900 dark:text-white' htmlFor={`fileInput-${index}`}>
+              <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white' htmlFor={`fileInput-${index}`}>
                 {fileInputs[index]}
               </label>
               <input
@@ -124,7 +124,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
                 type='file'
                 name={`file`}
                 onChange={(e) => handleFileChange(index, e)}
-                multiple 
+                multiple
               />
             </div>
           ))}
@@ -133,8 +133,8 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId,projectName }
           Upload
         </button>
       </form>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default FileUpload;

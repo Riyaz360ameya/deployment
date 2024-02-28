@@ -1,10 +1,10 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { BeatLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
-import { signUpApi } from '../userAPIs/authApis';
+import { getAllOrg, signUpApi } from '../userAPIs/authApis';
 import { useFormik } from 'formik';
 import { signUpSchema } from '@/app/schemas/authSchema';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
@@ -15,6 +15,8 @@ function Page() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [visiblePassword, setVisiblePassword] = useState(false)
+    const [otherOrg, setOtherOrg] = useState(false)
+    const [organizations, setOrganizations] = useState([])
     const [formValues, setFormValues] = useState({
         firstName: '',
         lastName: '',
@@ -22,10 +24,11 @@ function Page() {
         email: '',
         password: '',
         confirmPassword: '',
+        newOrganization: ''
     });
     const initialValues = formValues
     const validationSchema = signUpSchema
-    const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
+    const { values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue } = useFormik({
         initialValues,
         validationSchema,
         onSubmit: async (values, action) => {
@@ -47,6 +50,21 @@ function Page() {
     const showHiddenPassword = () => {
         setVisiblePassword(!visiblePassword);
     }
+    const allOrganizations = async () => {
+        const { data } = await getAllOrg()
+        console.log(data.organizationData, '----------all org')
+        setOrganizations(data.organizationData)
+    }
+    const handleOrganizationChange = (selectedOrganization) => {
+        console.log(selectedOrganization, '--------------selectedOrganization')
+        setFieldValue('organization', selectedOrganization);
+    };
+    const newOrgValue = (newValue) => {
+        setFieldValue('newOrganization', newValue);
+    }
+    useEffect(() => {
+        allOrganizations()
+    }, [])
     return (
         <div className='h-screen bg-white text-center flex items-center justify-end'>
             <img src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a43592af6b9a40001bda44b_HomeCover.jpg" alt="" className='w-full h-full object-cover' />
@@ -92,21 +110,57 @@ function Page() {
                             </div>
                         </div>
                         <div className='text-left text-sm'>
-                            <label className='font-bold' htmlFor="organization">Organization</label>
-                            <input
+                            <label className='font-bold' htmlFor='organization'>
+                                Organization
+                            </label>
+                            <select
+                                name='organization'
                                 value={values.organization}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-
-                                type="text"
+                                id='organization'
                                 className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.organization ? 'border-red-500' : ''
                                     }`}
-                                id="organization"
-                            />
+                                onChange={(e) => handleOrganizationChange(e.target.value)}
+                            // required
+                            >
+                                <option value='' className='uppercase' disabled defaultValue>
+                                    Choose Organization
+                                </option>
+                                {organizations.map((item, i) => {
+                                    return (
+                                        <option key={i} value={item.organization} className='uppercase'>
+                                            {item.organization}
+                                        </option>
+                                    );
+                                })}
+                                <option value='Other' className='uppercase text-red-500' defaultValue>
+                                    Other
+                                </option>
+                            </select>
+                            {errors.organization && touched.organization ? (
+                                <p className="text-red-600 text-start text-sm">{errors.organization}</p>
+                            ) : null}
                         </div>
-                        {errors.organization && touched.organization ? (
-                            <p className="text-red-600 text-start text-sm">{errors.organization}</p>
-                        ) : null}
+                        {values.organization === 'Other' && (
+                            <>
+                                <div className='text-left text-sm'>
+                                    <label className='font-bold' htmlFor='newOrganization'>
+                                        New Organization Name
+                                    </label>
+                                    <input
+                                        type='text'
+                                        id='newOrganization'
+                                        name='newOrganization'
+                                        className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.newOrganization ? 'border-red-500' : ''
+                                            }`}
+                                        value={values.newOrganization}
+                                        onChange={(e) => newOrgValue(e.target.value)}
+                                    />
+                                </div>
+                                {errors.newOrganization && touched.newOrganization ? (
+                                    <p className="text-red-600 text-start text-sm">{errors.newOrganization}</p>
+                                ) : null}
+                            </>
+                        )}
                         <div className='text-left text-sm'>
                             <label className='font-bold' htmlFor="email">Email</label>
                             <input

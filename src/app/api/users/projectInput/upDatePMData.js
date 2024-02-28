@@ -52,39 +52,4 @@ export const upDatePMProjects = async ({ userId, projectId }) => {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // const existPm = await pmProjectsModel.findOne({ proManagerId })
-    // if (existPm) {
-    //     console.log(existPm, '---------------existPm')
-    //     existPm.newProjects.push({
-    //         userId,
-    //         projectId: latestNewTaskId,
-    //         status: "New Project",
-    //         payment: "Payment is not Completed",
-    //     })
-    //     const savedProject = await existPm.save();
-    //     return savedProject
-    // } else {
-    //     const newProject = new pmProjectsModel({
-    //         proManagerId,
-    //         newProjects:
-    //             [
-    //                 {
-    //                     userId,
-    //                     projectId: latestNewTaskId,
-    //                     status: "New Project",
-    //                     payment: "Payment is not Completed",
-    //                 },
-    //             ],
-    //     });
-    //     const savedProject = await newProject.save();
-    //     return savedProject
-    // }
-
-
-
-    // findPm.notifications.push({
-    //     message: `Team Lead ${findUser.firstName} Assigned a New Project`,
-    //     projectId: latestNewTaskId,
-    // })
-
 }
