@@ -5,25 +5,18 @@ import { getDataFromToken } from "../helpers/getDataFromToken";
 import userModel from "../models/User/userModel";
 
 
-export function generateUniqueCode(projectName) {
-  const currentYear = new Date().getFullYear();
-  // const projectSeriesNumber = 1;
-  // return `${projectName}${currentYear}${projectSeriesNumber.toString().padStart(4, '0')}`; //Ameya360Prestigious2024001
-  return `${projectName} ${currentYear}`; //Ameya360Prestigious2024
-}
-
 export async function POST(req = NextRequest) {
   try {
     const data = await req.formData();
-    const files = data.getAll('file[]');
-    const projectName = data.getAll('projectName[]');
-    const projectIds = projectName.map((project) => generateUniqueCode(project));
-    // const projectIds = projectName.map((projectName) => generateUniqueCode(projectName));
-
-
-    console.log(projectIds, "format");
-    console.log(projectName, '------------projectName file upload backend----------');
-    // const serverFolderPath = 'Z://cad file';
+    console.log(data, '------------------------data')
+    // for (const entry of data.entries()) {
+    //   const [name, value] = entry;
+    //   console.log(name, '------------name', value.name, '-------------value');
+    // }
+    const currentYear = new Date().getFullYear()
+    const projectName = data.get('projectName')
+    const projectFolder = `${projectName} ${currentYear}`
+    console.log(projectFolder, "---------------- projectFolder name");
     const serverFolderPath = 'Z://Ameya360';
 
     //..................................................................//
@@ -32,9 +25,9 @@ export async function POST(req = NextRequest) {
     const user = await userModel.findById(userId)
     const organizationName = user.organization
     const clientName = user.firstName
-    
+
     //..................................................................//
-    
+
     const currentDate = new Date();
     const currentDateAndTime = currentDate.toLocaleString('en-IN', {
       day: '2-digit',
@@ -51,28 +44,25 @@ export async function POST(req = NextRequest) {
 
     //..................................................................//
 
+    for (const entry of data.entries()) {
+      const [name, value] = entry;
+      if (name !== "projectName") {
+        const uploadFolderPath = path.join(serverFolderPath, organizationName, clientName, projectFolder.toString(), currentDateAndTime,);
 
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const projectId = projectIds[i];
+        await fs.mkdir(uploadFolderPath, { recursive: true });
 
-      // const uploadFolderPath = path.join(serverFolderPath, 'uploads', projectId.toString());
-      const uploadFolderPath = path.join(serverFolderPath, organizationName, clientName, projectId.toString(), currentDateAndTime,);
+        const uniqueFilename = name + '--' + value.name;
+        const filePath = path.join(uploadFolderPath, uniqueFilename);
 
-      await fs.mkdir(uploadFolderPath, { recursive: true });
+        const buffer = Buffer.from(await value.arrayBuffer());
+        await fs.writeFile(filePath, buffer);
 
-      const uniqueFilename = Date.now() + '--' + file.name;
-      const filePath = path.join(uploadFolderPath, uniqueFilename);
-
-      const buffer = Buffer.from(await file.arrayBuffer());
-      await fs.writeFile(filePath, buffer);
-
-      console.log(`File saved at: ${filePath}`);
+        console.log(`File saved at: ${filePath}`);
+      }
     }
-
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: "File Uploaded Successfully" });
   } catch (error) {
-    console.error(error.message);
+    console.log(error.message, '----------error while file Uploading');
     return NextResponse.json({
       success: false,
       error: error.message,

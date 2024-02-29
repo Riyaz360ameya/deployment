@@ -37,7 +37,7 @@ const DataUpload = () => {
 
     });
 
-    const [location, setLocation] = useState([1])
+    const [location, setLocation] = useState([1,2,3])
     const [width, setWidth] = useState(15)
 
     const addToLocation = (newValue) => {

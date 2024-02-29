@@ -51,12 +51,12 @@ const ImageFilesUpload = ({ addToLocation, removeFromLocation, files, setFiles }
             <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2  bg-gray-800 rounded md:grid-cols-2'>
                 {fileInputs.map((label, index) => (
                     <div key={index}>
-                        <label className='block mb-2 text-sm font-medium text-gray-900 text-white' htmlFor={`fileInput_${index}`}>
+                        <label className='block mb-2 text-sm font-medium  text-white' htmlFor={label}>
                             {label}
                         </label>
                         <input
                             className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
-                            id={`fileInput_${index}`}
+                            id={label}
                             type='file'
                         />
                     </div>
