@@ -7,9 +7,9 @@ import FileUPload from './FileUPload';
 import Loading from './Loading';
 import ImageFilesUpload from './ImageFilesUpload';
 import { uploadProject } from '../userAPIs/projectApis';
-import { v4 as uuidv4 } from 'uuid';
 
 const DataUpload = () => {
+    const [uniqueId, setUniqueId] = useState('')
     const [clientInputs, setClientInputs] = useState({
         // projectId: '',
         projectName: '',
@@ -37,7 +37,7 @@ const DataUpload = () => {
 
     });
 
-    const [location, setLocation] = useState([1,2,3])
+    const [location, setLocation] = useState([1])
     const [width, setWidth] = useState(15)
 
     const addToLocation = (newValue) => {
@@ -56,10 +56,9 @@ const DataUpload = () => {
     }
     const sentClientData = async (clientInputs) => {
         try {
-            // const projectId = uuidv4();
-            // setClientInputs({ ...clientInputs, projectId });
-            // const { data } = await uploadProject(clientInputs);
-            // console.log(data, "-------data sending------------");
+            const { data } = await uploadProject(clientInputs);
+            console.log(data, "-------data sending------------");
+            setUniqueId(data.savedProject.ProjectUniqId)
         } catch (error) {
             console.error('Error sending data to the backend:', error);
         }
@@ -118,7 +117,7 @@ const DataUpload = () => {
                         location.length == 1 ? <ProjectInfo addToLocation={addToLocation} setClientInputs={setClientInputs} clientInputs={clientInputs} />
                             // : location.length == 2 ? <ProjectOverview addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
                             : location.length == 2 ? <ContactDetails addToLocation={addToLocation} removeFromLocation={removeFromLocation} setClientInputs={setClientInputs} clientInputs={clientInputs} />
-                                : location.length == 3 ? <FileUPload addToLocation={addToLocation} removeFromLocation={removeFromLocation} projectId={clientInputs.projectId} projectName={clientInputs.projectName} />
+                                : location.length == 3 ? <FileUPload addToLocation={addToLocation} removeFromLocation={removeFromLocation} projectName={clientInputs.projectName} uniqueId={uniqueId} />
                                     : location.length == 4 ? <ImageFilesUpload addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
                                         : location.length == 5 && <Loading resetLocation={resetLocation} />
                     }

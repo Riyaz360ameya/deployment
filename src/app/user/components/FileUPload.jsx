@@ -131,37 +131,37 @@ import React, { useState, useRef } from 'react';
 import { GrLinkNext } from 'react-icons/gr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-const FileUpload = ({ addToLocation, removeFromLocation, projectId, projectName }) => {
+const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId }) => {
   const [fileUpload, setFileUpload] = useState({
     '3DsMax - Building': {},
     '3DsMax - Landscape & Textures': {},
     '3DsMax - Terrace': {},
     '3DsMax - Entry or Exit gate': {},
-    'CAD Floor plans (dwg)': {},
-    'CAD Elevation (dwg)': {},
-    'CAD Section (dwg)': {},
-    'Club House CAD Elevation (dwg)': {},
-    'Club House CAD Section (dwg)': {},
-    'Club house floor plans CAD (dwg)': {},
-    'Tower Terrace Cad (dwg)': {},
-    'Landscape (Dwg)': {},
-    //images file
-    'Material Palette': {},
-    'Exterior draft images': {},
-    'Interior draft images': {},
-    'Aerial Image, Front Building elevation image for all towers': {},
-    '2D Floor Plan (color)': {},
-    '2D Unit plan (color)': {},
-    '2D Unit plan (ISO)': {},
-    'Renders of common areas': {},
-    'Tower Terrace Renders': {},
-    'Club House Terrace Renders': {},
-    'Amenities Images': {},
-    'Master Plan of site (color)': {},
-    'Club house floor plan (2D Color)': {},
-    'Logo of project or Company': {},
-    'Landscape renders': {},
-    'Project Brochure': {},
+    // 'CAD Floor plans (dwg)': {},
+    // 'CAD Elevation (dwg)': {},
+    // 'CAD Section (dwg)': {},
+    // 'Club House CAD Elevation (dwg)': {},
+    // 'Club House CAD Section (dwg)': {},
+    // 'Club house floor plans CAD (dwg)': {},
+    // 'Tower Terrace Cad (dwg)': {},
+    // 'Landscape (Dwg)': {},
+    // //images file
+    // 'Material Palette': {},
+    // 'Exterior draft images': {},
+    // 'Interior draft images': {},
+    // 'Aerial Image, Front Building elevation image for all towers': {},
+    // '2D Floor Plan (color)': {},
+    // '2D Unit plan (color)': {},
+    // '2D Unit plan (ISO)': {},
+    // 'Renders of common areas': {},
+    // 'Tower Terrace Renders': {},
+    // 'Club House Terrace Renders': {},
+    // 'Amenities Images': {},
+    // 'Master Plan of site (color)': {},
+    // 'Club house floor plan (2D Color)': {},
+    // 'Logo of project or Company': {},
+    // 'Landscape renders': {},
+    // 'Project Brochure': {},
   });
   // console.log(fileUpload, '---------------------fileUpload')
   const handleInputChange = (key, files) => {
@@ -183,6 +183,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectId, projectName 
         formData.append(key, file, name);
       }
       formData.append('projectName', projectName)
+      formData.append('uniqueId', uniqueId)
       const { data } = await axios.post('/api/upload', formData);
       toast.success(data.message);
     } catch (error) {

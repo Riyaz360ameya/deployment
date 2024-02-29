@@ -15,7 +15,9 @@ export async function POST(req = NextRequest) {
     // }
     const currentYear = new Date().getFullYear()
     const projectName = data.get('projectName')
-    const projectFolder = `${projectName} ${currentYear}`
+    const uniqueId = data.get('uniqueId')
+    // const projectFolder = `${projectName} ${currentYear}`
+    const projectFolder = uniqueId
     console.log(projectFolder, "---------------- projectFolder name");
     const serverFolderPath = 'Z://Ameya360';
 
@@ -46,7 +48,7 @@ export async function POST(req = NextRequest) {
 
     for (const entry of data.entries()) {
       const [name, value] = entry;
-      if (name !== "projectName") {
+      if (name !== "projectName" && name !== "uniqueId") {
         const uploadFolderPath = path.join(serverFolderPath, organizationName, clientName, projectFolder.toString(), currentDateAndTime,);
 
         await fs.mkdir(uploadFolderPath, { recursive: true });
