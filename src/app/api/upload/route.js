@@ -15,8 +15,10 @@ export function generateUniqueCode(projectName) {
 export async function POST(req = NextRequest) {
   try {
     const data = await req.formData();
+    console.log(data, '-----------data')
 
     const files = data.getAll('file[]');
+    console.log(files, '----------------------vfiles')
     const projectName = data.getAll('projectName[]');
     const projectIds = projectName.map((project) => generateUniqueCode(project));
     // const projectIds = projectName.map((projectName) => generateUniqueCode(projectName));
@@ -33,9 +35,9 @@ export async function POST(req = NextRequest) {
     const user = await userModel.findById(userId)
     const organizationName = user.organization
     const clientName = user.firstName
-    
+
     //..................................................................//
-    
+
     const currentDate = new Date();
     const currentDateAndTime = currentDate.toLocaleString('en-IN', {
       day: '2-digit',
@@ -61,7 +63,6 @@ export async function POST(req = NextRequest) {
       const uploadFolderPath = path.join(serverFolderPath, organizationName, clientName, projectId.toString(), currentDateAndTime,);
 
       await fs.mkdir(uploadFolderPath, { recursive: true });
-
       const uniqueFilename = Date.now() + '--' + file.name;
       const filePath = path.join(uploadFolderPath, uniqueFilename);
 
@@ -71,9 +72,9 @@ export async function POST(req = NextRequest) {
       console.log(`File saved at: ${filePath}`);
     }
 
-    return NextResponse.json({ success: true,message:"file uplod success" });
+    return NextResponse.json({ success: true, message: "file uplod success" });
   } catch (error) {
-    console.error(error.message); 
+    console.error(error.message);
     return NextResponse.json({
       success: false,
       error: error.message,

@@ -137,7 +137,6 @@ const Projects = ({ loading, setLoading }) => {
                 setIsLoading(false);
             }
         }
-
         fetchData();
     }, []);
     const ViewModal = () => (
@@ -158,21 +157,19 @@ const Projects = ({ loading, setLoading }) => {
                             <p className="text-sm text-gray-500">
                                 Project details go here...
                             </p>
-
                             <ul>
                                 {
                                     filesData.map((files, index) => (
                                         <>
                                             <div className='flex justify-around'>
                                             <li key={index}>{files.fileName}</li>
-                                            <button className='bg-green-600'
-                                                href={`data:applications/octet-stream;base64,${files.content}`}
-                                                download={files.fileName}
-                                            >
-                                                Download File
-                                            </button>
+                                            <a
+                                href={`data:application/octet-stream;base64,${files.content}`}
+                                download={files.fileName}
+                            >
+                                Download File
+                            </a>
                                             </div>
-
                                         </>
                                     ))
                                 }
@@ -282,7 +279,6 @@ const Projects = ({ loading, setLoading }) => {
                                                         <span className='flex items-center gap-2' onClick={viewFilesData}><PiChatDotsLight /> <button>  views </button></span>
                                                     </td>
                                                     <td className='font-extrabold bg-blue-00'>{dateConverter(item.projectReachedOn)}</td>
-                                                    {/* <td className='font-extrabold bg-red-600 '>{item.projectId.projectInfo.estimatedDeliveryDate}</td> */}
                                                     {
                                                         position != "New" && <td>{item.assignedLeadId?.firstName} - <span className='font-extrabold '>{item.assignedLeadId?.designation}</span> </td>
                                                     }
