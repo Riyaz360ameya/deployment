@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import ClientInformationModel from "../../models/ClientInformationModel";
 import userProjectsModel from "../../models/User/userProjectModel";
+import userModel from "../../models/User/userModel";
 
 export const createNewProject = async ({ reqData, userId }) => {
     try {
@@ -99,9 +100,31 @@ async function getTotalProjects(userId) {
     }
 }
 export async function generateUniqueCode(projectName, userId) {
+
+    const userData = await userModel.findById(userId)
+    const org = userData.organization
     const currentYear = new Date().getFullYear();
 
     const userTotalProjects = await getTotalProjects(userId);
     const projectSeriesNumber = userTotalProjects + 1;
-    return `Ameya360${projectName}${currentYear}${projectSeriesNumber.toString().padStart(4, '0')}`; //Ameya360Prestigious2024001
+    const companyName = "Ameya360"
+    const location = "Hyderabad"
+    const builderShortName = generateShortForm(org)
+    const clientShortName = generateShortForm(org)
+    // A & H are the short form of the Ameya360 and Hyderabad
+    return `AH${builderShortName}${clientShortName}${currentYear}${projectSeriesNumber.toString().padStart(4, '0')}`
+    // return `AH${projectName}${currentYear}${projectSeriesNumber.toString().padStart(4, '0')}`; //Ameya360Prestigious2024001
+}
+function generateShortForm(name) {
+    // Remove any leading or trailing whitespaces and convert to uppercase
+    const formattedName = name.trim().toUpperCase();
+    // Get the first, middle (if applicable), and last letters
+    let shortForm = formattedName[0];
+
+    if (formattedName.length > 1) {
+        const middleIndex = Math.floor(formattedName.length / 2);
+        shortForm += formattedName[middleIndex];
+    }
+    shortForm += formattedName[formattedName.length - 1];
+    return shortForm;
 }
