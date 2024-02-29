@@ -114,6 +114,7 @@ const DataUpload = () => {
                         </div>
                     </div>
                 </div>
+
                 <div className='p-5 '>
                     {
                         location.length == 1 ? <ProjectInfo addToLocation={addToLocation} setClientInputs={setClientInputs} clientInputs={clientInputs} />

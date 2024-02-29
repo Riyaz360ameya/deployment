@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 import { FaLink } from 'react-icons/fa6';
 import { PiChatDotsLight } from 'react-icons/pi';
 import TaskAssignModal from './TaskAssignModal';
@@ -10,11 +10,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { pmAllProjects, projectCompleted } from '../pmAPIs/projectApis';
 import { completePmProject, pmCompletedProjects, pmNewProjects, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
 import { BeatLoader } from 'react-spinners';
+import { Dialog, Transition } from '@headlessui/react';
 import ConfirmModal from './ConfirmModal';
+import axios from 'axios';
 const Projects = ({ loading, setLoading }) => {
     const dispatch = useDispatch()
     const [projectsPerPage] = useState(12); // Adjust the number of projects per page
     const [currentPage, setCurrentPage] = useState(1);
+    const cancelButtonRef = useRef(null);
     const pmNewPro = useSelector((state) => state.pmProjects.pmNewProjects)
     const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
     const pmComPro = useSelector((state) => state.pmProjects.pmCompletedProjects)
@@ -30,12 +33,16 @@ const Projects = ({ loading, setLoading }) => {
     const [position, setPosition] = useState("New")
     const [item, setItem] = useState()
     const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+    const [viewFiles, setviewFiles] = useState(false);
+    const [filesData, setFilesData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const getAllPmProjects = async () => {
         setLoading(true);
         try {
-            const  {data}= await pmAllProjects()
-            console.log(data,"new")
+            const { data } = await pmAllProjects()
+            console.log(data, "new")
             dispatch(pmNewProjects(data.PmProjects.newProjects))
             dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
             dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
@@ -44,6 +51,9 @@ const Projects = ({ loading, setLoading }) => {
             console.error('Error fetching tasks:', error.message);
             setLoading(false);
         }
+    }
+    const viewFilesData = () => {
+        setviewFiles(true);
     }
     const settingAllPmProjects = (position) => {
         if (position === "New") {
@@ -110,8 +120,86 @@ const Projects = ({ loading, setLoading }) => {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/fetchFilesServer');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch files: ${response.statusText}`);
+                }
+                const data = await response.json();
+                setFilesData(data.files || []);
+            } catch (error) {
+                console.error('Error fetching files:', error.message);
+                setError('Failed to fetch files. Please try again.');
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchData();
+    }, []);
+    const ViewModal = () => (
+        <Dialog.Panel
+            className="relative  transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+            ref={cancelButtonRef}
+        >
+            <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div className="sm:flex sm:items-start">
+                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                        <PiChatDotsLight className="h-6 w-6 text-red-600" aria-hidden="true" />
+                    </div>
+                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                        <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                            View Project Details
+                        </Dialog.Title>
+                        <div className="mt-2">
+                            <p className="text-sm text-gray-500">
+                                Project details go here...
+                            </p>
+
+                            <ul>
+                                {
+                                    filesData.map((files, index) => (
+                                        <>
+                                            <div className='flex justify-around'>
+                                            <li key={index}>{files.fileName}</li>
+                                            <button className='bg-green-600'
+                                                href={`data:applications/octet-stream;base64,${files.content}`}
+                                                download={files.fileName}
+                                            >
+                                                Download File
+                                            </button>
+                                            </div>
+
+                                        </>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button
+                    type="button"
+                    className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:w-auto"
+                    onClick={() => setviewFiles(false)}
+                >
+                    Close
+                </button>
+            </div>
+        </Dialog.Panel>
+    );
+
     return (
         <>
+            <Transition.Root show={viewFiles} as={Fragment} >
+                <Dialog as="div" className="flex items-center justify-center fixed inset-0 z-10" onClose={() => setviewFiles(false)}>
+                    <ViewModal />
+                </Dialog>
+            </Transition.Root>
             {loading ? (
                 <div className='flex items-center justify-center h-full'>
                     <div>
@@ -133,7 +221,7 @@ const Projects = ({ loading, setLoading }) => {
                                 <div onClick={() => setPosition("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
                                     <p>Completed</p>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div className="">
@@ -157,7 +245,7 @@ const Projects = ({ loading, setLoading }) => {
                                     <th>Organization</th>
                                     <th>Project Name</th>
                                     <th>Venture Type</th>
-                                    <th>Description</th>
+                                    <th>Views/Files</th>
                                     <th>ReachedOn</th>
                                     {
                                         position != "New" && <th>Assigned Lead</th>
@@ -180,7 +268,7 @@ const Projects = ({ loading, setLoading }) => {
                                             return (
                                                 <tr key={i} className='h-10 mt-10 text-center border shadow-xl hover:cursor-pointer hover:bg-slate-500 hover:text-white'>
                                                     <td className='sticky'>{i + 1}</td>
-                                        
+
                                                     <td className=''>
                                                         <div className='flex items-center gap-2 ml-5' >
                                                             <p>{item.userId?.organization}</p>
@@ -191,7 +279,7 @@ const Projects = ({ loading, setLoading }) => {
                                                     </td>
                                                     <td className='text-center'>{item.projectId.projectInfo.projectDetails.projectType}</td>
                                                     <td className=''>
-                                                        <span className='flex items-center gap-2'><PiChatDotsLight /> {item.projectId.projectInfo.projectDetails.projectDes}</span>
+                                                        <span className='flex items-center gap-2' onClick={viewFilesData}><PiChatDotsLight /> <button>  views </button></span>
                                                     </td>
                                                     <td className='font-extrabold bg-blue-00'>{dateConverter(item.projectReachedOn)}</td>
                                                     {/* <td className='font-extrabold bg-red-600 '>{item.projectId.projectInfo.estimatedDeliveryDate}</td> */}
@@ -232,11 +320,13 @@ const Projects = ({ loading, setLoading }) => {
                     </div>
 
                     {modal ? <TaskAssignModal projectId={projectId} setModal={setModal} itemId={item} moveONgoing={moveONgoing} /> : ''}
-                    {verify ? <ConfirmModal projectId={projectId} setVerify={setVerify} itemId={item} setNextTask={setNextTask} /> : ''}
+                    {verify ? <ConfirmModal projectId={projectId} setfixedVerify={setVerify} itemId={item} setNextTask={setNextTask} /> : ''}
                     {nextTask ? <TaskAssignModal projectId={projectId} setModal={setModal} itemId={item} moveONgoing={moveONgoing} setNextTask={setNextTask} /> : ''}
+
                 </div>
             )}
         </>
     );
 };
 export default Projects;
+
