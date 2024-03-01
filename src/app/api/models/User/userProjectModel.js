@@ -2,10 +2,11 @@
 import mongoose from "mongoose";
 import userModel from "./userModel";
 import projectInfoModel from "../projectInfoModel";
+import ClientInformationModel from "../ClientInformationModel";
 
 // Register the 'users' model with Mongoose
 const User = mongoose.models.users || userModel;
-const Project = mongoose.models.projectInfo || projectInfoModel;
+const Project = mongoose.models.ClientInformation || ClientInformationModel;
 const userProjectSchema = new mongoose.Schema(
     {
         userId: {

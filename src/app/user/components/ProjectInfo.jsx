@@ -52,19 +52,19 @@ const ProjectInfo = ({ addToLocation, setClientInputs, clientInputs }) => {
                             <option value="Choose Project Type" className="uppercase" disabled >
                                 Choose Type
                             </option>
-                            <option value="REGULAR" className="uppercase" defaultValue>
+                            <option value="Apartment" className="uppercase" defaultValue>
                                 Apartment
                             </option>
-                            <option value="MEDIUM" className="uppercase">
+                            <option value="Villa" className="uppercase">
                                 Villa
                             </option>
-                            <option value="URGENT" className="uppercase">
+                            <option value="Plotting" className="uppercase">
                                 Plotting
                             </option>
-                            <option value="URGENT" className="uppercase">
+                            <option value="Commercial" className="uppercase">
                                 Commercial
                             </option>
-                            <option value="URGENT" className="uppercase">
+                            <option value="Other" className="uppercase">
                                 Other
                             </option>
                         </select>

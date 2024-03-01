@@ -103,6 +103,7 @@ export async function generateUniqueCode(projectName, userId) {
 
     const userData = await userModel.findById(userId)
     const org = userData.organization
+    const name = userData.firstName
     const currentYear = new Date().getFullYear();
 
     const userTotalProjects = await getTotalProjects(userId);
@@ -110,7 +111,7 @@ export async function generateUniqueCode(projectName, userId) {
     const companyName = "Ameya360"
     const location = "Hyderabad"
     const builderShortName = generateShortForm(org)
-    const clientShortName = generateShortForm(org)
+    const clientShortName = generateShortForm(name)
     // A & H are the short form of the Ameya360 and Hyderabad
     return `AH${builderShortName}${clientShortName}${currentYear}${projectSeriesNumber.toString().padStart(4, '0')}`
     // return `AH${projectName}${currentYear}${projectSeriesNumber.toString().padStart(4, '0')}`; //Ameya360Prestigious2024001
