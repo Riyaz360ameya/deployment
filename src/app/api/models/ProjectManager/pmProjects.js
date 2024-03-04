@@ -79,6 +79,7 @@ const proManagerProjectSchema = new mongoose.Schema({
             },
             projectVerified: {
                 type: Boolean,
+                
             }
         }
     ],

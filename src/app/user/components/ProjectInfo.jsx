@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { GrLinkNext } from "react-icons/gr";
 
-const ProjectInfo = ({ addToLocation, setClientInputs, clientInputs }) => {
+const ProjectInfo = ({ removeFromLocation,addToLocation, setClientInputs, clientInputs }) => {
     const fields = [
         { id: "projectName", label: "Project Name", placeholder: "Project Name" },
         { id: "specification", label: "Specification", placeholder: "Specification" },
@@ -9,20 +9,57 @@ const ProjectInfo = ({ addToLocation, setClientInputs, clientInputs }) => {
         { id: "projectUSP", label: "Project USP", placeholder: "Project USP" },
         { id: "projectDes", label: "Project Description", placeholder: "Project Description" },
     ];
+    const [complete, setComplete] = useState(false);
+    const [currentStep, setCurrentStep] = useState(1);
+    const steps = ["Project Info", "Contact Details", "Files Upload", "Payment", "Feedback"];
+
     return (
-        <div className='p-2 rounded mt-5'>
+        <div className='p-2 rounded mt-5 '>
             <div className=' flex justify-between items-center'>
                 <div>
                     <h1 className='text-2xl font-extrabold text-white '>Project Info</h1>
                 </div>
-                <button className='bg-gray-800 px-5 p-2 rounded border text-white font-bold' onClick={() => addToLocation(2)}>
+                {/* <button className='bg-gray-800 px-5 p-2 rounded border text-white font-bold' onClick={() => addToLocation(2)}>
                     <span className='flex items-center justify-between gap-3'>Next<GrLinkNext className='text-white' style={{ color: 'red' }} />
 
                     </span>
-                </button>
+                </button> */}
+                <div className="flex items-center justify-between gap-2 px-5">
+                    {!complete && (
+                        <>
+                            <button
+                                className=" p-2 px-4 rounded text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                                                             hover:bg-gray-200  
+                                                             bg-gray-100 
+                                                            text-gray-700 
+                                                               border duration-200 ease-in-out 
+                                                          border-gray-600 transition"
+                                onClick={() => {
+                                    removeFromLocation(1)
+                                }}
+                            >
+                                Back
+                            </button>
+
+                            <button
+                                className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                                hover:bg-teal-600  
+                                bg-teal-600 
+                                text-teal-100 
+                                border duration-200 ease-in-out 
+                                border-teal-600 transition"
+                                onClick={() => {
+                                    addToLocation(2)
+                                }}
+                            >
+                                {currentStep === steps.length ? "Finish" : "Next"}
+                            </button>
+                        </>
+                    )}
+                </div>
             </div>
-            <div className='h-80 md:h-80  overflow-y-scroll p-3 bg-gray-800 mt-2'>
-                <div className="grid gap-6 grid-cols-2 mb-6 md:grid-cols-3 my-2 mx-2 overflow-hidden bg-gray-800 p-2 rounded">
+            <div className='h-80 md:h-80   p-3 bg-gray-400 mt-2'>
+                <div className="grid gap-6 grid-cols-2 mb-6 md:grid-cols-3 my-2 mx-2 bg-gray-400 p-2 rounded">
                     <>
                         {fields.map((field) => (
                             <div key={field.id}>
@@ -52,19 +89,19 @@ const ProjectInfo = ({ addToLocation, setClientInputs, clientInputs }) => {
                             <option value="Choose Project Type" className="uppercase" disabled >
                                 Choose Type
                             </option>
-                            <option value="REGULAR" className="uppercase" defaultValue>
+                            <option value="Apartment" className="uppercase" defaultValue>
                                 Apartment
                             </option>
-                            <option value="MEDIUM" className="uppercase">
+                            <option value="Villa" className="uppercase">
                                 Villa
                             </option>
-                            <option value="URGENT" className="uppercase">
+                            <option value="Plotting" className="uppercase">
                                 Plotting
                             </option>
-                            <option value="URGENT" className="uppercase">
+                            <option value="Commercial" className="uppercase">
                                 Commercial
                             </option>
-                            <option value="URGENT" className="uppercase">
+                            <option value="Other" className="uppercase">
                                 Other
                             </option>
                         </select>

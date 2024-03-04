@@ -2,40 +2,41 @@ import React, { useState, useRef } from 'react';
 import { GrLinkNext } from 'react-icons/gr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId }) => {
-  const [uploadedFiles, setUploadedFiles] = useState(false);
-  const [loading, setLoading] = useState(false);
+const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId }) => {
+  const [complete, setComplete] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const steps = ["Project Info", "Contact Details", "Files Upload", "Payment", "Feedback"];
 
   const [fileUpload, setFileUpload] = useState({
     '3DsMax - Building': {},
     '3DsMax - Landscape & Textures': {},
     '3DsMax - Terrace': {},
     '3DsMax - Entry or Exit gate': {},
-    'CAD Floor plans (dwg)': {},
-    'CAD Elevation (dwg)': {},
-    'CAD Section (dwg)': {},
-    'Club House CAD Elevation (dwg)': {},
-    'Club House CAD Section (dwg)': {},
-    'Club house floor plans CAD (dwg)': {},
-    'Tower Terrace Cad (dwg)': {},
-    'Landscape (Dwg)': {},
-    // //images file
-    'Material Palette': {},
-    'Exterior draft images': {},
-    'Interior draft images': {},
-    'Aerial Image, Front Building elevation image for all towers': {},
-    '2D Floor Plan (color)': {},
-    '2D Unit plan (color)': {},
-    '2D Unit plan (ISO)': {},
-    'Renders of common areas': {},
-    'Tower Terrace Renders': {},
-    'Club House Terrace Renders': {},
-    'Amenities Images': {},
-    'Master Plan of site (color)': {},
-    'Club house floor plan (2D Color)': {},
-    'Logo of project or Company': {},
-    'Landscape renders': {},
-    'Project Brochure': {},
+    // 'CAD Floor plans (dwg)': {},
+    // 'CAD Elevation (dwg)': {},
+    // 'CAD Section (dwg)': {},
+    // 'Club House CAD Elevation (dwg)': {},
+    // 'Club House CAD Section (dwg)': {},
+    // 'Club house floor plans CAD (dwg)': {},
+    // 'Tower Terrace Cad (dwg)': {},
+    // 'Landscape (Dwg)': {},
+    // // //images file
+    // 'Material Palette': {},
+    // 'Exterior draft images': {},
+    // 'Interior draft images': {},
+    // 'Aerial Image, Front Building elevation image for all towers': {},
+    // '2D Floor Plan (color)': {},
+    // '2D Unit plan (color)': {},
+    // '2D Unit plan (ISO)': {},
+    // 'Renders of common areas': {},
+    // 'Tower Terrace Renders': {},
+    // 'Club House Terrace Renders': {},
+    // 'Amenities Images': {},
+    // 'Master Plan of site (color)': {},
+    // 'Club house floor plan (2D Color)': {},
+    // 'Logo of project or Company': {},
+    // 'Landscape renders': {},
+    // 'Project Brochure': {},
   });
   // console.log(fileUpload, '---------------------fileUpload')
   const handleInputChange = (key, files) => {
@@ -74,7 +75,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId }
         <div>
           <h1 className='text-2xl font-extrabold text-white '>Upload your Cad Files...</h1>
         </div>
-        <div className='flex gap-4'>
+        {/* <div className='flex gap-4'>
           <button
             className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
             onClick={() => removeFromLocation(3)}
@@ -90,43 +91,61 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId }
           >
             <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
           </button>
-        </div>
-      </div>
-      {
-        // loading ? (
-        //   <div>
-        //     <p>Loading.............</p>
-        //   </div>
-        // )
-        //   : 
-        uploadedFiles ? (
-          <div className='flex items-center justify-center md:h-80'>
-            <div>
-              <h1 className='text-white'>Thank you! Your files are uploaded successfully 😊</h1>
-            </div>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-800 rounded md:grid-cols-2'>
-              {Object.keys(fileUpload).map((item, index) => (
-                <div key={index}>
-                  <label className='block mb-2 text-sm text-white font-medium  dark:text-white' htmlFor={item}>{item}</label>
-                  <input
-                    type="file"
-                    className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
-                    id={item}
-                    name={item}
-                    onChange={(e) => handleInputChange(item, e.target.files)}
-                    multiple
-                  />
+        </div> */}
+         <div className="flex items-center justify-between gap-2 px-5">
+                    {!complete && (
+                        <>
+                            <button
+                                className=" p-2 px-4 rounded text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                                hover:bg-gray-200  
+                                bg-gray-100 
+                               text-gray-700 
+                                  border duration-200 ease-in-out 
+                             border-gray-600 transition"
+                                onClick={() => {
+                                    removeFromLocation(3)
+                                }}
+                            >
+                                Back
+                            </button>
+
+                            <button
+                                className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                                hover:bg-teal-600  
+                                bg-teal-600 
+                                text-teal-100 
+                                border duration-200 ease-in-out 
+                                border-teal-600 transition"
+                                onClick={() => {
+                                   addToLocation(4)
+                                }}
+                            >
+                                {currentStep === steps.length ? "Finish" : "Next"}
+                            </button>
+                        </>
+                    )}
                 </div>
-              ))}
+      </div>
+      <form onSubmit={handleSubmit}>
+        <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-400 rounded md:grid-cols-2'>
+          {Object.keys(fileUpload).map((item, index) => (
+            <div key={index}>
+              <label className='block mb-2 text-sm text-white font-medium  dark:text-white' htmlFor={item}>{item}</label>
+              <input
+                type="file"
+                className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                id={item}
+                name={item}
+                onChange={(e) => handleInputChange(item, e.target.files)}
+                multiple
+              />
             </div>
-            <button className='p-2 px-5 font-bold text-white bg-slate-500 border rounded mt-4' type='submit'>
-              Upload
-            </button>
-          </form>
-        )}
+          ))}
+        </div>
+        <button className='p-2 px-5 font-bold text-white bg-slate-500 border rounded mt-4' type='submit'>
+          Upload
+        </button>
+      </form>
     </div>
   )
 }

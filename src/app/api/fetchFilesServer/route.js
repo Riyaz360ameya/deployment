@@ -5,9 +5,7 @@ import { getDataFromToken } from "../helpers/getDataFromToken";
 
 export async function GET(request = NextRequest) {
     try {
-
-
-        const folderPath = '//192.168.1.100/3DProjects/Tech-Dept/Ameya360/ameya360/Riyaz/AHAA0AA020240001/01-03-2024  10-49 am';
+        const folderPath = '//192.168.1.100/3DProjects/Tech-Dept/Ameya360/ameya360/Riyaz/AHAA0RYZ20240001/01-03-2024  11-30 am';
 
         const files = await fs.readdir(folderPath);
         console.log(files);

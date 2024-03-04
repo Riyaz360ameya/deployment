@@ -37,6 +37,11 @@ const projectInfoSchema = new mongoose.Schema(
                     type: String,
                     required: true,
                 },
+                projectHighlights: {
+                    type: String,
+                    required: true,
+                },
+                
             },
             contactDetails: {
                 email: {

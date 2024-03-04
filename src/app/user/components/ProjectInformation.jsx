@@ -29,7 +29,7 @@ function ProjectInformation() {
         setLoading(true);
         try {
             const { data } = await userProjects()
-            console.log(data, '---------------------data')
+            console.log(data.projectsInformation, '---------------------data')
             const NewProjects = data.projectsInformation.NewProjects;
             dispatch(userNewProjects(NewProjects))
             const onGoingProjects = data.projectsInformation.onGoingProjects;
@@ -115,11 +115,13 @@ function ProjectInformation() {
                                 <tbody>
                                     <tr className='h-16 border border-gray-950 text-white font-bold text-xl rounded shadow-xl  bg-gray-500'>
                                         <th>No</th>
-                                        <th>Venture Name</th>
-                                        <th>Project No</th>
-                                        <th>Venture Type</th>
+                                        <th>ProjectUniqId</th>
+                                        <th>Project Name</th>
+                                        <th>Project Type</th>
                                         <th>Description</th>
-                                        <th>Deadline</th>
+                                        <th>Project USP</th>
+                                        <th>Project Highlights</th>
+                                        <th>Specifications</th>
                                         {
                                             position !== "Completed" &&
                                             <th>Options</th>
@@ -138,16 +140,21 @@ function ProjectInformation() {
                                                         <td>{i + 1}</td>
                                                         <td className=''>
                                                             <div className='flex items-center gap-2 ml-5 cursor-pointer' >
-                                                                <FaLink color='blue' onClick={() => handleShowData(item)} />                                                            <p>{item.ProjectId.projectInfo.ventureName}</p>
+                                                                {/* <FaLink color='blue' onClick={() => handleShowData(item)} />   */}
+                                                                <td className=''>{item.ProjectId.ProjectUniqId}</td>                                                          <p>{item.ProjectId.projectInfo.ventureName}</p>
                                                             </div>
                                                         </td>
-                                                        <td className=''>{item.ProjectId.userId.slice(0, 8)}</td>
-                                                        <td className='text-center'>{item.ProjectId.projectInfo.ventureType}</td>
+                                                        <td className='text-center'>{item.ProjectId.projectInfo.projectDetails.projectName}</td>
+                                                        <td className='text-center'>
+                                                            {item.ProjectId.projectInfo.projectDetails.projectType}
+                                                        </td>
+                                                        <td className='text-center'>{item.ProjectId.projectInfo.projectDetails.projectDes}</td>
+                                                        <td className='text-center'>{item.ProjectId.projectInfo.projectDetails.projectUSP}</td>
                                                         <td className='flex items-center justify-center gap-2'>
                                                             <PiChatDotsLight />
-                                                            {item.ProjectId.projectInfo.ventureDescription}
+                                                            {item.ProjectId.projectInfo.projectDetails.projectHighlights}
                                                         </td>
-                                                        <td className='bg-red-200 rounded text-red-600'>{item.ProjectId.projectInfo.estimatedDeliveryDate}</td>
+                                                        <td className='text-center'>{item.ProjectId.projectInfo.projectDetails.specification}</td>
                                                         {
                                                             position !== "Completed" &&
                                                             <td className='flex items-center justify-around'>
