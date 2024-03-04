@@ -2,7 +2,10 @@ import React, { useState, useRef } from 'react';
 import { GrLinkNext } from 'react-icons/gr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId }) => {
+const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId }) => {
+  const [uploadedFiles, setUploadedFiles] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const [fileUpload, setFileUpload] = useState({
     '3DsMax - Building': {},
     '3DsMax - Landscape & Textures': {},
@@ -45,6 +48,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId })
   };
   const handleSubmit = async (e) => {
     try {
+      setLoading(true);
       e.preventDefault();
       const formData = new FormData();
       // Iterate over the keys of fileUpload object
@@ -56,10 +60,12 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId })
       formData.append('projectName', projectName)
       formData.append('uniqueId', uniqueId)
       const { data } = await axios.post('/api/upload', formData);
+      setUploadedFiles(true);
       toast.success(data.message);
     } catch (error) {
       console.log(error.message, '-------------------error')
       toast.error(error.response?.data?.error || 'Error uploading files');
+      setLoading(false);
     }
   };
   return (
@@ -86,26 +92,41 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId })
           </button>
         </div>
       </div>
-      <form onSubmit={handleSubmit}>
-        <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-800 rounded md:grid-cols-2'>
-          {Object.keys(fileUpload).map((item, index) => (
-            <div key={index}>
-              <label className='block mb-2 text-sm text-white font-medium  dark:text-white' htmlFor={item}>{item}</label>
-              <input
-                type="file"
-                className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
-                id={item}
-                name={item}
-                onChange={(e) => handleInputChange(item, e.target.files)}
-                multiple
-              />
+      {
+        // loading ? (
+        //   <div>
+        //     <p>Loading.............</p>
+        //   </div>
+        // )
+        //   : 
+        uploadedFiles ? (
+          <div className='flex items-center justify-center md:h-80'>
+            <div>
+              <h1 className='text-white'>Thank you! Your files are uploaded successfully 😊</h1>
             </div>
-          ))}
-        </div>
-        <button className='p-2 px-5 font-bold text-white bg-slate-500 border rounded mt-4' type='submit'>
-          Upload
-        </button>
-      </form>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-800 rounded md:grid-cols-2'>
+              {Object.keys(fileUpload).map((item, index) => (
+                <div key={index}>
+                  <label className='block mb-2 text-sm text-white font-medium  dark:text-white' htmlFor={item}>{item}</label>
+                  <input
+                    type="file"
+                    className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                    id={item}
+                    name={item}
+                    onChange={(e) => handleInputChange(item, e.target.files)}
+                    multiple
+                  />
+                </div>
+              ))}
+            </div>
+            <button className='p-2 px-5 font-bold text-white bg-slate-500 border rounded mt-4' type='submit'>
+              Upload
+            </button>
+          </form>
+        )}
     </div>
   )
 }
