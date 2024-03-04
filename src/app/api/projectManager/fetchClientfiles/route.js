@@ -15,10 +15,11 @@ export async function PUT(request = NextRequest) {
         }
 
         const reqBody = await request.json();
-        const { userName, uniqueId, organizationName } = reqBody;
+        // const { userName, uniqueId, organizationName } = reqBody;
 
         // Call your helper function to get client files
         const clientsData = await clientsFiles(reqBody);
+        // console.log(clientsData,'--------------------------clientsData 88888')
 
         // Use clientsData instead of fileContents since you are fetching it from clientsFiles function
         return NextResponse.json({
@@ -26,7 +27,7 @@ export async function PUT(request = NextRequest) {
             files: clientsData,
         });
     } catch (error) {
-        console.error(error); // Log the error for debugging purposes
+        console.error(error.message); // Log the error for debugging purposes
         return NextResponse.json({
             success: false,
             error: error.message,
