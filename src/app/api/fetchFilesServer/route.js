@@ -4,7 +4,7 @@ import path from 'path';
 
 export async function GET(request = NextRequest) {
     try {
-        const folderPath = '//192.168.1.100/3DProjects/Tech-Dept/Ameya360/ameya360/Riyaz/Fredericka Mccoy 2024/29-02-2024  03-03 pm';
+        const folderPath = '//192.168.1.100/3DProjects/Tech-Dept/Ameya360/ameya360/Riyaz/AHAA0RYZ20240001/01-03-2024  11-30 am';
 
         const files = await fs.readdir(folderPath);
         console.log(files);

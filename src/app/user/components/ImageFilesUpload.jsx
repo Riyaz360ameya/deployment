@@ -1,7 +1,10 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { GrLinkNext } from 'react-icons/gr';
 
 const ImageFilesUpload = ({ addToLocation, removeFromLocation, files, setFiles }) => {
+    const [complete, setComplete] = useState(false);
+    const [currentStep, setCurrentStep] = useState(1);
+    const steps = ["Project Info", "Contact Details", "Files Upload", "Payment", "Feedback"];
     const fileInputs = [
         "Material Palette",
         "Exterior draft images",
@@ -27,39 +30,41 @@ const ImageFilesUpload = ({ addToLocation, removeFromLocation, files, setFiles }
                 <div>
                     <h1 className='text-2xl font-extrabold text-white'>Preview of your files uploaded History</h1>
                 </div>
-                <div className='flex gap-4'>
-                    <button
-                        className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
-                        onClick={() => removeFromLocation(4)}
-                    >
-                        <span className='flex items-center justify-between gap-3'>
-                            <GrLinkNext className='rotate-180' />
-                            Back
-                        </span>
-                    </button>
-                    <button
-                        className='p-2 px-5 font-bold text-white border rounded bg-gray-800'
-                        onClick={() => addToLocation(5)}
-                    >
-                        <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
-                    </button>
+                <div className="flex items-center justify-between gap-2 px-5">
+                    {!complete && (
+                        <>
+                            <button
+                                className=" p-2 px-4 rounded text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                                hover:bg-gray-200  
+                                bg-gray-100 
+                               text-gray-700 
+                                  border duration-200 ease-in-out 
+                             border-gray-600 transition"
+                                onClick={() => {
+                                    removeFromLocation(2)
+                                }}
+                            >
+                                Back
+                            </button>
+
+                            <button
+                                className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                                hover:bg-teal-600  
+                                bg-teal-600 
+                                text-teal-100 
+                                border duration-200 ease-in-out 
+                                border-teal-600 transition"
+                                onClick={() => {
+                                   addToLocation(3)
+                                }}
+                            >
+                                {currentStep === steps.length ? "Finish" : "Next"}
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
-            {/* <div className='h-full md:h-80  overflow-y-scroll p-3'> */}
-            <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2  bg-gray-800 rounded md:grid-cols-2'>
-                {fileInputs.map((label, index) => (
-                    <div key={index}>
-                        <label className='block mb-2 text-sm font-medium  text-white' htmlFor={label}>
-                            {label}
-                        </label>
-                        <input
-                            className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
-                            id={label}
-                            type='file'
-                        />
-                    </div>
-                ))}
-            </div>
+           
         </div>
     );
 };

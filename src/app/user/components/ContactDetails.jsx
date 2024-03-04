@@ -3,6 +3,9 @@ import { GrLinkNext } from 'react-icons/gr';
 
 const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, clientInputs }) => {
     const [coordinators, setCoordinators] = useState([{ coordinatorName: '', coordinatorEmail: '', coordinatorMobile: '' }]);
+    const [complete, setComplete] = useState(false);
+    const [currentStep, setCurrentStep] = useState(1);
+    const steps = ["Project Info", "Contact Details", "Files Upload", "Payment", "Feedback"];
 
     const addCoordinator = () => {
         setCoordinators([...coordinators, { coordinatorName: '', coordinatorEmail: '', coordinatorMobile: '' }]);
@@ -61,7 +64,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                     <h1 className='text-2xl font-extrabold text-white'>Contact Details</h1>
                 </div>
 
-                <div className='flex gap-4'>
+                {/* <div className='flex gap-4'>
                     <button
                         className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
                         onClick={() => removeFromLocation(2)}
@@ -76,9 +79,42 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                     >
                         <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
                     </button>
+                </div> */}
+                 <div className="flex items-center justify-between gap-2 px-5">
+                    {!complete && (
+                        <>
+                            <button
+                                className=" p-2 px-4 rounded text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                                hover:bg-gray-200  
+                                bg-gray-100 
+                               text-gray-700 
+                                  border duration-200 ease-in-out 
+                             border-gray-600 transition"
+                                onClick={() => {
+                                    removeFromLocation(2)
+                                }}
+                            >
+                                Back
+                            </button>
+
+                            <button
+                                className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                                hover:bg-teal-600  
+                                bg-teal-600 
+                                text-teal-100 
+                                border duration-200 ease-in-out 
+                                border-teal-600 transition"
+                                onClick={() => {
+                                   addToLocation(3)
+                                }}
+                            >
+                                {currentStep === steps.length ? "Finish" : "Next"}
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
-            <div className='h-80 md:h-80  overflow-y-scroll p-3 bg-gray-800 mt-2'>
+            <div className='h-80 md:h-80  overflow-y-scroll p-3 bg-gray-400 mt-2'>
                 {sections.map((section) => {
                     if (section.title !== "Coordinators") {
                         return (
