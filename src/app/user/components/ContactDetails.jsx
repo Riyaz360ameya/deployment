@@ -80,7 +80,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                         <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
                     </button>
                 </div> */}
-                 <div className="flex items-center justify-between gap-2 px-5">
+                <div className="flex items-center justify-between gap-2 px-5">
                     {!complete && (
                         <>
                             <button
@@ -105,7 +105,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                                 border duration-200 ease-in-out 
                                 border-teal-600 transition"
                                 onClick={() => {
-                                   addToLocation(3)
+                                    addToLocation(3)
                                 }}
                             >
                                 {currentStep === steps.length ? "Finish" : "Next"}
@@ -182,11 +182,34 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                     ))}
                 </div>
                 <div className='flex justify-between mt-5'>
-                    <button className='p-2 px-5 font-bold text-center text-white bg-gray-800 border rounded' onClick={addCoordinator}>
+                    {/* <button className='p-2 px-5 font-bold text-center text-white bg-gray-800 border rounded' onClick={addCoordinator}>
                         <span className='flex items-center justify-between gap-3'>Add more coordinators </span>
-                    </button>
-                    <button className='p-2 px-5 font-bold text-center text-white bg-gray-800 border rounded' onClick={() => removeCoordinator(coordinators.length - 1)}>
+                    </button> */}
+
+                    {/* <button className='p-2 px-5 font-bold text-center text-white bg-gray-800 border rounded' onClick={() => removeCoordinator(coordinators.length - 1)}>
                         <span className='flex items-center justify-between gap-3'>Remove coordinators </span>
+                    </button> */}
+                    <button
+                        className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                                hover:bg-teal-600  
+                                bg-teal-600 
+                                text-teal-100 
+                                border duration-200 ease-in-out 
+                                border-teal-600 transition"
+                        onClick={addCoordinator}
+                    >
+                        Add more coordinators
+                    </button>
+                    <button
+                        className=" p-2 px-4 rounded text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                                hover:bg-gray-200  
+                                bg-gray-100 
+                               text-gray-700 
+                                  border duration-200 ease-in-out 
+                             border-gray-600 transition"
+                        onClick={() => removeCoordinator(coordinators.length - 1)}
+                    >
+                        Remove coordinators
                     </button>
                 </div>
             </div>

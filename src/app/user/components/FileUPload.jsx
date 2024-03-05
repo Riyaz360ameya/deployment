@@ -12,31 +12,31 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId })
     '3DsMax - Landscape & Textures': {},
     '3DsMax - Terrace': {},
     '3DsMax - Entry or Exit gate': {},
-    // 'CAD Floor plans (dwg)': {},
-    // 'CAD Elevation (dwg)': {},
-    // 'CAD Section (dwg)': {},
-    // 'Club House CAD Elevation (dwg)': {},
-    // 'Club House CAD Section (dwg)': {},
-    // 'Club house floor plans CAD (dwg)': {},
-    // 'Tower Terrace Cad (dwg)': {},
-    // 'Landscape (Dwg)': {},
-    // // //images file
-    // 'Material Palette': {},
-    // 'Exterior draft images': {},
-    // 'Interior draft images': {},
-    // 'Aerial Image, Front Building elevation image for all towers': {},
-    // '2D Floor Plan (color)': {},
-    // '2D Unit plan (color)': {},
-    // '2D Unit plan (ISO)': {},
-    // 'Renders of common areas': {},
-    // 'Tower Terrace Renders': {},
-    // 'Club House Terrace Renders': {},
-    // 'Amenities Images': {},
-    // 'Master Plan of site (color)': {},
-    // 'Club house floor plan (2D Color)': {},
-    // 'Logo of project or Company': {},
-    // 'Landscape renders': {},
-    // 'Project Brochure': {},
+    'CAD Floor plans (dwg)': {},
+    'CAD Elevation (dwg)': {},
+    'CAD Section (dwg)': {},
+    'Club House CAD Elevation (dwg)': {},
+    'Club House CAD Section (dwg)': {},
+    'Club house floor plans CAD (dwg)': {},
+    'Tower Terrace Cad (dwg)': {},
+    'Landscape (Dwg)': {},
+    // //images file
+    'Material Palette': {},
+    'Exterior draft images': {},
+    'Interior draft images': {},
+    'Aerial Image, Front Building elevation image for all towers': {},
+    '2D Floor Plan (color)': {},
+    '2D Unit plan (color)': {},
+    '2D Unit plan (ISO)': {},
+    'Renders of common areas': {},
+    'Tower Terrace Renders': {},
+    'Club House Terrace Renders': {},
+    'Amenities Images': {},
+    'Master Plan of site (color)': {},
+    'Club house floor plan (2D Color)': {},
+    'Logo of project or Company': {},
+    'Landscape renders': {},
+    'Project Brochure': {},
   });
   // console.log(fileUpload, '---------------------fileUpload')
   const handleInputChange = (key, files) => {
@@ -49,7 +49,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId })
   };
   const handleSubmit = async (e) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       e.preventDefault();
       const formData = new FormData();
       // Iterate over the keys of fileUpload object
@@ -61,12 +61,12 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId })
       formData.append('projectName', projectName)
       formData.append('uniqueId', uniqueId)
       const { data } = await axios.post('/api/upload', formData);
-      setUploadedFiles(true);
+      // setUploadedFiles(true);
       toast.success(data.message);
     } catch (error) {
       console.log(error.message, '-------------------error')
       toast.error(error.response?.data?.error || 'Error uploading files');
-      setLoading(false);
+      // setLoading(false);
     }
   };
   return (
