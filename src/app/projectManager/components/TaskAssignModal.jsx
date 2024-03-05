@@ -114,13 +114,13 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing, setNextTask
                                     <option value="Choose Team" className="uppercase" disabled >
                                         Choose Phase
                                     </option>
-                                    <option value="REGULAR" className="uppercase" defaultValue>
+                                    <option value="WHITE RENDERING" className="uppercase" defaultValue>
                                         WHITE RENDERING
                                     </option>
-                                    <option value="MEDIUM" className="uppercase">
+                                    <option value="TEXTURE & LIGHTNING" className="uppercase">
                                         TEXTURE & LIGHTNING
                                     </option>
-                                    <option value="URGENT" className="uppercase">
+                                    <option value="8K RENDERS" className="uppercase">
                                         8K RENDERS
                                     </option>
                                 </select>

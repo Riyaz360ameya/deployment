@@ -6,7 +6,7 @@ connect();
 export async function POST(request = NextRequest) {
     try {
         const reqBody = await request.json()
-        const { firstName, lastName, email, designation, password } = reqBody
+        const { firstName, lastName, email, designation, password, roles } = reqBody
         const leader = await developerModel.findOne({ email })
         if (leader) {
             return NextResponse.json({ error: "Developer Already exists!", success: false }, { status: 409 })
@@ -18,9 +18,11 @@ export async function POST(request = NextRequest) {
             lastName,
             email,
             designation,
-            password: hashPassword
+            password: hashPassword,
+            roles
         })
         const savedDeveloper = await newDeveloper.save()
+        console.log(savedDeveloper, '---------------savedDeveloper')
         return NextResponse.json(
             { message: "Developer created successfully" },
             { savedDeveloper },
