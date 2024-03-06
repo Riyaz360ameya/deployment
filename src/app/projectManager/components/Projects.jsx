@@ -42,6 +42,7 @@ const Projects = ({ loading, setLoading }) => {
     const [viewFiles, setviewFiles] = useState(false);
     const [uniqueId, setUniqueId] = useState('')
     const [userDetails, setUserDetails] = useState()
+    const [details, setDetails] = useState({})
 
     const getAllPmProjects = async () => {
         setLoading(true);
@@ -57,10 +58,11 @@ const Projects = ({ loading, setLoading }) => {
             setLoading(false);
         }
     }
-    const viewFilesData = ({ uniqueId, userDetails }) => {
+    const viewFilesData = ({ uniqueId, userDetails, fileDetails }) => {
         setviewFiles(true);
         setUniqueId(uniqueId)
         setUserDetails(userDetails)
+        setDetails(fileDetails)
     }
     const settingAllPmProjects = (position) => {
         if (position === "New") {
@@ -230,8 +232,8 @@ const Projects = ({ loading, setLoading }) => {
                                 <tr className='sticky top-0 h-16 text-lg font-bold text-white border rounded shadow-xl border-gray-950 bg-slate-600'>
                                     <th>No</th>
                                     <th>Organization</th>
-                                    <th>Project UniqueId</th>
-                                    <th>Project Name</th>
+                                    <th> Project Name</th>
+                                    <th> Project UniqueId</th>
                                     <th>Venture Type</th>
                                     <th>Views/Files</th>
                                     <th>ReachedOn</th>
@@ -270,7 +272,7 @@ const Projects = ({ loading, setLoading }) => {
                                                     </td>
                                                     <td className='text-center'>{item.projectId.projectInfo.projectDetails.projectType}</td>
                                                     <td className=''>
-                                                        <span className='flex items-center gap-2' onClick={() => viewFilesData({ uniqueId: item.projectId.ProjectUniqId, userDetails: item.userId })}><PiChatDotsLight /> <button>  views </button></span>
+                                                        <span className='flex items-center gap-2' onClick={() => viewFilesData({ uniqueId: item.projectId.ProjectUniqId, userDetails: item.userId, fileDetails: item })}><PiChatDotsLight /> <button>  views </button></span>
                                                     </td>
                                                     <td className='font-extrabold bg-blue-00'>{dateConverter(item.projectReachedOn)}</td>
                                                     {
@@ -312,7 +314,7 @@ const Projects = ({ loading, setLoading }) => {
                     {modal ? <TaskAssignModal projectId={projectId} setModal={setModal} itemId={item} moveONgoing={moveONgoing} /> : ''}
                     {verify ? <ConfirmModal projectId={projectId} setfixedVerify={setVerify} itemId={item} setNextTask={setNextTask} /> : ''}
                     {nextTask ? <TaskAssignModal projectId={projectId} setModal={setModal} itemId={item} moveONgoing={moveONgoing} setNextTask={setNextTask} /> : ''}
-                    {viewFiles ? <ViewFileModal userDetails={userDetails} uniqueId={uniqueId} setviewFiles={setviewFiles} /> : ''}
+                    {viewFiles ? <ViewFileModal userDetails={userDetails} uniqueId={uniqueId} setviewFiles={setviewFiles} details={details} /> : ''}
                 </div>
             )}
         </>
