@@ -3,7 +3,7 @@ import { PiChatDotsLight } from 'react-icons/pi';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { allProjectFiles, dataVerified } from '../devApis/taskApi';
-import { developerCompletedProjectsStore, developerNewProjectsStore } from '@/app/redux/developer/developerProSlice';
+import {  developerNewProjectsStore } from '@/app/redux/developer/developerProSlice';
 
 // const ViewFileModal = ({ userDetails, uniqueId, setviewFiles }) => {
 const ViewFileModal = ({ data, setOpenModal }) => {

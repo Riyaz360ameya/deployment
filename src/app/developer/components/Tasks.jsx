@@ -214,7 +214,7 @@ const Tasks = ({ Project, loading, setLoading, designation }) => {
                                                     designation !== "File Verifier" && Project === "Completed" && <td className='text-green-600 font-bold'>{dateConverter(item.devCompletedDate)}</td>
                                                 }
                                                 {
-                                                     Project === "Completed" && <td className='b rounded text-blue-600 font-bold'>
+                                                    Project === "Completed" && <td className='b rounded text-blue-600 font-bold'>
                                                         {dateConverter(item.endDate)}
                                                     </td>
 
