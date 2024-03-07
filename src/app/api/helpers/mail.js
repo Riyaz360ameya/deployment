@@ -26,6 +26,7 @@ export const sendEmail = async ({ email, emailType, userId }) => {
             });
             await newOtpVerification.save();
         }
+      
         let transport = nodemailer.createTransport({
             host: "sandbox.smtp.mailtrap.io",
             port: 2525,
