@@ -3,13 +3,14 @@ import { PiChatDotsLight } from 'react-icons/pi';
 import { pmAllProjects, pmProjectFiles } from '../pmAPIs/projectApis';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { PaperClipIcon } from '@heroicons/react/24/outline';
 
 const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
   console.log(details, '-------------------details')
   const [filesData, setFilesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [sort, setSort] = useState('latest');
+
   const userName = userDetails.firstName;
   const organizationName = userDetails.organization;
 
@@ -22,9 +23,6 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
       onClose();
     }
   };
-
-
-
   const fetchData = async () => {
     try {
       const { data } = await pmProjectFiles({ userName, uniqueId, organizationName });
@@ -329,9 +327,14 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                     <p>Please wait. Files are loading 😊...</p>
                   ) : filesData?.length > 0 ? (
                     <div className='d-flex gap-5 '>
+                        {/* <div className='flex justify-around'>
+                             <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Latest Files</button>
+                             <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Old Files</button>
+
+                             </div> */}
                       <ol className="relative text-black border-s border-gray-200 dark:border-gray-700 dark:text-gray-400">
                         {filesData
-                          ?.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) // Sort by timestamp
+                          ?.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) 
                           .map((file, index) => (
                             <li key={index} className="mb-10 ms-6">
                               <span className="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
@@ -341,7 +344,9 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                               </span>
                               <h3 className="font-medium leading-tight text-black">{file.folderName}</h3>
                               <div className="">
-                                <h2 className='text-lg font-bold text-black'>Data Uploaded: {file.folderName}</h2>
+                               <div className='flex justify-between'>
+                               <h2 className='text-lg font-bold text-black'>Data Uploaded: {file.folderName}</h2>
+                               </div>
                                 <hr />
                                 <div className=''>
                                   {file.data.map((item, i) => (
@@ -378,6 +383,7 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                 </div>
               </div>
             </div>
+            
 
           </div>
 
