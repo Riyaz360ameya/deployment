@@ -53,8 +53,6 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
       className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center "
     >
       <div className="bg-white flex h-full w-full overflow-y-scroll ">
-
-
         <div className="w-full bg-white border border-gray-200 rounded-lg shadow ">
           <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50  dark:text-gray-400 ">
             <li className="me-2">
@@ -127,15 +125,7 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                             </div>
                           </div>
                         </div>
-
                       </div>
-                      {/* <figcaption class="flex items-center justify-center ">
-                        <img class="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png" alt="profile picture" />
-                        <div class="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-                          <div>Bonnie Green</div>
-                          <div class="text-sm text-gray-500 dark:text-gray-400 ">Developer at Open AI</div>
-                        </div>
-                      </figcaption> */}
                     </figure>
                     <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
                       <div className="w-full bg-gray-50 px-4 py-4 sm:flex sm:flex-col sm:items-start ">
@@ -175,15 +165,7 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                             </div>
                           </div>
                         </div>
-
                       </div>
-                      {/* <figcaption class="flex items-center justify-center ">
-                        <img class="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png" alt="profile picture" />
-                        <div class="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
-                          <div>Bonnie Green</div>
-                          <div class="text-sm text-gray-500 dark:text-gray-400 ">Developer at Open AI</div>
-                        </div>
-                      </figcaption> */}
                     </figure>
                   </div>
                 </div>
@@ -257,7 +239,6 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                       <div className="w-full bg-gray-50 px-4 py-4 sm:flex sm:flex-col sm:items-start ">
                         <div className="mt-2">
                           <div>
-
                             <div className=" border-t border-gray-100">
                               <dl className="divide-y divide-gray-100">
                                 <div className="px-4 mt-5 sm:px-0">
@@ -327,11 +308,6 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                     <p>Please wait. Files are loading 😊...</p>
                   ) : filesData?.length > 0 ? (
                     <div className='d-flex gap-5 '>
-                        {/* <div className='flex justify-around'>
-                             <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Latest Files</button>
-                             <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Old Files</button>
-
-                             </div> */}
                       <ol className="relative text-black border-s border-gray-200 dark:border-gray-700 dark:text-gray-400">
                         {filesData
                           ?.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) 
@@ -383,13 +359,8 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                 </div>
               </div>
             </div>
-            
-
           </div>
-
         </div>
-
-
       </div>
     </div>
   );
