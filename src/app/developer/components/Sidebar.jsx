@@ -17,6 +17,8 @@ const Sidebar = ({ menu, setProject, Project }) => {
     const dispatch = useDispatch()
     const router = useRouter();
     const user = useSelector((state) => state.developer.developerDetails)
+    console.log(user.designation, '----------dev details')
+    const design = user.designation
     const [selectedItem, setSelectedItem] = useState(Project);
     //fetching user details from token
     const icons = [
@@ -30,9 +32,10 @@ const Sidebar = ({ menu, setProject, Project }) => {
         setSelectedItem(name)
     }
     const handleLogout = async () => {
+        console.log('its log outing')
         await logOut()
-        dispatch(resetDev())
         dispatch(resetDevTasks())
+        dispatch(resetDev())
         toast.success("Logout success")
         router.push("/developer/login")
     }
@@ -57,17 +60,33 @@ const Sidebar = ({ menu, setProject, Project }) => {
                 <p className='text-blue-400'>Menu</p>
                 <div className='ml-2'>
                     {icons.map((item, i) => {
-                        return (
-                            <div key={i}
-                                onClick={() => handleClick(item.name)}
-                                className={`flex gap-2 mt-2 items-center ${menu ? "" : "justify-center"}  text-base  p-2 cursor-pointer  rounded duration-300 ease-in-out
-                                ${selectedItem === item.name && "bg-slate-600"}
-                                hover:bg-slate-600`} >
-                                <p className='flex items-center gap-2'>{item.icon}
-                                    {menu && <span className=" ">{item.name}</span>}
-                                </p>
-                            </div>
-                        )
+                        if (design === "File Verifier") {
+                            if (i % 2 === 0) {
+                                return (
+                                    <div key={i}
+                                        onClick={() => handleClick(item.name)}
+                                        className={`flex gap-2 mt-2 items-center ${menu ? "" : "justify-center"}  text-base  p-2 cursor-pointer  rounded duration-300 ease-in-out
+                                        ${selectedItem === item.name && "bg-slate-600"}
+                                        hover:bg-slate-600`} >
+                                        <p className='flex items-center gap-2'>{item.icon}
+                                            {menu && <span className=" ">{item.name}</span>}
+                                        </p>
+                                    </div>
+                                );
+                            }
+                        } else {
+                            return (
+                                <div key={i}
+                                    onClick={() => handleClick(item.name)}
+                                    className={`flex gap-2 mt-2 items-center ${menu ? "" : "justify-center"}  text-base  p-2 cursor-pointer  rounded duration-300 ease-in-out
+                                    ${selectedItem === item.name && "bg-slate-600"}
+                                    hover:bg-slate-600`} >
+                                    <p className='flex items-center gap-2'>{item.icon}
+                                        {menu && <span className=" ">{item.name}</span>}
+                                    </p>
+                                </div>
+                            );
+                        }
                     })}
                 </div>
                 <div className='ml-2'>

@@ -19,6 +19,14 @@ const developerProSlice = createSlice({
     developerCompletedProjectsStore: (state, action) => {
       state.developerCompletedTasks = action.payload;
     },
+    verifierAddCompletedProjectsStore: (state, action) => {
+      console.log(action.payload, '-------------------action.payload')
+      // state.developerCompletedTasks = action.payload;
+    },
+    verifierRemoveSingleProjectsStore: (state, action) => {
+      console.log(action.payload, '-------------------action.payload')
+      // state.developerCompletedTasks = action.payload;
+    },
     resetDevTasks: () => initialState,
   },
 });

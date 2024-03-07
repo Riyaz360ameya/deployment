@@ -21,6 +21,8 @@ export async function POST(request = NextRequest) {
                 return NextResponse.json({ error: "invalid password" }, { status: 400 })
             }
             //create token data
+            console.log(user,'-------full data')
+            console.log(user._id, '------------------user._id')
             const developerTokenData = {
                 developerId: user._id,
                 role: "developer",

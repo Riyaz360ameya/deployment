@@ -8,6 +8,7 @@ export const clientsFiles = async (data) => {
         console.log(`${userName} -- ${uniqueId} == ${organizationName} - Data received in client files route`);
 
         const serverFolderPath = `//192.168.1.100/3DProjects/Tech-Dept/Ameya360/${organizationName}/${userName}/${uniqueId}/`;
+        console.log(serverFolderPath,'--------serverFolderPath')
 
         const files = await fs.readdir(serverFolderPath);
         console.log(files, '--------------------files');
