@@ -53,10 +53,7 @@ const ViewFileModal = ({ data, setOpenModal }) => {
     console.log(data.upDatedVerifier.newTasks, '--------------456')
     dispatch(developerNewProjectsStore(data.upDatedVerifier.newTasks));
     dispatch(developerCompletedProjectsStore(data.upDatedVerifier.completedTasks))
-    // const updatedNewTasks = devNewTasks.filter(task => task.projectId !== projectId);
-    // dispatch(developerNewProjectsStore(updatedNewTasks));
     onClose();
-
   }
   return (
     <div
@@ -102,7 +99,6 @@ const ViewFileModal = ({ data, setOpenModal }) => {
                       </div>
                       <button type='submit' className='p-2 rounded text-white bg-red-600'>Send Message</button>
                     </form>
-
                     : ''
                 }
                 {filesData?.map((file, index) => (
