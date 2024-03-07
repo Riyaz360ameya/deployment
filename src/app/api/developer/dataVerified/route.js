@@ -27,7 +27,6 @@ export const PUT = async (request = NextRequest) => {
             console.log('Task not found for projectId:', projectId);
             return NextResponse.json({ error: "Task not found" }, { status: 404 });
         }
-        // Update data and move it to completedTasks
         const upDatedVerifier = await upDateVerifierTask({data, verifierTasks,projectId})
 
         const upDatedPM = await upDateOnPM({ projectId })
