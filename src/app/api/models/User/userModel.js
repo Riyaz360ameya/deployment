@@ -28,14 +28,13 @@ const userSchema = new mongoose.Schema({
       type: Boolean,
       default: false
    },
-   isAdmin: {
+   filesVerified:{
       type: Boolean,
       default: false
    },
-   cadFile: {
-      data: Buffer, // Store file data as Buffer
-      contentType: String, // MIME type of the file
-      fileName: String, // Original file name
+   isAdmin: {
+      type: Boolean,
+      default: false
    },
    notifications: [
       {
