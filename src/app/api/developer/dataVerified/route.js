@@ -4,6 +4,7 @@ import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 import verifierProjectModel from "../../models/Developer/verifierProjects";
 import { upDateVerifierTask } from "./upDateVerifierTask";
 import { upDateOnPM } from "./upDateOnPM";
+import { sendEmail } from "../../helpers/mail";
 
 export const PUT = async (request = NextRequest) => {
     try {
@@ -13,8 +14,8 @@ export const PUT = async (request = NextRequest) => {
             return removeTokenCookie();
         }
         const verifierId = developerId
-        const { projectId } = await request.json()
-        console.log(projectId, '---------body')
+        const { projectId, email } = await request.json()
+        console.log(projectId, '---------body',email)
         const verifierTasks = await verifierProjectModel.findOne({ verifierId })
         if (!verifierTasks) {
             console.log(error, '---error--------')
@@ -31,6 +32,10 @@ export const PUT = async (request = NextRequest) => {
         const upDatedVerifier = await upDateVerifierTask({data, verifierTasks,projectId})
 
         const upDatedPM = await upDateOnPM({ projectId })
+
+        const emailType = "FILES_VERIFIED"
+
+        const emailSend = await sendEmail({ email, emailType })
 
         return NextResponse.json({ message: "Project verification Completed", success: true ,upDatedVerifier }, { status: 200 });
     } catch (error) {

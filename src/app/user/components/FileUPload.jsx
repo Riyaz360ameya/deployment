@@ -2,9 +2,11 @@ import React, { useState, useRef } from 'react';
 import { GrLinkNext } from 'react-icons/gr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { InfinitySpin } from 'react-loader-spinner';
 const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId }) => {
   const [complete, setComplete] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [load, setLoad] = useState(false);
   const steps = ["Project Info", "Contact Details", "Files Upload", "Payment", "Feedback"];
 
   const [fileUpload, setFileUpload] = useState({
@@ -50,6 +52,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId })
   const handleSubmit = async (e) => {
     try {
       // setLoading(true);
+      setLoad(true)
       e.preventDefault();
       const formData = new FormData();
       // Iterate over the keys of fileUpload object
@@ -67,6 +70,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId })
       console.log(error.message, '-------------------error')
       toast.error(error.response?.data?.error || 'Error uploading files');
       // setLoading(false);
+      setLoad(false)
     }
   };
   return (
@@ -126,7 +130,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId })
                     )}
                 </div>
       </div>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-400 rounded md:grid-cols-2'>
           {Object.keys(fileUpload).map((item, index) => (
             <div key={index}>
@@ -145,7 +149,35 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName,uniqueId })
         <button className='p-2 px-5 font-bold text-white bg-slate-500 border rounded mt-4' type='submit'>
           Upload
         </button>
-      </form>
+      </form> */}
+       {load ? (
+                <div className='flex items-center justify-center h-full'>
+                    <div className=''>
+                       <h1>Files uploaded successfully</h1>
+                        {/* <p>Please continoue furthur</p> */}
+                    </div>
+                </div>
+            ) : <form onSubmit={handleSubmit}>
+            <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-2 gap-6 p-2 mt-2 bg-gray-400 rounded md:grid-cols-2'>
+              {Object.keys(fileUpload).map((item, index) => (
+                <div key={index}>
+                  <label className='block mb-2 text-sm text-white font-medium  dark:text-white' htmlFor={item}>{item}</label>
+                  <input
+                    type="file"
+                    className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                    id={item}
+                    name={item}
+                    onChange={(e) => handleInputChange(item, e.target.files)}
+                    multiple
+                  />
+                </div>
+              ))}
+            </div>
+            <button className='p-2 px-5 font-bold text-white bg-slate-500 border rounded mt-4' type='submit'>
+              Upload
+            </button>
+          </form>
+            }
     </div>
   )
 }

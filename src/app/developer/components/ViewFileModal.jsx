@@ -7,11 +7,14 @@ import { developerCompletedProjectsStore, developerNewProjectsStore } from '@/ap
 
 // const ViewFileModal = ({ userDetails, uniqueId, setviewFiles }) => {
 const ViewFileModal = ({ data, setOpenModal }) => {
+  const user = useSelector((state) => state.developer.developerDetails)
+  const devNewTasks = useSelector((state) => state.developerTaskUpdates.developerNewTasks);
   const dispatch = useDispatch()
   const [filesData, setFilesData] = useState([]);
   const [formData, setFormData] = useState('')
   const [openInput, setOpenInput] = useState(false)
   const [isLoading, setIsLoading] = useState(true);
+  const email = user.email;
   const userName = data.userId.firstName;
   const organizationName = data.userId.organization;
   const uniqueId = data.projectId.ProjectUniqId
@@ -47,15 +50,20 @@ const ViewFileModal = ({ data, setOpenModal }) => {
     setFormData('')
     onClose();
   }
-  const handleVerified = async (projectId) => {
-    const { data } = await dataVerified(projectId)
-    console.log(data, '--------------1010')
-    console.log(data.upDatedVerifier.newTasks, '--------------456')
-    dispatch(developerNewProjectsStore(data.upDatedVerifier.newTasks));
-    dispatch(developerCompletedProjectsStore(data.upDatedVerifier.completedTasks))
-    // const updatedNewTasks = devNewTasks.filter(task => task.projectId !== projectId);
-    // dispatch(developerNewProjectsStore(updatedNewTasks));
-    onClose();
+  const handleVerified = async ({ projectId, email }) => {
+    try {
+      const { data } = await dataVerified({ projectId, email })
+      console.log(data, '--------------1010')
+      console.log(devNewTasks, '--------before-----devNewTasks')
+      const updatedNewTasks = devNewTasks.filter(task => task.projectId._id !== projectId);
+      console.log(updatedNewTasks, '------after--------456')
+      dispatch(developerNewProjectsStore(updatedNewTasks))
+      // dispatch(developerCompletedProjectsStore(data.upDatedVerifier.completedTasks))
+      toast.success(data.message);
+      onClose();
+    } catch (error) {
+      toast.error(error.response?.data?.error || 'Error uploading files');
+    }
 
   }
   return (
@@ -82,7 +90,7 @@ const ViewFileModal = ({ data, setOpenModal }) => {
             ) : filesData?.length > 0 ? (
               <div className='d-flex gap-5 '>
                 <div className=' flex justify-end gap-2'>
-                  <button onClick={() => handleVerified(data.projectId._id)} className='p-2 rounded text-white bg-green-800'>Its Verified</button>
+                  <button onClick={() => handleVerified({ projectId: data.projectId._id, email: email })} className='p-2 rounded text-white bg-green-800'>Its Verified</button>
                   <button onClick={() => setOpenInput((prev) => !prev)} className='p-2 rounded text-white bg-red-600'>Need More Data</button>
                 </div>
                 {

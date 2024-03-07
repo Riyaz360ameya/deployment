@@ -4,7 +4,7 @@ import { GrLinkNext } from 'react-icons/gr';
 const ImageFilesUpload = ({ addToLocation, removeFromLocation, files, setFiles }) => {
     const [complete, setComplete] = useState(false);
     const [currentStep, setCurrentStep] = useState(1);
-    const steps = ["Project Info", "Contact Details", "Files Upload", "Payment", "Feedback"];
+    const steps = ["Project Info", "Contact Details", "Files Upload", "Payment", "Confirmation"];
     const fileInputs = [
         "Material Palette",
         "Exterior draft images",
@@ -28,7 +28,7 @@ const ImageFilesUpload = ({ addToLocation, removeFromLocation, files, setFiles }
         <div className='p-2 mt-5 rounded'>
             <div className='flex items-center justify-between h:md-80'>
                 <div>
-                    <h1 className='text-2xl font-extrabold text-white'>Preview of your files uploaded History</h1>
+                    <h1 className='text-2xl font-extrabold text-white'>Payment Gateways</h1>
                 </div>
                 <div className="flex items-center justify-between gap-2 px-5">
                     {!complete && (
