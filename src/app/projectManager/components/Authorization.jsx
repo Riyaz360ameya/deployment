@@ -28,9 +28,6 @@ const Authorization = () => {
             roles: []
         })
         console.log(user, '----------------------------user after reset')
-        // if (post === "Verifier") {
-        //     setUser({ ...user, designation: "File Verifier" });
-        // }
     }
     const [errors, setErrors] = useState({}); // To store validation errors
     const togglePasswordVisibility = () => {
@@ -93,7 +90,7 @@ const Authorization = () => {
             }
         }
     };
-    return (
+return (
         <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden' >
             <div className='flex items-center justify-around'>
                 <div className='border bg-orange-700 text-white p-5 rounded cursor-pointer' onClick={() => handlePost('Team Lead')}>
@@ -178,11 +175,9 @@ const Authorization = () => {
                                                 </option>
                                             ))
                                         }
-
                                     </select>
                                     {errors.roles && <p className='text-red-500'>{errors.roles}</p>}
                                 </div>
-
                                 <div className='text-left text-sm'>
                                     <label className='font-bold' htmlFor="roles">Roles</label>
                                     <input
