@@ -25,6 +25,26 @@ export const sendEmail = async ({ email, emailType, userId }) => {
                 expiresAt: Date.now() + 3600000,
             });
             await newOtpVerification.save();
+        } else if(emailType === "FILES_VERIFIED"){
+             await userModel.findByIdAndUpdate(userId,{isFilesVerified:true})
+             const mailOption = {
+                from: 'riyazulahad786@gmail.com',
+                to: email,
+                subject: "Your files are verified successfully",
+                html: `<p>Your files have been verified successfully 😊</p>`
+            };
+        
+            const transport = nodemailer.createTransport({
+                host: "sandbox.smtp.mailtrap.io",
+                port: 2525,
+                auth: {
+                    user: "2c08790f23a149",
+                    pass: "3e6de38a745224"
+                }
+            });
+        
+            const mailResponse = await transport.sendMail(mailOption);
+            return mailResponse;
         }
       
         let transport = nodemailer.createTransport({
