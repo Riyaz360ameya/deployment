@@ -20,6 +20,12 @@ const developerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    roles: [
+        {
+            type: String,
+            required: true
+        }
+    ],
     notifications: [
         {
             projectId: {
@@ -43,5 +49,6 @@ const developerSchema = new mongoose.Schema({
     verifyToken: String,
     verifyTokenExpiry: Date,
 })
+delete mongoose.connection.models['developerLogins'];
 const developerModel = mongoose.models.developerLogins || mongoose.model("developerLogins", developerSchema);
 export default developerModel

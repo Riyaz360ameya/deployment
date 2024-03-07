@@ -13,10 +13,10 @@ import Header from '../components/Header'
 import { useSelector } from 'react-redux'
 const page = () => {
     const [menu, setMenu] = useState(true)
-    const [Project, setProject] = useState("Projects")
+    const [Project, setProject] = useState("Authorization")
     const [loading, setLoading] = useState(true);
     const user = useSelector((state) => state.pm.pmDetails)
-    console.log(user, '...................pm')
+    // console.log(user, '...................pm')
     return (
         <>
             <div className='h-screen flex w-full '>

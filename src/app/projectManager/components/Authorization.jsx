@@ -9,13 +9,25 @@ const Authorization = () => {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [post, setPost] = useState("Team Lead")
+    const addRoles = ["WHITE RENDERING", "TEXTURE & LIGHTNING", "8K RENDERS", "PREVIEW", "LIGHTNING", "ANIMATION", "SHORT DIVISION", "FINAL RENDERS"]
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
         email: '',
         password: '',
-        designation: ''
+        designation: '',
+        roles: []
     });
+    const resetUser = () => {
+        setUser({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            designation: '',
+            roles: []
+        })
+    }
     const [errors, setErrors] = useState({}); // To store validation errors
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -33,7 +45,10 @@ const Authorization = () => {
             newErrors.lastName = 'Please enter a valid last name';
         }
         if (!user.designation) {
-            newErrors.position = 'Please enter your organization';
+            newErrors.position = 'Please enter designation';
+        }
+        if (!user.roles) {
+            newErrors.position = 'Please select roles';
         }
         if (!user.email.match(emailRegex)) {
             newErrors.email = 'Please enter a valid email address';
@@ -48,29 +63,25 @@ const Authorization = () => {
     const onRegister = async (e) => {
         e.preventDefault();
         if (validateInput()) {
-            try {
-                setLoading(true);
-                const { data } = await (post === "Team Lead" ? addTeamLead(user) : addDev(user));
-                console.log(data, '----------data')
-                toast.success(data.message)
-                setUser({
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    password: '',
-                    designation: ''
-                })
-            } catch (error) {
-                console.log("register failed", error);
-                toast.error(error.response.data.error);
-            } finally {
-                setLoading(false);
-            }
+        try {
+            // setLoading(true);
+            console.log(user, '---------------all input of the new lead or dev')
+            const { data } = await (post === "Team Lead" ? addTeamLead(user) : addDev(user));
+            console.log(data, '----------data')
+            toast.success(data.message)
+            resetUser()
+        } catch (error) {
+            console.log("register failed", error);
+            toast.error(error.response.data.error);
+        } finally {
+            setLoading(false);
+        }
         }
     };
     const handlePost = (name) => {
         console.log(name, '-------name')
         setPost(name)
+        resetUser()
     }
     return (
         <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden' >
@@ -130,6 +141,39 @@ const Authorization = () => {
                         {errors.designation && <p className='text-red-500'>{errors.designation}</p>}
                     </div>
                     <div className='text-left text-sm'>
+                        <label className='font-bold' htmlFor="roles">Choose roles <span className='text-slate-500'>( ctrl + any of below )</span></label>
+                        <select
+                            name='roles'
+                            id='roles'
+                            value={user.roles}
+                            className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
+                            onChange={(e) => setUser({ ...user, roles: Array.from(e.target.selectedOptions, option => option.value) })}
+                            multiple  // Enable multiple selection
+                            required
+                        >
+                            {
+                                addRoles.map((item, i) => (
+                                    <option key={i} value={item} className="uppercase">
+                                        {item}
+                                    </option>
+                                ))
+                            }
+
+                        </select>
+                        {errors.roles && <p className='text-red-500'>{errors.roles}</p>}
+                    </div>
+
+                    <div className='text-left text-sm'>
+                        <label className='font-bold' htmlFor="roles">Roles</label>
+                        <input
+                            type='text'
+                            className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.roles ? 'border-red-500' : ''}`}
+                            value={user.roles}
+                            readOnly
+                        />
+                        {errors.roles && <p className='text-red-500'>{errors.roles}</p>}
+                    </div>
+                    <div className='text-left text-sm'>
                         <label className='font-bold' htmlFor="email">Email</label>
                         <input
                             type='text'
@@ -169,8 +213,6 @@ const Authorization = () => {
                 </form>
             </div>
         </div>
-        //     }
-        // </>
     )
 }
 export default Authorization
