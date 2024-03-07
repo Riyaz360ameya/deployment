@@ -114,7 +114,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                     )}
                 </div>
             </div>
-            <div className='h-80 md:h-80  overflow-y-scroll p-3 bg-gray-400 mt-2'>
+            <div className='h-96 md:h-96  overflow-y-scroll p-3 bg-gray-400 mt-2'>
                 {sections.map((section) => {
                     if (section.title !== "Coordinators") {
                         return (

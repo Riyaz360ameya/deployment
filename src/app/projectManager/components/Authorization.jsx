@@ -15,7 +15,7 @@ const Authorization = () => {
         lastName: '',
         email: '',
         password: '',
-        designation: '',
+        designation: "",
         roles: []
     });
     const resetUser = () => {
@@ -24,9 +24,13 @@ const Authorization = () => {
             lastName: '',
             email: '',
             password: '',
-            designation: '',
+            designation: post ==="Verifier" ? "File Verifier": "",
             roles: []
         })
+        console.log(user, '----------------------------user after reset')
+        // if (post === "Verifier") {
+        //     setUser({ ...user, designation: "File Verifier" });
+        // }
     }
     const [errors, setErrors] = useState({}); // To store validation errors
     const togglePasswordVisibility = () => {
@@ -47,8 +51,10 @@ const Authorization = () => {
         if (!user.designation) {
             newErrors.position = 'Please enter designation';
         }
-        if (!user.roles) {
-            newErrors.position = 'Please select roles';
+        if (post !== "Verifier") {
+            if (!user.roles) {
+                newErrors.position = 'Please select roles';
+            }
         }
         if (!user.email.match(emailRegex)) {
             newErrors.email = 'Please enter a valid email address';
@@ -60,29 +66,33 @@ const Authorization = () => {
         // Check if there are any errors
         return Object.keys(newErrors).length === 0;
     };
+    const handlePost = (name) => {
+        console.log(name, '-------name');
+        resetUser(); // Assuming resetUser() resets the user state
+        setPost(name);
+        if (name === "Verifier") {
+            setUser({ ...user, designation: "File Verifier" });
+        }
+        console.log(user, '-------------------user 444');
+    };
     const onRegister = async (e) => {
         e.preventDefault();
         if (validateInput()) {
-        try {
-            // setLoading(true);
-            console.log(user, '---------------all input of the new lead or dev')
-            const { data } = await (post === "Team Lead" ? addTeamLead(user) : addDev(user));
-            console.log(data, '----------data')
-            toast.success(data.message)
-            resetUser()
-        } catch (error) {
-            console.log("register failed", error);
-            toast.error(error.response.data.error);
-        } finally {
-            setLoading(false);
-        }
+            try {
+                // setLoading(true);
+                console.log(user, '---------------all input of the new lead or dev')
+                const { data } = await (post === "Team Lead" ? addTeamLead(user) : addDev(user));
+                console.log(data, '----------data')
+                toast.success(data.message)
+                resetUser()
+            } catch (error) {
+                console.log("register failed", error);
+                toast.error(error.response.data.error);
+            } finally {
+                setLoading(false);
+            }
         }
     };
-    const handlePost = (name) => {
-        console.log(name, '-------name')
-        setPost(name)
-        resetUser()
-    }
     return (
         <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden' >
             <div className='flex items-center justify-around'>
@@ -98,10 +108,16 @@ const Authorization = () => {
                         Developer
                     </div>
                 </div>
+                <div className='border bg-green-700 text-white p-5 rounded cursor-pointer' onClick={() => handlePost('Verifier')} >
+                    <div className='flex items-center justify-between gap-3'>
+                        <FaPlus />
+                        File Verifier
+                    </div>
+                </div>
             </div>
             <div className='flex flex-col  items-center mt-5'>
                 <form onSubmit={onRegister} className='w-1/2'>
-                    <h1 className='text-lg font-bold'>{post === "Team Lead" ? "Team Lead Details" : "Developer Details"}</h1>
+                    <h1 className='text-lg font-bold'>{post === "Team Lead" ? "Team Lead Details" : post !== "Verifier" ? "Developer Details" : "File Verifier"}</h1>
                     <div className='flex justify-between gap-2 mt-2'>
                         <div className='text-left text-sm w-1/2'>
                             <label className='font-bold' htmlFor="firstName">First Name</label>
@@ -137,42 +153,48 @@ const Authorization = () => {
                             value={user.designation}
                             onChange={(e) => setUser({ ...user, designation: e.target.value })}
                             required
+                            readOnly={post === "Verifier"}
                         />
                         {errors.designation && <p className='text-red-500'>{errors.designation}</p>}
                     </div>
-                    <div className='text-left text-sm'>
-                        <label className='font-bold' htmlFor="roles">Choose roles <span className='text-slate-500'>( ctrl + any of below )</span></label>
-                        <select
-                            name='roles'
-                            id='roles'
-                            value={user.roles}
-                            className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
-                            onChange={(e) => setUser({ ...user, roles: Array.from(e.target.selectedOptions, option => option.value) })}
-                            multiple  // Enable multiple selection
-                            required
-                        >
-                            {
-                                addRoles.map((item, i) => (
-                                    <option key={i} value={item} className="uppercase">
-                                        {item}
-                                    </option>
-                                ))
-                            }
+                    {
+                        post !== "Verifier" ?
+                            <>
+                                <div className='text-left text-sm'>
+                                    <label className='font-bold' htmlFor="roles">Choose roles <span className='text-slate-500'>( ctrl + any of below )</span></label>
+                                    <select
+                                        name='roles'
+                                        id='roles'
+                                        value={user.roles}
+                                        className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
+                                        onChange={(e) => setUser({ ...user, roles: Array.from(e.target.selectedOptions, option => option.value) })}
+                                        multiple  // Enable multiple selection
+                                        required
+                                    >
+                                        {
+                                            addRoles.map((item, i) => (
+                                                <option key={i} value={item} className="uppercase">
+                                                    {item}
+                                                </option>
+                                            ))
+                                        }
 
-                        </select>
-                        {errors.roles && <p className='text-red-500'>{errors.roles}</p>}
-                    </div>
+                                    </select>
+                                    {errors.roles && <p className='text-red-500'>{errors.roles}</p>}
+                                </div>
 
-                    <div className='text-left text-sm'>
-                        <label className='font-bold' htmlFor="roles">Roles</label>
-                        <input
-                            type='text'
-                            className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.roles ? 'border-red-500' : ''}`}
-                            value={user.roles}
-                            readOnly
-                        />
-                        {errors.roles && <p className='text-red-500'>{errors.roles}</p>}
-                    </div>
+                                <div className='text-left text-sm'>
+                                    <label className='font-bold' htmlFor="roles">Roles</label>
+                                    <input
+                                        type='text'
+                                        className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md ${errors.roles ? 'border-red-500' : ''}`}
+                                        value={user.roles}
+                                        readOnly
+                                    />
+                                    {errors.roles && <p className='text-red-500'>{errors.roles}</p>}
+                                </div>
+                            </> : ''
+                    }
                     <div className='text-left text-sm'>
                         <label className='font-bold' htmlFor="email">Email</label>
                         <input

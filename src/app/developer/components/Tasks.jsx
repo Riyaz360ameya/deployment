@@ -7,10 +7,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { completeTask, startTask } from '../devApis/taskApi';
 import { developerCompletedProjectsStore, developerOngoingProjectsStore, developerNewProjectsStore } from '@/app/redux/developer/developerProSlice';
 import { InfinitySpin } from 'react-loader-spinner';
+import ViewFileModal from './ViewFileModal';
 
-const Tasks = ({ Project, loading, setLoading }) => {
+const Tasks = ({ Project, loading, setLoading, designation }) => {
+    console.log(designation, '---------------designation 5555')
     const dispatch = useDispatch();
     const [tasks, setTasks] = useState([])
+
+    // Modal settings
+
+    const [openModal, setOpenModal] = useState(false)
+    const [dataFiles, setDataFiles] = useState({})
 
     const [tasksPerPage] = useState(12); // Adjust the number of projects per page
     const [currentPage, setCurrentPage] = useState(1);
@@ -18,15 +25,15 @@ const Tasks = ({ Project, loading, setLoading }) => {
     const devNewTasks = useSelector((state) => state.developerTaskUpdates.developerNewTasks);
     console.log(devNewTasks, '-----------new task-------------')
     const devOnGoTasks = useSelector((state) => state.developerTaskUpdates.developerOngoingTasks);
-    console.log(devOnGoTasks, '--------devOnGoTasks-----------')
+    // console.log(devOnGoTasks, '--------devOnGoTasks-----------')
     const devCompTasks = useSelector((state) => state.developerTaskUpdates.developerCompletedTasks);
     const newTasks = useSelector((state) => state.developerTaskUpdates.developerNewTasks);
     const setProjects = (Project) => {
-        console.log(Project, '-------------------------Project');
+        // console.log(Project, '-------------------------Project');
         if (Project === 'New Tasks') {
             setTasks(devNewTasks);
         } else if (Project === 'Ongoing Tasks') {
-            console.log(devOnGoTasks, '-------------------------devOnGoTasks');
+            // console.log(devOnGoTasks, '-------------------------devOnGoTasks');
             setTasks(devOnGoTasks);
         } else if (Project === 'Completed') {
             setTasks(devCompTasks);
@@ -34,22 +41,22 @@ const Tasks = ({ Project, loading, setLoading }) => {
     };
 
     useEffect(() => {
-        setProjects(Project);
-        console.log('its............. Project.............. effect')
+        setProjects(Project); // fun to call data as per page
+        // console.log('its............. Project.............. effect')
         setCurrentPage(1)
     }, [Project]);
 
     useEffect(() => {
         setProjects(Project);
-        console.log('its ...........devCompTasks........... effect')
+        // console.log('its ...........devCompTasks........... effect')
     }, [devCompTasks]);
     useEffect(() => {
         setProjects(Project);
-        console.log('its.......... ongoing............. effect')
+        // console.log('its.......... ongoing............. effect')
     }, [devOnGoTasks]);
     useEffect(() => {
         setProjects(Project);
-        console.log('its.......... New............. effect')
+        // console.log('its.......... New............. effect')
     }, [devNewTasks]);
 
     const handleStartClick = async (projectId) => {
@@ -109,6 +116,10 @@ const Tasks = ({ Project, loading, setLoading }) => {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+    const handleViewAllData = (data) => {
+        setOpenModal(true)
+        setDataFiles(data)
+    }
     return (
         <>
             {loading ? (
@@ -136,17 +147,27 @@ const Tasks = ({ Project, loading, setLoading }) => {
                         <table className="w-full whitespace-nowrap shadow p-3">
                             <tbody>
                                 <tr tabIndex="0" className="focus:outline-none h-16 border border-gray-100 rounded shadow-xl">
+
                                     <th>No</th>
-                                    <th>Project Title</th>
-                                    <th>Importance</th>
-                                    <th>description</th>
-                                    <th>Assigned Date</th>
-                                    <th>Start Date</th>
+                                    <th>Project ID</th>
+
                                     {
-                                        Project !== "New Tasks" && <th>Dev Started</th>
+                                        designation === "File Verifier" ?
+                                            <th>User Name</th>
+                                            :
+                                            <>
+                                                <th>Importance</th>
+                                                <th>description</th>
+                                            </>
+                                    }
+                                    <th>Assigned Date</th>
+                                    {
+                                        Project !== "New Tasks" && designation !== "File Verifier" && <th>Dev Started</th>
+                                    }
+                                    {
+                                        designation !== "File Verifier" && <th>Deadline</th>
                                     }
 
-                                    <th>Deadline</th>
                                     {
                                         Project === "Completed" && <th>Completed Date</th>
                                     }
@@ -166,40 +187,63 @@ const Tasks = ({ Project, loading, setLoading }) => {
                                             <tr className='text-center mt-10 shadow-xl border h-10' key={item._id}>
                                                 <td>{i + 1}</td>
                                                 <td className="">
-                                                    <p>{item.projectTitle}</p>
+                                                    <p>{item.projectId.ProjectUniqId}</p>
                                                 </td>
-                                                <td className="">
-                                                    <div className="flex items-center justify-center">
-                                                        <FiAlertOctagon color='red' />
-                                                        <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
-                                                    </div>
-                                                </td>
-                                                <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.description}</td>
-                                                <td className='b rounded text-green-600'>
+                                                {
+                                                    designation === "File Verifier" ? <td>{item.userId.firstName}</td>
+                                                        : <>
+                                                            <td className="">
+                                                                <div className="flex items-center justify-center">
+                                                                    <FiAlertOctagon color='red' />
+                                                                    <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
+                                                                </div>
+                                                            </td>
+                                                            <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.description}</td>
+                                                        </>
+                                                }
+                                                <td className='b rounded text-green-600 font-bold'>
                                                     {dateConverter(item.assignedDate)}
                                                 </td>
-                                                <td className='b rounded text-blue-600 font-bold'>{item.startDate}</td>
                                                 {
+                                                    designation !== "File Verifier" && <td className='b rounded text-blue-600 font-bold'>{item.startDate}</td>
+                                                }
+                                                {
+                                                    designation !== "File Verifier" && Project !== "New Tasks" && <td> {dateConverter(item.devStartedDate)}</td>
+                                                }
+                                                {
+                                                    designation !== "File Verifier" && Project === "Completed" && <td className='text-green-600 font-bold'>{dateConverter(item.devCompletedDate)}</td>
+                                                }
+                                                {
+                                                     Project === "Completed" && <td className='b rounded text-blue-600 font-bold'>
+                                                        {dateConverter(item.endDate)}
+                                                    </td>
+
+                                                }
+
+                                                {/* {
                                                     Project !== "New Tasks" && <td> {dateConverter(item.devStartedDate)}</td>
                                                 }
-                                                <td className='bg-red-200  rounded text-red-600 font-bold'>{item.endDate}</td>
                                                 {
                                                     Project === "Completed" && <td className='text-green-600 font-bold'>{dateConverter(item.devCompletedDate)}</td>
-                                                }
+                                                } */}
                                                 {
                                                     Project !== "Completed" &&
                                                     <td>
                                                         <button
                                                             onClick={() => {
                                                                 if (Project === "New Tasks") {
-                                                                    handleStartClick(item.projectId);
+                                                                    if (designation === "File Verifier") {
+                                                                        handleViewAllData(item)
+                                                                    } else {
+                                                                        handleStartClick(item.projectId);
+                                                                    }
                                                                 } else if (Project === "Ongoing Tasks") {
                                                                     handleCompleted(item.projectId);
                                                                 }
                                                             }}
                                                             className='bg-green-800 text-white px-4 py-1 rounded'
                                                         >
-                                                            {Project === "New Tasks" ? "Start" : Project === "Ongoing Tasks" ? "Set Completed" : ''}
+                                                            {designation === "File Verifier" ? "View" : Project === "New Tasks" ? "Start" : Project === "Ongoing Tasks" ? "Set Completed" : ''}
                                                         </button>
                                                     </td>
                                                 }
@@ -212,6 +256,7 @@ const Tasks = ({ Project, loading, setLoading }) => {
                     </div>
                 </div>
             )}
+            {openModal ? <ViewFileModal data={dataFiles} setOpenModal={setOpenModal} /> : ''}
         </>
     );
 };

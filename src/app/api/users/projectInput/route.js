@@ -5,6 +5,7 @@ import { createNewProject } from "./createNewProject";
 import { updateUserProjects } from "./updateUserProjects";
 import { getDataFromToken } from "../../helpers/getDataFromToken";
 import { removeTokenCookie } from "../../helpers/removeTokenCookie";
+import { updateVerifier } from "./updateVerifier";
 connect();
 export async function POST(request = NextRequest) {
     try {
@@ -20,6 +21,7 @@ export async function POST(request = NextRequest) {
         const savedProject = await createNewProject({ reqData, userId })
         const projectId = savedProject._id
         const user = await updateUserProjects({ userId, projectId })
+        const verifier = await updateVerifier({userId, projectId})
         const pm = await upDatePMProjects({ userId, projectId })
         console.log(projectId, '--------55--------ProjectId')
         return NextResponse.json({
