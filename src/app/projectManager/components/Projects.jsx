@@ -12,7 +12,6 @@ import { completePmProject, pmCompletedProjects, pmNewProjects, pmOngoingProject
 import { BeatLoader } from 'react-spinners';
 import { Dialog, Transition } from '@headlessui/react';
 import ConfirmModal from './ConfirmModal';
-import axios from 'axios';
 import ViewFileModal from './ViewFileModal';
 const Projects = ({ loading, setLoading }) => {
     const dispatch = useDispatch()
