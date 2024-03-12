@@ -5,7 +5,6 @@ import { sendEmail } from "../../helpers/mail";
 import userModel from "../../models/User/userModel";
 import organizationModel from "../../models/organization/organizationModel";
 
-
 connect()
 export async function POST(request = NextRequest) {
     try {

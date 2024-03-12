@@ -152,23 +152,7 @@ const ViewFileModal = ({ data, setOpenModal }) => {
                 </ol>
               </div>
             ) : (
-              // <form onSubmit={formSubmit} className='flex flex-col items-center justify-center gap-2'>
-              //   <div className='w-full'>
-              //     <label htmlFor='fileInput'>Add Comments:</label>
-              //     <input
-              //       id='fileInput'
-              //       name='fileInput'
-              //       type="text"
-              //       placeholder='Enter Your comments'
-              //       className="bg-gray-50 w-full outline-none border text-gray-900 text-sm rounded-lg border-blue-500 focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-              //       required
-              //       onChange={(e) => setFormData(e.target.value)}
-              //     />
-              //   </div>
-              //   <button type='submit' className='p-2 rounded text-white bg-red-600'>Send Message</button>
-              // </form>
               ""
-
             )}
           </div>
         </div>
