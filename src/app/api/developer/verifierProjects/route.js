@@ -35,5 +35,5 @@ export async function GET() {
     } catch (error) {
         console.log(error.message, '------------allTasks error');
         return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+    } 
 }

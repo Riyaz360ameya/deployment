@@ -1,9 +1,68 @@
+// import { NextResponse } from 'next/server';
+
+
+
+// function getRoleFromPath(path) {
+//   return Object.values(Roles).find(role => path.startsWith(rolePaths[role]));
+// }
+
+// function isPublicRoute(path) {
+//   return (
+//     path.endsWith('/login') ||
+//     path.endsWith('/register')
+//   );
+// }
+
+// export function middleware(req) {
+//   try {
+//     const path = req.nextUrl.pathname;
+//     const token = req.cookies.get('token')?.value || '';
+
+//     if (!token) {
+//       const role = getRoleFromPath(path);
+
+//       if (role && !isPublicRoute(path)) {
+//         console.log(`Redirecting to ${role} login`);
+//         return NextResponse.redirect(new URL(`${role}/login`, req.nextUrl));
+//       }
+//     } else {
+//       console.log(token, 'Token exists');
+
+//       if (isPublicRoute(path) && token) {
+//         const role = getRoleFromPath(path);
+
+//         if (role) {
+//           console.log(`Redirecting to ${role} home`);
+//           return NextResponse.redirect(new URL(`${role}/home`, req.nextUrl));
+//         }
+//       }
+//     }
+//   } catch (error) {
+//     console.error(error.message, '-------------error in middleware --Invalid token');
+//     return NextResponse.redirect(new URL('/error', req.nextUrl));
+//   }
+// }
+
+// export const config = {
+//   matcher: [
+//     '/user/home',
+//     '/user/login',
+//     '/projectManager/home',
+//     '/projectManager/login',
+//     '/teamLead/home',
+//     '/teamLead/login',
+//     '/developer/home',
+//     '/developer/login',
+//   ],
+// };
+
 import { NextResponse } from 'next/server';
 
-export function middleware(req) {
+export  function middleware(req) {
     try {
         const path = req.nextUrl.pathname;
         const token = req.cookies.get('token')?.value || '';
+       
         const user = path.startsWith('/user')
         const pm = path.startsWith('/projectManager')
         const lead = path.startsWith('/teamLead')
@@ -27,7 +86,8 @@ export function middleware(req) {
                 return NextResponse.redirect(new URL('/developer/login', req.nextUrl));
             }
         } else {
-            console.log('token exist')
+            console.log(token,'token exist')
+            
             // Check if the path is a public route and user is already authenticated
             if (
                 (path === '/user/login' || path === '/user/register' ||
