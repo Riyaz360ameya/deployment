@@ -33,7 +33,6 @@ export const PUT = async (request = NextRequest) => {
             return NextResponse.json({ error: "Task not found" }, { status: 404 });
         }
         const upDatedVerifier = await upDateVerifierTask({ data, verifierTasks, projectId })
-
         const upDatedPM = await upDateOnPM({ projectId })
 
         if (emailType === "FILES_VERIFIED") {
