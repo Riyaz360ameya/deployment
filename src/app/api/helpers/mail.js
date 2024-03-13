@@ -4,12 +4,15 @@ import otpVerifyModel from '../models/otpVerifyModel.js'
 import userModel from '../models/User/userModel.js'
 export const sendEmail = async ({ email, emailType, userId, formData }) => {
     try {
+        // const hashedToken = await bcryptjs.hash(userId.toString(), 10)
         //create hashed token
-        if (emailType !== "FILES_VERIFIED" && emailType !== "NOT_VERIFIED") {
-            const hashedToken = await bcryptjs.hash(userId.toString(), 10)
+        let hashedToken
+        if (emailType === "VERIFY" || emailType === "Password RESET") {
+            hashedToken = await bcryptjs.hash(userId.toString(), 10)
             console.log(hashedToken, "hashedtoken")
             //update with userModel id
         }
+      
         let OTP = `${Math.floor(1000 + Math.random() * 9000)}`;
         if (emailType === "VERIFY") {
             await userModel.findByIdAndUpdate(userId,

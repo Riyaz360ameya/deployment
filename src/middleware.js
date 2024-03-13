@@ -28,7 +28,7 @@ export  function middleware(req) {
                 return NextResponse.redirect(new URL('/developer/login', req.nextUrl));
             }
         } else {
-            console.log(token,'token exist')
+            // console.log(token,'token exist')
             
             // Check if the path is a public route and user is already authenticated
             if (

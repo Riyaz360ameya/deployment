@@ -16,7 +16,7 @@ export const PUT = async (request = NextRequest) => {
         const verifierId = developerId
         // const ggg = await request.json()
         // console.log(ggg, '----------------formData')
-        const { projectId, email, emailType, formData } = await request.json()
+        const { projectId, email, emailType, formData} = await request.json()
         console.log(projectId, '---------body', email)
         const verifierTasks = await verifierProjectModel.findOne({ verifierId })
         if (!verifierTasks) {
@@ -24,8 +24,8 @@ export const PUT = async (request = NextRequest) => {
             return NextResponse.json({ error: error.message }, { status: 404 })
         }
         console.log(verifierTasks, '------------verifierTasks')
-        // const data = verifierTasks.newTasks.find(task => task.projectId.toString() === projectId.toString());
-        const data = verifierTasks.newTasks.find(task => task.projectId && task.projectId.toString() === projectId.toString());
+        const data = verifierTasks.newTasks.find(task => task.projectId.toString() === projectId.toString());
+        // const data = verifierTasks.newTasks.find(task => task.projectId && task.projectId.toString() === projectId.toString());
 
         console.log(data, '-----------task')
         if (!data) {
