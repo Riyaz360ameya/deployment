@@ -9,6 +9,7 @@ import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllTasks } from '../leadAPIs/taskApi';
 import { teamLeadCompletedProjectsStore, teamLeadNewProjectsStore, teamLeadOngoingProjectsStore } from '@/app/redux/teamLead/leadProSlice';
+import ViewFileModal from './ViewFilesModal';
 const Projects = () => {
     const dispatch = useDispatch();
     const leadNewTasks = useSelector((state) => state.leadTasks.teamLeadNewProjects)
@@ -21,7 +22,10 @@ const Projects = () => {
     const [cModal, setCModal] = useState(false)
     const [leadData, setLeadData] = useState([])
     const [position, setPosition] = useState("New Task")
-
+    const [viewFiles, setviewFiles] = useState(false);
+    const [uniqueId, setUniqueId] = useState('')
+    const [userDetails, setUserDetails] = useState()
+    const [details, setDetails] = useState({})
     const [tasksPerPage] = useState(10); // Adjust the number of projects per page
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -75,7 +79,12 @@ const Projects = () => {
         setCModal(true)
         setProjectId(id)
     }
-
+    const viewFilesData = ({ uniqueId, userDetails, fileDetails }) => {
+        setviewFiles(true);
+        setUniqueId(uniqueId)
+        setUserDetails(userDetails)
+        setDetails(fileDetails)
+    }
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
     const currentTasks = leadData.slice(indexOfFirstTask, indexOfLastTask);
@@ -123,6 +132,7 @@ const Projects = () => {
                                 <th>Importance</th>
                                 <th>Assigned Date</th>
                                 <th>Comments</th>
+                                <th>Views Files</th>
                                 <th>Deadline</th>
                                 {
                                     position !== "New Task" && (
@@ -175,7 +185,9 @@ const Projects = () => {
                                                 </td>
                                                 <td className='text-center'>{dateConverter(item?.assignedDate)}</td>
                                                 <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item?.instruction}</td>
+                                                <td className=''onClick={() => viewFilesData({ uniqueId: item.projectId.ProjectUniqId, userDetails: item.userId, fileDetails: item })}><button>Files</button></td>
                                                 <td className='bg-red-200 rounded text-red-600'>{item?.endDate}</td>
+
                                                 {position !== "New Task" && <td>{item?.assignedDeveloperName}</td>}
                                                 <td>{item?.status}</td>
                                                 <td className='flex gap-2 items-center justify-center'>
@@ -205,6 +217,8 @@ const Projects = () => {
                         </tbody>
                     </table>
                 </div>
+                {viewFiles ? <ViewFileModal userDetails={userDetails} uniqueId={uniqueId} setviewFiles={setviewFiles} details={details} /> : ''}
+
                 {
                     modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} /> : ""
                 }

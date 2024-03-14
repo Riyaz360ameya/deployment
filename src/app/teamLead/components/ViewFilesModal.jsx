@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  pmProjectFiles } from '../pmAPIs/projectApis';
+import { pmProjectFiles } from '@/app/projectManager/pmAPIs/projectApis';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -26,12 +26,11 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
     try {
       const { data } = await pmProjectFiles({ userName, uniqueId, organizationName });
       console.log(data, '---------------------data in files');
-      setFilesData(data.files || []);
+    //   setFilesData(data.files || []);
     } catch (error) {
-      toast.error(error.response.data.error);
+    //   toast.error(error.response.data.error);
       console.error('Error fetching files:', error.message);
     } finally {
-      setIsLoading(false);
     }
   };
 
@@ -54,7 +53,7 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
       <div className="bg-white flex h-full w-full overflow-y-scroll ">
         <div className="w-full bg-white border border-gray-200 rounded-lg shadow ">
           <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50  dark:text-gray-400 ">
-            <li className="me-2">
+            {/* <li className="me-2">
               <button
                 onClick={() => handleTabClick('about')}
                 className={`inline-block p-4 ${activeTab === 'about' ? 'text-blue-600' : 'hover:text-gray-600'} rounded-ss-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-blue-500`}
@@ -69,7 +68,7 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
               >
                 Project contact details
               </button>
-            </li>
+            </li> */}
             <li className="me-2">
               <button
                 onClick={() => handleTabClick('statistics')}
@@ -80,7 +79,7 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
             </li>
           </ul>
           <div id="defaultTabContent">
-            <div className={`p-4 bg-white rounded-lg md:p-8  ${activeTab === 'about' ? '' : 'hidden'}`}>
+            {/* <div className={`p-4 bg-white rounded-lg md:p-8  ${activeTab === 'about' ? '' : 'hidden'}`}>
               <div className="w-full bg-gray-50 px-4 py-4 sm:flex sm:flex-col justify-between ">
                 <div className="mt-2">
                   <div class="grid  mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2 dark:bg-gray-800">
@@ -298,8 +297,8 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                   </button>
                 </div>
               </div>
-            </div>
-            <div className={`p-4 md:p-8 dark:bg-white ${activeTab === 'statistics' ? '' : 'hidden'}`}>
+            </div> */}
+            {/* <div className={`p-4 md:p-8 dark:bg-white ${activeTab === 'statistics' ? '' : 'hidden'}`}>
               <div className="w-3/4 px-4 py-4">
                 <h3 className="text-base font-semibold leading-6 text-gray-900">Files</h3>
                 <div className="mt-2">
@@ -357,7 +356,8 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                   </button>
                 </div>
               </div>
-            </div>
+            </div> */}
+            <div>files</div>
           </div>
         </div>
       </div>
