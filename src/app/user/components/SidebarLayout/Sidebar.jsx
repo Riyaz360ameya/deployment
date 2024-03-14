@@ -4,9 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { IoMdCloseCircle } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     const pathname = usePathname();
+    const user = useSelector((state) => state.user.userDetails)
 
     const trigger = useRef(null);
     const sidebar = useRef(null);
@@ -60,6 +62,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         >
             {/* <!-- SIDEBAR HEADER --> */}
             <div className="flex items-center justify-between mt-4 gap-2 px-6 py-5.5 lg:py-6.5">
+
                 <Link href="/" passHref>
                     <Image
                         width={60}
@@ -77,7 +80,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     aria-expanded={sidebarOpen}
                     className="block lg:hidden "
                 >
-                   <IoMdCloseCircle className="text-white" />
+                    <IoMdCloseCircle className="text-white" />
 
 
                 </button>
@@ -106,7 +109,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                             <Link
                                                 href="#" passHref
                                                 className={`group text-white relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === "/" ||
-                                                        pathname.includes("dashboard")) &&
+                                                    pathname.includes("dashboard")) &&
                                                     "bg-graydark dark:bg-meta-4"
                                                     }`}
                                                 onClick={(e) => {
@@ -250,7 +253,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                             <Link
                                                 href="/" passHref
                                                 className={`group relative text-white flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${(pathname === "/forms" ||
-                                                        pathname.includes("forms")) &&
+                                                    pathname.includes("forms")) &&
                                                     "bg-graydark dark:bg-meta-4"
                                                     }`}
                                                 onClick={(e) => {
@@ -674,10 +677,26 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                 }}
                             </SidebarLinkGroup>
                             {/* <!-- Menu Item Auth Pages --> */}
+                            {/* <div className="text-white text-center shadow-lg text-gray-900 bg-white border border-gray-300   focus:ring-4 focus:ring-gray-100 font-medium text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                <p>Blocs by Clove Pro</p>
+                                <div className="py-3">
+                                    <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Purchase Now</button>
+
+                                </div>
+                            </div> */}
                         </ul>
                     </div>
                 </nav>
                 {/* <!-- Sidebar Menu --> */}
+                <div class="mx-auto mb-10  max-w-60 rounded-sm  bg-boxdark bg-gray-900 px-4 py-6 text-center shadow-default">
+                    <h3 class="mb-1 font-semibold text-white">Blocs by Clove Pro</h3>
+                    <p class="mb-4 text-xs text-white">Get Project Management Tool +</p>
+                    {/* <a href="https://tailadmin.com/pricing" target="_blank" rel="nofollow" class="flex items-center justify-center rounded-md bg-primary p-2 text-white hover:bg-opacity-95">
+                        Purchase Now
+                    </a> */}
+                    <button type="button" class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Purchase Now</button>
+
+                </div>
             </div>
         </aside>
     )
