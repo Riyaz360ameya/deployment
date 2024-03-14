@@ -25,15 +25,12 @@ const Tasks = ({ Project, loading, setLoading, designation }) => {
     const devNewTasks = useSelector((state) => state.developerTaskUpdates.developerNewTasks);
     console.log(devNewTasks, '-----------new task-------------')
     const devOnGoTasks = useSelector((state) => state.developerTaskUpdates.developerOngoingTasks);
-    // console.log(devOnGoTasks, '--------devOnGoTasks-----------')
     const devCompTasks = useSelector((state) => state.developerTaskUpdates.developerCompletedTasks);
     const newTasks = useSelector((state) => state.developerTaskUpdates.developerNewTasks);
     const setProjects = (Project) => {
-        // console.log(Project, '-------------------------Project');
         if (Project === 'New Tasks') {
             setTasks(devNewTasks);
         } else if (Project === 'Ongoing Tasks') {
-            // console.log(devOnGoTasks, '-------------------------devOnGoTasks');
             setTasks(devOnGoTasks);
         } else if (Project === 'Completed') {
             setTasks(devCompTasks);
@@ -41,22 +38,18 @@ const Tasks = ({ Project, loading, setLoading, designation }) => {
     };
 
     useEffect(() => {
-        setProjects(Project); // fun to call data as per page
-        // console.log('its............. Project.............. effect')
+        setProjects(Project); 
         setCurrentPage(1)
     }, [Project]);
 
     useEffect(() => {
         setProjects(Project);
-        // console.log('its ...........devCompTasks........... effect')
     }, [devCompTasks]);
     useEffect(() => {
         setProjects(Project);
-        // console.log('its.......... ongoing............. effect')
     }, [devOnGoTasks]);
     useEffect(() => {
         setProjects(Project);
-        // console.log('its.......... New............. effect')
     }, [devNewTasks]);
 
     const handleStartClick = async (projectId) => {
@@ -187,7 +180,8 @@ const Tasks = ({ Project, loading, setLoading, designation }) => {
                                             <tr className='text-center mt-10 shadow-xl border h-10' key={item._id}>
                                                 <td>{i + 1}</td>
                                                 <td className="">
-                                                    <p>{item.projectId.ProjectUniqId}</p>
+                                                    <p>{item.projectId.ProjectUniqId
+}</p>
                                                 </td>
                                                 {
                                                     designation === "File Verifier" ? <td>{item.userId.firstName}</td>

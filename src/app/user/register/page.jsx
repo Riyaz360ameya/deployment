@@ -34,7 +34,6 @@ function Page() {
         onSubmit: async (values, action) => {
             setLoading(true)
             try {
-                console.log(values, '-----------------signUp values')
                 const { data } = await signUpApi(values)
                 console.log(data, '------------------')
                 router.push("/user/login");

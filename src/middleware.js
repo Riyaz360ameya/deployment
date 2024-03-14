@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
+
 export  function middleware(req) {
     try {
         const path = req.nextUrl.pathname;
         const token = req.cookies.get('token')?.value || '';
+       
         const user = path.startsWith('/user')
         const pm = path.startsWith('/projectManager')
         const lead = path.startsWith('/teamLead')
@@ -27,6 +29,7 @@ export  function middleware(req) {
             }
         } else {
             // console.log(token,'token exist')
+            
             // Check if the path is a public route and user is already authenticated
             if (
                 (path === '/user/login' || path === '/user/register' ||

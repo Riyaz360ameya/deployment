@@ -22,6 +22,10 @@ const Sidebar = ({ menu, setProject, Project, setLoading }) => {
         { icon: <SlCalender />, name: 'Calender' },
         { icon: <FaRegBuilding />, name: 'Builders' },
         { icon: <IoStatsChartSharp />, name: 'Charts' },
+        { icon: <IoStatsChartSharp />, name: 'Finance' },
+        { icon: <IoStatsChartSharp />, name: 'Community' },
+        { icon: <IoStatsChartSharp />, name: 'Statistics' },
+
     ];
 
     const handleClick = (name) => {

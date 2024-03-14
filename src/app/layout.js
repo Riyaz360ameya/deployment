@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Providers from './providers';
+import DefaultLayout from './user/components/Layout/DefaultLayout';
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -17,12 +18,16 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         suppressHydrationWarning={true}
-        // className={inter.className}
-        >
+      // className={inter.className}
+      >
         <div key="root">
+
           <Providers>
-            {children}
-            <ToastContainer />
+            <DefaultLayout>
+              {children}
+              <ToastContainer />
+            </DefaultLayout>
+
           </Providers>
         </div>
       </body>

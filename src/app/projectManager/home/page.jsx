@@ -11,6 +11,9 @@ import Authorization from '../components/Authorization'
 import Sidebar from '../components/Sidebar'
 import Header from '../components/Header'
 import { useSelector } from 'react-redux'
+import Finance from '../components/Finance'
+import Community from '../components/Community'
+import Statistics from '../components/Statistics'
 const page = () => {
     const [menu, setMenu] = useState(true)
     const [Project, setProject] = useState("Projects")
@@ -31,6 +34,9 @@ const page = () => {
                                         : Project === "Calender" ? <Calender loading={loading} setLoading={setLoading} />
                                             : Project === "Clients" ? <Clients loading={loading} setLoading={setLoading} />
                                                 : Project === "Charts" ? <Charts loading={loading} setLoading={setLoading} />
+                                                : Project === "Finance" ? <Finance loading={loading} setLoading={setLoading} />
+                                                : Project === "Community" ? <Community loading={loading} setLoading={setLoading} />
+                                                : Project === "Statistics" ? <Statistics loading={loading} setLoading={setLoading} />
                                                     : Project === "Authorization" ? <Authorization loading={loading} setLoading={setLoading} />
                                                         : ""
                     }
