@@ -13,7 +13,7 @@ import Header from '../components/Header'
 import { useSelector } from 'react-redux'
 const page = () => {
     const [menu, setMenu] = useState(true)
-    const [Project, setProject] = useState("Authorization")
+    const [Project, setProject] = useState("Projects")
     const [loading, setLoading] = useState(true);
     const user = useSelector((state) => state.pm.pmDetails)
     // console.log(user, '...................pm')

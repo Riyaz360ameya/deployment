@@ -283,27 +283,31 @@ const Projects = ({ loading, setLoading }) => {
                                                     {
                                                         position == "Completed" && <td className='font-bold bg-green-700'>{dateConverter(item.leadTaskCompletedDate)}</td>
                                                     }
-                                                    <td>
-                                                        {
-                                                            position !== "Completed" ?
-                                                                item.payment === "Payment is Done" ?
-                                                                    <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleAssign({ projectId: item.projectId._id, itemId: item._id })} >Assign Task to</button>
-                                                                    :
-                                                                    item.status === "Assigned" ?
-                                                                        <>
-                                                                            <button className='px-3 text-white bg-blue-600 rounded'>E</button>
-                                                                            <button className='px-3 ml-2 text-white bg-red-600 rounded'>D</button>
-                                                                        </>
-                                                                        :
-                                                                        item.status === "Completed" ?
-                                                                            <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id, index: i })} >Update</button>
 
-                                                                            : <p className='text-red-600'>
-                                                                                Not Payed
-                                                                            </p>
-                                                                : ''
-                                                        }
-                                                    </td>
+                                                    {item.projectVerified ?
+                                                        <td>
+                                                            {
+                                                                position !== "Completed" ?
+                                                                    item.payment === "Payment is Done" ?
+                                                                        <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleAssign({ projectId: item.projectId._id, itemId: item._id })} >Assign Task to</button>
+                                                                        :
+                                                                        item.status === "Assigned" ?
+                                                                            <>
+                                                                                <button className='px-3 text-white bg-blue-600 rounded'>E</button>
+                                                                                <button className='px-3 ml-2 text-white bg-red-600 rounded'>D</button>
+                                                                            </>
+                                                                            :
+                                                                            item.status === "Completed" ?
+                                                                                <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id, index: i })} >Update</button>
+
+                                                                                : <p className='text-red-600'>
+                                                                                    Not Payed
+                                                                                </p>
+                                                                    : ''
+                                                            }
+                                                        </td> : <td className='text-red-500 font-bold'>"Not verified"</td>
+                                                    }
+
                                                 </tr>
                                             )
                                         })}

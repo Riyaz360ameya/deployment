@@ -7,11 +7,13 @@ import { developerCompletedProjectsStore, developerNewProjectsStore } from '@/ap
 
 // const ViewFileModal = ({ userDetails, uniqueId, setviewFiles }) => {
 const ViewFileModal = ({ data, setOpenModal }) => {
+  const user = useSelector((state) => state.developer.developerDetails)
   const dispatch = useDispatch()
   const [filesData, setFilesData] = useState([]);
   const [formData, setFormData] = useState('')
   const [openInput, setOpenInput] = useState(false)
   const [isLoading, setIsLoading] = useState(true);
+  const email = user.email
   const userName = data.userId.firstName;
   const organizationName = data.userId.organization;
   const uniqueId = data.projectId.ProjectUniqId
@@ -47,13 +49,18 @@ const ViewFileModal = ({ data, setOpenModal }) => {
     setFormData('')
     onClose();
   }
-  const handleVerified = async (projectId) => {
-    const { data } = await dataVerified(projectId)
-    console.log(data, '--------------1010')
-    console.log(data.upDatedVerifier.newTasks, '--------------456')
-    dispatch(developerNewProjectsStore(data.upDatedVerifier.newTasks));
-    dispatch(developerCompletedProjectsStore(data.upDatedVerifier.completedTasks))
-    onClose();
+  const handleVerified = async ({ projectId, email, uniqueId }) => {
+    try {
+      const { data } = await dataVerified({ projectId, email, uniqueId })
+      console.log(data, '--------------1010')
+      console.log(data.upDatedVerifier.newTasks, '--------------456')
+      dispatch(developerNewProjectsStore(data.upDatedVerifier.newTasks));
+      dispatch(developerCompletedProjectsStore(data.upDatedVerifier.completedTasks))
+      onClose();
+    } catch (error) {
+      console.log(error.message)
+      toast.error(error.response.data.error)
+    }
   }
   return (
     <div
@@ -79,7 +86,7 @@ const ViewFileModal = ({ data, setOpenModal }) => {
             ) : filesData?.length > 0 ? (
               <div className='d-flex gap-5 '>
                 <div className=' flex justify-end gap-2'>
-                  <button onClick={() => handleVerified(data.projectId._id)} className='p-2 rounded text-white bg-green-800'>Its Verified</button>
+                  <button onClick={() => handleVerified({ projectId: data.projectId._id, email: email, uniqueId: data.projectId.ProjectUniqId })} className='p-2 rounded text-white bg-green-800'>Its Verified</button>
                   <button onClick={() => setOpenInput((prev) => !prev)} className='p-2 rounded text-white bg-red-600'>Need More Data</button>
                 </div>
                 {

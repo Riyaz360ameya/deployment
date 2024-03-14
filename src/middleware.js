@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-
-export function middleware(req) {
+export  function middleware(req) {
     try {
         const path = req.nextUrl.pathname;
         const token = req.cookies.get('token')?.value || '';
@@ -27,7 +26,7 @@ export function middleware(req) {
                 return NextResponse.redirect(new URL('/developer/login', req.nextUrl));
             }
         } else {
-            console.log('token exist')
+            // console.log(token,'token exist')
             // Check if the path is a public route and user is already authenticated
             if (
                 (path === '/user/login' || path === '/user/register' ||
@@ -56,7 +55,6 @@ export function middleware(req) {
         // return NextResponse.json({ message: 'Invalid token Unauthorized' }, { status: 401 });
     }
 }
-
 // the middleware is called whenever the matcher endpoint is requested
 export const config = {
     matcher: [

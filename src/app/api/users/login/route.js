@@ -37,6 +37,7 @@ export async function POST(request = NextRequest) {
                 }
                 const secret = process.env.SECRET_TOKEN
                 const token = Jwt.sign(tokenData, secret, { expiresIn: '1d' })
+                // console.log(token, '--------backend---------token')
                 const response = NextResponse.json(
                     { message: "Login Successful"
                     , user: others, token},

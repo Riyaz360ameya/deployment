@@ -18,6 +18,7 @@ function page() {
     const [menu, setMenu] = useState(true)
     const [Project, setProject] = useState("New Project")
     const user = useSelector((state) => state.user.userDetails)
+    console.log(user, '-----------------user 5454')
     const stopLoading = () => {
         user._id && setLoader(false)
     }
@@ -46,14 +47,17 @@ function page() {
                                     : Project === "Project Details" ? <ProjectInformation />
                                         : Project === "Project Status" ? <Status />
                                             : Project === "Transactions" ? <Payment />
-                                                : Project === "View" ? <View />
-                                                    : Project === "Package" ? <Package />
+                                                : Project === "Package" ? <Package />
+                                                    : Project === "View" ? <View />
                                                         : ""
                             }
                         </div>
                     </div>
             }
         </>
+        // <div className="flex h-screen items-center justify-center bg-white dark:bg-black">
+        //     <div className="h-16 w-16 animate-spin duration-300 rounded-full border-4 border-solid border-primary border-t-transparent"></div>
+        // </div>
     )
 }
 

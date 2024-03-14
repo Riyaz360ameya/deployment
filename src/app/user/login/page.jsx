@@ -37,9 +37,7 @@ function Page() {
         onSubmit: async (values, action) => {
             setLoading(true)
             try {
-                console.log(values, '----------hh-------LoginForm values')
                 const { data } = await logInApi(values)
-                console.log(data.user, '-------------data')
                 toast.success(data.message)
                 dispatch(userDetails(data.user));
                 dispatch(accessToken(data.token));
@@ -60,7 +58,8 @@ function Page() {
         <>
             <div className='h-screen bg-black text-center flex items-center justify-end'>
                 <img
-                    src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a43592af6b9a40001bda44b_HomeCover.jpg"
+                    // src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a43592af6b9a40001bda44b_HomeCover.jpg"
+                    src="/images/qweas.jpg"
                     alt=""
                     className='w-full h-full object-cover'
                 />
@@ -68,7 +67,7 @@ function Page() {
                     <div className='border border-gray-400 rounded-md p-5 mr-10'>
                         <div className='flex items-center gap-5 justify-center'>
                             <img
-                                className='h-16'
+                                className='h-16 rounded-full'
                                 src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a460b2980557a00017cac78_logonav.png"
                                 alt=""
                             />
@@ -125,13 +124,13 @@ function Page() {
                                     </button>
                                 </div>
                                 <div className=' mt-5 text-sm'>
-                                    <p className='text-gray-500 underline cursor-pointer' onClick={handleForgot}>
+                                    <p className='text-white  cursor-pointer' onClick={handleForgot}>
                                         Forgot Password
                                     </p>
                                 </div>
                                 <div className=' mt-5'>
-                                    <p className='text-gray-500 underline cursor-pointer'>
-                                        Need a new Account? <Link href='/user/register'><span className='font-bold cursor-pointer text-black'>Register</span></Link>
+                                    <p className=' text-gray-300 cursor-pointer'>
+                                        Need a new Account? <Link href='/user/register'><span className='font-bold cursor-pointer text-white'>Register</span></Link>
                                     </p>
                                 </div>
                             </form>

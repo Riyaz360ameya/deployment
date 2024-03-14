@@ -18,7 +18,6 @@ import { resetUser } from '@/app/redux/users/userSlice';
 function Header({ setMenu, menu }) {
     const dispatch = useDispatch()
     const user = useSelector((state) => state.user.userDetails)
-    console.log(user, '-------------store user')
     const [data, setData] = useState({})
     const router = useRouter()
     const [drop, setDrop] = useState(false)
