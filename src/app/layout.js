@@ -23,10 +23,10 @@ export default function RootLayout({ children }) {
         <div key="root">
 
           <Providers>
-            <DefaultLayout>
+          
               {children}
               <ToastContainer />
-            </DefaultLayout>
+
 
           </Providers>
         </div>

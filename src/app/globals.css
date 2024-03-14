@@ -4,11 +4,28 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
+@layer utilities {
+    .z-1 {
+      z-index: 1;
+    }
+  }
+  
 
 
 
+  @layer base {
+    .bg-whiten {
+      background-color: light white;
+    }
+  }
+ 
 
-@layer components {
+
+
+/* third-party libraries CSS */
+
+.sidebar-upper{
+    z-index: 9999 !important;
 }
 
 @layer utilities {
@@ -18,8 +35,8 @@
     }
 
     .no-scrollbar {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; 
+        scrollbar-width: none; 
     }
 
     .chat-height {
@@ -33,6 +50,19 @@
 
 /* third-party libraries CSS */
 
-.sidebar-upper{
-    z-index: 9999 !important;
+.tableCheckbox:checked ~ div span {
+    @apply opacity-100;
 }
+
+
+
+input[type="search"]::-webkit-search-cancel-button {
+    @apply appearance-none;
+}
+
+
+
+
+
+
+
