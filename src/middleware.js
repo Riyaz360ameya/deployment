@@ -40,7 +40,7 @@ export  function middleware(req) {
                 if (user) {
                     return NextResponse.redirect(new URL('/user/home', req.nextUrl));
                 } else if (pm) {
-                    return NextResponse.redirect(new URL('/projectManager/home', req.nextUrl));
+                    return NextResponse.redirect(new URL('/projectManager/dashboard', req.nextUrl));
                 } else if (lead) {
                     // Redirect to team lead's home
                     // Adjust the URL accordingly
@@ -64,6 +64,7 @@ export const config = {
         '/user/home',
         '/user/login',
         '/projectManager/home',
+        '/projectManager/dashboard',
         '/projectManager/login',
         '/teamLead/home',
         '/teamLead/login',

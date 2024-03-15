@@ -34,7 +34,8 @@ export async function POST(request = NextRequest) {
                     lastName,
                     email,
                     organization: organizationName,
-                    password: hashPassword
+                    password: hashPassword,
+                    designation:"user"
                 })
                 savedUser = await newUser.save();
                 return NextResponse.json({
@@ -50,7 +51,8 @@ export async function POST(request = NextRequest) {
                 lastName,
                 email,
                 organization,
-                password: hashPassword
+                password: hashPassword,
+                designation:"user"
             })
             savedUser = await newUser.save();
             console.log(savedUser, "---------------savedUser")

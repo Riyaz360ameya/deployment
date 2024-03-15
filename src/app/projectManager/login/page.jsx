@@ -8,9 +8,10 @@ import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux'
 import { pmLogInApi } from '../pmAPIs/authApis'
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
-import { accessToken, pmDetails } from '@/app/redux/projectManager/pmSlice'
+import {  pmDetails } from '@/app/redux/projectManager/pmSlice'
 import { useFormik } from 'formik';
 import { loginSchema } from '@/app/schemas/authSchema';
+import { userDetails,accessToken } from '@/app/redux/users/userSlice'
 
 function page() {
     const dispatch = useDispatch()
@@ -39,12 +40,14 @@ function page() {
         onSubmit: async (values, action) => {
             setLoading(true)
             try {
-                console.log(values,'formik')
+                console.log(values, 'formik')
                 const { data } = await pmLogInApi(values)
-                dispatch(pmDetails(data.user));
+                console.log(data, '-----------------dara')
+                // dispatch(pmDetails(data.user));
+                dispatch(userDetails(data.user));
                 dispatch(accessToken(data.token));
                 toast.success(data.message)
-                router.push("/projectManager/home")
+                router.push("/projectManager/dashboard")
                 setLoading(false)
             } catch (error) {
                 toast.error(error.response.data.error)
@@ -85,8 +88,8 @@ function page() {
                                 />
                             </div>
                             {errors.email && touched.email ? (
-                                    <p className="text-red-600 text-start text-sm">{errors.email}</p>
-                                ) : null}
+                                <p className="text-red-600 text-start text-sm">{errors.email}</p>
+                            ) : null}
                             <div className='text-left text-sm'>
                                 <label className='font-bold' htmlFor="password">Password</label>
                                 <div className="relative">
@@ -99,15 +102,15 @@ function page() {
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                     />
-                                     <div
-                                            className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                                            onClick={showHiddenPassword}
-                                        >
-                                            {visiblePassword ?
-                                                <IoIosEye />
-                                                : <IoIosEyeOff />
-                                            }
-                                        </div>
+                                    <div
+                                        className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                                        onClick={showHiddenPassword}
+                                    >
+                                        {visiblePassword ?
+                                            <IoIosEye />
+                                            : <IoIosEyeOff />
+                                        }
+                                    </div>
                                     <div
                                         className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
                                         onClick={showHiddenPassword}
@@ -117,8 +120,8 @@ function page() {
                                 </div>
                             </div>
                             {errors.password && touched.password ? (
-                                    <p className="text-red-600 text-start text-sm">{errors.password}</p>
-                                ) : null}
+                                <p className="text-red-600 text-start text-sm">{errors.password}</p>
+                            ) : null}
                             <div>
                                 <button type='submit' className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold' >
                                     {loading ? <BeatLoader color='white' /> : 'Login'}

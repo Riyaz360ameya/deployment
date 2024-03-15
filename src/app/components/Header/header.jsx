@@ -9,7 +9,7 @@ import { PiBellLight, PiChatDotsLight } from "react-icons/pi";
 
 const Header = (props) => {
     return (
-        <header className="sticky top-0 z-999 flex w-full  bg-light drop-shadow-1 dark:bg-boxdark dark dark:drop-shadow-none bg-slate-500  shadow-lg">
+        <header className="top-0 z-999 flex w-full  bg-light drop-shadow-1  dark dark:drop-shadow-none shadow-lg">
             <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
                 <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
                     {/* <!-- Hamburger Toggle BTN --> */}
@@ -20,7 +20,7 @@ const Header = (props) => {
                             props.setSidebarOpen(!props.sidebarOpen);
                         }}
 
-                        className="z-99999 block  rounded-sm border border-stroke  p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
+                        className="z-99999 block  rounded-sm border border-stroke  p-1.5 shadow-sm dark:border-strokedark lg:hidden"
                     >
 
                         <CiMenuBurger />

@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Providers from './providers';
 import DefaultLayout from './components/Layout/DefaultLayout';
-import Loader from './components/commen/page';
+import Loader from './components/common/page';
 import { useEffect, useState } from 'react';
 
 
