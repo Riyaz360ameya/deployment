@@ -9,7 +9,7 @@ import { PiBellLight, PiChatDotsLight } from "react-icons/pi";
 
 const Header = (props) => {
     return (
-        <header className="sticky top-0 z-999 flex w-full  bg-light drop-shadow-1 dark:bg-box dark dark:drop-shadow-none  shadow-lg">
+        <header className="sticky top-0 z-999 flex w-full  bg-light drop-shadow-1 dark:bg-boxdark dark dark:drop-shadow-none bg-slate-500  shadow-lg">
             <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
                 <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
                     {/* <!-- Hamburger Toggle BTN --> */}
@@ -23,7 +23,7 @@ const Header = (props) => {
                         className="z-99999 block  rounded-sm border border-stroke  p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
                     >
 
-<CiMenuBurger />
+                        <CiMenuBurger />
 
                     </button>
                     {/* <!-- Hamburger Toggle BTN --> */}
@@ -37,7 +37,7 @@ const Header = (props) => {
                 </div>
 
                 <div className="hidden sm:block">
-                    <form action="https://formbold.com/s/unique_form_id" method="POST">
+                    <form action="https://formbold.com/s/unique_form_id" method="POST" className="bg-white p-2 rounded">
                         <div className="relative">
                             <button className="absolute left-0 top-1/2 -translate-y-1/2">
                                 <svg
@@ -76,7 +76,7 @@ const Header = (props) => {
                         {/* <!-- Dark Mode Toggler --> */}
                         <DarkModeSwitcher />
                         {/* <!-- Dark Mode Toggler --> */}
-                        
+
 
                         {/* <!-- Notification Menu Area --> */}
                         <DropdownNotification />
