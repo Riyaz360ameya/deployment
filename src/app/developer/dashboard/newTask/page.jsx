@@ -1,11 +1,11 @@
 "use client"
 import React from 'react'
-import Projects from '../../components/Projects'
+import Tasks from '../../components/Tasks'
 
 function page() {
   return (
     <div>
-        <Projects/>
+        <Tasks/>
     </div>
   )
 }
