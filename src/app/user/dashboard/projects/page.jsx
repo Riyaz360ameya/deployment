@@ -86,13 +86,13 @@ function Projects() {
                             <h1 className='text-xl p-2 flex justify-center items-center shadow-lg bg-gray-200'>Your Projects Details</h1>
                             <div className='flex items-center justify-between'>
                                 <div className='flex gap-4 ml-2 py-4 sticky top-0'>
-                                    <div onClick={() => handleData("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
-                                        <p className='font-bold shadow'>New</p>
+                                    <div onClick={() => handleData("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl shadow-cyan-500/50 cursor-pointer`}>
+                                        <p className='font-bold '>New</p>
                                     </div>
-                                    <div onClick={() => handleData("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
+                                    <div onClick={() => handleData("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl shadow-cyan-500/50 cursor-pointer`}>
                                         <p className='font-bold shadow'>OnGoing</p>
                                     </div>
-                                    <div onClick={() => handleData("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
+                                    <div onClick={() => handleData("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl shadow-cyan-500/50 cursor-pointer`}>
                                         <p className='font-bold shadow'>Completed</p>
                                     </div>
                                 </div>

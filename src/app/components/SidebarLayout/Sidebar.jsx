@@ -24,9 +24,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
     const pathname = usePathname();
     const user = useSelector((state) => state.user.userDetails)
-    console.log(user.designation, 'kkkkkkkkkk')
+    console.log(pathname, '..................pathname')
     const design = user.designation
-    console.log(design,'--------------------design')
+    console.log(design, '--------------------design')
     const trigger = useRef(null);
     const sidebar = useRef(null);
     let storedSidebarExpanded = "true";
@@ -112,22 +112,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             list: [
                 {
                     title: 'Dashboard',
-                    path: '/dashboard',
+                    path: '/projectManager/dashboard',
                     icon: <LuLayoutDashboard />,
                 },
                 {
                     title: 'Users',
-                    path: '/dashboard/users',
+                    path: '/projectManager/dashboard/users',
                     icon: <FaUsers />,
                 },
                 {
                     title: 'Projects',
-                    path: '/user/dashboard/projects',
+                    path: '/projectManager/dashboard/projects',
                     icon: <SiTraefikproxy />,
                 },
                 {
                     title: 'Transactions',
-                    path: '/dashboard/transactions',
+                    path: '/projectManager/dashboard/transactions',
                     icon: <GrTransaction />,
                 },
             ]
@@ -138,17 +138,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             list: [
                 {
                     title: 'Revenue',
-                    path: '/dashboard/revenue',
+                    path: '/projectManager/dashboard/revenue',
                     icon: <MdCurrencyRupee />,
                 },
                 {
                     title: 'Reports',
-                    path: '/dashboard/reports',
+                    path: '/projectManager/dashboard/reports',
                     icon: <MdTune />,
                 },
                 {
                     title: 'Team',
-                    path: '/dashboard/teamLeads',
+                    path: '/projectManager/dashboard/teamLeads',
                     icon: <FaUserGear />,
                 },
             ]
@@ -159,17 +159,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             list: [
                 {
                     title: 'Authorization',
-                    path: '/dashboard/authorization',
+                    path: '/projectManager/dashboard/authorization',
                     icon: <IoKeyOutline />,
                 },
                 {
                     title: 'Settings',
-                    path: '/dashboard/settings',
+                    path: '/projectManager/dashboard/settings',
                     icon: <MdOutlineSettings />,
                 },
                 {
                     title: 'Help',
-                    path: '/dashboard/help',
+                    path: '/projectManager/dashboard/help',
                     icon: <MdHelpOutline />,
                 }
             ]
@@ -212,13 +212,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                             MENU
                         </h3>
                         <ul className='pt-2'>
-                            { design ==="user" ?
+                            {design === "user" ?
                                 userMenuItems.map((item, i) => (
                                     <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
                                         <p className='text-gray-400 text-sm hidden md:flex'> {item.title}</p>
                                         {
                                             item.list.map((each, i) => (
-                                                <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 hover:bg-slate-400 rounded-md`}>
+                                                <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
                                                     <div className='text-xl text-white'>{each.icon}</div>
                                                     <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
                                                 </Link>
@@ -232,7 +232,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                         <p className='text-gray-400 text-sm hidden md:flex'> {item.title}</p>
                                         {
                                             item.list.map((each, i) => (
-                                                <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 hover:bg-slate-400 rounded-md`}>
+                                                <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
                                                     <div className='text-xl text-white'>{each.icon}</div>
                                                     <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
                                                 </Link>

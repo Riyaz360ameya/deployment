@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
-const VerifyData = ({ addToLocation, removeFromLocation }) => {
-    const [complete, setComplete] = useState(false);
+const VerifyData = ({ addToLocation, removeFromLocation, clientInputs, fileUploads }) => {
+    console.log(clientInputs, '-------------------clientInputs')
+    console.log(fileUploads, '-------------------fileUpload')
     return (
         <div className='rounded mt-5 h-full flex flex-col '>
             <div className='flex justify-between items-center'>
@@ -27,9 +28,34 @@ const VerifyData = ({ addToLocation, removeFromLocation }) => {
                         onClick={() => {
                             addToLocation(5)
                         }}
-                    >Next
+                    >Upload
                     </button>
                 </div>
+            </div>
+            <div className='bg-white h-3/4 overflow-auto p-1'>
+                <p className='text-xl font-bold'>Project & Contact Details</p>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-2 mt-3 p-2'>
+                    {Object.keys(clientInputs).map((key) => (
+                        <p key={key}>
+                            <strong className=''>
+                                {key
+                                    .split(' ')
+                                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                                    .join(' ')}:
+                            </strong> {clientInputs[key]}
+                        </p>
+                    ))}
+                </div>
+                <p className='text-xl font-bold mt-3 '>Files Details</p>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-2 p-2'>
+                    {Object.keys(fileUploads).map((category) => (
+                        <div key={category}>
+                            <strong className=''>{category}:</strong>
+                            <p>{fileUploads[category].name}</p>
+                        </div>
+                    ))}
+                </div>
+
             </div>
 
         </div>

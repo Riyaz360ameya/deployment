@@ -6,37 +6,42 @@
 
 @layer utilities {
     .z-1 {
-      z-index: 1;
+        z-index: 1;
     }
-  }
-  
+}
+/* Making all pages to be 100% height */
+html,
+body,
+:root {
+    height: 100%;
+}
 
 
-
-  @layer base {
+@layer base {
     .bg-whiten {
-      background-color: light white;
+        background-color: light white;
     }
-  }
- 
+}
+
 
 
 
 /* third-party libraries CSS */
 
-.sidebar-upper{
+.sidebar-upper {
     z-index: 9999 !important;
 }
 
 @layer utilities {
+
     /* Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
         display: none;
     }
 
     .no-scrollbar {
-        -ms-overflow-style: none; 
-        scrollbar-width: none; 
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 
     .chat-height {
@@ -50,7 +55,7 @@
 
 /* third-party libraries CSS */
 
-.tableCheckbox:checked ~ div span {
+.tableCheckbox:checked~div span {
     @apply opacity-100;
 }
 
@@ -59,10 +64,3 @@
 input[type="search"]::-webkit-search-cancel-button {
     @apply appearance-none;
 }
-
-
-
-
-
-
-

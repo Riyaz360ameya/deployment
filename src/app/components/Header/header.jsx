@@ -6,8 +6,11 @@ import DropdownMessage from "./DropDownMessage";
 import DropdownNotification from "./DropdownNotification";
 import DropdownUser from "./DropdownUser";
 import { PiBellLight, PiChatDotsLight } from "react-icons/pi";
+import { usePathname } from "next/navigation";
 
 const Header = (props) => {
+    const pathname = usePathname()
+    console.log(pathname,'-----------------pathname')
     return (
         <header className="top-0 z-999 flex w-full  bg-light drop-shadow-1  dark dark:drop-shadow-none shadow-lg">
             <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
@@ -35,9 +38,12 @@ const Header = (props) => {
                     />
 
                 </div>
+                <div>
+                <p className="font-bold p-2 rounded">{pathname.split('/').pop().toUpperCase()}</p>
+                </div>
 
-                <div className="hidden sm:block">
-                    <form action="https://formbold.com/s/unique_form_id" method="POST" className="bg-white p-2 rounded">
+                {/* <div className="hidden sm:block">
+                    <form action="https://formbold.com/s/unique_form_id" method="POST" className="bg-gray-500 p-2 rounded">
                         <div className="relative">
                             <button className="absolute left-0 top-1/2 -translate-y-1/2">
                                 <svg
@@ -70,7 +76,7 @@ const Header = (props) => {
                             />
                         </div>
                     </form>
-                </div>
+                </div> */}
                 <div className="flex items-center gap-3 2xsm:gap-7">
                     <ul className="flex items-center gap-2 2xsm:gap-4">
                         {/* <!-- Dark Mode Toggler --> */}
@@ -86,7 +92,6 @@ const Header = (props) => {
                         {/* <DropdownMessage /> */}
                         {/* <!-- Chat Notification Area --> */}
                     </ul>
-
                     {/* <!-- User Area --> */}
                     <DropdownUser />
                     {/* <!-- User Area --> */}

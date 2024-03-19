@@ -284,7 +284,7 @@ import ViewFileModal from './ViewFileModal';
 
 const Projects = ({ loading, setLoading }) => {
     const dispatch = useDispatch()
-    const [projectsPerPage] = useState(12); // Adjust the number of projects per page
+    const [projectsPerPage] = useState(8); // Adjust the number of projects per page
     const [currentPage, setCurrentPage] = useState(1);
     const cancelButtonRef = useRef(null);
     const pmNewPro = useSelector((state) => state.pmProjects.pmNewProjects)
@@ -321,7 +321,7 @@ const Projects = ({ loading, setLoading }) => {
             // setLoading(false);
         }
     }
-    
+
     const viewFilesData = ({ uniqueId, userDetails, fileDetails }) => {
         setviewFiles(true);
         setUniqueId(uniqueId)
@@ -341,12 +341,12 @@ const Projects = ({ loading, setLoading }) => {
             setProjects(pmComPro)
         }
     }
-    
+
     useEffect(() => {
         getAllPmProjects()
         settingAllPmProjects(position)
     }, [])
-    
+
     useEffect(() => {
         settingAllPmProjects(position)
     }, [position])
@@ -395,7 +395,6 @@ const Projects = ({ loading, setLoading }) => {
                 </div>
             ) : (
                 <div className='w-full h-full p-2 overflow-hidden overflow-x-hidden '>
-                    <h1 className='p-2 text-2xl font-bold'>PROJECTS</h1>
                     <div className='flex items-center justify-between '>
                         <div className=''>
                             <div className='flex gap-4 ml-2'>
@@ -430,10 +429,10 @@ const Projects = ({ loading, setLoading }) => {
                             <div className="relative mt-1">
                                 <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
                                     <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                                     </svg>
                                 </div>
-                                <input type="text" id="table-search" className="block p-3 ps-10  text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search htmlFor items"/>
+                                <input type="text" id="table-search" className="block p-3 ps-10  text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search htmlFor items" />
                             </div>
                         </div>
                         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -441,7 +440,7 @@ const Projects = ({ loading, setLoading }) => {
                                 <tr>
                                     <th scope="col" className="p-4">
                                         <div className="flex items-center">
-                                            <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                                            <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                             <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
                                         </div>
                                     </th>
@@ -467,7 +466,7 @@ const Projects = ({ loading, setLoading }) => {
                                         Status
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                       Create Task
+                                        Create Task
                                     </th>
                                 </tr>
                             </thead>
@@ -481,7 +480,7 @@ const Projects = ({ loading, setLoading }) => {
                                         <tr key={i} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
                                             <td className="w-4 p-4">
                                                 <div className="flex items-center">
-                                                    <input id={`checkbox-table-search-${i}`} type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                                                    <input id={`checkbox-table-search-${i}`} type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                                     <label htmlFor={`checkbox-table-search-${i}`} className="sr-only">checkbox</label>
                                                 </div>
                                             </td>
@@ -505,31 +504,31 @@ const Projects = ({ loading, setLoading }) => {
                                             </td>
                                             <td>{item.status}</td>
 
-                                                     {
-                                                         position == "Completed" && <td className='font-bold bg-green-700'>{dateConverter(item.leadTaskCompletedDate)}</td>
-                                                    }
-                                                     {item.projectVerified ?
-                                                         <td>
-                                                             {
-                                                                position !== "Completed" ?
-                                                                    item.payment === "Payment is Done" ?
-                                                                        <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleAssign({ projectId: item.projectId._id, itemId: item._id })} >Assign Task to</button>
-                                                                        :
-                                                                         item.status === "Assigned" ?
-                                                                            <>
-                                                                                <button className='px-3 text-white bg-blue-600 rounded'>E</button>
-                                                                                <button className='px-3 ml-2 text-white bg-red-600 rounded'>D</button>
-                                                                            </>
-                                                                            :
-                                                                             item.status === "Completed" ?                                                                                 <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id, index: i })} >Update</button>
+                                            {
+                                                position == "Completed" && <td className='font-bold bg-green-700'>{dateConverter(item.leadTaskCompletedDate)}</td>
+                                            }
+                                            {item.projectVerified ?
+                                                <td>
+                                                    {
+                                                        position !== "Completed" ?
+                                                            item.payment === "Payment is Done" ?
+                                                                <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleAssign({ projectId: item.projectId._id, itemId: item._id })} >Assign Task to</button>
+                                                                :
+                                                                item.status === "Assigned" ?
+                                                                    <>
+                                                                        <button className='px-3 text-white bg-blue-600 rounded'>E</button>
+                                                                        <button className='px-3 ml-2 text-white bg-red-600 rounded'>D</button>
+                                                                    </>
+                                                                    :
+                                                                    item.status === "Completed" ? <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate({ projectId: item.projectId._id, itemId: item._id, index: i })} >Update</button>
 
-                                                                                : <p className='text-red-600'>
-                                                                                 Not Payed
-                                                                                 </p>
-                                                                   : ''
-                                                            }
-                                                        </td> : <td className='text-red-500 font-bold'>"Not verified"</td>
+                                                                        : <p className='text-red-600'>
+                                                                            Not Payed
+                                                                        </p>
+                                                            : ''
                                                     }
+                                                </td> : <td className='text-red-500 font-bold'>"Not verified"</td>
+                                            }
                                         </tr>
                                     ))
                                 )}

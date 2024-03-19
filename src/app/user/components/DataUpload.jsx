@@ -12,6 +12,8 @@ import VerifyData from './VerifyData';
 
 const DataUpload = () => {
     const [uniqueId, setUniqueId] = useState('');
+
+
     const [clientInputs, setClientInputs] = useState({
         // projectId: '',
         projectName: '',
@@ -35,8 +37,37 @@ const DataUpload = () => {
         landscapeName: '',
         landscapeEmail: '',
         landscapeMobNo: '',
-
-
+    });
+    const [fileUpload, setFileUpload] = useState({
+        '3DsMax - Building': {},
+        '3DsMax - Landscape & Textures': {},
+        '3DsMax - Terrace': {},
+        // '3DsMax - Entry or Exit gate': {},
+        // 'CAD Floor plans (dwg)': {},
+        // 'CAD Elevation (dwg)': {},
+        // 'CAD Section (dwg)': {},
+        // 'Club House CAD Elevation (dwg)': {},
+        // 'Club House CAD Section (dwg)': {},
+        // 'Club house floor plans CAD (dwg)': {},
+        // 'Tower Terrace Cad (dwg)': {},
+        // 'Landscape (Dwg)': {},
+        // // //images file
+        // 'Material Palette': {},
+        // 'Exterior draft images': {},
+        // 'Interior draft images': {},
+        // 'Aerial Image, Front Building elevation image for all towers': {},
+        // '2D Floor Plan (color)': {},
+        // '2D Unit plan (color)': {},
+        // '2D Unit plan (ISO)': {},
+        // 'Renders of common areas': {},
+        // 'Tower Terrace Renders': {},
+        // 'Club House Terrace Renders': {},
+        // 'Amenities Images': {},
+        // 'Master Plan of site (color)': {},
+        // 'Club house floor plan (2D Color)': {},
+        // 'Logo of project or Company': {},
+        // 'Landscape renders': {},
+        // 'Project Brochure': {},
     });
     const [width, setWidth] = useState(15);
     const steps = ["Project Info", "Contact Details", "Files Upload", "Confirm", "Successful"];
@@ -45,13 +76,13 @@ const DataUpload = () => {
     const bgColor = width < 20 ? 'bg-red-600' : width < 40 ? 'bg-orange-500' : width < 60 ? 'bg-yellow-400' : width < 80 ? 'bg-lime-400' : 'bg-green-600';
     const [location, setLocation] = useState([1]);
 
-    const addToLocation = (newValue) => {
+    const addToLocation = async (newValue) => {
         setLocation((prevLocation) => [...prevLocation, newValue]);
         currentStep === steps.length
             ? setComplete(true)
             : setCurrentStep((prev) => prev + 1);
-        if (newValue === 3) {
-            sentClientData(clientInputs);
+        if (newValue === 5) {
+            await sentClientData(clientInputs);
         }
     };
 
@@ -73,10 +104,10 @@ const DataUpload = () => {
 
     const sentClientData = async (clientInputs) => {
         try {
-            // const { data } = await uploadProject(clientInputs);
-            // console.log(data, "-------data sending------------");
-            // console.log(data.savedProject.ProjectUniqId, "-------data sending------------");
-            // setUniqueId(data.savedProject.ProjectUniqId);
+            const { data } = await uploadProject(clientInputs);
+            console.log(data, "-------data sending------------");
+            console.log(data.savedProject.ProjectUniqId, "-------data sending------------");
+            setUniqueId(data.savedProject.ProjectUniqId);
         } catch (error) {
             console.error('Error sending data to the backend:', error);
         }
@@ -114,10 +145,10 @@ const DataUpload = () => {
                 ) : location.length === 2 ? (
                     <ContactDetails addToLocation={addToLocation} removeFromLocation={removeFromLocation} setClientInputs={setClientInputs} clientInputs={clientInputs} />
                 ) : location.length === 3 ? (
-                    <FileUPload addToLocation={addToLocation} removeFromLocation={removeFromLocation} uniqueId={uniqueId} projectName={clientInputs.projectName} />
+                    <FileUPload addToLocation={addToLocation} removeFromLocation={removeFromLocation} uniqueId={uniqueId} projectName={clientInputs.projectName} fileUploads={fileUpload} setFileUploads={setFileUpload} />
                 )
                     : location.length === 4 ? (
-                        <VerifyData addToLocation={addToLocation} removeFromLocation={removeFromLocation} />
+                        <VerifyData addToLocation={addToLocation} removeFromLocation={removeFromLocation} clientInputs={clientInputs} fileUploads={fileUpload} />
                         // <ImageFilesUpload  />
                     )
                         : location.length === 5 && (

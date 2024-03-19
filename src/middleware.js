@@ -65,7 +65,6 @@ export const config = {
         '/user/home',
         '/user/dashboard',
         '/user/dashboard/newProject',
-        
         '/user/login',
         '/projectManager/home',
         '/projectManager/dashboard',
@@ -76,3 +75,33 @@ export const config = {
         '/developer/login',
     ],
 };
+
+
+// import { NextResponse } from 'next/server';
+
+// export function middleware(req) {
+//     try {
+//         const path = req.nextUrl.pathname;
+//         const token = req.cookies.get('token')?.value || '';
+//         console.log(path, '-----------------path')
+//         if (!token && path !== '/error') { // Add path !== '/error' condition
+//             console.log('no token')
+//             console.log(path, '-----------------path')
+//             return NextResponse.redirect(new URL('/error', req.nextUrl));
+//         } else {
+//             console.log(token, '---------token')
+//         }
+//     } catch (error) {
+//         console.error(error.message, '-------------error in middleware --Invalid token');
+//         return NextResponse.redirect(new URL('/error', req.nextUrl));
+//         // return NextResponse.json({ message: 'Invalid token Unauthorized' }, { status: 401 });
+//     }
+// }
+
+
+// export const config = {
+//     api: {
+//         bodyParser: false,
+//     },
+//     middleware: 'all', // Apply middleware to all routes
+// };

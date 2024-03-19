@@ -68,7 +68,7 @@
 //                     <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
 //                 </td>
 //             </tr>
-          
+
 //         </tbody>
 //     </table>
 // </div>
@@ -78,6 +78,7 @@
 // }
 
 // export default page
+
 "use client"
 import React from 'react'
 import Projects from '../../components/Projects'
@@ -85,7 +86,7 @@ import Projects from '../../components/Projects'
 function page() {
   return (
     <div>
-        <Projects/>
+      <Projects />
     </div>
   )
 }
