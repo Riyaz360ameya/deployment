@@ -66,15 +66,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
         }
     }, [sidebarExpanded]);
     const userMenuItems = [
-        {
-            title: "",
-            list: [
-                {
-                    title: 'Home',
-                    path: '/user/dashboard',
-                    icon: <SiTraefikproxy />,
-                },]
-        },
+        // {
+        //     title: "",
+        //     list: [
+        //         {
+        //             title: 'Home',
+        //             path: '/user/dashboard',
+        //             icon: <SiTraefikproxy />,
+        //         },]
+        // },
         {
             title: "DashBoard",
             list: [
@@ -296,7 +296,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                
                                 PMMenuItems.map((item, i) => (
                                     <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
-                                        <p className='text-gray-400 text-sm hidden md:flex'> {item.title}</p>
+                                        <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>
                                         {
                                             item.list.map((each, i) => (
                                                 <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
