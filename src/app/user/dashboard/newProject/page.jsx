@@ -1,8 +1,12 @@
+"use client"
 import React from 'react'
+import DataUpload from '../../components/DataUpload'
 
 function page() {
   return (
-    <div>page</div>
+    <>
+      <DataUpload />
+    </>
   )
 }
 

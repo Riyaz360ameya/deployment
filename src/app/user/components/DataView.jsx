@@ -6,13 +6,12 @@ const DataView = ({ setView, allData }) => {
         setView(false)
     }
     const handleClose = (e) => {
-        console.log('Event:', e);
         console.log('Target ID:', e.target.id);
         if (e.target.id === "payment") {
+            console.log('888')
             onClose();
         }
     }
-
     return (
         <>
             <div

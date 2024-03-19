@@ -1,11 +1,6 @@
 "use client";
 import React from "react";
 import CardDataStats from "../components/CardDataStats";
-import ChartOne from "./Chart/ChartOne";
-import ChartTwo from "./Chart/ChartTwo";
-import ChartThree from "./Chart/ChartThree";
-
-
 
 const page = () => {
   return (

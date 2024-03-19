@@ -9,10 +9,10 @@ export default function DefaultLayout({ children }) {
             <div className="flex h-screen overflow-hidden">
                 <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-                <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden ">
+                <div className="relative flex flex-1 flex-col">
                     <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-                    <main  className="w-full-2xl p-4 md:p-6 2xl:p-10 h-full ">
+                    <main  className="w-full p-1 h-full">
                         {/* <div> */}
                             {children}
                         {/* </div> */}
