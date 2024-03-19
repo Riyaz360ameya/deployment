@@ -58,69 +58,41 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
     ];
 
     return (
-        <div className='p-2 mt-5 rounded'>
-            <div className='flex items-center justify-between'>
+        <div className='rounded mt-5 h-full flex flex-col '>
+            <div className='flex justify-between items-center'>
                 <div>
-                    <h1 className='text-2xl font-extrabold text-white'>Contact Details</h1>
+                    <h1 className='md:text-2xl text-lg font-extrabold text-white'>Contact Details</h1>
                 </div>
-
-                {/* <div className='flex gap-4'>
-                    <button
-                        className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
-                        onClick={() => removeFromLocation(2)}
-                    >
-                        <span className='flex items-center justify-between gap-3'>
-                            <GrLinkNext className='rotate-180' /> Back
-                        </span>
-                    </button>
-                    <button
-                        className='p-2 px-5 font-bold text-white bg-gray-800 border rounded'
-                        onClick={() => addToLocation(3)}
-                    >
-                        <span className='flex items-center justify-between gap-3'>Next<GrLinkNext /></span>
-                    </button>
-                </div> */}
                 <div className="flex items-center justify-between gap-2 px-5">
-                    {!complete && (
-                        <>
-                            <button
-                                className=" p-2 px-4 rounded text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-                                hover:bg-gray-200  
-                                bg-gray-100 
-                               text-gray-700 
-                                  border duration-200 ease-in-out 
-                             border-gray-600 transition"
-                                onClick={() => {
-                                    removeFromLocation(2)
-                                }}
-                            >
-                                Back
-                            </button>
-
-                            <button
-                                className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-                                hover:bg-teal-600  
-                                bg-teal-600 
-                                text-teal-100 
-                                border duration-200 ease-in-out 
-                                border-teal-600 transition"
-                                onClick={() => {
-                                    addToLocation(3)
-                                }}
-                            >
-                                {currentStep === steps.length ? "Finish" : "Next"}
-                            </button>
-                        </>
-                    )}
+                    <button
+                        className=" p-2 text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer  hover:bg-gray-200   bg-gray-100  text-gray-700     border duration-200 ease-in-out  border-gray-600 transition"
+                        onClick={() => {
+                            removeFromLocation(2)
+                        }}
+                    >
+                        Back
+                    </button>
+                    <button
+                        className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                            hover:bg-teal-600  
+                            bg-teal-600 
+                            text-teal-100 
+                            border duration-200 ease-in-out 
+                            border-teal-600 transition"
+                        onClick={() => {
+                            addToLocation(3)
+                        }}
+                    >Next
+                    </button>
                 </div>
             </div>
-            <div className='h-96 md:h-96  overflow-y-scroll p-3 bg-gray-400 mt-2'>
+            <div className='h-96 md:h-96 overflow-x-hidden  overflow-y-scroll p-3 bg-gray-400 mt-2 rounded'>
                 {sections.map((section) => {
                     if (section.title !== "Coordinators") {
                         return (
-                            <div key={section.title} className="mt-8">
+                            <div key={section.title} className="mt-4">
                                 <p className="text-white text-2xl font-bold">{section.title}</p>
-                                <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:grid-cols-3">
                                     {section.fields.map((item, i) => (
                                         <div key={item.id}>
                                             <label htmlFor={item.id} className="block mb-2 text-sm font-medium text-white">
@@ -142,7 +114,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                     return null;
                 })}
                 <div className='mt-8'>
-                    <p className='text-white text-2xl font-bold'>Coordinators</p>
+                    <p className='text-white md:text-2xl text-lg  font-bold'>Coordinators</p>
                     {coordinators.map((_, index) => (
                         <React.Fragment key={index}>
                             <div className='grid grid-col-2 md:grid-cols-3 gap-6 mt-5'>
@@ -182,31 +154,14 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                     ))}
                 </div>
                 <div className='flex justify-between mt-5'>
-                    {/* <button className='p-2 px-5 font-bold text-center text-white bg-gray-800 border rounded' onClick={addCoordinator}>
-                        <span className='flex items-center justify-between gap-3'>Add more coordinators </span>
-                    </button> */}
-
-                    {/* <button className='p-2 px-5 font-bold text-center text-white bg-gray-800 border rounded' onClick={() => removeCoordinator(coordinators.length - 1)}>
-                        <span className='flex items-center justify-between gap-3'>Remove coordinators </span>
-                    </button> */}
                     <button
-                        className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-                                hover:bg-teal-600  
-                                bg-teal-600 
-                                text-teal-100 
-                                border duration-200 ease-in-out 
-                                border-teal-600 transition"
+                        className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer  hover:bg-teal-600   bg-teal-600  text-teal-100  border duration-200 ease-in-out  border-teal-600 transition"
                         onClick={addCoordinator}
                     >
                         Add more coordinators
                     </button>
                     <button
-                        className=" p-2 px-4 rounded text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-                                hover:bg-gray-200  
-                                bg-gray-100 
-                               text-gray-700 
-                                  border duration-200 ease-in-out 
-                             border-gray-600 transition"
+                        className=" p-2 text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer    hover:bg-gray-200     bg-gray-100   text-gray-700      border duration-200 ease-in-out  border-gray-600 transition"
                         onClick={() => removeCoordinator(coordinators.length - 1)}
                     >
                         Remove coordinators

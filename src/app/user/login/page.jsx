@@ -41,7 +41,7 @@ function Page() {
                 toast.success(data.message)
                 dispatch(userDetails(data.user));
                 dispatch(accessToken(data.token));
-                router.push("/user/home");
+                router.push("/user/dashboard");
             } catch (error) {
                 console.log(error.response.data.error, '-----------LoginForm failed');
                 toast.error(error.response.data.error)

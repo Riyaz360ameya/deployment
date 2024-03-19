@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import { GrLinkNext } from 'react-icons/gr';
 
 const ImageFilesUpload = ({ addToLocation, removeFromLocation, files, setFiles }) => {
@@ -28,7 +28,7 @@ const ImageFilesUpload = ({ addToLocation, removeFromLocation, files, setFiles }
         <div className='p-2 mt-5 rounded'>
             <div className='flex items-center justify-between h:md-80'>
                 <div>
-                    <h1 className='text-2xl font-extrabold text-white'>Payment Gateways</h1>
+                    <h1 className='text-2xl font-extrabold text-white'>Verify all Input files</h1>
                 </div>
                 <div className="flex items-center justify-between gap-2 px-5">
                     {!complete && (
@@ -55,7 +55,7 @@ const ImageFilesUpload = ({ addToLocation, removeFromLocation, files, setFiles }
                                 border duration-200 ease-in-out 
                                 border-teal-600 transition"
                                 onClick={() => {
-                                   addToLocation(3)
+                                    addToLocation(3)
                                 }}
                             >
                                 {currentStep === steps.length ? "Finish" : "Next"}
@@ -64,7 +64,7 @@ const ImageFilesUpload = ({ addToLocation, removeFromLocation, files, setFiles }
                     )}
                 </div>
             </div>
-           
+
         </div>
     );
 };
