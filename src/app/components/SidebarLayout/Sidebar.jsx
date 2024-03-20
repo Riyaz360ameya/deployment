@@ -106,6 +106,29 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             ]
         },
     ]
+    const devMenuItems = [
+
+        {
+            title: "DashBoard",
+            list: [
+                {
+                    title: 'New Tasks',
+                    path: '/developer/newTasks',
+                    icon: <SiTraefikproxy />,
+                },
+                {
+                    title: 'Ongoing Tasks',
+                    path: '/developer/onGoingTasks',
+                    icon: <SiTraefikproxy />,
+                },
+                {
+                    title: 'Completed Tasks',
+                    path: '/developer/completedTasks',
+                    icon: <SiTraefikproxy />,
+                },
+            ]
+        },
+    ]
     const PMMenuItems = [
         {
             title: "Pages",
@@ -175,72 +198,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             ]
         }
     ]
-    const devMenuItems = [
-        {
-            title: "Pages",
-            list: [
-                {
-                    title: 'Dashboard',
-                    path: '/developer/dashboard',
-                    icon: <LuLayoutDashboard />,
-                },
-                {
-                    title: 'Projects',
-                    path: '/dashboard/users',
-                    icon: <FaUsers />,
-                },
-                {
-                    title: 'New Task',
-                    path: '/developer/dashboard/newTask',
-                    icon: <SiTraefikproxy />,
-                },
-                {
-                    title: 'onGoing Task',
-                    path: '/developer/dashboard/onGoingTask',
-                    icon: <GrTransaction />,
-                },
-                {
-                    title: 'Completed Task',
-                    path: '/developer/dashboard/completedTask',
-                    icon: <GrTransaction />,
-                },
-            ]
-        },
-        {
-            title: "Analyze",
-            gap: true,
-            list: [
-              
-                {
-                    title: 'Reports',
-                    path: '/dashboard/reports',
-                    icon: <MdTune />,
-                },
-                {
-                    title: 'Team',
-                    path: '/dashboard/teamLeads',
-                    icon: <FaUserGear />,
-                },
-            ]
-        },
-        {
-            title: "Actions",
-            gap: true,
-            list: [
-             
-                {
-                    title: 'Settings',
-                    path: '/dashboard/settings',
-                    icon: <MdOutlineSettings />,
-                },
-                {
-                    title: 'Help',
-                    path: '/dashboard/help',
-                    icon: <MdHelpOutline />,
-                }
-            ]
-        }
-    ]
+
     return (
         <aside
             ref={sidebar}
@@ -292,21 +250,33 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                         }
                                     </li>
                                 ))
-                                :
-                               
-                                PMMenuItems.map((item, i) => (
-                                    <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
-                                        <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>
-                                        {
-                                            item.list.map((each, i) => (
-                                                <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
-                                                    <div className='text-xl text-white'>{each.icon}</div>
-                                                    <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
-                                                </Link>
-                                            ))
-                                        }
-                                    </li>
-                                ))
+                                : design === "Project Manager" ?
+                                    PMMenuItems.map((item, i) => (
+                                        <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
+                                            <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>
+                                            {
+                                                item.list.map((each, i) => (
+                                                    <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
+                                                        <div className='text-xl text-white'>{each.icon}</div>
+                                                        <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
+                                                    </Link>
+                                                ))
+                                            }
+                                        </li>
+                                    ))
+                                    : devMenuItems.map((item, i) => (
+                                        <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
+                                            <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>
+                                            {
+                                                item.list.map((each, i) => (
+                                                    <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
+                                                        <div className='text-xl text-white'>{each.icon}</div>
+                                                        <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
+                                                    </Link>
+                                                ))
+                                            }
+                                        </li>
+                                    ))
                             }
                         </ul>
                     </div>

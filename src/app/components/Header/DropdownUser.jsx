@@ -3,31 +3,33 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
-import { resetProject } from '@/app/redux/users/userProSlice';
-import { resetUser } from '@/app/redux/users/userSlice';
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from 'next/navigation'
+import { resetUser } from "@/app/redux/users/userSlice";
+import { resetProject } from "@/app/redux/users/userProSlice";
 const DropdownUser = () => {
-    const router = useRouter()
+  const dispatch = useDispatch()
+  const router = useRouter()
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const user = useSelector((state) => state.user.userDetails);
-  console.log(user,'-----------user')
+  const design = user.designation
+  console.log(user, '-----------user')
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
   const onLogout = async () => {
     try {
-        const { data } = await axios.get("/api/users/logout")
-        // dispatch(resetUser())
-        // dispatch(resetProject())
-        console.log(data.message)
-        toast.success(data.message)
-        router.push("/user/login")
+      const { data } = await axios.get("/api/users/logout")
+      dispatch(resetUser())
+      dispatch(resetProject())
+      console.log(data.message)
+      toast.success(data.message)
+      design === 'user' ? router.push("/user/login") : design === 'Project Manager' ? router.push("/projectManager/login") : router.push("/developer/login")
     } catch (error) {
-        console.log(error.message, '------------Header Error')
+      console.log(error.message, '------------Header Error')
     }
-}
+  }
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
@@ -64,9 +66,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black ">
-          {user.firstName} {user.lastName}
+            {user.firstName} {user.lastName}
           </span>
-          {/* <span className="block text-xs">UX Designer</span> */}
+          <span className="block text-xs">{user.designation === 'user' ? '' : user.designation}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -77,7 +79,7 @@ const DropdownUser = () => {
             style={{
               width: "auto",
               height: "auto",
-              borderRadius:'100px'
+              borderRadius: '100px'
             }}
             alt="User"
           />
@@ -105,9 +107,8 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-5 py-4 flex w-62.5 z-1 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark ${
-          dropdownOpen === true ? "block" : "hidden"
-        }`}
+        className={`absolute right-0 mt-5 py-4 flex w-62.5 z-1 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark ${dropdownOpen === true ? "block" : "hidden"
+          }`}
       >
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark ">
           <li >
@@ -172,7 +173,7 @@ const DropdownUser = () => {
               </svg>
               Settings
             </Link>
-          
+
           </li>
         </ul>
         <button className="flex items-center gap-3.5 px-6 py-2 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base" onClick={onLogout}>
@@ -193,7 +194,7 @@ const DropdownUser = () => {
               fill=""
             />
           </svg>
-          
+
           Log Out
         </button>
       </div>

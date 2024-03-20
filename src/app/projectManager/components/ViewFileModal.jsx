@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  pmProjectFiles } from '../pmAPIs/projectApis';
+import { pmProjectFiles } from '../pmAPIs/projectApis';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -51,256 +51,197 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
       onClick={handleClose}
       className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center "
     >
-      <div className="bg-white flex h-full w-full overflow-y-scroll ">
+      <div className="bg-white flex rounded">
         <div className="w-full bg-white border border-gray-200 rounded-lg shadow ">
-          <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50  dark:text-gray-400 ">
-            <li className="me-2">
+          <div className='flex justify-between items-center'>
+            <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50  dark:text-gray-400 ">
+              <li className="me-2">
+                <button
+                  onClick={() => handleTabClick('about')}
+                  className={`inline-block p-4 ${activeTab === 'about' ? 'text-blue-600' : 'hover:text-gray-600'}  hover:rounded hover:bg-gray-300 dark:hover:bg-gray-700 dark:text-blue-500`}
+                >
+                  Project Information
+                </button>
+              </li>
+              <li className="me-2">
+                <button
+                  onClick={() => handleTabClick('services')}
+                  className={`inline-block p-4 ${activeTab === 'services' ? 'text-blue-600' : 'hover:text-gray-600'} hover:rounded hover:bg-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300`}
+                >
+                  Project contact details
+                </button>
+              </li>
+              <li className="me-2">
+                <button
+                  onClick={() => handleTabClick('statistics')}
+                  className={`inline-block p-4 ${activeTab === 'statistics' ? 'text-blue-600' : 'hover:text-gray-600'} hover:rounded hover:bg-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300`}
+                >
+                  Files
+                </button>
+              </li>
+            </ul>
+            <div className='p-2'>
               <button
-                onClick={() => handleTabClick('about')}
-                className={`inline-block p-4 ${activeTab === 'about' ? 'text-blue-600' : 'hover:text-gray-600'} rounded-ss-lg hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-blue-500`}
+                type="button"
+                className="p-2 text-center hover:scale-110 focus:outline-none flex justify-center rounded font-bold cursor-pointer  hover:bg-gray-200   bg-gray-100  text-gray-700  border duration-200 ease-in-out  border-gray-600 transition "
+                onClick={onClose}
               >
-                Project Information
+                Close
               </button>
-            </li>
-            <li className="me-2">
-              <button
-                onClick={() => handleTabClick('services')}
-                className={`inline-block p-4 ${activeTab === 'services' ? 'text-blue-600' : 'hover:text-gray-600'} hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300`}
-              >
-                Project contact details
-              </button>
-            </li>
-            <li className="me-2">
-              <button
-                onClick={() => handleTabClick('statistics')}
-                className={`inline-block p-4 ${activeTab === 'statistics' ? 'text-blue-600' : 'hover:text-gray-600'} hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-gray-300`}
-              >
-                Files
-              </button>
-            </li>
-          </ul>
+            </div>
+          </div>
+          <hr className='border-2 border-red-600' />
           <div id="defaultTabContent">
-            <div className={`p-4 bg-white rounded-lg md:p-8  ${activeTab === 'about' ? '' : 'hidden'}`}>
-              <div className="w-full bg-gray-50 px-4 py-4 sm:flex sm:flex-col justify-between ">
-                <div className="mt-2">
-                  <div class="grid  mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2 dark:bg-gray-800">
-                    <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-                      <div className="w-full bg-gray-50 px-4 py-4 sm:flex sm:flex-col sm:items-start ">
-                        <div className="mt-2">
-                          <div>
-                            <div className="px-4 sm:px-0">
-                              <h3 className="text-base font-semibold leading-7 text-gray-900">Project Information</h3>
-                            </div>
-                            <hr />
-                            <div className="mt-6 border-t border-gray-100">
-                              <dl className="divide-y divide-gray-100">
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Project Id</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.projectId.ProjectUniqId}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Project Name</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.projectId.projectInfo.projectDetails.projectName}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Project USP</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.projectId.projectInfo.projectDetails.projectUSP}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Project Verified</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.projectVerified ? 'Yes' : 'No'}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Specification</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {details.projectId.projectInfo.projectDetails.specification}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Project Heighlights</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                    {details.projectId.projectInfo.projectDetails.projectHighlights}
-                                  </dd>
-                                </div>
-                              </dl>
-                            </div>
-                          </div>
-                        </div>
+            <div className={` bg-white rounded-lg md:p-8  ${activeTab === 'about' ? '' : 'hidden'}`}>
+              <div className='flex'>
+                <div>
+                  <div className="px-4 sm:px-0">
+                    <h3 className="text-base font-semibold leading-7 text-gray-900">Project Information</h3>
+                  </div>
+                  <hr />
+                  <div className="mt-6 border-t border-gray-100">
+                    <dl className="divide-y divide-gray-100">
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Project Id</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.projectId.ProjectUniqId}</dd>
                       </div>
-                    </figure>
-                    <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-                      <div className="w-full bg-gray-50 px-4 py-4 sm:flex sm:flex-col sm:items-start ">
-                        <div className="mt-2">
-                          <div>
-                            <h3 className="text-base font-semibold leading-7 text-gray-900">Project Contact Details</h3>
-                            <hr />
-                            <div className="mt-6 border-t border-gray-100">
-                              <dl className="divide-y divide-gray-100">
-                                <div className="px-4  sm:px-0">
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Contact No </dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.contact}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Email Id </dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.email}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Office Address </dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.officeAddress}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Site Address</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.siteAddress}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Site Location</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {details.projectId.projectInfo.contactDetails.siteLocation}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Registered Date</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {details.projectReachedOn}</dd>
-                                </div>
-                              </dl>
-                            </div>
-                          </div>
-                        </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Project Name</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.projectId.projectInfo.projectDetails.projectName}</dd>
                       </div>
-                    </figure>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Project USP</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.projectId.projectInfo.projectDetails.projectUSP}</dd>
+                      </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Project Verified</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{details.projectVerified ? 'Yes' : 'No'}</dd>
+                      </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Specification</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {details.projectId.projectInfo.projectDetails.specification}</dd>
+                      </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Project Heighlights</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                          {details.projectId.projectInfo.projectDetails.projectHighlights}
+                        </dd>
+                      </div>
+                    </dl>
                   </div>
                 </div>
-                <div className="mt-3 text-center sm:text-left ">
-                  <button
-                    type="button"
-                    className="p-2 px-4 rounded text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-              hover:bg-gray-200  
-              bg-gray-100 
-             text-gray-700 
-                border duration-200 ease-in-out 
-           border-gray-600 transition"
-                    onClick={onClose}
-                  >
-                    Close
-                  </button>
+                <div>
+                  <h3 className="text-base font-semibold leading-7 text-gray-900">Project Contact Details</h3>
+                  <hr />
+                  <div className="mt-6 border-t border-gray-100">
+                    <dl className="divide-y divide-gray-100">
+                      <div className="px-4  sm:px-0">
+                      </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Contact No </dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.contact}</dd>
+                      </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Email Id </dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.email}</dd>
+                      </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Office Address </dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.officeAddress}</dd>
+                      </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Site Address</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.siteAddress}</dd>
+                      </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Site Location</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {details.projectId.projectInfo.contactDetails.siteLocation}</dd>
+                      </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Registered Date</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {details.projectReachedOn}</dd>
+                      </div>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
             <div className={`p-4 bg-white rounded-lg md:p-8   ${activeTab === 'services' ? '' : 'hidden'}`}>
-              <div className="w-full bg-gray-50 px-4 py-4 sm:flex sm:flex-col justify-between ">
-                <div className="mt-2">
-                  <div class="grid  mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:mb-12 md:grid-cols-2 dark:bg-gray-800">
-                    <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-                      <div className="w-full bg-gray-50 px-4 py-4 sm:flex sm:flex-col sm:items-start ">
-                        <div className="mt-2">
-                          <div>
-                            <div className=" border-t border-gray-100">
-                              <dl className="divide-y divide-gray-100">
-                                <div className="px-4 mt-5 sm:px-0">
-                                  <h3 className="text-base font-semibold leading-7 text-gray-900 ">Architecture Contact Details</h3>
-                                </div>
-                                <hr className='text-black' />
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Architecture Name</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.architecture.architectureName}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900"> Architecture Email  </dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.architecture.architectureEmail
-                                  }</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Architecture No </dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.architecture.architectureMobNo}</dd>
-                                </div>
-                                <div className="px-4 mt-5 sm:px-0">
-                                  <h3 className="text-base font-semibold leading-7 text-gray-900">Landscape Contact Details</h3>
-                                </div>
-                                <hr className='' />
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Landscape Name</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.landscape.landscapeName}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900"> Landscape Email  </dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.landscape.landscapeEmail
-                                  }</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Landscape No </dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.landscape.landscapeMobNo}</dd>
-                                </div>
-                              </dl>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </figure>
-                    <figure class="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e dark:bg-gray-800 dark:border-gray-700">
-                      <div className="w-full bg-gray-50 px-4 py-4 sm:flex sm:flex-col sm:items-start ">
-                        <div className="mt-2">
-                          <div>
-                            <div className=" border-t border-gray-100">
-                              <dl className="divide-y divide-gray-100">
-                                <div className="px-4 mt-5 sm:px-0">
-                                  <h3 className="text-base font-semibold leading-7 text-gray-900">Client Details</h3>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Organisation Name</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {details.userId.organization}</dd>
-                                </div>
-                                <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                  <dt className="text-sm font-medium leading-6 text-gray-900">Client Name</dt>
-                                  <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {details.userId.firstName}</dd>
-                                </div>
-                                <div className="px-4 mt-5 sm:px-0">
-                                  <h3 className="text-base font-semibold leading-7 text-gray-900"> Coordinators Details</h3>
-                                </div>
-                                <hr className='' />
-                                {details.projectId.projectInfo.contactDetails.coordinators.map((coordinator, index) => (
-                                  <div key={index} className="">
-                                    <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                      <dt className="text-sm font-medium leading-6 text-gray-900">Coordinator Name</dt>
-                                      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {coordinator.coordinatorName}</dd>
-                                    </div>
-                                    <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                      <dt className="text-sm font-medium leading-6 text-gray-900">Coordinator Email</dt>
-                                      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{coordinator.coordinatorEmail}</dd>
-                                    </div>
-
-                                    <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                      <dt className="text-sm font-medium leading-6 text-gray-900">Coordinator Contact</dt>
-                                      <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{coordinator.coordinatorMobile}</dd>
-                                    </div>
-                                  </div>
-                                ))}
-
-                              </dl>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </figure>
+              <div className='flex'>
+                <div className="divide-y divide-gray-100">
+                  <div className="px-4 mt-5 sm:px-0">
+                    <h3 className="text-base font-semibold leading-7 text-gray-900 ">Architecture Contact Details</h3>
+                  </div>
+                  <hr className='text-black' />
+                  <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">Architecture Name</dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.architecture.architectureName}</dd>
+                  </div>
+                  <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900"> Architecture Email  </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.architecture.architectureEmail
+                    }</dd>
+                  </div>
+                  <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">Architecture No </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.architecture.architectureMobNo}</dd>
+                  </div>
+                  <div className="px-4 mt-5 sm:px-0">
+                    <h3 className="text-base font-semibold leading-7 text-gray-900">Landscape Contact Details</h3>
+                  </div>
+                  <hr className='' />
+                  <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">Landscape Name</dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.landscape.landscapeName}</dd>
+                  </div>
+                  <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900"> Landscape Email  </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.landscape.landscapeEmail
+                    }</dd>
+                  </div>
+                  <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">Landscape No </dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">  {details.projectId.projectInfo.contactDetails.landscape.landscapeMobNo}</dd>
                   </div>
                 </div>
-                <div className="mt-3 text-center sm:text-left ">
-                  <button
-                    type="button"
-                    className="p-2 px-4 rounded text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-              hover:bg-gray-200  
-              bg-gray-100 
-             text-gray-700 
-                border duration-200 ease-in-out 
-           border-gray-600 transition"
-                    onClick={onClose}
-                  >
-                    Close
-                  </button>
+                <div className="divide-y divide-gray-100">
+                  <div className="px-4 mt-5 sm:px-0">
+                    <h3 className="text-base font-semibold leading-7 text-gray-900">Client Details</h3>
+                  </div>
+                  <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">Organisation Name</dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {details.userId.organization}</dd>
+                  </div>
+                  <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm font-medium leading-6 text-gray-900">Client Name</dt>
+                    <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {details.userId.firstName}</dd>
+                  </div>
+                  <div className="px-4 mt-5 sm:px-0">
+                    <h3 className="text-base font-semibold leading-7 text-gray-900"> Coordinators Details</h3>
+                  </div>
+                  <hr className='' />
+                  {details.projectId.projectInfo.contactDetails.coordinators.map((coordinator, index) => (
+                    <div key={index} className="">
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Coordinator Name</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"> {coordinator.coordinatorName}</dd>
+                      </div>
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Coordinator Email</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{coordinator.coordinatorEmail}</dd>
+                      </div>
+
+                      <div className="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt className="text-sm font-medium leading-6 text-gray-900">Coordinator Contact</dt>
+                        <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{coordinator.coordinatorMobile}</dd>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
             <div className={`p-4 md:p-8 dark:bg-white ${activeTab === 'statistics' ? '' : 'hidden'}`}>
-              <div className="w-3/4 px-4 py-4">
+              <div className="">
                 <h3 className="text-base font-semibold leading-6 text-gray-900">Files</h3>
                 <div className="mt-2">
                   {isLoading ? (
@@ -309,7 +250,7 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                     <div className='d-flex gap-5 '>
                       <ol className="relative text-black border-s border-gray-200 dark:border-gray-700 dark:text-gray-400">
                         {filesData
-                          ?.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) 
+                          ?.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
                           .map((file, index) => (
                             <li key={index} className="mb-10 ms-6">
                               <span className="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-green-900">
@@ -319,9 +260,9 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                               </span>
                               <h3 className="font-medium leading-tight text-black">{file.folderName}</h3>
                               <div className="">
-                               <div className='flex justify-between'>
-                               <h2 className='text-lg font-bold text-black'>Data Uploaded: {file.folderName}</h2>
-                               </div>
+                                <div className='flex justify-between'>
+                                  <h2 className='text-lg font-bold text-black'>Data Uploaded: {file.folderName}</h2>
+                                </div>
                                 <hr />
                                 <div className=''>
                                   {file.data.map((item, i) => (
@@ -342,20 +283,7 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
                     <p>No files available.</p>
                   )}
                 </div>
-                <div className="mt-3 text-center sm:text-left ">
-                  <button
-                    type="button"
-                    className="p-2 px-4 rounded text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
-        hover:bg-gray-200  
-        bg-gray-100 
-        text-gray-700 
-        border duration-200 ease-in-out 
-        border-gray-600 transition"
-                    onClick={onClose}
-                  >
-                    Close
-                  </button>
-                </div>
+
               </div>
             </div>
           </div>

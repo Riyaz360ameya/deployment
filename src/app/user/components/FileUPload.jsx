@@ -3,7 +3,7 @@ import { GrLinkNext } from 'react-icons/gr';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { InfinitySpin } from 'react-loader-spinner';
-const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId,fileUploads,setFileUploads }) => {
+const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId, fileUploads, setFileUploads }) => {
   const [load, setLoad] = useState(false);
   const [success, setSuccess] = useState(false);
   const handleInputChange = (key, files) => {
@@ -14,33 +14,33 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId,f
     };
     setFileUploads(updatedFileUpload);
   };
-  const handleSubmit = async (e) => {
-    try {
-      // setLoading(true);
-      setLoad(true)
-      e.preventDefault();
-      const formData = new FormData();
-      // Iterate over the keys of fileUpload object
-      for (const key of Object.keys(fileUploads)) {
-        const { name, file } = fileUploads[key];
-        console.log(`Appending file - Key: ${key}, Name: ${name}, Size: ${file.size} bytes`);
-        formData.append(key, file, name);
-      }
-      formData.append('projectName', projectName)
-      formData.append('uniqueId', uniqueId)
-      const { data } = await axios.post('/api/upload', formData);
-      // setUploadedFiles(true);
-      toast.success(data.message);
-      setLoad(false);
-      setSuccess(true);
+  // const handleSubmit = async (e) => {
+  //   try {
+  //     // setLoading(true);
+  //     setLoad(true)
+  //     e.preventDefault();
+  //     const formData = new FormData();
+  //     // Iterate over the keys of fileUpload object
+  //     for (const key of Object.keys(fileUploads)) {
+  //       const { name, file } = fileUploads[key];
+  //       console.log(`Appending file - Key: ${key}, Name: ${name}, Size: ${file.size} bytes`);
+  //       formData.append(key, file, name);
+  //     }
+  //     formData.append('projectName', projectName)
+  //     formData.append('uniqueId', uniqueId)
+  //     const { data } = await axios.post('/api/upload', formData);
+  //     // setUploadedFiles(true);
+  //     toast.success(data.message);
+  //     setLoad(false);
+  //     setSuccess(true);
 
-    } catch (error) {
-      console.log(error.message, '-------------------error')
-      toast.error(error.response?.data?.error || 'Error uploading files');
-      // setLoading(false);
-      setLoad(false)
-    }
-  };
+  //   } catch (error) {
+  //     console.log(error.message, '-------------------error')
+  //     toast.error(error.response?.data?.error || 'Error uploading files');
+  //     // setLoading(false);
+  //     setLoad(false)
+  //   }
+  // };
   return (
     <div className='rounded mt-5 h-full flex flex-col '>
       <div className='flex justify-between items-center'>
@@ -83,7 +83,9 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId,f
             {/* <p>Please continue further</p> */}
           </div>
         </div>) :
-        <form onSubmit={handleSubmit}>
+        <form
+        //  onSubmit={handleSubmit}
+        >
           {/* <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-1 md:grid-cols-2 gap-2 p-2 mt-2 bg-gray-400 rounded '> */}
           <div className='grid grid-cols-1 md:grid-cols-2 gap-2 h-2/4 md:3/4 overflow-hidden overflow-y-scroll p-2 mt-2 bg-gray-500 rounded' >
             {Object.keys(fileUploads).map((item, index) => (
@@ -100,9 +102,9 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId,f
               </div>
             ))}
           </div>
-          <button className='p-2 px-5 font-bold text-white bg-slate-500 border rounded mt-4' type='submit'>
+          {/* <button className='p-2 px-5 font-bold text-white bg-slate-500 border rounded mt-4' type='submit'>
             Upload
-          </button>
+          </button> */}
         </form>
       }
     </div>

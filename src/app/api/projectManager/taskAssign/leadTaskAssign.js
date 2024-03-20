@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
 import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 
-export const leadTaskAssign = async ({ findLead, teamLeadId, findPM, projectId, reqBody }) => {
+export const leadTaskAssign = async ({ teamLeadId, reqBody, findLead, findPM }) => {
     try {
+        console.log(teamLeadId, '-------------------------asdf 55')
+
         const { importance, projectTitle, description, instruction, startDate, endDate, projectId } = reqBody
         const existLeadTask = await LeadTaskModel.findOne({ teamLeadId })
+        console.log(existLeadTask, '-------------------existLeadTask')
         let savedTask
         if (existLeadTask) {
             existLeadTask.newTasks.push({

@@ -9,6 +9,7 @@ import { uploadProject } from '../userAPIs/projectApis';
 import './View.css';  // Assuming your styles are in View.css
 import { TiTick } from "react-icons/ti";
 import VerifyData from './VerifyData';
+import { toast } from 'react-toastify';
 
 const DataUpload = () => {
     const [uniqueId, setUniqueId] = useState('');
@@ -69,21 +70,19 @@ const DataUpload = () => {
         // 'Landscape renders': {},
         // 'Project Brochure': {},
     });
-    const [width, setWidth] = useState(15);
     const steps = ["Project Info", "Contact Details", "Files Upload", "Confirm", "Successful"];
     const [currentStep, setCurrentStep] = useState(1);
     const [complete, setComplete] = useState(false);
-    const bgColor = width < 20 ? 'bg-red-600' : width < 40 ? 'bg-orange-500' : width < 60 ? 'bg-yellow-400' : width < 80 ? 'bg-lime-400' : 'bg-green-600';
     const [location, setLocation] = useState([1]);
 
     const addToLocation = async (newValue) => {
         setLocation((prevLocation) => [...prevLocation, newValue]);
-        currentStep === steps.length
-            ? setComplete(true)
-            : setCurrentStep((prev) => prev + 1);
         if (newValue === 5) {
             await sentClientData(clientInputs);
         }
+        currentStep === steps.length
+            ? setComplete(true)
+            : setCurrentStep((prev) => prev + 1);
     };
 
     const removeFromLocation = (valueToRemove) => {
@@ -108,11 +107,38 @@ const DataUpload = () => {
             console.log(data, "-------data sending------------");
             console.log(data.savedProject.ProjectUniqId, "-------data sending------------");
             setUniqueId(data.savedProject.ProjectUniqId);
+            handleSubmit()
         } catch (error) {
             console.error('Error sending data to the backend:', error);
         }
     };
+    const handleSubmit = async (e) => {
+        try {
+            // setLoading(true);
+            // setLoad(true)
+            e.preventDefault();
+            const formData = new FormData();
+            // Iterate over the keys of fileUpload object
+            for (const key of Object.keys(fileUpload)) {
+                const { name, file } = fileUpload[key];
+                console.log(`Appending file - Key: ${key}, Name: ${name}, Size: ${file.size} bytes`);
+                formData.append(key, file, name);
+            }
+            formData.append('projectName', projectName)
+            formData.append('uniqueId', uniqueId)
+            const { data } = await axios.post('/api/upload', formData);
+            // setUploadedFiles(true);
+            toast.success(data.message);
+            // setLoad(false);
+            // setSuccess(true);
 
+        } catch (error) {
+            console.log(error.message, '-------------------error')
+            toast.error(error.response?.data?.error || 'Error uploading files');
+            // setLoading(false);
+            // setLoad(false)
+        }
+    };
     return (
         <div className='h-full bg-gray-600 p-2 flex flex-col '>
             <div className="p-5 ">

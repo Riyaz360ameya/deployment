@@ -313,6 +313,8 @@ const Projects = ({ loading, setLoading }) => {
         try {
             const { data } = await pmAllProjects()
             dispatch(pmNewProjects(data.PmProjects.newProjects))
+            console.log(data.PmProjects.newProjects, '-------------------newProjects')
+            console.log(data.PmProjects.onGoingProjects, '--------------------data.----------onGoingProjects')
             dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
             dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
             setLoading(false);
@@ -423,7 +425,7 @@ const Projects = ({ loading, setLoading }) => {
                         </div>
                     </div>
 
-                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-5 border">
+                    <div className="relative overflow-auto shadow-md sm:rounded-lg mt-5 border">
                         {/* <div className="pb-4 bg-white dark:bg-gray-900">
                             <label htmlFor="table-search" className="sr-only">Search</label>
                             <div className="relative mt-1">
@@ -435,7 +437,7 @@ const Projects = ({ loading, setLoading }) => {
                                 <input type="text" id="table-search" className="block p-3 ps-10  text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search htmlFor items" />
                             </div>
                         </div> */}
-                        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <table className="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" className="p-4">
@@ -466,7 +468,7 @@ const Projects = ({ loading, setLoading }) => {
                                         Status
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Create Task
+                                        Options
                                     </th>
                                 </tr>
                             </thead>
@@ -511,7 +513,7 @@ const Projects = ({ loading, setLoading }) => {
                                                 <td>
                                                     {
                                                         position !== "Completed" ?
-                                                            item.payment === "Payment is Done" ?
+                                                            item.payment === "Payment is Done" && position !== "OnGoing" ?
                                                                 <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleAssign({ projectId: item.projectId._id, itemId: item._id })} >Assign Task to</button>
                                                                 :
                                                                 item.status === "Assigned" ?

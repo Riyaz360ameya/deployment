@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { InfinitySpin } from 'react-loader-spinner';
 import { BeatLoader } from 'react-spinners';
 import { useDispatch, useSelector } from 'react-redux'
-import { assignLeadTask } from '../pmAPIs/taskApis';
+import { assignLeadTask, getAllLeads } from '../pmAPIs/taskApis';
 import { addNewOnGoProject, leadTaskAssign, pmOngoingProjects } from '@/app/redux/projectManager/pmProSlice';
 
 const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing, setNextTask }) => {
     const dispatch = useDispatch()
+    const [leadsData, setLeadsData] = useState([])
     const [loading, setLoading] = useState(false);
     const [task, setTask] = useState({
         designation: 'Interior',
@@ -17,22 +18,39 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing, setNextTask
         instruction: '',
         startDate: '',
         endDate: '',
-        projectId: projectId
+        projectId: projectId,
+        selectedTeams: []
     });
     const onClose = () => {
         setModal(false);
         // setNextTask(false)
     };
     const handleClose = (e) => {
-        console.log('its closing')
         if (e.target.id === 'container') {
             onClose();
+        }
+    };
+    const handleCheckboxChange = (e) => {
+        const { value, checked } = e.target;
+        // If checked, add the value to selectedTeams; otherwise, remove it
+        if (checked) {
+            setTask(prevTask => ({
+                ...prevTask,
+                selectedTeams: [...prevTask.selectedTeams, value]
+            }));
+        } else {
+            setTask(prevTask => ({
+                ...prevTask,
+                selectedTeams: prevTask.selectedTeams.filter(teamId => teamId !== value)
+            }));
         }
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
+            console.log(task.selectedTeams, '------------------task')
+
             const { data } = await assignLeadTask(task)
             console.log(data, '.................data on assigning')
             dispatch(leadTaskAssign(itemId));
@@ -47,6 +65,14 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing, setNextTask
             setLoading(false);
         }
     };
+    const getLeads = async () => {
+        const { data } = await getAllLeads()
+        setLeadsData(data.allLeadsData)
+    }
+    useEffect(() => {
+        getLeads()
+    }, [])
+
 
     return (
         <div
@@ -63,42 +89,17 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing, setNextTask
                     </div>
                     :
                     <form onSubmit={handleSubmit} className='space-y-2'>
-                        {/* <div className='text-left text-sm'>
-                            <label className='font-bold' htmlFor="">Select Team</label>
-                            <select
-                                placeholder='Choose Team'
-                                name='designation'
-                                id='designation'
-                                className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
-                                onChange={(e) => setTask({ ...task, designation: e.target.value })}
-                                required
-                            >
-                                <option value="" className="uppercase" disabled >
-                                    Choose Team
-                                </option>
-                                <option value="Interior" className="uppercase" defaultValue>
-                                    INTERIOR
-                                </option>
-                                <option value="Exterior" className="uppercase">
-                                    EXTERIOR
-                                </option>
-                            </select>
-                        </div> */}
                         <div className='grid gap-2'>
                             <label className='font-bold' htmlFor="">Select Team</label>
-                            <div className=' grid gap-2 grid-cols-2'>
-                                <div className="flex items-center">
-                                    <input id="interior-checkbox" type="checkbox" value="Interior" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                    <label htmlFor="interior-checkbox" className="ms-2 text-sm font-extrabold text-gray-900 ">Interior Team</label>
-                                </div>
-                                <div className="flex items-center">
-                                    <input id="exterior-checkbox" type="checkbox" value="Exterior" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                    <label htmlFor="exterior-checkbox" className="ms-2 text-sm font-extrabold text-gray-900 ">Exterior Team</label>
-                                </div>
-                                <div className="flex items-center">
-                                    <input id="walkthrough-checkbox" type="checkbox" value="Walk Through" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                    <label htmlFor="walkthrough-checkbox" className="ms-2 text-sm font-extrabold text-gray-900 ">Walk Through Team</label>
-                                </div>
+                            <div className='grid gap-2 grid-cols-2'>
+                                {leadsData.map((lead, i) => (
+                                    <div className="flex items-center" key={lead._id}>
+                                        <input id={`checkbox-${lead._id}`} type="checkbox" value={lead._id}
+                                            onChange={handleCheckboxChange}
+                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label htmlFor={`checkbox-${lead._id}`} className="ms-2 text-sm font-extrabold text-gray-900">{lead.designation} Team</label>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                         <div className='flex gap-2' >

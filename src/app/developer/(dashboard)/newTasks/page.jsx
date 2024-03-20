@@ -2,12 +2,12 @@
 import React from 'react'
 import Tasks from '../../components/Tasks'
 
-function page() {
+function NewTasks() {
   return (
     <div>
-        <Tasks/>
+      <Tasks />
     </div>
   )
 }
 
-export default page
+export default NewTasks

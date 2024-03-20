@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik';
 import { loginSchema } from '@/app/schemas/authSchema';
 import { devLogInApi } from '../devApis/authApi'
-import { accessToken, developerDetails } from '@/app/redux/developer/developerSlice'
+import { userDetails,accessToken } from '@/app/redux/users/userSlice';
 
 function page() {
     const dispatch = useDispatch();
@@ -36,10 +36,10 @@ function page() {
             try {
                 setLoading(true)
                 const { data } = await devLogInApi(values);
-                dispatch(developerDetails(data.user))
+                dispatch(userDetails(data.user))
                 dispatch(accessToken(data.token));
                 toast.success(data.message)
-                router.push("/developer/dashboard")
+                router.push("/developer/newTasks")
                 setLoading(false)
             } catch (error) {
                 console.log(error)
@@ -48,11 +48,12 @@ function page() {
             }
         }
     })
-  
+
     return (
         <div className='h-screen bg-black text-center flex items-center justify-end'>
             <img
-                src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a436d6080557a000178b2a6_Exterior002-p-1080.jpeg"
+                // src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a436d6080557a000178b2a6_Exterior002-p-1080.jpeg"
+                src="/developer.webp"
                 alt=""
                 className='w-full h-full object-cover'
             />
@@ -64,61 +65,61 @@ function page() {
                             src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a460b2980557a00017cac78_logonav.png"
                             alt=""
                         />
-                        <h1 className='text-2xl font-bold mb-4'>Developer </h1>
+                        <h1 className='text-2xl font-bold mb-4 text-white'>Developer </h1>
                     </div>
-                  <form onSubmit={handleSubmit} id='signUpForm'>
-                  <div className='text-left text-sm'>
-                        <label className='font-bold' htmlFor="email">Email</label>
-                        <input
-                            type="text"
-                            className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
-                                `}
-                            id="email"
-                            value={values.email}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                        />
-                    </div>
-                    {errors.email && touched.email ? (
-                                    <p className="text-red-600 text-start text-sm">{errors.email}</p>
-                                ) : null}
-                    <div className='text-left text-sm'>
-                        <label className='font-bold' htmlFor="password">Password</label>
-                        <div className="relative">
+                    <form onSubmit={handleSubmit} id='signUpForm'>
+                        <div className='text-left text-sm'>
+                            <label className='font-bold' htmlFor="email">Email</label>
                             <input
-                                type={visiblePassword ? "text" : "password"}
+                                type="text"
                                 className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
                                 `}
-                                id="password"
-                                value={values.password}
+                                id="email"
+                                value={values.email}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                             />
-                            <div
-                                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                                onClick={showHiddenPassword}
-                            >
-                                {visiblePassword ?
-                                    <IoIosEye /> :
-                                    <IoIosEyeOff />
-                                }
+                        </div>
+                        {errors.email && touched.email ? (
+                            <p className="text-red-600 text-start text-sm">{errors.email}</p>
+                        ) : null}
+                        <div className='text-left text-sm'>
+                            <label className='font-bold' htmlFor="password">Password</label>
+                            <div className="relative">
+                                <input
+                                    type={visiblePassword ? "text" : "password"}
+                                    className={`w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md
+                                `}
+                                    id="password"
+                                    value={values.password}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                />
+                                <div
+                                    className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                                    onClick={showHiddenPassword}
+                                >
+                                    {visiblePassword ?
+                                        <IoIosEye /> :
+                                        <IoIosEyeOff />
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    {errors.password && touched.password ? (
-                                    <p className="text-red-600 text-start text-sm">{errors.password}</p>
-                                ) : null}
-                    <div>
-                        <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold'>
-                            {loading ? <BeatLoader color='white' /> : 'Login'}
-                        </button>
-                    </div>
-                    <div className=' mt-5 text-sm'>
-                        <p className='text-black underline font-bold cursor-pointer' >
-                            Forgot Password
-                        </p>
-                    </div>
-                  </form>
+                        {errors.password && touched.password ? (
+                            <p className="text-red-600 text-start text-sm">{errors.password}</p>
+                        ) : null}
+                        <div>
+                            <button className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold'>
+                                {loading ? <BeatLoader color='white' /> : 'Login'}
+                            </button>
+                        </div>
+                        <div className=' mt-5 text-sm'>
+                            <p className='text-white underline font-bold cursor-pointer' >
+                                Forgot Password
+                            </p>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
