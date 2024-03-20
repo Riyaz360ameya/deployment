@@ -14,32 +14,31 @@ connect();
 export async function POST(request = NextRequest) {
   try {
     const reqBody = await request.json();
+    console.log(reqBody, '----------55----------reqBody')
     const { proManagerId } = await getDataFromToken();
 
     if (!proManagerId) {
       console.log('No PM Id present. Removing token cookie.');
       return removeTokenCookie();
     }
-    const { designation, projectId } = reqBody;
-    const findLead = await leadLoginModel.findOne({ designation });
-    if (!findLead) {
-      console.log('Lead not found. Designation:', designation);
-      return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
-    }
+    const { selectedTeams, projectId } = reqBody;
+
     const findPM = await managerLoginModel.findById(proManagerId);
     if (!findPM) {
-      console.log('Project Manager not found. PM Id:', proManagerId);
-      return NextResponse.json(
-        { error: 'Project Manager not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: 'Project Manager not found' }, { status: 404 });
     }
-    const teamLeadId = findLead._id;
-    // saved data to database
-    const savedTask = await leadTaskAssign({ findLead, teamLeadId, findPM, reqBody, });
-    const newOngoing = await pmProjectUpdate({ projectId, teamLeadId, proManagerId, });
+    for (const teamLeadId of selectedTeams) {
+      const findLead = await leadLoginModel.findById(teamLeadId);
+      if (!findLead) {
+        return NextResponse.json({ error: 'Lead not found' }, { status: 404 });
+      }
+      console.log(findLead, '----------------findLead')
+      await leadTaskAssign({ teamLeadId, reqBody, findLead, findPM })
+    }
+    const newOngoing = await pmProjectUpdate({ projectId, selectedTeams, proManagerId, });
+
+    // update in user data 
     const updateUser = await userProjectUpdate({ projectId });
-    // console.log(newOngoing, '..............newOngoing')
     return NextResponse.json({ message: 'Assigned task successfully', newOngoing }, { success: true }, { status: 201 });
   } catch (error) {
     console.error(error.message, 'Error:-----pm task assign');

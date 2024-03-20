@@ -39,7 +39,7 @@ function page() {
                 dispatch(userDetails(data.user))
                 dispatch(accessToken(data.token));
                 toast.success(data.message)
-                router.push("/developer/dashboard")
+                router.push("/developer/newTasks")
                 setLoading(false)
             } catch (error) {
                 console.log(error)

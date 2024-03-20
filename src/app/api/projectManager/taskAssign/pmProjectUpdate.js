@@ -1,9 +1,9 @@
 import pmProjectsModel from "../../models/ProjectManager/pmProjects"
 import projectInfoModel from "../../models/projectInfoModel";
 
-export const pmProjectUpdate = async ({ projectId, latestNewTaskId, teamLeadId, proManagerId }) => {
+export const pmProjectUpdate = async ({ projectId, latestNewTaskId, selectedTeams, proManagerId }) => {
     try {
-        console.log(teamLeadId, '------------teamLeadId')
+        console.log(selectedTeams, '------------selectedTeams')
         const pmProjects = await pmProjectsModel.findOne({ proManagerId })
         const data = pmProjects.newProjects.find(task => task.projectId.toString() === projectId);
         if (!data) {
@@ -18,7 +18,7 @@ export const pmProjectUpdate = async ({ projectId, latestNewTaskId, teamLeadId, 
             status: "Assigned",
             projectReachedOn: data.projectReachedOn,
             payment: "50% Payed",
-            assignedLeadId: teamLeadId,
+            assignedLeadId: selectedTeams,
         })
         console.log(pmProjects.onGoingProjects, '-------------pushed data')
         const pmNewProject = await pmProjects.save();

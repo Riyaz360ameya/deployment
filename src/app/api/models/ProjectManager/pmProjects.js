@@ -72,14 +72,15 @@ const proManagerProjectSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
-            assignedLeadId: {
-                type: mongoose.Types.ObjectId,
-                ref: Lead, 
-                required: true,
-            },
+            assignedLeadId: [
+                {
+                    type: mongoose.Types.ObjectId,
+                    ref: Lead,
+                    required: true,
+                }
+            ],
             projectVerified: {
                 type: Boolean,
-                
             }
         }
     ],
@@ -107,11 +108,13 @@ const proManagerProjectSchema = new mongoose.Schema({
                 type: String,
                 required: true,
             },
-            assignedLeadId: {
-                type: mongoose.Types.ObjectId,
-                ref: Lead, 
-                required: true,
-            },
+            assignedLeadId: [
+                {
+                    type: mongoose.Types.ObjectId,
+                    ref: Lead,
+                    required: true,
+                }
+            ],
             leadTaskAssignedDate: {
                 type: Date,
                 required: true,
