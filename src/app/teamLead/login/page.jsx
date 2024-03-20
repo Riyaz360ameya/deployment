@@ -44,7 +44,7 @@ function page() {
                 console.log(data.user)
                 localStorage.setItem('TeamLead', JSON.stringify(data.user))
                 setLoading(false)
-                router.push("/teamLead/home")
+                router.push("/teamLead/dashboard/projects")
             } catch (error) {
                 console.log(error.message, '---error in login Lead')
                 toast.error(error.response.data.error)
