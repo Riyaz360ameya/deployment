@@ -138,15 +138,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     path: '/projectManager/dashboard',
                     icon: <LuLayoutDashboard />,
                 },
-                {
-                    title: 'Users',
-                    path: '/projectManager/dashboard/users',
-                    icon: <FaUsers />,
-                },
+
                 {
                     title: 'Projects',
                     path: '/projectManager/dashboard/projects',
                     icon: <SiTraefikproxy />,
+                },
+                {
+                    title: 'Users',
+                    path: '/projectManager/dashboard/users',
+                    icon: <FaUsers />,
                 },
                 {
                     title: 'Transactions',
@@ -161,12 +162,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             list: [
                 {
                     title: 'Revenue',
-                    path: '/projectManager/dashboard/revenue',
+                    path: '/projectManager/dashboard/Revenue',
                     icon: <MdCurrencyRupee />,
                 },
                 {
                     title: 'Reports',
-                    path: '/projectManager/dashboard/reports',
+                    path: '/projectManager/dashboard/Reports',
                     icon: <MdTune />,
                 },
                 {
@@ -182,7 +183,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
             list: [
                 {
                     title: 'Authorization',
-                    path: '/projectManager/dashboard/authorization',
+                    path: '/projectManager/dashboard/authorizations',
                     icon: <IoKeyOutline />,
                 },
                 {
@@ -282,11 +283,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     </div>
                 </nav>
                 {/* <!-- Sidebar Menu --> */}
-                <div className="mx-auto mb-1 mt-5 max-w-60 rounded-sm  bg-boxdark  px-4 py-6 text-center shadow-default bottom-0">
-                    <h3 className="mb-1 font-semibold text-white">Blocs by Clove Pro</h3>
-                    <p className="mb-4 text-xs text-white">Get Project Management Tool +</p>
-                    <button type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Purchase Now</button>
-                </div>
+                {design === "user" &&
+                    <div className="mx-auto mb-1 mt-5 max-w-60 rounded-sm  bg-boxdark  px-4 py-6 text-center shadow-default bottom-0">
+                        <h3 className="mb-1 font-semibold text-white">Blocs by Clove Pro</h3>
+                        <p className="mb-4 text-xs text-white">Get Project Management Tool +</p>
+                        <button type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Purchase Now</button>
+                    </div>
+                }
+
+
             </div>
         </aside>
     )
