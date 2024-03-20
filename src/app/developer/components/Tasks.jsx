@@ -38,7 +38,7 @@ const Tasks = ({ Project, loading, setLoading, designation }) => {
     };
 
     useEffect(() => {
-        setProjects(Project); 
+        setProjects(Project);
         setCurrentPage(1)
     }, [Project]);
 
@@ -247,96 +247,96 @@ const Tasks = ({ Project, loading, setLoading, designation }) => {
             )}
             {openModal ? <ViewFileModal data={dataFiles} setOpenModal={setOpenModal} /> : ''} */}
 
-<>
-    {loading ? (
-        <div className='h-full flex items-center justify-center'>
-            <div>
-                <InfinitySpin width='200' color='black' />
-            </div>
-        </div>
-    ) : (
-        <div className='p-2 h-full overflow-hidden w-full overflow-x-hidden'>
-            <div className="flex justify-end">
-                {Array.from({ length: Math.ceil(tasks.length / tasksPerPage) }).map((_, index) => (
-                    <button
-                        key={index}
-                        onClick={() => paginate(index + 1)}
-                        className={`px-4 py-2 mx-1 font-extrabold shadow-xl ${currentPage === index + 1 ? 'bg-slate-600 text-white' : 'bg-white text-blue-500'
-                            } border border-blue-500 rounded-md hover:bg-slate-600 hover:text-white`}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-            </div>
-            <div className='border shadow mt-4'>
-                <table className="w-full whitespace-nowrap shadow p-3">
-                    <tbody>
-                        <tr className="bg-gray-50 dark:bg-gray-700">
-                            <th>No</th>
-                            <th>Project ID</th>
-                            {designation === "File Verifier" ? <th>User Name</th> : <><th>Importance</th><th>Description</th></>}
-                            <th>Assigned Date</th>
-                            {designation !== "File Verifier" && <th>Dev Started</th>}
-                            {designation !== "File Verifier" && <th>Deadline</th>}
-                            {Project === "Completed" && <th>Completed Date</th>}
-                            {Project !== "Completed" && <th>Task Option</th>}
-                        </tr>
-                        {tasks.length === 0 ? (
-                            <tr className="text-center mt-10 shadow-xl border">
-                                <td colSpan="8" className='text-2xl text-blue-600'>No Tasks</td>
-                            </tr>
-                        ) : (
-                            currentTasks.map((item, i) => (
-                                <tr className='text-center mt-10 shadow-xl border h-10' key={item._id}>
-                                    <td>{i + 1}</td>
-                                    <td className="">
-                                        <p>{item.projectId.ProjectUniqId}</p>
-                                    </td>
-                                    {designation === "File Verifier" ? <td>{item.userId.firstName}</td> : 
-                                    <>
-                                        <td className="">
-                                            <div className="flex items-center justify-center">
-                                                <FiAlertOctagon color='red' />
-                                                <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
-                                            </div>
-                                        </td>
-                                        <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.description}</td>
-                                    </>}
-                                    <td className='b rounded text-green-600 font-bold'>{dateConverter(item.assignedDate)}</td>
-                                    {designation !== "File Verifier" && <td className='b rounded text-blue-600 font-bold'>{item.startDate}</td>}
-                                    {designation !== "File Verifier" && Project !== "New Tasks" && <td> {dateConverter(item.devStartedDate)}</td>}
-                                    {designation !== "File Verifier" && Project === "Completed" && <td className='text-green-600 font-bold'>{dateConverter(item.devCompletedDate)}</td>}
-                                    {Project === "Completed" && <td className='b rounded text-blue-600 font-bold'>{dateConverter(item.endDate)}</td>}
-                                    {Project !== "Completed" &&
-                                        <td>
-                                            <button
-                                                onClick={() => {
-                                                    if (Project === "New Tasks") {
-                                                        if (designation === "File Verifier") {
-                                                            handleViewAllData(item)
-                                                        } else {
-                                                            handleStartClick(item.projectId);
-                                                        }
-                                                    } else if (Project === "Ongoing Tasks") {
-                                                        handleCompleted(item.projectId);
-                                                    }
-                                                }}
-                                                className='bg-green-800 text-white px-4 py-1 rounded'
-                                            >
-                                                {designation === "File Verifier" ? "View" : Project === "New Tasks" ? "Start" : Project === "Ongoing Tasks" ? "Set Completed" : ''}
-                                            </button>
-                                        </td>
-                                    }
-                                </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    )}
-    {openModal ? <ViewFileModal data={dataFiles} setOpenModal={setOpenModal} /> : ''}
-</>
+            <>
+                {loading ? (
+                    <div className='h-full flex items-center justify-center'>
+                        <div>
+                            <InfinitySpin width='200' color='black' />
+                        </div>
+                    </div>
+                ) : (
+                    <div className='p-2 h-full overflow-hidden w-full overflow-x-hidden'>
+                        <div className="flex justify-end">
+                            {Array.from({ length: Math.ceil(tasks.length / tasksPerPage) }).map((_, index) => (
+                                <button
+                                    key={index}
+                                    onClick={() => paginate(index + 1)}
+                                    className={`px-4 py-2 mx-1 font-extrabold shadow-xl ${currentPage === index + 1 ? 'bg-slate-600 text-white' : 'bg-white text-blue-500'
+                                        } border border-blue-500 rounded-md hover:bg-slate-600 hover:text-white`}
+                                >
+                                    {index + 1}
+                                </button>
+                            ))}
+                        </div>
+                        <div className='border shadow mt-4'>
+                            <table className="w-full whitespace-nowrap shadow p-3">
+                                <tbody>
+                                    <tr className="bg-gray-50 dark:bg-gray-700">
+                                        <th>No</th>
+                                        <th>Project ID</th>
+                                        {designation === "File Verifier" ? <th>User Name</th> : <><th>Importance</th><th>Description</th></>}
+                                        <th>Assigned Date</th>
+                                        {designation !== "File Verifier" && <th>Dev Started</th>}
+                                        {designation !== "File Verifier" && <th>Deadline</th>}
+                                        {Project === "Completed" && <th>Completed Date</th>}
+                                        {Project !== "Completed" && <th>Task Option</th>}
+                                    </tr>
+                                    {tasks.length === 0 ? (
+                                        <tr className="text-center mt-10 shadow-xl border">
+                                            <td colSpan="8" className='text-2xl text-blue-600'>No Tasks</td>
+                                        </tr>
+                                    ) : (
+                                        currentTasks.map((item, i) => (
+                                            <tr className='text-center mt-10 shadow-xl border h-10' key={item._id}>
+                                                <td>{i + 1}</td>
+                                                <td className="">
+                                                    <p>{item.projectId.ProjectUniqId}</p>
+                                                </td>
+                                                {designation === "File Verifier" ? <td>{item.userId.firstName}</td> :
+                                                    <>
+                                                        <td className="">
+                                                            <div className="flex items-center justify-center">
+                                                                <FiAlertOctagon color='red' />
+                                                                <p className="text-sm text-gray-600 ml-2">{item.importance}</p>
+                                                            </div>
+                                                        </td>
+                                                        <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item.description}</td>
+                                                    </>}
+                                                <td className='b rounded text-green-600 font-bold'>{dateConverter(item.assignedDate)}</td>
+                                                {designation !== "File Verifier" && <td className='b rounded text-blue-600 font-bold'>{item.startDate}</td>}
+                                                {designation !== "File Verifier" && Project !== "New Tasks" && <td> {dateConverter(item.devStartedDate)}</td>}
+                                                {designation !== "File Verifier" && Project === "Completed" && <td className='text-green-600 font-bold'>{dateConverter(item.devCompletedDate)}</td>}
+                                                {Project === "Completed" && <td className='b rounded text-blue-600 font-bold'>{dateConverter(item.endDate)}</td>}
+                                                {Project !== "Completed" &&
+                                                    <td>
+                                                        <button
+                                                            onClick={() => {
+                                                                if (Project === "New Tasks") {
+                                                                    if (designation === "File Verifier") {
+                                                                        handleViewAllData(item)
+                                                                    } else {
+                                                                        handleStartClick(item.projectId);
+                                                                    }
+                                                                } else if (Project === "Ongoing Tasks") {
+                                                                    handleCompleted(item.projectId);
+                                                                }
+                                                            }}
+                                                            className='bg-green-800 text-white px-4 py-1 rounded'
+                                                        >
+                                                            {designation === "File Verifier" ? "View" : Project === "New Tasks" ? "Start" : Project === "Ongoing Tasks" ? "Set Completed" : ''}
+                                                        </button>
+                                                    </td>
+                                                }
+                                            </tr>
+                                        ))
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                )}
+                {openModal ? <ViewFileModal data={dataFiles} setOpenModal={setOpenModal} /> : ''}
+            </>
 
         </>
     );
