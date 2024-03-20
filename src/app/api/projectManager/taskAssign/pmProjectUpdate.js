@@ -17,7 +17,8 @@ export const pmProjectUpdate = async ({ projectId, latestNewTaskId, selectedTeam
             projectId: data.projectId,
             status: "Assigned",
             projectReachedOn: data.projectReachedOn,
-            payment: "50% Payed",
+            projectVerified:data.projectVerified,
+            payment: data.payment,
             assignedLeadId: selectedTeams,
         })
         console.log(pmProjects.onGoingProjects, '-------------pushed data')
