@@ -10,3 +10,6 @@ export const dataVerified = (data) => API.put("/dataVerified", data);
 export const startTask = (projectId) => API.post("/startTask", { projectId });
 export const completeTask = (projectId) => API.post("/complete", { projectId });
 
+
+export const developerNewTasks = () => API.get("/newTasks");
+

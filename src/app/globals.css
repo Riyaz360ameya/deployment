@@ -10,11 +10,7 @@
     }
 }
 /* Making all pages to be 100% height */
-html,
-body,
-:root {
-    height: 100%;
-}
+
 
 
 @layer base {
