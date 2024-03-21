@@ -140,7 +140,7 @@ const DataUpload = () => {
         }
     };
     return (
-        <div className='h-full bg-gray-600 p-2 flex flex-col '>
+        <div className='h-full bg-gray-400 p-2 flex flex-col '>
             <div className="p-5 ">
                 <div className="flex items-center">
                     {steps?.map((step, i) => (

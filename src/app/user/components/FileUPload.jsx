@@ -87,7 +87,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId, 
         //  onSubmit={handleSubmit}
         >
           {/* <div className='h-full md:h-80 overflow-hidden overflow-y-scroll grid grid-cols-1 md:grid-cols-2 gap-2 p-2 mt-2 bg-gray-400 rounded '> */}
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-2 h-2/4 md:3/4 overflow-hidden overflow-y-scroll p-2 mt-2 bg-gray-500 rounded' >
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-2 h-2/4 md:3/4 overflow-hidden overflow-y-scroll p-2 mt-2  rounded' >
             {Object.keys(fileUploads).map((item, index) => (
               <div key={index}>
                 <label className='block mb-2 text-sm text-white font-medium  dark:text-white' htmlFor={item}>{item}</label>
