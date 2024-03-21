@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         suppressHydrationWarning={true}>
-        <div key="root" >
+        <div key="root"  className="dark:bg-boxdark-2 dark:text-bodydark">
           <Providers>
             {loading ? <Loader /> : children}
             <ToastContainer />

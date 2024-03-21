@@ -46,36 +46,36 @@ const DropdownNotification = () => {
         className="relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white"
       >
         <span
-          className={`absolute -top-0.5 right-0 z-1 h-2 w-2 rounded-full bg-meta-1 ${
-            notifying === false ? "hidden" : "inline"
-          }`}
+          className={`absolute -top-0.5 right-0 z-1 h-2 w-2 rounded-full bg-meta-1 ${notifying === false ? "hidden" : "inline"
+            }`}
         >
           <span className="absolute -z-1 inline-flex h-full w-full animate-ping rounded-full bg-meta-1 opacity-75"></span>
         </span>
 
         <div className="relative cursor-pointer text-black">
-                            <div className='w-10 h-10 flex items-center   justify-center  '>
-                                <PiBellLight className=" text-gray-200 text-2xl " />
-                            </div>
-                            <span className='absolute h-2 w-2 bg-red-500 rounded-full top-0 right-0 flex items-center justify-center'>
-                                <span className=" h-2 w-2 animate-ping rounded-full bg-red-500 opacity-75"></span>
-                            </span>
-                        </div>
+          <div className='w-10 h-10 flex items-center   justify-center  '>
+            <PiBellLight className=" text-gray-400 text-2xl " />
+          </div>
+          <span className='absolute h-2 w-2 bg-red-500 rounded-full top-0 right-0 flex items-center justify-center'>
+            <span className=" h-2 w-2 animate-ping rounded-full bg-red-500 opacity-75"></span>
+          </span>
+        </div>
       </Link>
 
       <div
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute -right-27 mt-2.5 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-gray-400 shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80 ${
-          dropdownOpen === true ? "block" : "hidden"
-        }`}
+        // className={`absolute h-90 w-60 bg-white -right-20 ${dropdownOpen === true ? "block" : "hidden"}`}
+        className={`absolute -right-27 mt-2.5 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80 ${dropdownOpen === true ? "block" : "hidden"
+      }`}
       >
+
         <div className="px-4.5 py-3">
           <h5 className="text-sm font-medium text-bodydark2">Notification</h5>
         </div>
 
-        <ul className="flex h-auto flex-col overflow-y-auto">
+        <ul className="flex h-80 flex-col overflow-y-auto">
           <li>
             <Link
               className="flex flex-col gap-2.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"

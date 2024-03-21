@@ -20,13 +20,13 @@ import { MdCurrencyRupee } from "react-icons/md";
 import { MdTune } from "react-icons/md";
 import { MdOutlineSettings } from "react-icons/md";
 import { MdHelpOutline } from "react-icons/md";
+
+
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
     const pathname = usePathname();
     const user = useSelector((state) => state.user.userDetails)
-    console.log(pathname, '..................pathname')
     const design = user.designation
-    console.log(design, '--------------------design')
     const trigger = useRef(null);
     const sidebar = useRef(null);
     let storedSidebarExpanded = "true";
@@ -124,6 +124,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 {
                     title: 'Completed Tasks',
                     path: '/developer/completedTasks',
+                    icon: <SiTraefikproxy />,
+                },
+            ]
+        },
+    ]
+    const leadMenuItems = [
+        {
+            title: "DashBoard",
+            list: [
+                {
+                    title: 'Tasks',
+                    path: '/teamLead/tasks',
+                    icon: <SiTraefikproxy />,
+                },
+                {
+                    title: 'Developers',
+                    path: '/teamLead/developers',
+                    icon: <SiTraefikproxy />,
+                },
+                {
+                    title: 'Calender',
+                    path: '/teamLead/calender',
                     icon: <SiTraefikproxy />,
                 },
             ]
@@ -265,19 +287,33 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                             }
                                         </li>
                                     ))
-                                    : devMenuItems.map((item, i) => (
-                                        <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
-                                            <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>
-                                            {
-                                                item.list.map((each, i) => (
-                                                    <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
-                                                        <div className='text-xl text-white'>{each.icon}</div>
-                                                        <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
-                                                    </Link>
-                                                ))
-                                            }
-                                        </li>
-                                    ))
+                                    : design === "Exterior Lead" || design === "Interior Lead" ?
+                                        leadMenuItems.map((item, i) => (
+                                            <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
+                                                <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>
+                                                {
+                                                    item.list.map((each, i) => (
+                                                        <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
+                                                            <div className='text-xl text-white'>{each.icon}</div>
+                                                            <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
+                                                        </Link>
+                                                    ))
+                                                }
+                                            </li>
+                                        ))
+                                        : devMenuItems.map((item, i) => (
+                                            <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
+                                                <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>
+                                                {
+                                                    item.list.map((each, i) => (
+                                                        <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
+                                                            <div className='text-xl text-white'>{each.icon}</div>
+                                                            <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
+                                                        </Link>
+                                                    ))
+                                                }
+                                            </li>
+                                        ))
                             }
                         </ul>
                     </div>
@@ -297,29 +333,3 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     )
 };
 export default Sidebar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

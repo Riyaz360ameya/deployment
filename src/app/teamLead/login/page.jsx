@@ -7,16 +7,15 @@ import { toast } from 'react-toastify';
 import { IoIosEyeOff, IoIosEye } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import { logInApi } from '../leadAPIs/authApi'
-import { leadDetails } from '@/app/redux/teamLead/leadSlice'
-import { accessToken } from '@/app/redux/developer/developerSlice'
 import { useFormik } from 'formik';
 import { loginSchema } from '@/app/schemas/authSchema';
+import { userDetails, accessToken } from '@/app/redux/users/userSlice'
 function page() {
     const dispatch = useDispatch()
     const router = useRouter();
     const [password, setPassword] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [visiblePassword, setvisiblePassword] = useState(false)
+    const [visiblePassword, setVisiblePassword] = useState(false)
     const [user, setUser] = useState({
         email: '',
         password: ''
@@ -28,7 +27,7 @@ function page() {
     const initialValues = formValues
     const validationSchema = loginSchema
     const showHiddenPassword = () => {
-        setvisiblePassword(!visiblePassword)
+        setVisiblePassword(!visiblePassword)
     }
     const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
         initialValues,
@@ -38,13 +37,13 @@ function page() {
                 setLoading(true);
                 const { data } = await logInApi(values)
                 console.log(data)
-                dispatch(leadDetails(data.user));
+                dispatch(userDetails(data.user));
                 dispatch(accessToken(data.token))
                 toast.success(data.message)
                 console.log(data.user)
                 localStorage.setItem('TeamLead', JSON.stringify(data.user))
                 setLoading(false)
-                router.push("/teamLead/dashboard/projects")
+                router.push("/teamLead/tasks")
             } catch (error) {
                 console.log(error.message, '---error in login Lead')
                 toast.error(error.response.data.error)
@@ -84,8 +83,8 @@ function page() {
                                 />
                             </div>
                             {errors.email && touched.email ? (
-                                    <p className="text-red-600 text-start text-sm">{errors.email}</p>
-                                ) : null}
+                                <p className="text-red-600 text-start text-sm">{errors.email}</p>
+                            ) : null}
                             <div className='text-left text-sm'>
                                 <label className='font-bold' htmlFor="password">Password</label>
                                 <div className="relative">
@@ -107,8 +106,8 @@ function page() {
                                 </div>
                             </div>
                             {errors.password && touched.password ? (
-                                    <p className="text-red-600 text-start text-sm">{errors.password}</p>
-                                ) : null}
+                                <p className="text-red-600 text-start text-sm">{errors.password}</p>
+                            ) : null}
                             <div>
                                 <button type='submit' className='bg-gray-900 text-white rounded-md p-2 w-full mt-5 font-bold'>
                                     {loading ? <BeatLoader color='white' /> : 'Login'}

@@ -2,19 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { pmProjectFiles } from '@/app/projectManager/pmAPIs/projectApis';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { leadTaskFiles } from '../leadAPIs/taskApi';
 
-const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
-  console.log(details, '-------------------details')
+const ViewFileModal = ({ projectId }) => {
   const [filesData, setFilesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState([]);
   const [sort, setSort] = useState('latest');
 
-  const userName = userDetails.firstName;
-  const organizationName = userDetails.organization;
-
   const onClose = () => {
-    setviewFiles(false);
+    setViewFiles(false);
   };
 
   const handleClose = (e) => {
@@ -24,11 +21,12 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
   };
   const fetchData = async () => {
     try {
-      const { data } = await pmProjectFiles({ userName, uniqueId, organizationName });
+      // const { data } = await pmProjectFiles({ userName, uniqueId, organizationName });
+      const { data } = await leadTaskFiles(projectId);
       console.log(data, '---------------------data in files');
-    //   setFilesData(data.files || []);
+      //   setFilesData(data.files || []);
     } catch (error) {
-    //   toast.error(error.response.data.error);
+      //   toast.error(error.response.data.error);
       console.error('Error fetching files:', error.message);
     } finally {
     }
@@ -36,7 +34,7 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
 
   useEffect(() => {
     fetchData();
-  }, [uniqueId]);
+  }, []);
 
   const [activeTab, setActiveTab] = useState('about');
 

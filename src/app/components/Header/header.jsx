@@ -10,9 +10,8 @@ import { usePathname } from "next/navigation";
 
 const Header = (props) => {
     const pathname = usePathname()
-    console.log(pathname,'-----------------pathname')
     return (
-        <header className="top-0 z-999 flex w-full  bg-light drop-shadow-1  dark dark:drop-shadow-none shadow-lg">
+        <header className="top-0 z-999 flex w-full  bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none shadow-lg">
             <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
                 <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
                     {/* <!-- Hamburger Toggle BTN --> */}
@@ -23,7 +22,7 @@ const Header = (props) => {
                             props.setSidebarOpen(!props.sidebarOpen);
                         }}
 
-                        className="z-99999 block  rounded-sm border border-stroke  p-1.5 shadow-sm dark:border-strokedark lg:hidden"
+                        className="z-99999 block  rounded-sm border border-stroke dark:text-white  p-1.5 shadow-sm dark:border-strokedark lg:hidden"
                     >
 
                         <CiMenuBurger />
@@ -39,7 +38,7 @@ const Header = (props) => {
 
                 </div>
                 <div>
-                <p className="font-bold p-2 rounded">{pathname.split('/').pop().toUpperCase()}</p>
+                    <p className="font-bold p-2 rounded dark:text-white">{pathname.split('/').pop().toUpperCase()}</p>
                 </div>
 
                 {/* <div className="hidden sm:block">
@@ -83,13 +82,12 @@ const Header = (props) => {
                         <DarkModeSwitcher />
                         {/* <!-- Dark Mode Toggler --> */}
 
-
                         {/* <!-- Notification Menu Area --> */}
                         <DropdownNotification />
                         {/* <!-- Notification Menu Area --> */}
-
+                        
                         {/* <!-- Chat Notification Area --> */}
-                        {/* <DropdownMessage /> */}
+                        <DropdownMessage />
                         {/* <!-- Chat Notification Area --> */}
                     </ul>
                     {/* <!-- User Area --> */}

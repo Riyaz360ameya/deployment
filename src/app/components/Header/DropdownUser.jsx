@@ -14,7 +14,6 @@ const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const user = useSelector((state) => state.user.userDetails);
   const design = user.designation
-  console.log(user, '-----------user')
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
@@ -23,9 +22,9 @@ const DropdownUser = () => {
       const { data } = await axios.get("/api/users/logout")
       dispatch(resetUser())
       dispatch(resetProject())
-      console.log(data.message)
       toast.success(data.message)
-      design === 'user' ? router.push("/user/login") : design === 'Project Manager' ? router.push("/projectManager/login") : router.push("/developer/login")
+      design === 'user' ? router.push("/user/login") : design === 'Project Manager' ? router.push("/projectManager/login")
+        : design === 'Exterior Lead' || design === 'Interior Lead' ? router.push("/teamLead/login") : router.push("/developer/login")
     } catch (error) {
       console.log(error.message, '------------Header Error')
     }
@@ -65,7 +64,7 @@ const DropdownUser = () => {
         href="#"
       >
         <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black ">
+          <span className="block text-sm font-medium text-black dark:text-white">
             {user.firstName} {user.lastName}
           </span>
           <span className="block text-xs">{user.designation === 'user' ? '' : user.designation}</span>
@@ -107,10 +106,10 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-5 py-4 flex w-62.5 z-1 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark ${dropdownOpen === true ? "block" : "hidden"
+        className={`absolute right-0 mt-5 py-2 flex w-62.5 z-1 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark ${dropdownOpen === true ? "block" : "hidden"
           }`}
       >
-        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark ">
+        <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark text-sm">
           <li >
             <Link
               href="/profile"
@@ -129,28 +128,7 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              My Profile
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/contacts"
-              className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
-            >
-              <svg
-                className="fill-current"
-                width="22"
-                height="22"
-                viewBox="0 0 22 22"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M15.1875 10.9375C13.4531 10.9375 12.0625 12.3281 12.0625 14.0625V16.4062H9.3125C7.57812 16.4062 6.1875 17.7969 6.1875 19.5312V20.4688C6.1875 21.1719 6.79688 21.7812 7.5 21.7812H14.875C15.5781 21.7812 16.1875 21.1719 16.1875 20.4688V19.5312C16.1875 17.7969 14.7969 16.4062 13.0625 16.4062H10.3125V14.0625C10.3125 12.3281 11.7031 10.9375 13.4375 10.9375H15.1875ZM19.4688 0.703125H2.53125C1.82812 0.703125 1.21875 1.3125 1.21875 2.01562V2.95312C1.21875 4.6875 2.60938 6.07812 4.34375 6.07812H5.28125C5.98438 6.07812 6.59375 6.6875 6.59375 7.39062C6.59375 8.09375 5.98438 8.70312 5.28125 8.70312H4.34375C2.98438 8.70312 1.875 9.8125 1.875 11.1719V13.2031C1.875 14.5625 2.98438 15.6719 4.34375 15.6719H5.28125C5.98438 15.6719 6.59375 16.2812 6.59375 16.9844C6.59375 17.6875 5.98438 18.2969 5.28125 18.2969H4.34375C2.60938 18.2969 1.21875 19.6875 1.21875 21.4219V22.3594C1.21875 23.0625 1.82812 23.6719 2.53125 23.6719H19.4688C20.1719 23.6719 20.7812 23.0625 20.7812 22.3594V21.4219C20.7812 19.6875 19.3906 18.2969 17.6562 18.2969H16.7188C16.0156 18.2969 15.4062 17.6875 15.4062 16.9844C15.4062 16.2812 16.0156 15.6719 16.7188 15.6719H17.6562C19.0156 15.6719 20.125 14.5625 20.125 13.2031V11.1719C20.125 9.8125 19.0156 8.70312 17.6562 8.70312H16.7188C16.0156 8.70312 15.4062 8.09375 15.4062 7.39062C15.4062 6.6875 16.0156 6.07812 16.7188 6.07812H17.6562C19.3906 6.07812 20.7812 4.6875 20.7812 2.95312V2.01562C20.7812 1.3125 20.1719 0.703125 19.4688 0.703125Z"
-                  fill=""
-                />
-              </svg>
-              My Contacts
+              <p className="text-sm">My Profile</p>
             </Link>
           </li>
           <li>
@@ -171,32 +149,34 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              Settings
+              <p className="text-sm">Settings</p>
             </Link>
 
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-2 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base" onClick={onLogout}>
-          <svg
-            className="fill-current"
-            width="22"
-            height="22"
-            viewBox="0 0 22 22"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M15.5375 0.618744H11.6531C10.7594 0.618744 10.0031 1.37499 10.0031 2.26874V4.64062C10.0031 5.05312 10.3469 5.39687 10.7594 5.39687C11.1719 5.39687 11.55 5.05312 11.55 4.64062V2.23437C11.55 2.16562 11.5844 2.13124 11.6531 2.13124H15.5375C16.3625 2.13124 17.0156 2.78437 17.0156 3.60937V18.3562C17.0156 19.1812 16.3625 19.8344 15.5375 19.8344H11.6531C11.5844 19.8344 11.55 19.8 11.55 19.7312V17.3594C11.55 16.9469 11.2062 16.6031 10.7594 16.6031C10.3125 16.6031 10.0031 16.9469 10.0031 17.3594V19.7312C10.0031 20.625 10.7594 21.3812 11.6531 21.3812H15.5375C17.2219 21.3812 18.5625 20.0062 18.5625 18.3562V3.64374C18.5625 1.95937 17.1875 0.618744 15.5375 0.618744Z"
-              fill=""
-            />
-            <path
-              d="M6.05001 11.7563H12.2031C12.6156 11.7563 12.9594 11.4125 12.9594 11C12.9594 10.5875 12.6156 10.2438 12.2031 10.2438H6.08439L8.21564 8.07813C8.52501 7.76875 8.52501 7.2875 8.21564 6.97812C7.90626 6.66875 7.42501 6.66875 7.11564 6.97812L3.67814 10.4844C3.36876 10.7938 3.36876 11.275 3.67814 11.5844L7.11564 15.0906C7.25314 15.2281 7.45939 15.3312 7.66564 15.3312C7.87189 15.3312 8.04376 15.2625 8.21564 15.125C8.52501 14.8156 8.52501 14.3344 8.21564 14.025L6.05001 11.7563Z"
-              fill=""
-            />
-          </svg>
+        <div className="">
+          <button className="flex items-center gap-3.5 px-6 py-2 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base" onClick={onLogout}>
+            <svg
+              className="fill-current"
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15.5375 0.618744H11.6531C10.7594 0.618744 10.0031 1.37499 10.0031 2.26874V4.64062C10.0031 5.05312 10.3469 5.39687 10.7594 5.39687C11.1719 5.39687 11.55 5.05312 11.55 4.64062V2.23437C11.55 2.16562 11.5844 2.13124 11.6531 2.13124H15.5375C16.3625 2.13124 17.0156 2.78437 17.0156 3.60937V18.3562C17.0156 19.1812 16.3625 19.8344 15.5375 19.8344H11.6531C11.5844 19.8344 11.55 19.8 11.55 19.7312V17.3594C11.55 16.9469 11.2062 16.6031 10.7594 16.6031C10.3125 16.6031 10.0031 16.9469 10.0031 17.3594V19.7312C10.0031 20.625 10.7594 21.3812 11.6531 21.3812H15.5375C17.2219 21.3812 18.5625 20.0062 18.5625 18.3562V3.64374C18.5625 1.95937 17.1875 0.618744 15.5375 0.618744Z"
+                fill=""
+              />
+              <path
+                d="M6.05001 11.7563H12.2031C12.6156 11.7563 12.9594 11.4125 12.9594 11C12.9594 10.5875 12.6156 10.2438 12.2031 10.2438H6.08439L8.21564 8.07813C8.52501 7.76875 8.52501 7.2875 8.21564 6.97812C7.90626 6.66875 7.42501 6.66875 7.11564 6.97812L3.67814 10.4844C3.36876 10.7938 3.36876 11.275 3.67814 11.5844L7.11564 15.0906C7.25314 15.2281 7.45939 15.3312 7.66564 15.3312C7.87189 15.3312 8.04376 15.2625 8.21564 15.125C8.52501 14.8156 8.52501 14.3344 8.21564 14.025L6.05001 11.7563Z"
+                fill=""
+              />
+            </svg>
 
-          Log Out
-        </button>
+            Log Out
+          </button>
+        </div>
       </div>
       {/* Dropdown End */}
     </div>

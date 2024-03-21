@@ -155,7 +155,7 @@ const TaskAssignModal = ({ setModal, projectId, onGoingFurther }) => {
                             </div>
                         </div>
                         <div className='text-left text-sm'>
-                            <label className='font-bold' htmlFor="">Instruction to the Team</label>
+                            <label className='font-bold' htmlFor="">Instruction to the Developer</label>
                             <textarea type="text" className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
                                 id='instruction'
                                 value={task.instruction}
