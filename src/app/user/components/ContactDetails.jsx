@@ -153,7 +153,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
 
                     ))}
                 </div>
-                <div className='flex justify-between mt-5'>
+                <div className='flex justify-between gap-6 mt-5'>
                     <button
                         className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer  hover:bg-teal-600   bg-teal-600  text-teal-100  border duration-200 ease-in-out  border-teal-600 transition"
                         onClick={addCoordinator}
