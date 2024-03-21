@@ -88,7 +88,7 @@ const Projects = () => {
     };
     return (
         <>
-            <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark dark:text-white sm:px-7.5 xl:pb-1">
+            <div className="rounded-sm border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark dark:text-white sm:px-7.5 xl:pb-1">
                 <div className=''>
                     <div className='flex items-center justify-between'>
                         <div className='flex gap-4 ml-2'>
@@ -116,107 +116,78 @@ const Projects = () => {
                         </div>
                     </div>
                 </div>
-                {/* <div className='border shadow mt-4'> */}
-                <div className="max-w-full overflow-x-auto">
-                    <table className="w-full whitespace-nowrap shadow p-3">
-                        <tbody>
-                            <tr tabIndex="0" className="focus:outline-none h-16 border border-gray-100 rounded shadow-xl">
-                                <th>No</th>
-                                <th>Select</th>
-                                <th>Project Title</th>
-                                <th>Importance</th>
-                                <th>Assigned Date</th>
-                                <th>Comments</th>
-                                <th>View Files</th>
-                                <th>Deadline</th>
-                                {
-                                    position !== "New Task" && (
-                                        <>
-                                            <th>Assigned Dev</th>
-                                            <th>Dev Status</th>
-                                        </>
-                                    )
-                                }
-                                {
-                                    position === "New Task" &&
-                                    <>
-                                        <th>Status</th>
-                                    </>
-                                }
-                                {
-                                    (position !== "Completed") &&
-                                    <>
-                                        <th>Options</th>
-                                    </>
-                                }
-                            </tr>
-                            <tr className='h-5'></tr>
-                            {
-                                leadData.length === 0 ? (
+                <div className="max-w-full overflow-x-auto py-4">
+                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <div class="pb-4 bg-white dark:bg-gray-900 py-5">
+                            <label for="table-search" class="sr-only">Search</label>
+                            <div class="relative mb-3">
+                                <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    </svg>
+                                </div>
+                                <input type="text" id="table-search" class=" block pt-2 pb-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items" />
+                            </div>
+                        </div>
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="p-4">
+                                        <div class="flex items-center">
+                                            <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                            <label for="checkbox-all-search" class="sr-only">checkbox</label>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Project Title
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Importance
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Assigned Date
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Comments
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        View Files
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Deadline
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {leadData.length === 0 ? (
                                     <tr className="text-center mt-10 shadow-xl border">
-                                        <td colSpan="8" className='text-2xl text-blue-600'>No Tasks</td>
+                                        <td colSpan="7" className="text-2xl text-blue-600">No Tasks</td>
                                     </tr>
-                                ) :
-                                    currentTasks.map((item, i) => {
-                                        return (
-                                            <tr key={i} className='text-center mt-10 shadow-xl border'>
-                                                <td>{i + 1}</td>
-                                                <td className='text-center flex justify-center items-center h-10 '>
-                                                    <div className="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
-                                                        <input placeholder="checkbox" type="checkbox" className="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full " />
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="flex items-center gap-2  ml-5">
-                                                        <FaLink color='blue' />
-                                                        <p className="text-base font-medium  text-gray-700 ">{item?.projectTitle}</p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="flex items-center justify-center">
-                                                        <FiAlertOctagon color='red' />
-                                                        <p className="text-sm text-gray-600 ml-2">{item?.importance}</p>
-                                                    </div>
-                                                </td>
-                                                <td>{dateConverter(item?.assignedDate)}</td>
-                                                <td className='flex items-center justify-center gap-2'>
-                                                    <PiChatDotsLight />{item?.instruction}
-                                                </td>
-                                                <td onClick={() => viewFilesData(item.projectId)}>
-                                                    <button>Files</button>
-                                                </td>
-                                                <td className='bg-red-200 rounded text-red-600'>{item?.endDate}</td>
-
-                                                {position !== "New Task" && <td>{item?.assignedDeveloperName}</td>}
-                                                <td>{item?.status}</td>
-                                                <td className='flex gap-2 items-center justify-center'>
-                                                    {
-                                                        item?.status === "New Task" ?
-                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item?.projectId)}>
-                                                                Assign Task to
-                                                            </button>
-                                                            :
-                                                            item?.status === "Assigned" ?
-                                                                <>
-                                                                    <button className='px-3 bg-blue-600 text-white rounded'>E</button>
-                                                                    <button className='px-3 bg-red-600 text-white rounded'>D</button>
-                                                                </>
-                                                                :
-                                                                position !== "Completed" &&
-                                                                    item?.status === "Completed" ?
-                                                                    <button className='px-3 bg-blue-600 text-white rounded' onClick={() => handleUpdate(item?.projectId)}>Update</button>
-                                                                    : ""
-                                                    }
-                                                </td>
-                                            </tr>
-                                        )
-                                    })}
-                        </tbody>
-                    </table>
-
+                                ) : (
+                                    leadData.map((item, index) => (
+                                        <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <td className="w-4 p-4">
+                                                <div className="flex items-center">
+                                                    <input id={`checkbox-table-search-${index + 1}`} type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                                    <label htmlFor={`checkbox-table-search-${index + 1}`} className="sr-only">checkbox</label>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.projectTitle}</td>
+                                            <td className="px-6 py-4">{item.importance}</td>
+                                            <td className="px-6 py-4">{item.assignedDate}</td>
+                                            <td className="px-6 py-4">{item?.instruction}</td>
+                                            <td className="px-6 py-4">
+                                                <button onClick={() => viewFilesData(item.projectId)} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</button>
+                                            </td>
+                                            <td className="px-6 py-4">{item?.endDate}</td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                {viewFiles ? <ViewFileModal projectId={projectId}  /> : ''}
-
+                {viewFiles ? <ViewFileModal projectId={projectId} /> : ''}
                 {
                     modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} /> : ""
                 }
@@ -225,7 +196,7 @@ const Projects = () => {
                 }
             </div>
 
-          
+
         </>
     );
 };
