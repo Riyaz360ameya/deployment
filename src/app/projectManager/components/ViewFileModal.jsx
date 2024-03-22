@@ -3,7 +3,7 @@ import { pmProjectFiles } from '../pmAPIs/projectApis';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
+const ViewFileModal = ({ userDetails, uniqueId, setViewFiles, details }) => {
   console.log(details, '-------------------details')
   const [filesData, setFilesData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +14,7 @@ const ViewFileModal = ({ userDetails, uniqueId, setviewFiles, details }) => {
   const organizationName = userDetails.organization;
 
   const onClose = () => {
-    setviewFiles(false);
+    setViewFiles(false);
   };
 
   const handleClose = (e) => {

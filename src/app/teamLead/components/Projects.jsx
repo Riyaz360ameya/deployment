@@ -9,7 +9,8 @@ import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllTasks } from '../leadAPIs/taskApi';
 import { teamLeadCompletedProjectsStore, teamLeadNewProjectsStore, teamLeadOngoingProjectsStore } from '@/app/redux/teamLead/leadProSlice';
-import ViewFileModal from './ViewFilesModal';
+import ViewFilesModal from '@/app/components/common/ViewFilesModal';
+// import ViewFileModal from './ViewFilesModal';
 const Projects = () => {
     const dispatch = useDispatch();
     const leadNewTasks = useSelector((state) => state.leadTasks.teamLeadNewProjects)
@@ -260,8 +261,8 @@ const Projects = () => {
 
                         </tbody>
                     </table>
-                    
-                    {viewFiles ? <ViewFileModal projectId={projectId} /> : ''}
+
+                    {viewFiles ? <ViewFilesModal projectId={projectId} setViewFiles={setViewFiles} /> : ''}
 
                     {
                         modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} /> : ""

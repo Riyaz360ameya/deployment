@@ -14,12 +14,16 @@ export async function PUT(request = NextRequest) {
         const { projectId } = await request.json();
         console.log(projectId, '-------------projectId')
 
-        const projectDetails = await ClientInformationModel.findById(projectId).populate({ path: 'userId' })
+        const projectDetails = await ClientInformationModel.findById(projectId).populate(
+            {
+                path: 'userId',
+                select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry -notifications',
+            })
         const userName = projectDetails.userId.firstName
         const uniqueId = projectDetails.ProjectUniqId
         const organizationName = projectDetails.userId.organization
 
-        console.log(projectDetails, '----------projectDetails')
+        console.log(projectDetails.projectInfo, '----------projectDetails')
         // const { userName, uniqueId, organizationName } = reqBody;
         const data = { userName, uniqueId, organizationName }
 
@@ -28,6 +32,7 @@ export async function PUT(request = NextRequest) {
         return NextResponse.json({
             success: true,
             files: clientsData,
+            projectDetails
         }, { status: 200 });
     } catch (error) {
         console.error(error.message, '------------POST error');
