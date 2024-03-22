@@ -50,7 +50,8 @@ const TaskAssignModal = ({ setModal, projectId, onGoingFurther }) => {
     }
     const leadData = async () => {
         const { data } = await devUnderLead()
-        setDevelopers(data.Developers, '-------------data')
+        console.log(data, '--------developer++++++')
+        setDevelopers(data.Developers)
     }
     useEffect(() => {
         leadData()

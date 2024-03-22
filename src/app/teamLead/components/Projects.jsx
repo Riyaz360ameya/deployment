@@ -31,6 +31,7 @@ const Projects = () => {
     const fetchTasks = async () => {
         try {
             const { data } = await getAllTasks()
+            console.log(data.LeadTasks.newTasks, '----------------------data.LeadTasks.newTasks')
             dispatch(teamLeadNewProjectsStore(data.LeadTasks.newTasks))
             dispatch(teamLeadOngoingProjectsStore(data.LeadTasks.onGoingTasks))
             dispatch(teamLeadCompletedProjectsStore(data.LeadTasks.completedTasks))
@@ -153,6 +154,9 @@ const Projects = () => {
                                 <th scope="col" className="px-6 py-3">
                                     Comments
                                 </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Work Type
+                                </th>
                                 <th scope="col" className="text-center">
                                     Files
                                 </th>
@@ -220,6 +224,11 @@ const Projects = () => {
                                             {item?.instruction} */}
                                             <span className='flex items-center gap-3'><PiChatDotsLight />{item?.instruction}</span>
                                         </td>
+                                        <td className="text-center">
+                                            {item?.workType?.['8KRender'] ? "8KRender" :
+                                                item?.workType?.textureAndLightning ? "textureAndLightning" :
+                                                    item?.workType?.whiteRender ? "whiteRender" :
+                                                        "NOT Specified"}                                        </td>
                                         <td onClick={() => viewFilesData(item.projectId)} className="text-center">
                                             <button>View Files</button>
                                         </td>

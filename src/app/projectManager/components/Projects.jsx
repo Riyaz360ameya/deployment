@@ -11,7 +11,7 @@ import ConfirmModal from './ConfirmModal';
 import ViewFilesModal from '@/app/components/common/ViewFilesModal';
 import { VscFiles } from "react-icons/vsc";
 
-const Projects = ({ loading, setLoading }) => {
+const Projects = () => {
     const dispatch = useDispatch()
     const [projectsPerPage] = useState(8); // Adjust the number of projects per page
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +19,7 @@ const Projects = ({ loading, setLoading }) => {
     const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
     const pmComPro = useSelector((state) => state.pmProjects.pmCompletedProjects)
 
+    const [loading, setLoading] = useState(false)
     const [verify, setVerify] = useState(false)
     const [nextTask, setNextTask] = useState(false)
     const [projectId, setProjectId] = useState()
@@ -177,7 +178,7 @@ const Projects = ({ loading, setLoading }) => {
                                         Project Id
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Ventuare
+                                        Venture
                                     </th>
                                     <th scope="col" className="px-6 py-3">
                                         Files View
