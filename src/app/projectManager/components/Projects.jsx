@@ -396,22 +396,22 @@ const Projects = ({ loading, setLoading }) => {
                     </div>
                 </div>
             ) : (
-                <div className='w-full h-full p-2 overflow-hidden overflow-x-hidden '>
-                    <div className='flex items-center justify-between '>
+                <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark dark:text-white sm:px-7.5 xl:pb-1">
+                    <div className='md:flex items-center justify-between '>
                         <div className=''>
                             <div className='flex gap-4 ml-2'>
-                                <div onClick={() => setPosition("New")} className={`py-2 px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
+                                <div onClick={() => setPosition("New")} className={`p-2 md:py-2 md:px-8  ${position === "New" && "bg-indigo-200"}  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl cursor-pointer`}>
                                     <p>New</p>
                                 </div>
-                                <div onClick={() => setPosition("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
+                                <div onClick={() => setPosition("OnGoing")} className={`p-2 md:py-2 md:px-8  ${position === "OnGoing" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
                                     <p>OnGoing</p>
                                 </div>
-                                <div onClick={() => setPosition("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
+                                <div onClick={() => setPosition("Completed")} className={`p-2 md:py-2 md:px-8  ${position === "Completed" && "bg-indigo-200"} hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl cursor-pointer`}>
                                     <p>Completed</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="">
+                        <div className=" flex justify-end">
                             {Array.from({ length: Math.ceil(projects.length / projectsPerPage) }).map((_, index) => (
                                 <button
                                     key={index}
@@ -425,21 +425,24 @@ const Projects = ({ loading, setLoading }) => {
                         </div>
                     </div>
 
-                    <div className="relative overflow-auto shadow-md sm:rounded-lg mt-5 border">
-                        {/* <div className="pb-4 bg-white dark:bg-gray-900">
-                            <label htmlFor="table-search" className="sr-only">Search</label>
-                            <div className="relative mt-1">
-                                <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                                    <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                    </svg>
-                                </div>
-                                <input type="text" id="table-search" className="block p-3 ps-10  text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search htmlFor items" />
+                    <div className="py-2">
+                        <label htmlFor="table-search" className="sr-only">Search</label>
+                        <div className="relative mt-1">
+                            <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
                             </div>
-                        </div> */}
+                            <input type="text" id="table-search" className="block p-3 ps-10  text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search htmlFor items" />
+                        </div>
+                    </div>
+                    <div className="relative overflow-auto shadow-md sm:rounded-lg mt-5 border">
                         <table className="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
+                                    <th scope="col" className="px-6 py-3">
+                                        NO:
+                                    </th>
                                     <th scope="col" className="p-4">
                                         <div className="flex items-center">
                                             <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
@@ -447,7 +450,7 @@ const Projects = ({ loading, setLoading }) => {
                                         </div>
                                     </th>
                                     <th scope="col" className="px-6 py-3">
-                                        Organisation
+                                        Organization
                                     </th>
                                     <th scope="col" className="px-6 py-3">
                                         Project Name
@@ -480,6 +483,9 @@ const Projects = ({ loading, setLoading }) => {
                                 ) : (
                                     currentProjects.map((item, i) => (
                                         <tr key={i} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+                                            <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                {i + 1}
+                                            </td>
                                             <td className="w-4 p-4">
                                                 <div className="flex items-center">
                                                     <input id={`checkbox-table-search-${i}`} type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />

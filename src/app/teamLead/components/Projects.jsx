@@ -116,248 +116,169 @@ const Projects = () => {
                         </div>
                     </div>
                 </div>
-                {/* <div className='border shadow mt-4'> */}
-                <div className="max-w-full overflow-x-auto">
-                    <table className="w-full whitespace-nowrap shadow p-3">
-                        <tbody>
-                            <tr tabIndex="0" className="focus:outline-none h-16 border border-gray-100 rounded shadow-xl">
-                                <th>No</th>
-                                <th>Select</th>
-                                <th>Project Title</th>
-                                <th>Importance</th>
-                                <th>Assigned Date</th>
-                                <th>Comments</th>
-                                <th>View Files</th>
-                                <th>Deadline</th>
-                                {
-                                    position !== "New Task" && (
-                                        <>
-                                            <th>Assigned Dev</th>
-                                            <th>Dev Status</th>
-                                        </>
-                                    )
-                                }
-                                {
-                                    position === "New Task" &&
-                                    <>
-                                        <th>Status</th>
-                                    </>
-                                }
-                                {
-                                    (position !== "Completed") &&
-                                    <>
-                                        <th>Options</th>
-                                    </>
-                                }
-                            </tr>
-                            <tr className='h-5'></tr>
-                            {
-                                leadData.length === 0 ? (
-                                    <tr className="text-center mt-10 shadow-xl border">
-                                        <td colSpan="8" className='text-2xl text-blue-600'>No Tasks</td>
-                                    </tr>
-                                ) :
-                                    currentTasks.map((item, i) => {
-                                        return (
-                                            <tr key={i} className='text-center mt-10 shadow-xl border'>
-                                                <td>{i + 1}</td>
-                                                <td className='text-center flex justify-center items-center h-10 '>
-                                                    <div className="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
-                                                        <input placeholder="checkbox" type="checkbox" className="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full " />
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="flex items-center gap-2  ml-5">
-                                                        <FaLink color='blue' />
-                                                        <p className="text-base font-medium  text-gray-700 ">{item?.projectTitle}</p>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="flex items-center justify-center">
-                                                        <FiAlertOctagon color='red' />
-                                                        <p className="text-sm text-gray-600 ml-2">{item?.importance}</p>
-                                                    </div>
-                                                </td>
-                                                <td>{dateConverter(item?.assignedDate)}</td>
-                                                <td className='flex items-center justify-center gap-2'>
-                                                    <PiChatDotsLight />{item?.instruction}
-                                                </td>
-                                                <td onClick={() => viewFilesData(item.projectId)}>
-                                                    <button>Files</button>
-                                                </td>
-                                                <td className='bg-red-200 rounded text-red-600'>{item?.endDate}</td>
-
-                                                {position !== "New Task" && <td>{item?.assignedDeveloperName}</td>}
-                                                <td>{item?.status}</td>
-                                                <td className='flex gap-2 items-center justify-center'>
-                                                    {
-                                                        item?.status === "New Task" ?
-                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item?.projectId)}>
-                                                                Assign Task to
-                                                            </button>
-                                                            :
-                                                            item?.status === "Assigned" ?
-                                                                <>
-                                                                    <button className='px-3 bg-blue-600 text-white rounded'>E</button>
-                                                                    <button className='px-3 bg-red-600 text-white rounded'>D</button>
-                                                                </>
-                                                                :
-                                                                position !== "Completed" &&
-                                                                    item?.status === "Completed" ?
-                                                                    <button className='px-3 bg-blue-600 text-white rounded' onClick={() => handleUpdate(item?.projectId)}>Update</button>
-                                                                    : ""
-                                                    }
-                                                </td>
-                                            </tr>
-                                        )
-                                    })}
-                        </tbody>
-                    </table>
-
-                </div>
-                {viewFiles ? <ViewFileModal projectId={projectId}  /> : ''}
-
-                {
-                    modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} /> : ""
-                }
-                {
-                    cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""
-                }
-            </div>
-
-            {/* <div className='p-2 h-full overflow-hidden overflow-y-scroll w-full overflow-x-hidden' >
-                <div className=''>
-                    <h1 className='text-xl p-2'>Projects</h1>
-                    <div className='flex items-center justify-between'>
-                        <div className='flex gap-4 ml-2'>
-                            <div onClick={() => setPosition("New Task")} className={`py-2 px-8  ${position === "New Task" && "bg-indigo-100"} cursor-pointer  hover:bg-indigo-100 text-indigo-700 rounded-full relative shadow-xl`}>
-                                <p className=''>New Task</p>
-                            </div>
-                            <div onClick={() => setPosition("OnGoing")} className={`py-2 px-8  ${position === "OnGoing" && "bg-indigo-100"} cursor-pointer hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
-                                <p>OnGoing</p>
-                            </div>
-                            <div onClick={() => setPosition("Completed")} className={`py-2 px-8  ${position === "Completed" && "bg-indigo-100"} cursor-pointer hover:bg-indigo-100 text-indigo-700 rounded-full shadow-xl`}>
-                                <p>Completed</p>
-                            </div>
+                <div className="py-2 ">
+                    <label htmlFor="table-search" className="sr-only">Search</label>
+                    <div className="relative mt-1">
+                        <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
                         </div>
-                        <div className="">
-                            {Array.from({ length: Math.ceil(leadData.length / tasksPerPage) }).map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => paginate(index + 1)}
-                                    className={`px-4 py-2 mx-1 font-extrabold shadow-xl ${currentPage === index + 1 ? 'bg-slate-600 text-white' : 'bg-white text-blue-500'
-                                        } border border-blue-500 rounded-md hover:bg-slate-600 hover:text-white`}
-                                >
-                                    {index + 1}
-                                </button>
-                            ))}
-                        </div>
+                        <input type="text" id="table-search" className="block p-3 ps-10  text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search htmlFor items" />
                     </div>
                 </div>
-                <div className='border shadow mt-4'>
-                    <table className="w-full whitespace-nowrap shadow p-3 ">
-                        <tbody>
-                            <tr tabIndex="0" className="focus:outline-none h-16 border border-gray-100 rounded shadow-xl">
-                                <th>No</th>
-                                <th>Select</th>
-                                <th>Project Tile</th>
-                                <th>Importance</th>
-                                <th>Assigned Date</th>
-                                <th>Comments</th>
-                                <th>Views Files</th>
-                                <th>Deadline</th>
+                <div className="relative overflow-auto shadow-md sm:rounded-lg mt-5 border">
+                    <table className="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-400 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" className="px-6 py-3">
+                                    NO:
+                                </th>
+                                <th scope="col" className="p-4">
+                                    <div className="flex items-center">
+                                        <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
+                                    </div>
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Project Title
+                                </th>
+                                <th scope="col" className="text-center">
+                                    Importance
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Assigned Date
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Comments
+                                </th>
+                                <th scope="col" className="text-center">
+                                    Files
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Deadline
+                                </th>
                                 {
                                     position !== "New Task" && (
                                         <>
-                                            <th>Assigned Dev</th>
-                                            <th>Dev Status</th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Assigned Dev
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Dev Status
+                                            </th>
                                         </>
                                     )
                                 }
                                 {
                                     position === "New Task" &&
                                     <>
-                                        <th>status</th>
+                                        <th scope="col" className="px-6 py-3">
+                                            Status
+                                        </th>
                                     </>
                                 }
                                 {
                                     (position !== "Completed") &&
                                     <>
-                                        <th>Options</th>
+                                        <th scope="col" className="px-6 py-3">
+                                            Options
+                                        </th>
                                     </>
                                 }
                             </tr>
-                            <tr className='h-5'></tr>
-                            {
-                                leadData.length === 0 ? (
-                                    <tr className="text-center mt-10 shadow-xl border">
-                                        <td colSpan="8" className='text-2xl text-blue-600'>No Tasks</td>
+                        </thead>
+                        <tbody>
+                            {leadData.length === 0 ? (
+                                <tr className="mt-10 text-center border shadow-xl">
+                                    <td colSpan="7" className='text-2xl text-blue-600'>No Tasks</td>
+                                </tr>
+                            ) : (
+                                currentTasks.map((item, i) => (
+                                    <tr key={i} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {i + 1}
+                                        </td>
+                                        <td className="w-4 p-4">
+                                            <div className="flex items-center">
+                                                <input id={`checkbox-table-search-${i}`} type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                                <label htmlFor={`checkbox-table-search-${i}`} className="sr-only">checkbox</label>
+                                            </div>
+                                        </td>
+                                        <td className=" font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {item?.projectTitle}
+                                        </td>
+                                        <td className="text-center">
+                                            {item?.importance}
+                                        </td>
+                                        <td className="text-center">
+                                            {dateConverter(item?.assignedDate)}
+                                        </td>
+                                        <td className=" text-center">
+                                            {/* <PiChatDotsLight />
+                                            {item?.instruction} */}
+                                            <span className='flex items-center gap-3'><PiChatDotsLight />{item?.instruction}</span>
+                                        </td>
+                                        <td onClick={() => viewFilesData(item.projectId)} className="text-center">
+                                            <button>View Files</button>
+                                        </td>
+                                        <td className="text-center">
+                                            {item?.endDate}
+                                        </td>
+                                        {position !== "New Task" &&
+                                            <td className="px-6 py-4 bg-red-200 rounded text-red-600">
+                                                {item?.assignedDeveloperName}
+                                            </td>
+                                        }
+
+                                        <td className="">
+                                            {item?.status}
+                                        </td>
+                                        <td>
+                                            {item?.status === "New Task" ?
+                                                <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleAssign(item?.projectId)} >
+                                                    Assign Task to
+                                                </button>
+                                                :
+                                                item.status === "Assigned" ?
+                                                    <>
+                                                        <button className='px-3 text-white bg-blue-600 rounded'>E</button>
+                                                        <button className='px-3 ml-2 text-white bg-red-600 rounded'>D</button>
+                                                    </>
+                                                    :
+                                                    position !== "Completed" &&
+                                                        item?.status === "Completed" ?
+                                                        <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate(item?.projectId)} >
+                                                            Update
+                                                        </button>
+                                                        : ""
+                                            }
+                                        </td>
                                     </tr>
-                                ) :
-                                    currentTasks.map((item, i) => {
-                                        return (
-                                            <tr key={i} className='text-center mt-10 shadow-xl border'>
-                                                <td>{i + 1}</td>
-                                                <td className='text-center flex justify-center items-center h-10 '>
-                                                    <div className="bg-gray-200 rounded-sm w-5 h-5 flex flex-shrink-0 justify-center items-center relative">
-                                                        <input placeholder="checkbox" type="checkbox" className="focus:opacity-100 checkbox opacity-0 absolute cursor-pointer w-full h-full " />
-                                                    </div>
-                                                </td>
-                                                <td className="">
-                                                    <div className="flex items-center gap-2  ml-5">
-                                                        <FaLink color='blue' />
-                                                        <p className="text-base font-medium  text-gray-700 ">{item?.projectTitle}</p>
-                                                    </div>
-                                                </td>
-                                                <td className="">
-                                                    <div className="flex items-center justify-center">
-                                                        <FiAlertOctagon color='red' />
-                                                        <p className="text-sm text-gray-600 ml-2">{item?.importance}</p>
-                                                    </div>
-                                                </td>
-                                                <td className='text-center'>{dateConverter(item?.assignedDate)}</td>
-                                                <td className='flex items-center justify-center gap-2'><PiChatDotsLight />{item?.instruction}</td>
-                                                <td className=''onClick={() => viewFilesData({ uniqueId: item.projectId.ProjectUniqId, userDetails: item.userId, fileDetails: item })}><button>Files</button></td>
-                                                <td className='bg-red-200 rounded text-red-600'>{item?.endDate}</td>
+                                ))
+                            )}
 
-                                                {position !== "New Task" && <td>{item?.assignedDeveloperName}</td>}
-                                                <td>{item?.status}</td>
-                                                <td className='flex gap-2 items-center justify-center'>
-                                                    {
-                                                        item?.status === "New Task" ?
-
-                                                            <button className='bg-blue-600 px-3 py-1 rounded text-white' onClick={() => handleAssign(item?.projectId)} >
-                                                                Assign Task to
-                                                            </button>
-                                                            :
-                                                            item?.status === "Assigned" ?
-                                                                <>
-                                                                    <button className='px-3 bg-blue-600 text-white rounded'>E</button>
-                                                                    <button className='px-3 bg-red-600 text-white rounded'>D</button>
-                                                                </>
-                                                                :
-                                                                position !== "Completed" &&
-                                                                    item?.status === "Completed" ?
-                                                                    <button className='px-3 bg-blue-600 text-white rounded' onClick={() => handleUpdate(item?.projectId)}>Update</button>
-                                                                    : ""
-                                                    }
-                                                </td>
-
-                                            </tr>
-                                        )
-                                    })}
                         </tbody>
                     </table>
+                    
+                    {viewFiles ? <ViewFileModal projectId={projectId} /> : ''}
+
+                    {
+                        modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} /> : ""
+                    }
+                    {
+                        cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""
+                    }
                 </div>
-                {viewFiles ? <ViewFileModal userDetails={userDetails} uniqueId={uniqueId} setViewFiles={setViewFiles} details={details} /> : ''}
+                {/* {viewFiles ? <ViewFileModal userDetails={userDetails} uniqueId={uniqueId} setViewFiles={setViewFiles} details={details} /> : ''}
 
                 {
                     modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} /> : ""
                 }
                 {
                     cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""
-                }
-            </div> */}
+                } */}
+            </div>
         </>
     );
 };
