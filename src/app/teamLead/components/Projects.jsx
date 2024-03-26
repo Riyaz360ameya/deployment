@@ -90,7 +90,7 @@ const Projects = () => {
     };
     return (
         <>
-            <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark dark:text-white sm:px-7.5 xl:pb-1">
+            <div className="rounded-sm border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark dark:text-white sm:px-7.5 xl:pb-1">
                 <div className=''>
                     <div className='flex items-center justify-between'>
                         <div className='flex gap-4 ml-2'>

@@ -34,7 +34,7 @@ const ProjectInfo = ({ removeFromLocation, addToLocation, setClientInputs, clien
                     </button>
                 </div>
             </div>
-            <div className='p-3 bg-gray-500 mt-2 flex flex-col rounded'>
+            <div className='p-3  mt-2 flex flex-col rounded'>
                 <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 mb-6 md:grid-cols-3 my-2 mx-2  p-2 rounded">
                     <>
                         {fields.map((field) => (
