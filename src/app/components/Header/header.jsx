@@ -38,7 +38,7 @@ const Header = (props) => {
 
                 </div>
                 <div>
-                    <p className="font-bold p-2 rounded dark:text-white">{pathname.split('/').pop().toUpperCase()}</p>
+                    <p className="font-bold p-2 rounded dark:text-white hidden lg:block">{pathname.split('/').pop().toUpperCase()}</p>
                 </div>
 
                 {/* <div className="hidden sm:block">
