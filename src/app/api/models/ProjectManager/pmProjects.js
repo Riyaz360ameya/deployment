@@ -81,7 +81,21 @@ const proManagerProjectSchema = new mongoose.Schema({
             ],
             projectVerified: {
                 type: Boolean,
-            }
+            },
+            projectStatus: {
+                whiteRender:{
+                    type:Boolean,
+                    default:false,
+                },
+                textureAndLightning:{
+                    type:Boolean,
+                    default:false,
+                },
+                "8KRender":{
+                    type:Boolean,
+                    default:false,
+                },
+            },
         }
     ],
     completedProjects: [
@@ -129,7 +143,18 @@ const proManagerProjectSchema = new mongoose.Schema({
             },
             projectVerified: {
                 type: Boolean,
-            }
+            },
+            projectStatus: {
+                whiteRender:{
+                    type:Boolean,
+                },
+                textureAndLightning:{
+                    type:Boolean,
+                },
+                "8KRender":{
+                    type:Boolean,
+                },
+            },
         }
     ]
 });

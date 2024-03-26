@@ -3,7 +3,6 @@ import { FaLink } from 'react-icons/fa6';
 import { PiChatDotsLight } from 'react-icons/pi';
 import axios from 'axios';
 import { InfinitySpin } from 'react-loader-spinner';
-import Badge from './Badge';
 import { userProjects } from '../userAPIs/projectApis';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoMdCut } from "react-icons/io";

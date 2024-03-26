@@ -16,5 +16,5 @@ const API = axios.create({ baseURL: "/api/projectManager" })
 //     }
 // });
 export const pmAllProjects = () => API.get('/allProjects');
-export const pmProjectFiles = (data) => API.put('/fetchClientfiles', data);
+export const pmProjectFiles = (projectId) => API.put('/fetchClientfiles', { projectId });
 export const projectCompleted = (projectId) => API.put('/complete', { projectId })

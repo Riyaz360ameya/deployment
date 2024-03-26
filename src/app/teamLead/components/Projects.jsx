@@ -9,7 +9,8 @@ import { dateConverter } from '@/app/api/helpers/dateConverter';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllTasks } from '../leadAPIs/taskApi';
 import { teamLeadCompletedProjectsStore, teamLeadNewProjectsStore, teamLeadOngoingProjectsStore } from '@/app/redux/teamLead/leadProSlice';
-import ViewFileModal from './ViewFilesModal';
+import ViewFilesModal from '@/app/components/common/ViewFilesModal';
+// import ViewFileModal from './ViewFilesModal';
 const Projects = () => {
     const dispatch = useDispatch();
     const leadNewTasks = useSelector((state) => state.leadTasks.teamLeadNewProjects)
@@ -30,6 +31,7 @@ const Projects = () => {
     const fetchTasks = async () => {
         try {
             const { data } = await getAllTasks()
+            console.log(data.LeadTasks.newTasks, '----------------------data.LeadTasks.newTasks')
             dispatch(teamLeadNewProjectsStore(data.LeadTasks.newTasks))
             dispatch(teamLeadOngoingProjectsStore(data.LeadTasks.onGoingTasks))
             dispatch(teamLeadCompletedProjectsStore(data.LeadTasks.completedTasks))
@@ -116,6 +118,177 @@ const Projects = () => {
                         </div>
                     </div>
                 </div>
+                <div className="py-2 ">
+                    <label htmlFor="table-search" className="sr-only">Search</label>
+                    <div className="relative mt-1">
+                        <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                            </svg>
+                        </div>
+                        <input type="text" id="table-search" className="block p-3 ps-10  text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search htmlFor items" />
+                    </div>
+                </div>
+                <div className="relative overflow-auto shadow-md sm:rounded-lg mt-5 border">
+                    <table className="w-full  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-gray-400 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" className="px-6 py-3">
+                                    NO:
+                                </th>
+                                <th scope="col" className="p-4">
+                                    <div className="flex items-center">
+                                        <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
+                                    </div>
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Project Title
+                                </th>
+                                <th scope="col" className="text-center">
+                                    Importance
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Assigned Date
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Comments
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Work Type
+                                </th>
+                                <th scope="col" className="text-center">
+                                    Files
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Deadline
+                                </th>
+                                {
+                                    position !== "New Task" && (
+                                        <>
+                                            <th scope="col" className="px-6 py-3">
+                                                Assigned Dev
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
+                                                Dev Status
+                                            </th>
+                                        </>
+                                    )
+                                }
+                                {
+                                    position === "New Task" &&
+                                    <>
+                                        <th scope="col" className="px-6 py-3">
+                                            Status
+                                        </th>
+                                    </>
+                                }
+                                {
+                                    (position !== "Completed") &&
+                                    <>
+                                        <th scope="col" className="px-6 py-3">
+                                            Options
+                                        </th>
+                                    </>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {leadData.length === 0 ? (
+                                <tr className="mt-10 text-center border shadow-xl">
+                                    <td colSpan="7" className='text-2xl text-blue-600'>No Tasks</td>
+                                </tr>
+                            ) : (
+                                currentTasks.map((item, i) => (
+                                    <tr key={i} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'>
+                                        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {i + 1}
+                                        </td>
+                                        <td className="w-4 p-4">
+                                            <div className="flex items-center">
+                                                <input id={`checkbox-table-search-${i}`} type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                                <label htmlFor={`checkbox-table-search-${i}`} className="sr-only">checkbox</label>
+                                            </div>
+                                        </td>
+                                        <td className=" font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {item?.projectTitle}
+                                        </td>
+                                        <td className="text-center">
+                                            {item?.importance}
+                                        </td>
+                                        <td className="text-center">
+                                            {dateConverter(item?.assignedDate)}
+                                        </td>
+                                        <td className=" text-center">
+                                            {/* <PiChatDotsLight />
+                                            {item?.instruction} */}
+                                            <span className='flex items-center gap-3'><PiChatDotsLight />{item?.instruction}</span>
+                                        </td>
+                                        <td className="text-center">
+                                            {item?.workType?.['8KRender'] ? "8KRender" :
+                                                item?.workType?.textureAndLightning ? "textureAndLightning" :
+                                                    item?.workType?.whiteRender ? "whiteRender" :
+                                                        "NOT Specified"}                                        </td>
+                                        <td onClick={() => viewFilesData(item.projectId)} className="text-center">
+                                            <button>View Files</button>
+                                        </td>
+                                        <td className="text-center">
+                                            {item?.endDate}
+                                        </td>
+                                        {position !== "New Task" &&
+                                            <td className="px-6 py-4 bg-red-200 rounded text-red-600">
+                                                {item?.assignedDeveloperName}
+                                            </td>
+                                        }
+
+                                        <td className="">
+                                            {item?.status}
+                                        </td>
+                                        <td>
+                                            {item?.status === "New Task" ?
+                                                <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleAssign(item?.projectId)} >
+                                                    Assign Task to
+                                                </button>
+                                                :
+                                                item.status === "Assigned" ?
+                                                    <>
+                                                        <button className='px-3 text-white bg-blue-600 rounded'>E</button>
+                                                        <button className='px-3 ml-2 text-white bg-red-600 rounded'>D</button>
+                                                    </>
+                                                    :
+                                                    position !== "Completed" &&
+                                                        item?.status === "Completed" ?
+                                                        <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate(item?.projectId)} >
+                                                            Update
+                                                        </button>
+                                                        : ""
+                                            }
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+
+                        </tbody>
+                    </table>
+
+                    {viewFiles ? <ViewFilesModal projectId={projectId} setViewFiles={setViewFiles} /> : ''}
+
+                    {
+                        modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} /> : ""
+                    }
+                    {
+                        cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""
+                    }
+                </div>
+                {/* {viewFiles ? <ViewFileModal userDetails={userDetails} uniqueId={uniqueId} setViewFiles={setViewFiles} details={details} /> : ''}
+
+                {
+                    modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} /> : ""
+                }
+                {
+                    cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""
+                } */}
+            </div>
                 <div className="max-w-full overflow-x-auto py-4">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <div class="pb-4 bg-white dark:bg-gray-900 py-5">

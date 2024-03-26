@@ -18,7 +18,7 @@ export async function GET(req = NextRequest, res = NextResponse) {
                 path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.assignedLeadId onGoingProjects.projectId completedProjects.assignedLeadId completedProjects.userId completedProjects.projectId',
                 select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry -notifications',
             }).sort({ projectReachedOn: -1 });
-           
+
         return NextResponse.json({
             message: "data has been fetched",
             success: true,

@@ -22,7 +22,7 @@ export async function POST(request = NextRequest) {
       return removeTokenCookie();
     }
     const { selectedTeams, projectId } = reqBody;
-
+    console.log(reqBody, '--------------body')
     const findPM = await managerLoginModel.findById(proManagerId);
     if (!findPM) {
       return NextResponse.json({ error: 'Project Manager not found' }, { status: 404 });
@@ -35,11 +35,11 @@ export async function POST(request = NextRequest) {
       console.log(findLead, '----------------findLead')
       await leadTaskAssign({ teamLeadId, reqBody, findLead, findPM })
     }
-    const newOngoing = await pmProjectUpdate({ projectId, selectedTeams, proManagerId, });
+    // const newOngoing = await pmProjectUpdate({ projectId, selectedTeams, proManagerId, });
 
     // update in user data 
-    const updateUser = await userProjectUpdate({ projectId });
-    return NextResponse.json({ message: 'Assigned task successfully', newOngoing }, { success: true }, { status: 201 });
+    // const updateUser = await userProjectUpdate({ projectId });
+    // return NextResponse.json({ message: 'Assigned task successfully', newOngoing }, { success: true }, { status: 201 });
   } catch (error) {
     console.error(error.message, 'Error:-----pm task assign');
     return NextResponse.json(

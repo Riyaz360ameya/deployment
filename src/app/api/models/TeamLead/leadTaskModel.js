@@ -26,6 +26,20 @@ const teamLeadSchema = new mongoose.Schema({
                 ref: PmData, // Update to match the actual model name
                 required: true,
             },
+            workType: {
+                whiteRender: {
+                    type: Boolean,
+                    default: false,
+                },
+                textureAndLightning: {
+                    type: Boolean,
+                    default: false,
+                },
+                "8KRender": {
+                    type: Boolean,
+                    default: false,
+                },
+            },
             assignedPersonName: {
                 type: String,
                 required: true,
@@ -74,6 +88,20 @@ const teamLeadSchema = new mongoose.Schema({
             assignedBy: {
                 type: String,
                 required: true,
+            },
+            workType: {
+                whiteRender: {
+                    type: Boolean,
+                    default: false,
+                },
+                textureAndLightning: {
+                    type: Boolean,
+                    default: false,
+                },
+                "8KRender": {
+                    type: Boolean,
+                    default: false,
+                },
             },
             assignedPersonName: {
                 type: String,
@@ -144,6 +172,20 @@ const teamLeadSchema = new mongoose.Schema({
             assignedBy: {
                 type: String,
                 required: true,
+            },
+            workType: {
+                whiteRender: {
+                    type: Boolean,
+                    default: false,
+                },
+                textureAndLightning: {
+                    type: Boolean,
+                    default: false,
+                },
+                "8KRender": {
+                    type: Boolean,
+                    default: false,
+                },
             },
             assignedPersonName: {
                 type: String,

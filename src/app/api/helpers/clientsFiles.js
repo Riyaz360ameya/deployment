@@ -8,19 +8,19 @@ export const clientsFiles = async (data) => {
         console.log(`${userName} -- ${uniqueId} == ${organizationName} - Data received in client files route`);
 
         const serverFolderPath = `//192.168.1.100/3DProjects/Tech-Dept/Ameya360/${organizationName}/${userName}/${uniqueId}/`;
-        console.log(serverFolderPath,'--------serverFolderPath')
+        console.log(serverFolderPath, '--------serverFolderPath')
 
         const files = await fs.readdir(serverFolderPath);
-        console.log(files, '--------------------files');
+        // console.log(files, '--------------------files');
         // Create an array to store file data
         const fileData = [];
         // Iterate through each file in the directory
         for (const file of files) {
-            console.log(file, '--------0000---------file')
+            // console.log(file, '--------0000---------file')
             // fileData.push({ folderName: file, });
             // Construct the full path to the file
             const filePath = path.join(serverFolderPath, file);
-            console.log(filePath, '-------------------filePath');
+            // console.log(filePath, '-------------------filePath');
 
             // Read the content of the file
             const eachFile = await fs.readdir(filePath);
@@ -31,7 +31,7 @@ export const clientsFiles = async (data) => {
                     const filePathData = path.join(filePath, innerFile);
                     const contentBuffer = await fs.readFile(filePathData);
                     const contentBase64 = contentBuffer.toString('base64');
-                    console.log(innerFile, '----------------file'); // Log innerFile instead of file
+                    // console.log(innerFile, '----------------file'); // Log innerFile instead of file
                     return {
                         fileName: innerFile,  // Use innerFile instead of file
                         content: contentBase64
@@ -42,7 +42,7 @@ export const clientsFiles = async (data) => {
             fileData.push({ folderName: file, data: fileContents });
             // fileData.push(...fileContents);
         }
-        console.log(fileData, '---------------------------fileData  fileData');
+        console.log('---------------------------are All files');
         return fileData
     } catch (error) {
         return error.message
