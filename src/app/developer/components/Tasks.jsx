@@ -22,10 +22,10 @@ const Tasks = ({ Project, loading, setLoading, designation }) => {
     const [tasksPerPage] = useState(12); // Adjust the number of projects per page
     const [currentPage, setCurrentPage] = useState(1);
 
-    const devNewTasks = useSelector((state) => state.developerTaskUpdates.developerNewTasks);
+    const devNewTasks = useSelector((state) => state.developerTaskUpdates.developerNewTasks.reverse());
     console.log(devNewTasks, '-----------new task-------------')
-    const devOnGoTasks = useSelector((state) => state.developerTaskUpdates.developerOngoingTasks);
-    const devCompTasks = useSelector((state) => state.developerTaskUpdates.developerCompletedTasks);
+    const devOnGoTasks = useSelector((state) => state.developerTaskUpdates.developerOngoingTasks.reverse());
+    const devCompTasks = useSelector((state) => state.developerTaskUpdates.developerCompletedTasks.reverse());
     const newTasks = useSelector((state) => state.developerTaskUpdates.developerNewTasks);
     const setProjects = (Project) => {
         if (Project === 'New Tasks') {

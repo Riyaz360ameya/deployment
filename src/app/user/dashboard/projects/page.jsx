@@ -29,11 +29,11 @@ function Projects() {
         try {
             const { data } = await userProjects();
             console.log(data, '-----------user project------------')
-            const NewProjects = data.projectsInformation.NewProjects;
+            const NewProjects = data.projectsInformation.NewProjects.reverse();
             dispatch(userNewProjects(NewProjects));
-            const onGoingProjects = data.projectsInformation.onGoingProjects;
+            const onGoingProjects = data.projectsInformation.onGoingProjects.reverse();
             dispatch(userOngoingProjects(onGoingProjects));
-            const completedProjects = data.projectsInformation.completedProjects;
+            const completedProjects = data.projectsInformation.completedProjects.reverse();
             dispatch(userCompletedProjects(completedProjects));
             handleData("New");
             setLoading(false);

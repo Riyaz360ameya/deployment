@@ -1,6 +1,9 @@
 "use client";
 import React from "react";
 import CardDataStats from "../components/CardDataStats";
+import ChartOne from "./Chart/ChartOne";
+import ChartTwo from "./Chart/ChartTwo";
+import ChartThree from "./Chart/ChartThree";
 
 const page = () => {
   return (
@@ -57,16 +60,16 @@ const page = () => {
         {/* Similar CardDataStats components with different props */}
       </div>
 
-      {/* <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne />
         <ChartTwo />
-        <ChartThree/> */}
+        <ChartThree/>
         {/* <MapOne /> */}
         {/* <div className="col-span-12 xl:col-span-8"> */}
           {/* <TableOne /> */}
         {/* </div> */}
         {/* <ChatCard /> */}
-      {/* </div> */}
+      </div>
     </>
   );
 };

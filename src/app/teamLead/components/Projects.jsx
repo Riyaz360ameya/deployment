@@ -40,9 +40,9 @@ const Projects = () => {
         try {
             const { data } = await getAllTasks()
             console.log(data.LeadTasks.newTasks, '----------------------data.LeadTasks.newTasks')
-            dispatch(teamLeadNewProjectsStore(data.LeadTasks.newTasks))
-            dispatch(teamLeadOngoingProjectsStore(data.LeadTasks.onGoingTasks))
-            dispatch(teamLeadCompletedProjectsStore(data.LeadTasks.completedTasks))
+            dispatch(teamLeadNewProjectsStore(data.LeadTasks.newTasks.reverse()))
+            dispatch(teamLeadOngoingProjectsStore(data.LeadTasks.onGoingTasks.reverse()))
+            dispatch(teamLeadCompletedProjectsStore(data.LeadTasks.completedTasks.reverse()))
         } catch (error) {
             console.error(error.message);
             toast.error(error)

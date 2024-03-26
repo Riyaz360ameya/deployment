@@ -34,11 +34,11 @@ const Projects = () => {
         setLoading(true);
         try {
             const { data } = await pmAllProjects()
-            dispatch(pmNewProjects(data.PmProjects.newProjects))
+            dispatch(pmNewProjects(data.PmProjects.newProjects.reverse()))
             console.log(data.PmProjects.newProjects, '-------------------newProjects')
             console.log(data.PmProjects.onGoingProjects, '--------------------data.----------onGoingProjects')
-            dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects))
-            dispatch(pmCompletedProjects(data.PmProjects.completedProjects))
+            dispatch(pmOngoingProjects(data.PmProjects.onGoingProjects.reverse()))
+            dispatch(pmCompletedProjects(data.PmProjects.completedProjects.reverse()))
             setLoading(false);
         } catch (error) {
             console.error('Error fetching tasks:', error.message);

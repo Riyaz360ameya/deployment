@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactApexChart from "react-apexcharts";
 
 const options = {
   legend: {
