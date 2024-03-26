@@ -12,7 +12,7 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing, setNextTask
     const [loading, setLoading] = useState(false);
     const [task, setTask] = useState({
         importance: 'REGULAR',
-        phase: 'whiteRender',
+        phase: 'White Render',
         projectTitle: '',
         description: '',
         instruction: '',
@@ -118,14 +118,14 @@ const TaskAssignModal = ({ setModal, projectId, itemId, moveONgoing, setNextTask
                                     <option value="Choose Team" className="uppercase" disabled >
                                         Choose Phase
                                     </option>
-                                    <option value="whiteRender" className="uppercase" defaultValue>
+                                    <option value="White Render" className="uppercase" defaultValue>
                                         WHITE RENDER
                                     </option>
-                                    <option value="textureAndLightning" className="uppercase">
+                                    <option value="Texture And Lightning" className="uppercase">
                                         TEXTURE & LIGHTNING
                                     </option>
-                                    <option value="8KRender" className="uppercase">
-                                        8K RENDERING
+                                    <option value="8K Render" className="uppercase">
+                                        8K RENDER
                                     </option>
                                 </select>
                             </div>

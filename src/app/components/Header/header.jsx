@@ -29,16 +29,18 @@ const Header = (props) => {
 
                     </button>
                     {/* <!-- Hamburger Toggle BTN --> */}
-                    <Image
-                        width={32}
-                        height={32}
-                        src="/ameyaLogo.png"
-                        alt="Logo"
-                    />
+                    <div className="hidden lg:block">
+                        <Image
+                            width={32}
+                            height={32}
+                            src="/ameyaLogo.png"
+                            alt="Logo"
+                        />
+                    </div>
 
                 </div>
                 <div>
-                    <p className="font-bold p-2 rounded dark:text-white hidden lg:block">{pathname.split('/').pop().toUpperCase()}</p>
+                    <p className="font-bold p-2 rounded dark:text-white ">{pathname.split('/').pop().toUpperCase()}</p>
                 </div>
 
                 {/* <div className="hidden sm:block">
@@ -85,7 +87,7 @@ const Header = (props) => {
                         {/* <!-- Notification Menu Area --> */}
                         <DropdownNotification />
                         {/* <!-- Notification Menu Area --> */}
-                        
+
                         {/* <!-- Chat Notification Area --> */}
                         <DropdownMessage />
                         {/* <!-- Chat Notification Area --> */}

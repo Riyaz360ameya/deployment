@@ -35,6 +35,7 @@ const teamLeadProSlice = createSlice({
         state.teamLeadOngoingProjects[updatedProjectIndex] = action.payload.updatedProject;
       }
     },
+    resetLeadProject: () => initialState,
   },
 });
 
@@ -46,6 +47,7 @@ export const {
   addNewLeadTaskProject,
   removeteamLeadProject,
   updateteamLeadProject,
+  resetLeadProject
 } = teamLeadProSlice.actions;
 
 export default teamLeadProSlice.reducer;

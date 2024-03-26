@@ -37,7 +37,7 @@ const DropdownMessage = () => {
   });
 
   return (
-    <li className="relative">
+    <li className="relative z-50">
       <Link
         ref={trigger}
         onClick={() => {
@@ -73,11 +73,11 @@ const DropdownMessage = () => {
           }`}
       >
 
-        <div className="px-4.5 py-3">
-          <h5 className="text-sm font-medium text-bodydark2">Messages</h5>
+        <div className="px-4 py-3 ">
+          <h5 className="text-sm font-medium text-bodydark2 ">Messages</h5>
         </div>
 
-        <ul className="flex h-80 flex-col overflow-y-auto px-4 py-4">
+        <ul className="flex h-80 flex-col overflow-y-auto px-3 py-3">
           <li className="">
             <Link href="#" className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4">
               <div className="h-12 w-12 rounded-full bg-slate-500 ">
@@ -179,6 +179,7 @@ const DropdownMessage = () => {
             </Link>
           </li>
         </ul>
+      
       </div>
     </li>
   );

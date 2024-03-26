@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useRouter } from 'next/navigation'
 import { resetUser } from "@/app/redux/users/userSlice";
 import { resetProject } from "@/app/redux/users/userProSlice";
+import { resetLeadProject } from "@/app/redux/teamLead/leadProSlice";
 const DropdownUser = () => {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -22,9 +23,10 @@ const DropdownUser = () => {
       const { data } = await axios.get("/api/users/logout")
       dispatch(resetUser())
       dispatch(resetProject())
+      dispatch(resetLeadProject())
       toast.success(data.message)
       design === 'user' ? router.push("/user/login") : design === 'Project Manager' ? router.push("/projectManager/login")
-        : design === 'Exterior Lead' || design === 'Interior Lead' ? router.push("/teamLead/login") : router.push("/developer/login")
+        : design === 'Exterior' || design === 'Interior' ? router.push("/teamLead/login") : router.push("/developer/login")
     } catch (error) {
       console.log(error.message, '------------Header Error')
     }
@@ -67,7 +69,9 @@ const DropdownUser = () => {
           <span className="block text-sm font-medium text-black dark:text-white">
             {user.firstName} {user.lastName}
           </span>
-          <span className="block text-xs">{user.designation === 'user' ? '' : user.designation}</span>
+          <span className="block text-xs">
+            {user.designation === 'user' ? '' :
+              user.designation === 'Exterior' || user.designation === 'Interior' ? user.designation + " Lead" : user.designation}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -128,7 +132,7 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              <p className="text-sm">My Profile</p>
+              <p className="text-sm">Profile</p>
             </Link>
           </li>
           <li>
@@ -174,7 +178,7 @@ const DropdownUser = () => {
               />
             </svg>
 
-            Log Out
+            Logout
           </button>
         </div>
       </div>
