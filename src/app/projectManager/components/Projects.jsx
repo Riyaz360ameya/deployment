@@ -13,7 +13,7 @@ import { VscFiles } from "react-icons/vsc";
 
 const Projects = () => {
     const dispatch = useDispatch()
-    const [projectsPerPage] = useState(8); // Adjust the number of projects per page
+    const [projectsPerPage] = useState(8); 
     const [currentPage, setCurrentPage] = useState(1);
     const pmNewPro = useSelector((state) => state.pmProjects.pmNewProjects)
     const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
