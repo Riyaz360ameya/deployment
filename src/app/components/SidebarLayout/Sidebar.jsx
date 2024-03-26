@@ -27,6 +27,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     const pathname = usePathname();
     const user = useSelector((state) => state.user.userDetails)
     const design = user.designation
+    console.log(design, '-----------------------design')
     const trigger = useRef(null);
     const sidebar = useRef(null);
     let storedSidebarExpanded = "true";
@@ -287,7 +288,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                             }
                                         </li>
                                     ))
-                                    : design === "Exterior Lead" || design === "Interior Lead" ?
+                                    : design === "Exterior" || design === "Interior" ?
                                         leadMenuItems.map((item, i) => (
                                             <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
                                                 <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>

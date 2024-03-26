@@ -9,7 +9,7 @@ const Authorization = () => {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [post, setPost] = useState("Team Lead")
-    const addRoles = ["WHITE RENDERING", "TEXTURE & LIGHTNING", "8K RENDERS", "PREVIEW", "LIGHTNING", "ANIMATION", "SHORT DIVISION", "FINAL RENDERS"]
+    const addRoles = ["WHITE RENDER", "TEXTURE & LIGHTNING", "8K RENDERS", "PREVIEW", "LIGHTNING", "ANIMATION", "SHORT DIVISION", "FINAL RENDERS"]
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',

@@ -10,6 +10,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllTasks } from '../leadAPIs/taskApi';
 import { teamLeadCompletedProjectsStore, teamLeadNewProjectsStore, teamLeadOngoingProjectsStore } from '@/app/redux/teamLead/leadProSlice';
 import ViewFilesModal from '@/app/components/common/ViewFilesModal';
+import { VscFiles } from "react-icons/vsc";
+import { CiSaveDown1 } from "react-icons/ci";
+import { IoCloudUploadOutline } from "react-icons/io5";
+
+
 // import ViewFileModal from './ViewFilesModal';
 const Projects = () => {
     const dispatch = useDispatch();
@@ -27,6 +32,9 @@ const Projects = () => {
     const [details, setDetails] = useState({})
     const [tasksPerPage] = useState(10); // Adjust the number of projects per page
     const [currentPage, setCurrentPage] = useState(1);
+
+    // Task assign 
+    const [workType, setWorkType] = useState()
 
     const fetchTasks = async () => {
         try {
@@ -59,7 +67,17 @@ const Projects = () => {
     }, [position]);
 
     // Assigning Task................
-    const handleAssign = (id) => {
+    const handleAssign = ({ id, workType }) => {
+        // console.log(id, '--------------------', workType);
+        // const trueConditions = Object.keys(workType).filter(key => workType[key]);
+        // console.log(trueConditions);
+
+        console.log(id, '--------------------', workType);
+        const trueCondition = Object.keys(workType).find(key => workType[key]);
+        const trueConditionValue = workType[trueCondition];
+        console.log(trueCondition, '----', trueConditionValue);
+
+        setWorkType(trueCondition)
         setModal(true);
         setProjectId(id)
     };
@@ -213,24 +231,23 @@ const Projects = () => {
                                         <td className=" font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {item?.projectTitle}
                                         </td>
-                                        <td className="text-center">
+                                        <td className={`text-center ${item?.importance === "URGENT"?'text-red-500 font-bold':'' }`}>
                                             {item?.importance}
                                         </td>
                                         <td className="text-center">
                                             {dateConverter(item?.assignedDate)}
                                         </td>
                                         <td className=" text-center">
-                                            {/* <PiChatDotsLight />
-                                            {item?.instruction} */}
                                             <span className='flex items-center gap-3'><PiChatDotsLight />{item?.instruction}</span>
                                         </td>
                                         <td className="text-center">
-                                            {item?.workType?.['8KRender'] ? "8KRender" :
-                                                item?.workType?.textureAndLightning ? "textureAndLightning" :
-                                                    item?.workType?.whiteRender ? "whiteRender" :
-                                                        "NOT Specified"}                                        </td>
-                                        <td onClick={() => viewFilesData(item.projectId)} className="text-center">
-                                            <button>View Files</button>
+                                            {item?.workType?.['8K Render'] ? "8K Render" :
+                                                item?.workType?.['Texture And Lightning'] ? "Texture And Lightning" :
+                                                    item?.workType?.['White Render'] ? "White Render" :
+                                                        "NOT Specified"}
+                                        </td>
+                                        <td className="px-6 py-4 text-center cursor-pointer">
+                                            <span className='flex items-center gap-3' onClick={() => viewFilesData(item.projectId)}><VscFiles />view</span>
                                         </td>
                                         <td className="text-center">
                                             {item?.endDate}
@@ -244,9 +261,34 @@ const Projects = () => {
                                         <td className="">
                                             {item?.status}
                                         </td>
-                                        <td>
+                                        <td className='text-center'>
                                             {item?.status === "New Task" ?
-                                                <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleAssign(item?.projectId)} >
+                                                item?.workType?.['8K Render'] ?
+                                                    <div className='flex items-center justify-center'>
+                                                        <button className='bg-green-700 p-2 text-white rounded flex items-center gap-2'>Download <span className='text-2xl'> <CiSaveDown1 /></span></button>
+                                                        {/* <button className='bg-yellow-600 p-2 text-white rounded text-2xl'><IoCloudUploadOutline /></button> */}
+                                                    </div> :
+                                                    <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleAssign({ id: item?.projectId, workType: item?.workType })} >
+                                                        Assign Task to
+                                                    </button>
+                                                :
+                                                item.status === "Assigned" ?
+                                                    <>
+                                                        <button className='px-3 text-white bg-blue-600 rounded'>E</button>
+                                                        <button className='px-3 ml-2 text-white bg-red-600 rounded'>D</button>
+                                                    </>
+                                                    :
+                                                    position !== "Completed" &&
+                                                        item?.status === "Completed" ?
+                                                        <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleUpdate(item?.projectId)} >
+                                                            Update
+                                                        </button>
+                                                        : ""
+                                            }
+                                        </td>
+                                        {/* <td>
+                                            {item?.status === "New Task" ?
+                                                <button className='px-3 py-1 text-white bg-blue-600 rounded' onClick={() => handleAssign({ id: item?.projectId, workType: item?.workType })} >
                                                     Assign Task to
                                                 </button>
                                                 :
@@ -263,7 +305,7 @@ const Projects = () => {
                                                         </button>
                                                         : ""
                                             }
-                                        </td>
+                                        </td> */}
                                     </tr>
                                 ))
                             )}
@@ -274,7 +316,7 @@ const Projects = () => {
                     {viewFiles ? <ViewFilesModal projectId={projectId} setViewFiles={setViewFiles} /> : ''}
 
                     {
-                        modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} /> : ""
+                        modal ? <TaskAssignModal projectId={projectId} setModal={setModal} onGoingFurther={onGoingFurther} workType={workType} /> : ""
                     }
                     {
                         cModal ? <ConfirmModal projectId={projectId} setCModal={setCModal} /> : ""

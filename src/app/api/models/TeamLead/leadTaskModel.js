@@ -27,15 +27,15 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             workType: {
-                whiteRender: {
+                "White Render": {
                     type: Boolean,
                     default: false,
                 },
-                textureAndLightning: {
+                "Texture And Lightning": {
                     type: Boolean,
                     default: false,
                 },
-                "8KRender": {
+                "8K Render": {
                     type: Boolean,
                     default: false,
                 },
@@ -90,15 +90,15 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             workType: {
-                whiteRender: {
+                "White Render": {
                     type: Boolean,
                     default: false,
                 },
-                textureAndLightning: {
+                "Texture And Lightning": {
                     type: Boolean,
                     default: false,
                 },
-                "8KRender": {
+                "8K Render": {
                     type: Boolean,
                     default: false,
                 },
@@ -174,15 +174,15 @@ const teamLeadSchema = new mongoose.Schema({
                 required: true,
             },
             workType: {
-                whiteRender: {
+                "White Render": {
                     type: Boolean,
                     default: false,
                 },
-                textureAndLightning: {
+                "Texture And Lightning": {
                     type: Boolean,
                     default: false,
                 },
-                "8KRender": {
+                "8K Render": {
                     type: Boolean,
                     default: false,
                 },
