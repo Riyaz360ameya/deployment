@@ -21,7 +21,7 @@ export async function GET(req = NextRequest, res = NextResponse) {
             { status: 200 }
         )
     } catch (error) {
-        console.log(error.message, '---------error in add new Team lead')
+        console.log(error.message, '---------error finding Team lead')
         return NextResponse.json({ error: error.message }, { status: 500 })
     }
 }

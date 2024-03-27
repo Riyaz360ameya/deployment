@@ -65,6 +65,8 @@ const developerTaskSchema = new mongoose.Schema({
                 ref: projectData,
                 required: true,
             },
+            selectedFiles: []
+
         }
     ],
     onGoingTasks: [
