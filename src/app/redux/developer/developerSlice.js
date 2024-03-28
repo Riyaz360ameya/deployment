@@ -29,18 +29,18 @@ export default developerSlice.reducer;
 //   name: "developers", 
 //   initialState: {
 //     developerLogins: [],
-//     developerTaskUpdates:[]
+//     developerTasks:[]
 //   },
 //   reducers: {
 //     setDeveloperLogins: (state, action) => {
 //       state.developerLogins = action.payload; 
 //     },
 //     setDevelopersTaskUpdates:(state)=>{
-//       state.developerTaskUpdates = action.payload;
+//       state.developerTasks = action.payload;
 //     }
 //   },
 // });
-// export const selectDevelopersTaskUpdates = (state)=>state.developers.developerTaskUpdates;
+// export const selectDevelopersTaskUpdates = (state)=>state.developers.developerTasks;
 // export const {setDevelopersTaskUpdates} = developerSlice.actions;
 // export const { setDeveloperLogins } = developerSlice.actions;
 // export const selectDevelopersLoginData = (state) => state.developers.developerLogins;

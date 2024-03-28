@@ -9,7 +9,7 @@ import { InfinitySpin } from 'react-loader-spinner';
 // const ViewFileModal = ({ userDetails, uniqueId, setviewFiles }) => {
 const ViewFileModal = ({ data, setOpenModal }) => {
   const user = useSelector((state) => state.developer.developerDetails)
-  const devNewTasks = useSelector((state) => state.developerTaskUpdates.developerNewTasks);
+  const devNewTasks = useSelector((state) => state.developerTasks.developerNewTasks);
   const dispatch = useDispatch()
   const [filesData, setFilesData] = useState([]);
   const [formData, setFormData] = useState('')
@@ -88,7 +88,7 @@ const ViewFileModal = ({ data, setOpenModal }) => {
       onClick={handleClose}
       className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
     >
-      <div className="bg-white flex w-full h-full h-80 px-5 overflow-y-scroll">
+      <div className="bg-white flex w-full  h-80 px-5 overflow-y-scroll">
         <div className="w-full px-4 py-4">
           <div className=' flex justify-between items-center p-2'>
             <h3 className="text-base font-semibold leading-6 text-gray-900 ">Files</h3>

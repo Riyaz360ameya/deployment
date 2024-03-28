@@ -17,5 +17,7 @@ const API = axios.create({ baseURL: "/api/users" })
 // });
 
 export const uploadProject = (formData) => API.post("/projectInput", formData);
+export const uploadFiles = (formData) => API.post("/uploadFiles", formData);
+
 export const userProjects = () => API.get("/projectData");
 

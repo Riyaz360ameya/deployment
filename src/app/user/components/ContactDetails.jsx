@@ -61,7 +61,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
         <div className='rounded mt-5 h-full flex flex-col '>
             <div className='flex justify-between items-center'>
                 <div>
-                    <h1 className='md:text-2xl text-lg font-extrabold text-white'>Contact Details</h1>
+                    <h1 className='md:text-2xl text-lg font-extrabold'>Contact Details</h1>
                 </div>
                 <div className="flex items-center justify-between gap-2 px-5">
                     <button
@@ -91,19 +91,18 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                     if (section.title !== "Coordinators") {
                         return (
                             <div key={section.title} className="mt-4">
-                                <p className="text-white text-2xl font-bold">{section.title}</p>
+                                <p className=" text-2xl font-bold">{section.title}</p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:grid-cols-3">
                                     {section.fields.map((item, i) => (
                                         <div key={item.id}>
-                                            <label htmlFor={item.id} className="block mb-2 text-sm font-medium text-white">
+                                            <label htmlFor={item.id} className="block mb-2 text-sm font-medium">
                                                 {item.label}
                                             </label>
                                             <input
                                                 type={item.type}
                                                 id={item.id}
                                                 value={clientInputs[item.id] || ''}
-                                                className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                                onChange={(e) => setClientInputs({ ...clientInputs, [item.id]: e.target.value })}
+                                                className="bg-gray-50 outline-none border border-gray-200  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" onChange={(e) => setClientInputs({ ...clientInputs, [item.id]: e.target.value })}
                                             />
                                         </div>
                                     ))}
@@ -114,38 +113,35 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                     return null;
                 })}
                 <div className='mt-8'>
-                    <p className='text-white md:text-2xl text-lg  font-bold'>Coordinators</p>
+                    <p className=' md:text-2xl text-lg  font-bold'>Coordinators</p>
                     {coordinators.map((_, index) => (
                         <React.Fragment key={index}>
                             <div className='grid grid-col-2 md:grid-cols-3 gap-6 mt-5'>
                                 <div>
-                                    <label htmlFor={`coordinatorName_${index}`} className="block mb-2 text-sm font-medium text-white ">Name</label>
+                                    <label htmlFor={`coordinatorName_${index}`} className="block mb-2 text-sm font-medium ">Name</label>
                                     <input
                                         type="text"
                                         id={`coordinatorName_${index}`}
                                         value={clientInputs[`coordinatorName_${index}`] || ''}
-                                        className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorName_${index}`]: e.target.value })}
+                                        className="bg-gray-50 outline-none border border-gray-200  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorName_${index}`]: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor={`coordinatorMobile_${index}`} className="block mb-2 text-sm font-medium text-white ">Mob No</label>
+                                    <label htmlFor={`coordinatorMobile_${index}`} className="block mb-2 text-sm font-medium ">Mob No</label>
                                     <input
                                         type="number"
                                         id={`coordinatorMobile_${index}`}
                                         value={clientInputs[`coordinatorMobile_${index}`] || ''}
-                                        className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorMobile_${index}`]: e.target.value })}
+                                        className="bg-gray-50 outline-none border border-gray-200  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorMobile_${index}`]: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label htmlFor={`coordinatorEmail_${index}`} className="block mb-2 text-sm font-medium text-white ">Email</label>
+                                    <label htmlFor={`coordinatorEmail_${index}`} className="block mb-2 text-sm font-medium ">Email</label>
                                     <input
                                         type="email"
                                         id={`coordinatorEmail_${index}`}
                                         value={clientInputs[`coordinatorEmail_${index}`] || ''}
-                                        className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorEmail_${index}`]: e.target.value })}
+                                        className="bg-gray-50 outline-none border border-gray-200  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"                                        onChange={(e) => setClientInputs({ ...clientInputs, [`coordinatorEmail_${index}`]: e.target.value })}
                                     />
                                 </div>
                             </div>

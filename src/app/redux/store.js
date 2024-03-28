@@ -18,6 +18,7 @@ import leadSlice from './teamLead/leadSlice';
 import leadProSlice from './teamLead/leadProSlice';
 import developerSlice from './developer/developerSlice';
 import developerProSlice from './developer/developerProSlice';
+// import developerProSlice from './developer/developerProSlice';
 
 const persistConfig = {
     timeout: 500,
@@ -26,7 +27,7 @@ const persistConfig = {
     timeout: 500,
     key: 'root',
     storage,
-    whitelist: ['user','pm','pmProjects','lead','leadTasks','developer','developerTaskUpdates']
+    whitelist: ['user','pm','pmProjects','lead','leadTasks','developer','developerTasks']
 };
 
 const rootReducer = combineReducers({
@@ -37,7 +38,7 @@ const rootReducer = combineReducers({
     lead:leadSlice,
     leadTasks:leadProSlice,
     developer:developerSlice,
-    developerTaskUpdates:developerProSlice,
+    developerTasks:developerProSlice,
 },)
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

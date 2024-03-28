@@ -13,6 +13,10 @@ export async function GET() {
         }
         console.log(developerId, '----55-----developerId')
         const devTasks = await devTaskModel.findOne({ developerId })
+        .populate({
+            path: 'newTasks.projectId onGoingTasks.projectId completedTasks.projectId',
+            select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry -notifications',
+        }).sort({ projectReachedOn: -1 });
         if (!devTasks) {
             return NextResponse.json({ error: error.message }, { status: 404 });
         }

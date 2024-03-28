@@ -45,7 +45,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId, 
     <div className='rounded mt-5 h-full flex flex-col '>
       <div className='flex justify-between items-center'>
         <div>
-          <h1 className='md:text-2xl text-lg font-extrabold text-white'>File Upload</h1>
+          <h1 className='md:text-2xl text-lg font-extrabold'>File Upload</h1>
         </div>
         <div className="flex items-center justify-between gap-2 px-5">
           <button
@@ -90,10 +90,10 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId, 
           <div className='grid grid-cols-1 md:grid-cols-2 gap-2 h-2/4 md:3/4 overflow-hidden overflow-y-scroll p-2 mt-2  rounded' >
             {Object.keys(fileUploads).map((item, index) => (
               <div key={index}>
-                <label className='block mb-2 text-sm text-white font-medium  dark:text-white' htmlFor={item}>{item}</label>
+                <label className='block mb-2 text-sm ' htmlFor={item}>{item}</label>
                 <input
                   type="file"
-                  className='block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                  className='block p-1 w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
                   id={item}
                   name={item}
                   onChange={(e) => handleInputChange(item, e.target.files)}

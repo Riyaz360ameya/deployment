@@ -5,6 +5,8 @@ import verifierProjectModel from "../../models/Developer/verifierProjects";
 import { upDateVerifierTask } from "./upDateVerifierTask";
 import { upDateOnPM } from "./upDateOnPM";
 import { sendEmail } from "../../helpers/mail";
+import ClientInformationModel from "../../models/ClientInformationModel";
+import userModel from "../../models/User/userModel";
 export const PUT = async (request = NextRequest) => {
     try {
         const { developerId } = await getDataFromToken()
@@ -15,8 +17,14 @@ export const PUT = async (request = NextRequest) => {
         const verifierId = developerId
         // const ggg = await request.json()
         // console.log(ggg, '----------------formData')
-        const { projectId, email, emailType, formData} = await request.json()
-        console.log(projectId, '---------body', email)
+        const { projectId, emailType, formData } = await request.json()
+        console.log(projectId, '---------body')
+
+        const projectData = await ClientInformationModel.findById(projectId)
+
+        const userDetails = await userModel.findById(projectData.userId)
+        const email = userDetails.email
+
         const verifierTasks = await verifierProjectModel.findOne({ verifierId })
         if (!verifierTasks) {
             console.log(error, '---error--------')
@@ -24,7 +32,6 @@ export const PUT = async (request = NextRequest) => {
         }
         console.log(verifierTasks, '------------verifierTasks')
         const data = verifierTasks.newTasks.find(task => task.projectId.toString() === projectId.toString());
-        // const data = verifierTasks.newTasks.find(task => task.projectId && task.projectId.toString() === projectId.toString());
 
         console.log(data, '-----------task')
         if (!data) {
@@ -39,7 +46,7 @@ export const PUT = async (request = NextRequest) => {
         } else {
             console.log('-----------;;;-------jhjhjhj')
             const emailSend = await sendEmail({ email, emailType, formData })
-        } 
+        }
         return NextResponse.json({ message: "Project verification Completed", success: true, upDatedVerifier }, { status: 200 });
     } catch (error) {
         console.error(error.message, '--------error message');

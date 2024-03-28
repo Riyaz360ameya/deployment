@@ -7,7 +7,7 @@ const VerifyData = ({ addToLocation, removeFromLocation, clientInputs, fileUploa
         <div className='rounded mt-5 h-full flex flex-col '>
             <div className='flex justify-between items-center'>
                 <div>
-                    <h1 className='md:text-2xl text-lg font-extrabold text-white'>Verify All Data & Files</h1>
+                    <h1 className='md:text-2xl text-lg font-extrabold'>Verify All Data & Files</h1>
                 </div>
                 <div className="flex items-center justify-between gap-2 px-5 py-4">
                     <button
@@ -32,12 +32,12 @@ const VerifyData = ({ addToLocation, removeFromLocation, clientInputs, fileUploa
                     </button>
                 </div>
             </div>
-            <div className='bg-white h-3/4 overflow-auto p-1 '>
+            <div className=' h-3/4 overflow-auto p-1 '>
                 <p className='text-xl font-bold'>Project & Contact Details</p>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-2 mt-3 p-2'>
                     {Object.keys(clientInputs).map((key) => (
-                        <p key={key}>
-                            <strong className=''>
+                        <p key={key} className='dark:text-white'>
+                            <strong className='dark:text-gray-500'>
                                 {key
                                     .split(' ')
                                     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -51,7 +51,7 @@ const VerifyData = ({ addToLocation, removeFromLocation, clientInputs, fileUploa
                     {Object.keys(fileUploads).map((category) => (
                         <div key={category}>
                             <strong className=''>{category}:</strong>
-                            <p>{fileUploads[category].name}</p>
+                            <p className='dark:text-white'>{fileUploads[category].name}</p>
                         </div>
                     ))}
                 </div>
