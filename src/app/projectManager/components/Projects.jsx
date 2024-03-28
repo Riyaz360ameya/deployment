@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-
 import TaskAssignModal from './TaskAssignModal';
 import { InfinitySpin } from 'react-loader-spinner';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
