@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import developerModel from "./developerLoginModel";
 import leadLoginModel from "../TeamLead/leadLoginModel";
-import projectInfoModel from "../projectInfoModel";
+import ClientInformationModel from "../ClientInformationModel";
 
 const Dev = mongoose.models.developerLogins || developerModel;
 const Lead = mongoose.models.leadLogins || leadLoginModel;
-const projectData = mongoose.models.projectInformation || projectInfoModel;
+const projectData = mongoose.models.ClientInformation || ClientInformationModel;
 
 const developerTaskSchema = new mongoose.Schema({
     developerId: {
@@ -65,6 +65,8 @@ const developerTaskSchema = new mongoose.Schema({
                 ref: projectData,
                 required: true,
             },
+            selectedFiles: []
+
         }
     ],
     onGoingTasks: [

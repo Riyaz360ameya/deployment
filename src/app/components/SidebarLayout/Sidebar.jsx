@@ -27,7 +27,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     const pathname = usePathname();
     const user = useSelector((state) => state.user.userDetails)
     const design = user.designation
-    console.log(design, '-----------------------design')
+    console.log(design, '-------------------design')
     const trigger = useRef(null);
     const sidebar = useRef(null);
     let storedSidebarExpanded = "true";
@@ -120,6 +120,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 {
                     title: 'Ongoing Tasks',
                     path: '/developer/onGoingTasks',
+                    icon: <SiTraefikproxy />,
+                },
+                {
+                    title: 'Completed Tasks',
+                    path: '/developer/completedTasks',
+                    icon: <SiTraefikproxy />,
+                },
+            ]
+        },
+    ]
+    const verifierMenuItems = [
+
+        {
+            title: "DashBoard",
+            list: [
+                {
+                    title: 'New Tasks',
+                    path: '/developer/newTasks',
                     icon: <SiTraefikproxy />,
                 },
                 {
@@ -302,19 +320,33 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                                                 }
                                             </li>
                                         ))
-                                        : devMenuItems.map((item, i) => (
-                                            <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
-                                                <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>
-                                                {
-                                                    item.list.map((each, i) => (
-                                                        <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
-                                                            <div className='text-xl text-white'>{each.icon}</div>
-                                                            <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
-                                                        </Link>
-                                                    ))
-                                                }
-                                            </li>
-                                        ))
+                                        : design === "File Verifier" ?
+                                            verifierMenuItems.map((item, i) => (
+                                                <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
+                                                    <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>
+                                                    {
+                                                        item.list.map((each, i) => (
+                                                            <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
+                                                                <div className='text-xl text-white'>{each.icon}</div>
+                                                                <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
+                                                            </Link>
+                                                        ))
+                                                    }
+                                                </li>
+                                            ))
+                                            : devMenuItems.map((item, i) => (
+                                                <li key={i} className={`${item.gap ? 'mt-4 md:mt-9' : 'mt-0 md:mt-2'}`} >
+                                                    <p className='text-gray-400 text-sm hidden md:flex '> {item.title}</p>
+                                                    {
+                                                        item.list.map((each, i) => (
+                                                            <Link key={i + each.path} href={each.path} className={`flex items-center gap-x-4 w-full p-3 mt-1 hover:bg-slate-400 rounded-md ${pathname === each.path && 'bg-slate-400'}`}>
+                                                                <div className='text-xl text-white'>{each.icon}</div>
+                                                                <span className={` origin-left duration-300  text-xs md:text-sm  text-white`}>{each.title}</span>
+                                                            </Link>
+                                                        ))
+                                                    }
+                                                </li>
+                                            ))
                             }
                         </ul>
                     </div>
@@ -327,8 +359,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <button type="button" className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Purchase Now</button>
                     </div>
                 }
-
-
             </div>
         </aside>
     )

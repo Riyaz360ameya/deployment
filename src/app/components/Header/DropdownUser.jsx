@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import { resetUser } from "@/app/redux/users/userSlice";
 import { resetProject } from "@/app/redux/users/userProSlice";
 import { resetLeadProject } from "@/app/redux/teamLead/leadProSlice";
+import { resetDevTasks } from "@/app/redux/developer/developerProSlice";
 const DropdownUser = () => {
   const dispatch = useDispatch()
   const router = useRouter()
@@ -24,6 +25,7 @@ const DropdownUser = () => {
       dispatch(resetUser())
       dispatch(resetProject())
       dispatch(resetLeadProject())
+      dispatch(resetDevTasks())
       toast.success(data.message)
       design === 'user' ? router.push("/user/login") : design === 'Project Manager' ? router.push("/projectManager/login")
         : design === 'Exterior' || design === 'Interior' ? router.push("/teamLead/login") : router.push("/developer/login")

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { InfinitySpin } from 'react-loader-spinner'
+import { dataVerified, verifierFiles } from '@/app/developer/devApis/taskApi';
 
 const ViewFilesModal = ({ setViewFiles, projectId }) => {
     const user = useSelector((state) => state.user.userDetails);
@@ -12,6 +13,7 @@ const ViewFilesModal = ({ setViewFiles, projectId }) => {
     const [filesData, setFilesData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [projectDetails, setProjectDetails] = useState()
+    const [openInput, setOpenInput] = useState(false)
     const [data, setData] = useState([]);
     const [sort, setSort] = useState('latest');
 
@@ -27,7 +29,9 @@ const ViewFilesModal = ({ setViewFiles, projectId }) => {
     const fetchData = async () => {
         try {
             setIsLoading(true)
-            const { data } = design === "Project Manager" ? await pmProjectFiles(projectId) : await leadTaskFiles(projectId);
+            const { data } = design === "Project Manager" ? await pmProjectFiles(projectId)
+                : design === "File Verifier" ? await verifierFiles(projectId)
+                    : await leadTaskFiles(projectId);
             console.log(data, '---------------------data in files');
             setFilesData(data.files || []);
             console.log(data.projectDetails, '------------------data.projectDetails')
@@ -41,53 +45,82 @@ const ViewFilesModal = ({ setViewFiles, projectId }) => {
         }
     };
 
+
+    const [activeTab, setActiveTab] = useState('info');
+
+    const handleTabClick = (tabId) => {
+        console.log(activeTab, '------1---------------old ', tabId)
+        setActiveTab(tabId);
+        console.log(activeTab, '--------2------------- new')
+    };
+    // console.log(projectDetails, '--------------projectDetails.ProjectUniqId')
+
+    // Verifier Works
+
+    const handleVerified = async () => {
+        try {
+            setIsLoading(true)
+            const { data } = await dataVerified({ projectId, emailType: "FILES_VERIFIED" })
+            console.log(data, '--------------1010')
+            console.log(devNewTasks, '--------before-----devNewTasks')
+            const updatedNewTasks = devNewTasks.filter(task => task.projectId._id !== projectId);
+            console.log(updatedNewTasks, '------after--------456')
+            dispatch(developerNewProjectsStore(updatedNewTasks))
+            // dispatch(developerCompletedProjectsStore(data.upDatedVerifier.completedTasks))
+            toast.success(data.message);
+            onClose();
+            setIsLoading(false)
+        } catch (error) {
+            toast.error(error.response?.data?.error || 'Error in verifying files');
+            setIsLoading(false)
+        }
+    }
     useEffect(() => {
         fetchData();
     }, [projectId]);
-
-    const [activeTab, setActiveTab] = useState('about');
-
-    const handleTabClick = (tabId) => {
-        setActiveTab(tabId);
-    };
-    console.log(projectDetails, '--------------projectDetails.ProjectUniqId')
     return (
         <div
             id="container"
             onClick={handleClose}
             className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center "
         >
-            <div className="bg-white flex rounded">
-                <div className="w-full bg-white border border-gray-200 rounded-lg shadow ">
+            <div className=" flex rounded">
+                <div className="w-full  border  rounded-lg shadow ">
                     <div className='flex justify-between items-center'>
-                        <ul className="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 rounded-t-lg bg-gray-50  dark:text-gray-400 ">
-                            <li className="me-2">
+                        <ul className="flex flex-wrap text-sm font-medium text-center  ">
+                            <li className="me-2 p-2">
                                 <button
-                                    onClick={() => handleTabClick('about')}
-                                    className={`inline-block p-4 ${activeTab === 'about' ? 'text-blue-600' : 'hover:text-gray-600'}  hover:rounded hover:bg-gray-300 dark:hover:bg-gray-700 dark:text-blue-500`}
+                                    onClick={() => handleTabClick('info')}
+                                    className={`inline-block p-4 ${activeTab === 'info' ? 'text-blue-600 bg-gray-300 rounded dark:bg-gray-700' : 'hover:text-gray-600'} hover:rounded hover:bg-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300`}
                                 >
                                     Project Information
                                 </button>
                             </li>
                             {
-                                design === "Project Manager" &&
+                                design === "Project Manager" && design === "File Verifier" &&
 
-                                <li className="me-2">
-                                    <button
-                                        onClick={() => handleTabClick('services')}
-                                        className={`inline-block p-4 ${activeTab === 'services' ? 'text-blue-600' : 'hover:text-gray-600'} hover:rounded hover:bg-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300`}
-                                    >
-                                        Project contact details
-                                    </button>
-                                </li>
-                            }
-                            <li className="me-2">
+                            <li className="me-2 p-2">
                                 <button
-                                    onClick={() => handleTabClick('statistics')}
-                                    className={`inline-block p-4 ${activeTab === 'statistics' ? 'text-blue-600' : 'hover:text-gray-600'} hover:rounded hover:bg-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300`}
+                                    onClick={() => handleTabClick('contact')}
+                                    className={`inline-block p-4 ${activeTab === 'contact' ? 'text-blue-600 bg-gray-300 rounded' : 'hover:text-gray-600'} hover:rounded hover:bg-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300`}
+                                >
+                                    Project contact details
+                                </button>
+                            </li>
+                            }
+                            <li className="me-2 p-2">
+                                <button
+                                    onClick={() => handleTabClick('Files')}
+                                    className={`inline-block p-4 ${activeTab === 'Files' ? 'text-blue-600 bg-gray-300 rounded' : 'hover:text-gray-600'} hover:rounded hover:bg-gray-300 dark:hover:bg-gray-700 dark:hover:text-gray-300`}
                                 >
                                     Files
                                 </button>
+                            </li>
+                            <li className="me-2 flex text-center items-center">
+                                <div className=' flex justify-end gap-2'>
+                                    <button onClick={handleVerified} className='p-2 rounded text-white bg-green-800'>Its Verified</button>
+                                    <button onClick={() => setOpenInput((prev) => !prev)} className='p-2 rounded text-white bg-red-600'>Need more Data</button>
+                                </div>
                             </li>
                         </ul>
                         <div className='p-2'>
@@ -111,7 +144,7 @@ const ViewFilesModal = ({ setViewFiles, projectId }) => {
                             </div>
                             :
                             <div id="defaultTabContent">
-                                <div className={` bg-white rounded-lg md:p-8  ${activeTab === 'about' ? '' : 'hidden'}`}>
+                                <div className={` bg-white dark:bg-gray-400 rounded-lg md:p-8  ${activeTab === 'info' ? '' : 'hidden'}`}>
                                     <div className='flex'>
                                         <div>
                                             <div className="px-4 sm:px-0">
@@ -188,7 +221,7 @@ const ViewFilesModal = ({ setViewFiles, projectId }) => {
                                 {
 
                                     design === "Project Manager" &&
-                                    <div className={`p-4 bg-white rounded-lg md:p-8   ${activeTab === 'services' ? '' : 'hidden'}`}>
+                                    <div className={`p-4 bg-white dark:bg-gray-400  rounded-lg md:p-8   ${activeTab === 'contact' ? '' : 'hidden'}`}>
                                         <div className='flex'>
                                             <div className="divide-y divide-gray-100">
                                                 <div className="px-4 mt-5 sm:px-0">
@@ -263,7 +296,7 @@ const ViewFilesModal = ({ setViewFiles, projectId }) => {
                                         </div>
                                     </div>
                                 }
-                                <div className={`p-4 md:p-8 dark:bg-white ${activeTab === 'statistics' ? '' : 'hidden'}`}>
+                                <div className={`p-4 md:p-8 bg-white dark:bg-gray-400 ${activeTab === 'Files' ? '' : 'hidden'}`}>
                                     <div className="">
                                         <h3 className="text-base font-semibold leading-6 text-gray-900">Files</h3>
                                         <div className="mt-2">
@@ -289,7 +322,7 @@ const ViewFilesModal = ({ setViewFiles, projectId }) => {
                                                                         <hr />
                                                                         <div className=''>
                                                                             {file.data.map((item, i) => (
-                                                                                <div className='bg-white flex items-center justify-between py-1' key={i}>
+                                                                                <div className='bg-white dark:bg-gray-400 flex items-center justify-between py-1' key={i}>
                                                                                     <p className='text-black'>{item.fileName}</p>
                                                                                     <a className='bg-green-400  text-white font-bold text-center p-2 rounded' href={`data:application/octet-stream;base64,${item.content}`} download={item.fileName}>
                                                                                         Download File
@@ -315,6 +348,7 @@ const ViewFilesModal = ({ setViewFiles, projectId }) => {
                 </div>
             </div>
         </div>
+
     );
 };
 

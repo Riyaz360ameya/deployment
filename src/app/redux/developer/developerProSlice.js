@@ -10,13 +10,13 @@ const developerProSlice = createSlice({
   name: 'developerProSlice',
   initialState,
   reducers: {
-    developerNewProjectsStore: (state, action) => {
+    developerNewTasks: (state, action) => {
       state.developerNewTasks = action.payload;
     },
-    developerOngoingProjectsStore: (state, action) => {
+    developerOngoingTasks: (state, action) => {
       state.developerOngoingTasks = action.payload;
     },
-    developerCompletedProjectsStore: (state, action) => {
+    developerCompletedTasks: (state, action) => {
       state.developerCompletedTasks = action.payload;
     },
     verifierAddCompletedProjectsStore: (state, action) => {
@@ -32,9 +32,9 @@ const developerProSlice = createSlice({
 });
 
 export const {
-  developerNewProjectsStore,
-  developerOngoingProjectsStore,
-  developerCompletedProjectsStore,
+  developerNewTasks,
+  developerOngoingTasks,
+  developerCompletedTasks,
   resetDevTasks
 } = developerProSlice.actions;
 

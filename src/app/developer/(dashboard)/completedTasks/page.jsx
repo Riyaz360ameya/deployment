@@ -1,8 +1,12 @@
+"use client"
 import React from 'react'
+import Tasks from '../../components/Tasks'
 
 const CompletedTasks = () => {
   return (
-    <div>CompletedTasks</div>
+    <div>
+      <Tasks />
+    </div>
   )
 }
 

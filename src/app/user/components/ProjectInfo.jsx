@@ -17,7 +17,7 @@ const ProjectInfo = ({ removeFromLocation, addToLocation, setClientInputs, clien
         <div className='rounded mt-5 h-full flex flex-col '>
             <div className='flex justify-between items-center'>
                 <div>
-                    <h1 className='md:text-2xl text-lg font-extrabold text-white'>Project Info</h1>
+                    <h1 className='md:text-2xl text-lg font-extrabold'>Project Info</h1>
                 </div>
                 <div className="flex items-center justify-between gap-2 px-5">
                     <button
@@ -39,13 +39,13 @@ const ProjectInfo = ({ removeFromLocation, addToLocation, setClientInputs, clien
                     <>
                         {fields.map((field) => (
                             <div key={field.id}>
-                                <label htmlFor={field.id} className="block mb-2 text-sm font-medium text-white">
+                                <label htmlFor={field.id} className="block mb-2 text-sm font-medium ">
                                     {field.label}
                                 </label>
                                 <input
                                     type="text"
                                     id={field.id}
-                                    className="bg-gray-50 outline-none border border-gray-200 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    className="bg-gray-50 outline-none border border-gray-200  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     placeholder={field.placeholder}
                                     value={clientInputs[field.id]}
                                     onChange={(e) => setClientInputs({ ...clientInputs, [field.id]: e.target.value })}
@@ -54,39 +54,39 @@ const ProjectInfo = ({ removeFromLocation, addToLocation, setClientInputs, clien
                         ))}
                     </>
                     <div>
-                        <label htmlFor="projectType" className="block mb-2 text-sm font-medium text-white ">Project Type </label>
+                        <label htmlFor="projectType" className="block mb-2 text-sm font-medium ">Project Type </label>
                         <select
                             name='projectType'
                             id='projectType'
-                            className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md'
+                            className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:placeholder-gray-600 '
                             value={clientInputs.projectType}
                             onChange={(e) => setClientInputs({ ...clientInputs, projectType: e.target.value })}
                         >
-                            <option value="Choose Project Type" className="uppercase" disabled >
+                            <option value="Choose Project Type" className="uppercase dark:bg-gray-700" disabled >
                                 Choose Type
                             </option>
-                            <option value="Apartment" className="uppercase" defaultValue>
+                            <option value="Apartment" className="uppercase dark:bg-gray-700" defaultValue>
                                 Apartment
                             </option>
-                            <option value="Villa" className="uppercase">
+                            <option value="Villa" className="uppercase dark:bg-gray-700">
                                 Villa
                             </option>
-                            <option value="Plotting" className="uppercase">
+                            <option value="Plotting" className="uppercase dark:bg-gray-700">
                                 Plotting
                             </option>
-                            <option value="Commercial" className="uppercase">
+                            <option value="Commercial" className="uppercase dark:bg-gray-700">
                                 Commercial
                             </option>
-                            <option value="Other" className="uppercase">
+                            <option value="Other" className="uppercase dark:bg-gray-700">
                                 Other
                             </option>
                         </select>
                     </div>
                 </div>
                 <div className='px-5'>
-                    <label htmlFor="projectName" className="block mb-2 text-sm font-medium text-white ">Project highlight</label>
+                    <label htmlFor="projectName" className="block mb-2 text-sm font-medium ">Project highlight</label>
                     <textarea
-                        id="projectOverview" rows="6" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50  rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                        id="projectOverview" rows="6" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 outline-none  rounded-lg border border-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:placeholder-gray-500"
                         placeholder="Extent,number of units,club house sqft..."
                         value={clientInputs.projectHighlights}
                         onChange={(e) => setClientInputs({ ...clientInputs, projectHighlights: e.target.value })}

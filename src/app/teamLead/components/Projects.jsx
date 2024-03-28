@@ -68,14 +68,8 @@ const Projects = () => {
 
     // Assigning Task................
     const handleAssign = ({ id, workType }) => {
-        // console.log(id, '--------------------', workType);
-        // const trueConditions = Object.keys(workType).filter(key => workType[key]);
-        // console.log(trueConditions);
-
-        console.log(id, '--------------------', workType);
         const trueCondition = Object.keys(workType).find(key => workType[key]);
         const trueConditionValue = workType[trueCondition];
-        console.log(trueCondition, '----', trueConditionValue);
 
         setWorkType(trueCondition)
         setModal(true);
