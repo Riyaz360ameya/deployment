@@ -13,9 +13,9 @@ import { toast } from 'react-toastify';
 
 const DataUpload = () => {
     const [uniqueId, setUniqueId] = useState('');
+    const [success, setSuccess] = useState(false)
 
-
-    const [clientInputs, setClientInputs] = useState({
+    const initialState = {
         // projectId: '',
         projectName: '',
         projectDes: '',
@@ -38,8 +38,10 @@ const DataUpload = () => {
         landscapeName: '',
         landscapeEmail: '',
         landscapeMobNo: '',
-    });
-    const [fileUpload, setFileUpload] = useState({
+    };
+    const [clientInputs, setClientInputs] = useState(initialState);
+
+    const filesInitial = {
         // '3DsMax - Building': {},
         // '3DsMax - Landscape & Textures': {},
         // '3DsMax - Terrace': {},
@@ -69,65 +71,69 @@ const DataUpload = () => {
         'Logo of project or Company': {},
         'Landscape renders': {},
         'Project Brochure': {},
-    });
+    }
+    const [fileUpload, setFileUpload] = useState(filesInitial);
+
     const steps = ["Project Info", "Contact Details", "Files Upload", "Confirm", "Successful"];
     const steps1 = ["Project Info", "Contact Details", "Files Upload", "Confirm"];
     const [currentStep, setCurrentStep] = useState(1);
     const [complete, setComplete] = useState(false);
     const [location, setLocation] = useState([1]);
-
     const addToLocation = async (newValue) => {
         setLocation((prevLocation) => [...prevLocation, newValue]);
-        if (newValue === 5) {
-            await sentClientData(clientInputs);
-        }
+
         currentStep === steps.length
             ? setComplete(true)
             : setCurrentStep((prev) => prev + 1);
+        if (newValue === 5) {
+            await sentClientData(clientInputs);
+            console.log(currentStep, '-------------its step 5 ***--------------', steps.length)
+        }
     };
 
     const removeFromLocation = (valueToRemove) => {
-        console.log(location, '---------------location')
         setLocation((prevLocation) => prevLocation.filter((item) => item !== valueToRemove));
         setCurrentStep((prev) => prev - 1);
 
     };
 
     const resetLocation = () => {
-        console.log(location, '------------------location')
         setLocation([1]); // Set "location" to contain only the value 1
-        console.log(location, '------------------location')
-        console.log(currentStep, '------------------currentStep')
         setCurrentStep(1)
         setComplete(false)
+        setClientInputs(initialState);
+        setFileUpload(filesInitial)
+        setSuccess(false)
     };
 
     const sentClientData = async (clientInputs) => {
         try {
             const { data } = await uploadProject(clientInputs);
-            console.log(data, "-------data sending------------");
             console.log(data.savedProject.ProjectUniqId, "-------data sending------------");
             setUniqueId(data.savedProject.ProjectUniqId);
             handleSubmit(data.savedProject.ProjectUniqId)
+            handleSubmit()
         } catch (error) {
             console.error('Error sending data to the backend:', error);
         }
     };
     const handleSubmit = async (ProjectUniqId) => {
         try {
-            const formData = new FormData();
-            // Iterate over the keys of fileUpload object
-            for (const key of Object.keys(fileUpload)) {
-                const { name, file } = fileUpload[key];
-                // console.log(`Appending file - Key: ${key}, Name: ${name}, Size: ${file.size} bytes`);
-                formData.append(key, file, name);
-            }
-            formData.append('projectName', clientInputs.projectName)
-            formData.append('uniqueId', ProjectUniqId)
-            console.log(formData, '-------------------formData', ProjectUniqId)
-            const { data } = await uploadFiles(formData);
-            console.log(data, '----------------upload result')
-            toast.success(data.message);
+            // const formData = new FormData();
+            // // Iterate over the keys of fileUpload object
+            // for (const key of Object.keys(fileUpload)) {
+            //     const { name, file } = fileUpload[key];
+            //     // console.log(`Appending file - Key: ${key}, Name: ${name}, Size: ${file.size} bytes`);
+            //     formData.append(key, file, name);
+            // }
+            // formData.append('projectName', clientInputs.projectName)
+            // formData.append('uniqueId', ProjectUniqId)
+            // console.log(formData, '-------------------formData', ProjectUniqId)
+            // const { data } = await uploadFiles(formData);
+            // console.log(data, '----------------upload result')
+            setCurrentStep((prev) => prev + 1);
+            // toast.success(data.message);
+            setSuccess(true)
         } catch (error) {
             console.log(error.message, '-------------------error')
             toast.error(error.response?.data?.error || 'Error uploading files');
@@ -193,7 +199,7 @@ const DataUpload = () => {
                         // <ImageFilesUpload  />
                     )
                         : location.length === 5 && (
-                            <Loading resetLocation={resetLocation} />
+                            <Loading resetLocation={resetLocation} success={success} />
                         )}
             </div>
         </div>

@@ -21,7 +21,7 @@ const ProjectInfo = ({ removeFromLocation, addToLocation, setClientInputs, clien
                 </div>
                 <div className="flex items-center justify-between gap-2 px-5">
                     <button
-                        className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                        className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-2 py-1 md:px-4 md:py-2 rounded font-bold cursor-pointer 
                                 hover:bg-teal-600  
                                 bg-teal-600 
                                 text-teal-100 
@@ -58,7 +58,7 @@ const ProjectInfo = ({ removeFromLocation, addToLocation, setClientInputs, clien
                         <select
                             name='projectType'
                             id='projectType'
-                            className='w-full border border-gray-400 bg-gray-200 outline-none p-2 rounded-md dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:placeholder-gray-600 '
+                            className='w-full border border-gray-200  outline-none p-2 rounded-md dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:placeholder-gray-600 focus:ring-blue-500 focus:border-blue-500 '
                             value={clientInputs.projectType}
                             onChange={(e) => setClientInputs({ ...clientInputs, projectType: e.target.value })}
                         >
@@ -86,7 +86,7 @@ const ProjectInfo = ({ removeFromLocation, addToLocation, setClientInputs, clien
                 <div className='px-5'>
                     <label htmlFor="projectName" className="block mb-2 text-sm font-medium ">Project highlight</label>
                     <textarea
-                        id="projectOverview" rows="6" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 outline-none  rounded-lg border border-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:placeholder-gray-500"
+                        id="projectOverview" rows="6" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 outline-none  rounded-lg border border-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Extent,number of units,club house sqft..."
                         value={clientInputs.projectHighlights}
                         onChange={(e) => setClientInputs({ ...clientInputs, projectHighlights: e.target.value })}

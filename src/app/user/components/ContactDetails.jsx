@@ -65,7 +65,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                 </div>
                 <div className="flex items-center justify-between gap-2 px-5">
                     <button
-                        className=" p-2 text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer  hover:bg-gray-200   bg-gray-100  text-gray-700     border duration-200 ease-in-out  border-gray-600 transition"
+                        className=" p-2 text-base hover:scale-110 focus:outline-none flex justify-center px-2 py-1 md:px-4 md:py-2 rounded font-bold cursor-pointer  hover:bg-gray-200   bg-gray-100  text-gray-700     border duration-200 ease-in-out  border-gray-600 transition"
                         onClick={() => {
                             removeFromLocation(2)
                         }}
@@ -73,7 +73,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                         Back
                     </button>
                     <button
-                        className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+                        className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-2 py-1 md:px-4 md:py-2 rounded font-bold cursor-pointer 
                             hover:bg-teal-600  
                             bg-teal-600 
                             text-teal-100 
@@ -91,7 +91,7 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                     if (section.title !== "Coordinators") {
                         return (
                             <div key={section.title} className="mt-4">
-                                <p className=" text-2xl font-bold">{section.title}</p>
+                                <p className=" md:text-2xl text-lg font-bold">{section.title}</p>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:grid-cols-3">
                                     {section.fields.map((item, i) => (
                                         <div key={item.id}>
@@ -151,13 +151,13 @@ const ContactDetails = ({ addToLocation, removeFromLocation, setClientInputs, cl
                 </div>
                 <div className='flex justify-between gap-6 mt-5'>
                     <button
-                        className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer  hover:bg-teal-600   bg-teal-600  text-teal-100  border duration-200 ease-in-out  border-teal-600 transition"
+                        className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-2 py-1 md:px-4 md:py-2 rounded font-bold cursor-pointer  hover:bg-teal-600   bg-teal-600  text-teal-100  border duration-200 ease-in-out  border-teal-600 transition"
                         onClick={addCoordinator}
                     >
                         Add more coordinators
                     </button>
                     <button
-                        className=" p-2 text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer    hover:bg-gray-200     bg-gray-100   text-gray-700      border duration-200 ease-in-out  border-gray-600 transition"
+                        className=" p-2 text-base hover:scale-110 focus:outline-none flex justify-center px-2 py-1 md:px-4 md:py-2 rounded font-bold cursor-pointer    hover:bg-gray-200     bg-gray-100   text-gray-700      border duration-200 ease-in-out  border-gray-600 transition"
                         onClick={() => removeCoordinator(coordinators.length - 1)}
                     >
                         Remove coordinators
