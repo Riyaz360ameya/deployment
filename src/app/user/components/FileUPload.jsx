@@ -49,7 +49,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId, 
         </div>
         <div className="flex items-center justify-between gap-2 px-5">
           <button
-            className=" p-2 text-base hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer  hover:bg-gray-200   bg-gray-100  text-gray-700     border duration-200 ease-in-out  border-gray-600 transition"
+            className=" p-2 text-base hover:scale-110 focus:outline-none flex justify-center px-2 py-1 md:px-4 md:py-2 rounded font-bold cursor-pointer  hover:bg-gray-200   bg-gray-100  text-gray-700     border duration-200 ease-in-out  border-gray-600 transition"
             onClick={() => {
               removeFromLocation(3)
             }}
@@ -57,7 +57,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId, 
             Back
           </button>
           <button
-            className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-4 py-2 rounded font-bold cursor-pointer 
+            className="text-base  ml-2  hover:scale-110 focus:outline-none flex justify-center px-2 py-1 md:px-4 md:py-2 rounded font-bold cursor-pointer 
                     hover:bg-teal-600  
                     bg-teal-600 
                     text-teal-100 
@@ -93,7 +93,7 @@ const FileUpload = ({ addToLocation, removeFromLocation, projectName, uniqueId, 
                 <label className='block mb-2 text-sm ' htmlFor={item}>{item}</label>
                 <input
                   type="file"
-                  className='block p-1 w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+                  className='block p-1 w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500'
                   id={item}
                   name={item}
                   onChange={(e) => handleInputChange(item, e.target.files)}
