@@ -71,7 +71,7 @@ export const config = {
         '/projectManager/login',
         '/teamLead/home',
         '/teamLead/login',
-        '/developer/home',
+        '/developer/dashboard',
         '/developer/login',
     ],
 };
@@ -104,4 +104,41 @@ export const config = {
 //         bodyParser: false,
 //     },
 //     middleware: 'all', // Apply middleware to all routes
+// };
+
+
+// export function middleware(req) {
+//     try {
+//         const token = req.cookies.get('token')?.value || '';
+
+//         const decodedToken = decodeToken(token);
+
+//         const routePermissions = {
+//             '/user/dashboard': ['user'],
+//             '/projectManager/dashboard': ['projectManager'],
+//             '/teamLead/dashboard': ['teamLead'],
+//             '/developer/dashboard': ['developer']
+//             // Add more routes and corresponding roles as needed
+//         };
+
+//         // Extract the requested route
+//         const requestedRoute = req.nextUrl.pathname;
+
+//         if (!routePermissions[requestedRoute] || !routePermissions[requestedRoute].includes(decodedToken.role)) {
+//             // If the user role doesn't permit access to the requested route, redirect to a suitable route
+//             return NextResponse.redirect(new URL(`/${decodedToken.role}/dashboard`, req.nextUrl));
+//         }
+
+//         return NextResponse.next();
+//     } catch (error) {
+//         console.error(error.message, '-------------error in middleware --Invalid token');
+//         return NextResponse.redirect(new URL('/error', req.nextUrl));
+//     }
+// }
+
+// export const config = {
+//     api: {
+//         bodyParser: false,
+//     },
+//     middleware: 'all',
 // };
