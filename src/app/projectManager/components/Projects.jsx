@@ -9,15 +9,31 @@ import { completePmProject, pmCompletedProjects, pmNewProjects, pmOngoingProject
 import ConfirmModal from './ConfirmModal';
 import ViewFilesModal from '@/app/components/common/ViewFilesModal';
 import { VscFiles } from "react-icons/vsc";
+import LandingPage from '@/app/Components/LandingPage/Landingpage';
 
 const Projects = () => {
     const dispatch = useDispatch()
     const [projectsPerPage] = useState(8); 
     const [currentPage, setCurrentPage] = useState(1);
+    const [showLandingPage, setShowLandingPage] = useState(true);
     const pmNewPro = useSelector((state) => state.pmProjects.pmNewProjects)
     const pmOnGoPro = useSelector((state) => state.pmProjects.pmOngoingProjects)
     const pmComPro = useSelector((state) => state.pmProjects.pmCompletedProjects)
+    //  --------------------------------
 
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+          setShowLandingPage(false); // Hide the landing page after 10 seconds
+        }, 1000); // 10 seconds
+    
+        return () => clearTimeout(timer);
+      }, []);
+    
+      const closeLandingPage = () => {
+        setShowLandingPage(false);
+      };
+    // --------------------------------------
     const [loading, setLoading] = useState(false)
     const [verify, setVerify] = useState(false)
     const [nextTask, setNextTask] = useState(false)
@@ -110,6 +126,8 @@ const Projects = () => {
 
     return (
         <>
+              {showLandingPage && <LandingPage />}
+
             {loading ? (
                 <div className='flex items-center justify-center h-full'>
                     <div>
