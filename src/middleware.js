@@ -5,7 +5,6 @@ export function middleware(req) {
         const path = req.nextUrl.pathname;
         const token = req.cookies.get('token')?.value || '';
         console.log(token, '---------token')
-
         const user = path.startsWith('/user')
         const pm = path.startsWith('/projectManager')
         const lead = path.startsWith('/teamLead')

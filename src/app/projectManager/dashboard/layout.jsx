@@ -1,4 +1,4 @@
-import DefaultLayout from '@/app/Components/Layout/DefaultLayout'
+import DefaultLayout from '@/app/components/Layout/DefaultLayout'
 import React from 'react'
 
 export const metadata = {

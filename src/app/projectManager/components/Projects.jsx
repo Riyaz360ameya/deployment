@@ -22,17 +22,6 @@ const Projects = () => {
     //  --------------------------------
 
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-          setShowLandingPage(false); // Hide the landing page after 10 seconds
-        }, 1000); // 10 seconds
-    
-        return () => clearTimeout(timer);
-      }, []);
-    
-      const closeLandingPage = () => {
-        setShowLandingPage(false);
-      };
     // --------------------------------------
     const [loading, setLoading] = useState(false)
     const [verify, setVerify] = useState(false)
@@ -124,9 +113,22 @@ const Projects = () => {
         return project.projectId.projectInfo.projectDetails.projectName.toLowerCase().includes(searchQuery.toLowerCase());
     });
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowLandingPage(false); // Hide the landing page after 10 seconds
+        }, 3000); // 10 seconds
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    const closeLandingPage =()=>{
+        setShowLandingPage(false)
+    }
+
+
     return (
         <>
-              {showLandingPage && <LandingPage />}
+            {showLandingPage && <LandingPage closeLandingPage={closeLandingPage} />}
 
             {loading ? (
                 <div className='flex items-center justify-center h-full'>

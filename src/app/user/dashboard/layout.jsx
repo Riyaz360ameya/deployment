@@ -1,5 +1,5 @@
 import React from 'react'
-import DefaultLayout from '../../components/Layout/DefaultLayout'
+import DefaultLayout from '@/app/components/Layout/DefaultLayout'
 
 export const metadata = {
     title: 'Ameya360',
