@@ -1,5 +1,6 @@
 import React from 'react'
 import DefaultLayout from '@/app/components/Layout/DefaultLayout'
+import UserProtected from '@/app/components/protectedRoute/UserProtected'
 
 export const metadata = {
     title: 'Ameya360',
@@ -7,9 +8,11 @@ export const metadata = {
 }
 const layout = ({ children }) => {
     return (
-        <DefaultLayout  >
-            {children}
-        </DefaultLayout>
+        <UserProtected>
+            <DefaultLayout  >
+                {children}
+            </DefaultLayout>
+        </UserProtected>
     )
 }
 

@@ -41,6 +41,7 @@ function Page() {
                 toast.success(data.message)
                 dispatch(userDetails(data.user));
                 dispatch(accessToken(data.token));
+                localStorage.setItem("token",data.token)
                 router.push("/user/dashboard/newProject");
             } catch (error) {
                 console.log(error.response.data.error, '-----------LoginForm failed');
@@ -71,7 +72,7 @@ function Page() {
                                 src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a460b2980557a00017cac78_logonav.png"
                                 alt=""
                             />
-                            <h1 className='text-2xl font-bold mb-4'>AMEYA360 World</h1>
+                            <h1 className='text-2xl font-bold mb-4'>Studio Blocs</h1>
                         </div>
                         {!password ? (
                             <form onSubmit={handleSubmit} id='signUpForm'>

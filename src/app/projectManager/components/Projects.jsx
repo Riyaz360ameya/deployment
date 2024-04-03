@@ -9,7 +9,7 @@ import { completePmProject, pmCompletedProjects, pmNewProjects, pmOngoingProject
 import ConfirmModal from './ConfirmModal';
 import ViewFilesModal from '@/app/components/common/ViewFilesModal';
 import { VscFiles } from "react-icons/vsc";
-import LandingPage from '@/app/Components/LandingPage/Landingpage';
+import LandingPage from '@/app/components/LandingPage/Landingpage';
 
 const Projects = () => {
     const dispatch = useDispatch()

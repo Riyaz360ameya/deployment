@@ -70,8 +70,8 @@ function Page() {
             <div className='absolute md:w-[40%] p-5'>
                 <div className='border border-gray-400 rounded-md p-5 mr-10 shadow-2xl'>
                     <div className='flex items-center gap-5 justify-center'>
-                        <img className='h-16' src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a460b2980557a00017cac78_logonav.png" alt="" />
-                        <h1 className='text-2xl font-bold mb-4'>AMEYA360 World</h1>
+                        <img className='h-16 rounded-full' src="https://uploads-ssl.webflow.com/5a4347c1115b2f0001333231/5a460b2980557a00017cac78_logonav.png" alt="" />
+                        <h1 className='text-2xl font-bold mb-4'>Studio Blocs</h1>
                     </div>
                     <form onSubmit={handleSubmit} id='loginForm'>
                         <div className='flex justify-between gap-2'>

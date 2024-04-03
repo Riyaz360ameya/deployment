@@ -4,7 +4,7 @@ export function middleware(req) {
     try {
         const path = req.nextUrl.pathname;
         const token = req.cookies.get('token')?.value || '';
-        console.log(token, '---------token')
+        // console.log(token, '---------token')
         const user = path.startsWith('/user')
         const pm = path.startsWith('/projectManager')
         const lead = path.startsWith('/teamLead')
@@ -28,7 +28,7 @@ export function middleware(req) {
                 return NextResponse.redirect(new URL('/developer/login', req.nextUrl));
             }
         } else {
-            console.log(token,'------------token exist')
+            // console.log(token,'------------token exist')
 
             // Check if the path is a public route and user is already authenticated
             if (
@@ -61,17 +61,19 @@ export function middleware(req) {
 // the middleware is called whenever the matcher endpoint is requested
 export const config = {
     matcher: [
-        '/user/home',
+        '/user/login',
         '/user/dashboard',
         '/user/dashboard/newProject',
-        '/user/login',
+
+        '/projectManager/login',
         '/projectManager/home',
         '/projectManager/dashboard',
-        '/projectManager/login',
-        '/teamLead/home',
+
         '/teamLead/login',
-        '/developer/dashboard',
+        '/teamLead/home',
+
         '/developer/login',
+        '/developer/dashboard',
     ],
 };
 

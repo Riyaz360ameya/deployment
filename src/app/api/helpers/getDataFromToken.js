@@ -1,4 +1,7 @@
+"use server"
+
 import { NextRequest } from "next/server";
+
 import { cookies } from "next/headers";
 import Jwt from "jsonwebtoken";
 
@@ -13,9 +16,20 @@ export const getDataFromToken = async () => {
             return null
         }
         const decodedToken = Jwt.verify(token, secret)
+
         return decodedToken
     } catch (error) {
         // console.log(error.message, '-----------error in getDataFromToken')
         throw new Error(error.message)
     }
 }
+
+
+// export async function getDataFromToken() {
+//     return new Promise((resolve) => {
+//         setTimeout(async () => {
+//             const cookieData = await cookies().getAll();
+//             resolve(cookieData);
+//         }, 1000);
+//     });
+// }
