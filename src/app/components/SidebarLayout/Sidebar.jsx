@@ -20,6 +20,7 @@ import { MdCurrencyRupee } from "react-icons/md";
 import { MdTune } from "react-icons/md";
 import { MdOutlineSettings } from "react-icons/md";
 import { MdHelpOutline } from "react-icons/md";
+import { FaChartBar } from "react-icons/fa";
 
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
@@ -203,6 +204,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     title: 'Team',
                     path: '/projectManager/dashboard/teamLeads',
                     icon: <FaUserGear />,
+                },
+                {
+                    title: 'Chart',
+                    path: '/projectManager/dashboard/chart',
+                    icon: <FaChartBar />,
                 },
             ]
         },

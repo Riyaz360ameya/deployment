@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-const PmProtected = () => {
+const PmProtected = ({ children }) => {
     const router = useRouter();
     const user = useSelector((state) => state.user.userDetails);
     const useId = user._id
