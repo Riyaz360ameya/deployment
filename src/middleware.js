@@ -44,11 +44,11 @@ export function middleware(req) {
                 } else if (lead) {
                     // Redirect to team lead's home
                     // Adjust the URL accordingly
-                    return NextResponse.redirect(new URL('/teamLead/home', req.nextUrl));
+                    return NextResponse.redirect(new URL('/teamLead/dashboard', req.nextUrl));
                 } else if (dev) {
                     // Redirect to developer's home
                     // Adjust the URL accordingly
-                    return NextResponse.redirect(new URL('/developer/home', req.nextUrl));
+                    return NextResponse.redirect(new URL('/developer/dashboard', req.nextUrl));
                 }
             }
         }
@@ -69,11 +69,11 @@ export const config = {
         '/user/view',
 
         '/projectManager/login',
-        '/projectManager/home',
         '/projectManager/dashboard',
+        '/projectManager/dashboard/newProjects',
 
         '/teamLead/login',
-        '/teamLead/home',
+        '/teamLead/dashboard',
 
         '/developer/login',
         '/developer/dashboard',
