@@ -62,8 +62,11 @@ export function middleware(req) {
 export const config = {
     matcher: [
         '/user/login',
-        '/user/dashboard',
-        '/user/dashboard/newProject',
+        '/user/newProject',
+        '/user/package',
+        '/user/projects',
+        '/user/status',
+        '/user/view',
 
         '/projectManager/login',
         '/projectManager/home',

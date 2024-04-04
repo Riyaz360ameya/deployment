@@ -42,7 +42,7 @@ function Page() {
                 dispatch(userDetails(data.user));
                 dispatch(accessToken(data.token));
                 localStorage.setItem("token",data.token)
-                router.push("/user/dashboard/newProject");
+                router.push("/user/newProject");
             } catch (error) {
                 console.log(error.response.data.error, '-----------LoginForm failed');
                 toast.error(error.response.data.error)

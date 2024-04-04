@@ -1,4 +1,5 @@
 import DefaultLayout from '@/app/components/Layout/DefaultLayout'
+import PmProtected from '@/app/components/protectedRoute/PmProtected'
 import React from 'react'
 
 export const metadata = {
@@ -7,9 +8,11 @@ export const metadata = {
 }
 const layout = ({ children }) => {
     return (
-        <DefaultLayout>
-            {children}
-        </DefaultLayout>
+        <PmProtected>
+            <DefaultLayout>
+                {children}
+            </DefaultLayout>
+        </PmProtected>
     )
 }
 

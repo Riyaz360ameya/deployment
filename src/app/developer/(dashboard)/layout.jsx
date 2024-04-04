@@ -1,4 +1,5 @@
 import DefaultLayout from '@/app/components/Layout/DefaultLayout'
+import DevProtected from '@/app/components/protectedRoute/DevProtected'
 import React from 'react'
 
 export const metadata = {
@@ -7,9 +8,11 @@ export const metadata = {
 }
 const layout = ({ children }) => {
     return (
-        <DefaultLayout>
-            {children}
-        </DefaultLayout>
+        <DevProtected>
+            <DefaultLayout>
+                {children}
+            </DefaultLayout>
+        </DevProtected>
     )
 }
 

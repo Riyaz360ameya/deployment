@@ -68,31 +68,31 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     }, [sidebarExpanded]);
     const userMenuItems = [
         {
-            title: "DashBoard",
+            title: "Menu",
             list: [
                 {
                     title: 'New Project',
-                    path: '/user/dashboard/newProject',
+                    path: '/user/newProject',
                     icon: <SiTraefikproxy />,
                 },
                 {
                     title: 'Projects Details',
-                    path: '/user/dashboard/projects',
+                    path: '/user/projects',
                     icon: <SiTraefikproxy />,
                 },
                 {
                     title: 'Status',
-                    path: '/user/dashboard/status',
+                    path: '/user/status',
                     icon: <SiTraefikproxy />,
                 },
                 {
                     title: 'View',
-                    path: '/user/dashboard/view',
+                    path: '/user/view',
                     icon: <SiTraefikproxy />,
                 },
                 {
                     title: 'Package',
-                    path: '/user/dashboard/package',
+                    path: '/user/package',
                     icon: <SiTraefikproxy />,
                 },
             ]
