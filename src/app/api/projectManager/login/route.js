@@ -13,6 +13,7 @@ export async function POST(request = NextRequest) {
         const pass = password
         //check if pm exist
         const pm = await managerLoginModel.findOne({ email })
+        console.log(pm, '------------------PM')
         if (!pm) {
             return NextResponse.json({ error: "Account doesn't exist" }, { status: 400 })
         } else {
@@ -24,14 +25,16 @@ export async function POST(request = NextRequest) {
             //create token data
             const tokenData = {
                 userId: pm._id,
-                role: user.designation,
+                role: pm.designation,
             }
             const secret = process.env.SECRET_TOKEN
             const { password, __v, haveAccess, isVerified, ...others } = pm._doc
             const token = Jwt.sign(tokenData, secret, { expiresIn: '1d' })
             const response = NextResponse.json(
-                { message: "Login Successful"
-                , user: others, token},
+                {
+                    message: "Login Successful"
+                    , user: others, token
+                },
                 { success: true },
                 { status: 200 })
             await setTokenCookie({ token, response })

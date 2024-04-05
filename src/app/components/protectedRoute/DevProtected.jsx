@@ -7,19 +7,19 @@ import { toast } from 'react-toastify';
 const DevProtected = ({ children }) => {
     const router = useRouter();
     const user = useSelector((state) => state.user.userDetails);
-    const useId = user._id
+    const userId = user._id
+    const token = localStorage.getItem('token')
 
     useEffect(() => {
-        if (!useId) {
+        if (!userId || !token) {
             router.push('/developer/login');
-            // toast.error('Please login');
-        } else if (useId && user.designation !== 'Developer') {
+        } else if (user.designation !== 'Interior Developer' && user.designation !== 'Exterior Developer' && user.designation !== 'File Verifier') {
             router.push('/error');
             toast.error('Unauthorized Access');
         }
-    }, [useId, router, user.designation]);
+    }, [userId, user.designation, token]);
 
-    return useId ? children : null;
+    return userId ? children : null;
 };
 
 

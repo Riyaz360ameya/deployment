@@ -7,19 +7,19 @@ import { toast } from 'react-toastify';
 const PmProtected = ({ children }) => {
     const router = useRouter();
     const user = useSelector((state) => state.user.userDetails);
-    const useId = user._id
+    const userId = user._id
+    const token = localStorage.getItem('token')
 
     useEffect(() => {
-        if (!useId) {
+        if (!userId || !token) {
             router.push('/projectManager/login');
-            // toast.error('Please login');
-        } else if (useId && user.designation !== 'Project Manager') {
+        } else if (userId && user.designation !== 'Project Manager') {
             router.push('/error');
             toast.error('Unauthorized Access');
         }
-    }, [useId, router, user.designation]);
-
-    return useId ? children : null;
+    }, [userId, user.designation, token]);
+    
+    return userId ? children : null;
 };
 
 

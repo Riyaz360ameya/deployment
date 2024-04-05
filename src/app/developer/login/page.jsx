@@ -40,6 +40,7 @@ function page() {
                 dispatch(accessToken(data.token));
                 toast.success(data.message)
                 router.push("/developer/newTasks")
+                localStorage.setItem("token",data.token)
                 setLoading(false)
             } catch (error) {
                 console.log(error)

@@ -5,7 +5,7 @@ import { upDateOnPM } from "./upDateOnPM";
 import { sendEmail } from "../../helpers/mail";
 import ClientInformationModel from "../../models/ClientInformationModel";
 import userModel from "../../models/User/userModel";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 export const PUT = async (req = NextRequest, res = NextResponse) => {
     try {
         await authMiddleware(req, res); // passing req, res directly

@@ -2,8 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import userProjectsModel from "../../models/User/userProjectModel";
 import { removeTokenCookie } from "../../helpers/removeTokenCookie";
+import { authMiddleware } from "../../middleware/authMiddleware";
 connect();
-import authMiddleware from "../../middleware/authMiddleware";
+
+
+
 export async function GET( req = NextRequest, res = NextResponse ) {
     try {
         await authMiddleware(req, res); // passing req, res directly

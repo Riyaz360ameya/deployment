@@ -7,19 +7,20 @@ import { toast } from 'react-toastify';
 const LeadProtected = ({ children }) => {
     const router = useRouter();
     const user = useSelector((state) => state.user.userDetails);
-    const useId = user._id
+    const userId = user._id
+    const token = localStorage.getItem('token')
 
     useEffect(() => {
-        if (!useId) {
+        if (!userId || !token) {
             router.push('/teamLead/login');
-            // toast.error('Please login');
-        } else if (useId && user.designation !== 'Interior' || user.designation !== 'Exterior') {
+        } else if (user.designation !== 'Exterior' && user.designation !== 'Interior') {
             router.push('/error');
             toast.error('Unauthorized Access');
         }
-    }, [useId, router, user.designation]);
+    }, [userId, user.designation, token]);
 
-    return useId ? children : null;
+    return userId ? children : null;
+
 };
 
 

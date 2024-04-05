@@ -47,6 +47,7 @@ function page() {
                 dispatch(userDetails(data.user));
                 dispatch(accessToken(data.token));
                 toast.success(data.message)
+                localStorage.setItem("token",data.token)
                 router.push("/projectManager/dashboard")
                 setLoading(false)
             } catch (error) {

@@ -27,9 +27,9 @@ const DropdownUser = () => {
       dispatch(resetLeadProject())
       dispatch(resetDevTasks())
       toast.success(data.message)
+      localStorage.setItem("token",'')
       design === 'user' ? router.push("/user/login") : design === 'Project Manager' ? router.push("/projectManager/login")
         : design === 'Exterior' || design === 'Interior' ? router.push("/teamLead/login") : router.push("/developer/login")
-      localStorage.setItem("token", '')
     } catch (error) {
       console.log(error.message, '------------Header Error')
     }

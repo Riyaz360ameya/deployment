@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import projectInfoModel from "../../models/projectInfoModel";
 import pmProjectsModel from "../../models/ProjectManager/pmProjects";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 connect();
 
 export async function GET(req = NextRequest, res = NextResponse) {

@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { clientsFiles } from "../../helpers/clientsFiles";
 import ClientInformationModel from "../../models/ClientInformationModel";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 export const POST = async (req = NextRequest, res = NextResponse) => {
     try {
         await authMiddleware(req, res); // passing req, res directly
         const developerId = req.userId;
         const role = req.role
-        if (role !== "Exterior Developer" || role !== "Interior Developer" || role !== "File Verifier") {
+        if (!developerId && role !== "File Verifier") {
             return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         const reqBody = await req.json()

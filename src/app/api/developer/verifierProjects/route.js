@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import verifierProjectModel from "../../models/Developer/verifierProjects";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 connect()
 export async function GET(req = NextRequest, res = NextResponse) {
@@ -9,7 +9,7 @@ export async function GET(req = NextRequest, res = NextResponse) {
         await authMiddleware(req, res); // passing req, res directly
         const developerId = req.userId;
         const role = req.role
-        if (!developerId || role !== "Exterior Developer" || role !== "Interior Developer" || role !== "user") {
+        if (!developerId && role !== "File Verifier") {
             return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         const verifierId = developerId

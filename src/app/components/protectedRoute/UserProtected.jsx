@@ -7,20 +7,19 @@ import { toast } from 'react-toastify';
 const UserProtected = ({ children }) => {
     const router = useRouter();
     const user = useSelector((state) => state.user.userDetails);
-    const useId = user._id
+    const userId = user._id
     const token = localStorage.getItem('token')
 
     useEffect(() => {
-        if (!useId || token) {
+        if (!userId || !token) {
             router.push('/user/login');
-            // toast.error('Please login');
-        } else if (useId && user.designation !== 'user') {
+        } else if (userId && user.designation !== 'user') {
             router.push('/error');
             toast.error('Unauthorized Access');
         }
-    }, [useId, user.designation]);
+    }, [userId, user.designation, token]);
 
-    return useId ? children : null;
+    return userId ? children : null;
 };
 
 export default UserProtected;
