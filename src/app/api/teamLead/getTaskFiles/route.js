@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import ClientInformationModel from "../../models/ClientInformationModel";
 import { clientsFiles } from "../../helpers/clientsFiles";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 export async function PUT(req = NextRequest, res = NextResponse) {
     try {

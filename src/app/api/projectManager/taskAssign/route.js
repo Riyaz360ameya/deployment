@@ -6,7 +6,7 @@ import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 import { leadTaskAssign } from "./leadTaskAssign";
 import { pmProjectUpdate } from "./pmProjectUpdate";
 import { userProjectUpdate } from "./userProjectUpdate";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 connect();
 

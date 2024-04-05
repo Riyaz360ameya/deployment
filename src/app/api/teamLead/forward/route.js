@@ -3,7 +3,7 @@ import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 import { upDateLeadTask } from "./upDateTask";
 import devTaskModel from "../../models/Developer/developerTask";
 import { upDatePmProjects } from "./upDatePmProjects";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 export const POST = async ( req = NextRequest, res = NextResponse ) => {
     try {

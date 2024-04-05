@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import devTaskModel from "../../models/Developer/developerTask"
 import LeadTaskModel from "../../models/TeamLead/leadTaskModel"
 import { upDateDevTask } from "./upDateDev"
-import authMiddleware from "../../middleware/authMiddleware"
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 export async function POST(req = NextRequest, res = NextResponse) {
     try {

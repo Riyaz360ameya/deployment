@@ -4,7 +4,7 @@ import { upDateTask } from "./upDateTask";
 import { upDateOnLead } from "./upDateOnLead";
 import leadLoginModel from "../../models/TeamLead/leadLoginModel";
 import developerModel from "../../models/Developer/developerLoginModel";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 export const POST = async (req = NextRequest, res = NextResponse) => {
     try {

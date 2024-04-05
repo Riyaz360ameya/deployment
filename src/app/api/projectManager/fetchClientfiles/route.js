@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { clientsFiles } from "../../helpers/clientsFiles";
 import ClientInformationModel from "../../models/ClientInformationModel";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 export async function PUT(req = NextRequest, res = NextResponse) {
     try {

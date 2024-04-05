@@ -4,7 +4,7 @@ import { upDatePMProjects } from "./upDatePMData";
 import { createNewProject } from "./createNewProject";
 import { updateUserProjects } from "./updateUserProjects";
 import { updateVerifier } from "./updateVerifier";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";;
 connect();
 export async function POST( req = NextRequest, res = NextResponse ) {
     try {

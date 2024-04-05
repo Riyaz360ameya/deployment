@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import userModel from "../../models/User/userModel";
 import fs from "fs/promises";
 import path from "path";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";;
 
 export async function POST(req = NextRequest) {
     try {

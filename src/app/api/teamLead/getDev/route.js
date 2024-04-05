@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import developerModel from "../../models/Developer/developerLoginModel";
 import leadLoginModel from "../../models/TeamLead/leadLoginModel";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 connect();
 export const GET = async ( req = NextRequest, res = NextResponse ) => {
     try {

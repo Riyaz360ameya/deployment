@@ -2,7 +2,7 @@ import { connect } from "../../dbConfig/dbConfig";
 
 import { NextRequest, NextResponse } from "next/server";
 import userModel from "../../models/User/userModel";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";;
 
 connect()
 

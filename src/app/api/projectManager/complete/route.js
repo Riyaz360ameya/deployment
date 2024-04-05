@@ -3,7 +3,7 @@ import pmProjectsModel from "../../models/ProjectManager/pmProjects"
 import { upDatePmProject } from "./upDateProject"
 import { upDateClientProject } from "./clientProject"
 import LeadTaskModel from "../../models/TeamLead/leadTaskModel"
-import authMiddleware from "../../middleware/authMiddleware"
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 export const PUT = async (req = NextRequest, res = NextResponse) => {
     try {

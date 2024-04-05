@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { clientsFiles } from "../../helpers/clientsFiles";
 import verifierProjectModel from "../../models/Developer/verifierProjects";
-import authMiddleware from "../../middleware/authMiddleware";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 export async function POST(request = NextRequest) {
     try {
