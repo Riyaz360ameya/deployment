@@ -6,12 +6,12 @@ connect()
 export async function GET(req = NextRequest, res = NextResponse) {
     try {
         await authMiddleware(req, res); // passing req, res directly
-        const developerId = req.userId;
         const role = req.role
         console.log(userId, '-----------userId')
-        if (role !== "Exterior Developer" || role !== "Interior Developer" || role !== "File Verifier") {
+        if (!userId || role !== "Exterior Developer" || role !== "Interior Developer" || role !== "File Verifier") {
             return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
+        const developerId = req.userId;
         console.log(developerId, '----55-----developerId')
         const devTasks = await devTaskModel.findOne({ developerId })
             .populate({
@@ -32,7 +32,7 @@ export async function GET(req = NextRequest, res = NextResponse) {
             devTasks
         });
     } catch (error) {
-        console.log(error.message, '------------allTasks error');
+        console.log(error.message, '-------developer-----allTasks error');
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

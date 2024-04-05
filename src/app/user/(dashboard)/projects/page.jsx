@@ -9,6 +9,7 @@ import { userCompletedProjects, userNewProjects, userOngoingProjects } from '@/a
 import DataView from '../../components/DataView';
 import { userProjects } from '../../userAPIs/projectApis';
 import { dateConverter } from '@/app/api/helpers/dateConverter';
+import { toast } from 'react-toastify';
 
 function Projects() {
     const dispatch = useDispatch();
@@ -40,8 +41,9 @@ function Projects() {
             handleData("New");
             setLoading(false);
         } catch (error) {
-            console.error('Error fetching tasks:', error.message);
             setLoading(false);
+            console.log(error.response.data.error, '-----------error message');
+            toast.error(error.response.data.error)
         }
     };
 

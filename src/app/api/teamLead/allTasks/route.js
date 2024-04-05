@@ -8,7 +8,7 @@ export async function GET( req = NextRequest, res = NextResponse ) {
         await authMiddleware(req, res); // passing req, res directly
         const teamLeadId = req.userId;
         const role = req.role
-        if (role !== "Exterior" || role !== "Interior") {
+        if (!teamLeadId || role !== "Exterior" || role !== "Interior") {
             return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         const LeadTasks = await LeadTaskModel.findOne({ teamLeadId })
@@ -18,7 +18,7 @@ export async function GET( req = NextRequest, res = NextResponse ) {
             LeadTasks
         });
     } catch (error) {
-        console.log(error, '------------allTasks error');
+        console.log(error, '------team lead------allTasks error');
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

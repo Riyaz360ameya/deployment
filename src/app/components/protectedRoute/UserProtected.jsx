@@ -8,9 +8,10 @@ const UserProtected = ({ children }) => {
     const router = useRouter();
     const user = useSelector((state) => state.user.userDetails);
     const useId = user._id
+    const token = localStorage.getItem('token')
 
     useEffect(() => {
-        if (!useId) {
+        if (!useId || token) {
             router.push('/user/login');
             // toast.error('Please login');
         } else if (useId && user.designation !== 'user') {

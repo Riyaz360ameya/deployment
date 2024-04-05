@@ -38,7 +38,7 @@ export function middleware(req) {
             ) {
                 // Redirect based on the user's role
                 if (user) {
-                    return NextResponse.redirect(new URL('/user/dashboard', req.nextUrl));
+                    return NextResponse.redirect(new URL('/user/newProject', req.nextUrl));
                 } else if (pm) {
                     return NextResponse.redirect(new URL('/projectManager/dashboard', req.nextUrl));
                 } else if (lead) {
