@@ -6,11 +6,11 @@ API.interceptors.request.use((req) => {
     try {
 
         const token = localStorage.getItem("token");
-        console.log(token,'-----------token from local storage')
+        // console.log(token,'-----------token from local storage')
         if (token) {
             req.headers.Authorization = `Bearer ${token}`;
         }
-        console.log(req, '-------------req with token')
+        // console.log(req, '-------------req with token')
         return req;
     } catch (error) {
         console.log(error.message, '---------error in api')

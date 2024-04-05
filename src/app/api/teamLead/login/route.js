@@ -27,8 +27,8 @@ export async function POST(request = NextRequest) {
         }
 
         const leadTokenData = {
-            teamLeadId: user._id,
-            role: "TeamLead",
+            userId: user._id,
+            role: user.designation,
         }
 
         const { password: userPassword, __v, haveAccess, isVerified, ...others } = user._doc

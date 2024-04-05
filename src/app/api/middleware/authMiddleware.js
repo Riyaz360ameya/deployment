@@ -1,27 +1,34 @@
-// authMiddleware.js
 import jwt from 'jsonwebtoken';
 import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { removeTokenCookie } from '../helpers/removeTokenCookie';
 
 const secret = process.env.SECRET_TOKEN;
 
-const authMiddleware = async ({ req = NextRequest, res = NextResponse }) => {
+const authMiddleware = async (req = NextRequest, res = NextResponse) => {
     try {
-        const headersList = headers();
+        
+        const headersList = headers(req);
         const authHeader = headersList.get('authorization')
-        console.log(authHeader, '----------head')
+        console.log(authHeader, '---------authHeader')
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.json({ message: 'No token provided or token format invalid' }, { status: 401 });
+        }
         const token = authHeader.split(" ")[1];
-        console.log(token, '----------token')
         if (!token) {
-            return res.status(401).json({ message: 'No token Unauthorized' });
+            return res.json({ message: 'No token Unauthorized' }, { status: 401 });
         }
         const decoded = jwt.verify(token, secret);
-        console.log(decoded, '---------------------decoded')
-        req.userId = decoded?.userId;
-        // next();
+        const userId = decoded?.userId;
+        const role = decoded?.role;
+        if (!userId || !role) {
+            return res.json({ error: "Forbidden Entry" }, { status: 403 });
+        }
+        req.userId = userId
+        req.role = role
     } catch (error) {
         console.error(error.message, '------error-----middleware');
-        return res.status(401).json({ message: 'Unauthorized' });
+        return res.json({ message: 'Unauthorized entry' }, { status: 401 });
     }
 };
 

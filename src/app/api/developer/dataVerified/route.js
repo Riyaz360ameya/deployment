@@ -1,23 +1,23 @@
 import { NextRequest, NextResponse } from "next/server"
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 import verifierProjectModel from "../../models/Developer/verifierProjects";
 import { upDateVerifierTask } from "./upDateVerifierTask";
 import { upDateOnPM } from "./upDateOnPM";
 import { sendEmail } from "../../helpers/mail";
 import ClientInformationModel from "../../models/ClientInformationModel";
 import userModel from "../../models/User/userModel";
-export const PUT = async (request = NextRequest) => {
+import authMiddleware from "../../middleware/authMiddleware";
+export const PUT = async (req = NextRequest, res = NextResponse) => {
     try {
-        const { developerId } = await getDataFromToken()
-        if (!developerId) {
-            console.log('.....NO Dev Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const developerId = req.userId;
+        const role = req.role
+        if ( role !== "File Verifier") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         const verifierId = developerId
-        // const ggg = await request.json()
+        // const ggg = await req.json()
         // console.log(ggg, '----------------formData')
-        const { projectId, emailType, formData } = await request.json()
+        const { projectId, emailType, formData } = await req.json()
         console.log(projectId, '---------body')
 
         const projectData = await ClientInformationModel.findById(projectId)

@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 import leadLoginModel from "../../models/TeamLead/leadLoginModel";
+import authMiddleware from "../../middleware/authMiddleware";
 
 connect();
 
 export async function GET(req = NextRequest, res = NextResponse) {
     try {
-        const { proManagerId } = await getDataFromToken()
-        if (!proManagerId) {
-            console.log('.....NO PM Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const proManagerId = req.userId;
+        const role = req.role
+        if (role !== "Project Manager") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         const allLeadsData = await leadLoginModel.find({}).select('-password -haveAccess -isVerified -notifications -__v')
         console.log(allLeadsData, '--------------------allLeadsData')

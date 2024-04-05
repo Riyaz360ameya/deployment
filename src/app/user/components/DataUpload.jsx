@@ -115,6 +115,7 @@ const DataUpload = () => {
             handleSubmit()
         } catch (error) {
             console.error('Error sending data to the backend:', error);
+            toast.error(error.response?.data?.error);
         }
     };
     const handleSubmit = async (ProjectUniqId) => {
@@ -163,28 +164,6 @@ const DataUpload = () => {
                     </>
                 ))}
             </div>
-
-            {/* <div className="flex items-center p-5 w-full">
-                {steps?.map((step, i) => (
-                    <div className={`w-full items-center ${i != steps.length - 1 && 'flex'} `} key={i}>
-                        <div className="flex items-center relative flex-col justify-center ">
-                            <div className={`rounded-full transition flex items-center justify-center duration-500 ease-in-out h-12 w-12 py-3 border-2 border-green-600 text-white bg-boxdark
-                                ${currentStep === i + 1 && "bg-sky-600 "} 
-                                ${(i + 1 < currentStep || complete) && "bg-green-600 text-white"}  
-                                `}>
-
-                                {i + 1 < currentStep || complete ?
-                                    <TiTick size={24} />
-                                    : i + 1}
-                            </div>
-                            <div className={`hidden md:flex items-center justify-center absolute top-0 mt-12 text-center w-32 text-xs font-medium uppercase text-black ${i + 1 < currentStep || complete ? 'text-white' : ''}`}>
-                                <p>{step}</p>
-                            </div>
-                        </div>
-                        {i != steps.length - 1 && <div className={`flex-auto border-t-4 transition duration-500 ease-in-out  ${i + 1 < currentStep || complete ? 'border-green-600 ' : 'border-yellow-200'} `}></div>}
-                    </div>
-                ))}
-            </div> */}
 
             <div className='p-2 h-full overflow-hidden duration-700 text-gray-700   dark:text-gray-400'>
                 {location.length === 1 ? (

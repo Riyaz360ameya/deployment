@@ -41,7 +41,7 @@ function page() {
                 dispatch(accessToken(data.token))
                 toast.success(data.message)
                 console.log(data.user)
-                localStorage.setItem('TeamLead', JSON.stringify(data.user))
+                localStorage.setItem("token",data.token)
                 setLoading(false)
                 router.push("/teamLead/tasks")
             } catch (error) {

@@ -1,21 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from 'fs/promises';
 import path from 'path';
-import { getDataFromToken } from "../../helpers/getDataFromToken";
 import { clientsFiles } from "../../helpers/clientsFiles";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie"; // Assuming you have a function to remove token cookies
 import ClientInformationModel from "../../models/ClientInformationModel";
+import authMiddleware from "../../middleware/authMiddleware";
 
-export async function PUT(request = NextRequest) {
+export async function PUT(req = NextRequest, res = NextResponse) {
     try {
-        const { proManagerId } = await getDataFromToken();
-
-        if (!proManagerId) {
-            console.log('.....NO PM Id present');
-            return removeTokenCookie(); // Assuming you want to remove token cookie if proManagerId is not present
+        await authMiddleware(req, res); // passing req, res directly
+        const proManagerId = req.userId;
+        const role = req.role
+        if (role !== "Project Manager") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
 
-        const { projectId } = await request.json();
+        const { projectId } = await req.json();
         // const { userName, uniqueId, organizationName } = reqBody;
         const projectDetails = await ClientInformationModel.findById(projectId).populate(
             {

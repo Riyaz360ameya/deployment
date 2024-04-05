@@ -3,18 +3,15 @@ import pmProjectsModel from "../../models/ProjectManager/pmProjects"
 import { upDatePmProject } from "./upDateProject"
 import { upDateClientProject } from "./clientProject"
 import LeadTaskModel from "../../models/TeamLead/leadTaskModel"
-import { getDataFromToken } from "../../helpers/getDataFromToken"
-import { removeTokenCookie } from "../../helpers/removeTokenCookie"
+import authMiddleware from "../../middleware/authMiddleware"
 
-export const PUT = async (request = NextRequest) => {
+export const PUT = async (req = NextRequest, res = NextResponse) => {
     try {
-        const reqBody = await request.json()
-        console.log(reqBody, '-----------reqBody')
-        const { projectId } = reqBody
-        const { proManagerId } = await getDataFromToken()
-        if (!proManagerId) {
-            console.log('.....NO PM Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const proManagerId = req.userId;
+        const role = req.role
+        if (role !== "Project Manager") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         const findPmProjects = await pmProjectsModel.findOne({ proManagerId })
         if (!findPmProjects) {
@@ -35,14 +32,14 @@ export const PUT = async (request = NextRequest) => {
         const userId = data.userId.toString()
         const upDatedLead = await upDateClientProject({ projectId, userId })
         const PmProjects = await pmProjectsModel.findOne({ proManagerId })
-        .populate({
-            path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.assignedLeadId onGoingProjects.projectId completedProjects.assignedLeadId completedProjects.userId completedProjects.projectId',
-            select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry -notifications',
-        })
+            .populate({
+                path: 'newProjects.userId newProjects.projectId onGoingProjects.userId onGoingProjects.assignedLeadId onGoingProjects.projectId completedProjects.assignedLeadId completedProjects.userId completedProjects.projectId',
+                select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry -notifications',
+            })
         const allComProject = PmProjects.completedProjects
         return NextResponse.json({ message: "Project Completed", success: true, allComProject }, { status: 200 });
     } catch (error) {
         console.error(error.message, '--------error message');
-        return NextResponse.json({ error:error.message }, { status: 500 });
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

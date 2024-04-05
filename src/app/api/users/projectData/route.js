@@ -1,21 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import userProjectsModel from "../../models/User/userProjectModel";
-// import { getDataFromToken } from "../../helpers/getDataFromToken";
 import { removeTokenCookie } from "../../helpers/removeTokenCookie";
-import Jwt from "jsonwebtoken";
 connect();
-import { headers } from 'next/headers'
 import authMiddleware from "../../middleware/authMiddleware";
-export async function GET({ req = NextRequest, res = NextResponse }) {
+export async function GET( req = NextRequest, res = NextResponse ) {
     try {
         await authMiddleware(req, res); // passing req, res directly
-        const { userId } = req;
+        const userId  = req.userId;
+        const role = req.role
         console.log(userId, '-----------userId')
-        // const { userId, role } = await getDataFromToken()
-        if (!userId) {
+        if (role !== "user") {
             console.log('.....NO User Id present');
-            return removeTokenCookie();
+            removeTokenCookie();
+            return NextResponse.json({ error: "Unauthorized Entry" }, { status: 401 });
         }
         //  user exists
         const userExists = await userProjectsModel.findOne({ userId })

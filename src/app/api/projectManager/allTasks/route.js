@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 connect();
-export const GET = async () => {
+export const GET = async ({req = NextRequest, res = NextResponse}) => {
     try {
-        const { proManagerId } = await getDataFromToken()
-        if (!proManagerId) {
-            console.log('.....NO PM Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const proManagerId = req.userId;
+        const role = req.role
+        if (role !== "Project Manager") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         // Use populate to include leadLogin details in teamLeadId
         const allTasks = await LeadTaskModel.find().populate({

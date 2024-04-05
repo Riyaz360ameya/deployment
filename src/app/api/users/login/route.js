@@ -33,7 +33,7 @@ export async function POST(request = NextRequest) {
                 //create token data
                 const tokenData = {
                     userId: others._id,
-                    role: "user"
+                    role: user.designation,
                 }
                 const secret = process.env.SECRET_TOKEN
                 const token = Jwt.sign(tokenData, secret, { expiresIn: '1d' })

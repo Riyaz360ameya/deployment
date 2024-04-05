@@ -1,16 +1,16 @@
 import { NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 import devTaskModel from "../../models/Developer/developerTask";
+import authMiddleware from "../../middleware/authMiddleware";
 
 connect()
-export async function GET() {
+export async function GET(req = NextRequest, res = NextResponse) {
     try {
-        const { developerId } = await getDataFromToken()
-        if (!developerId) {
-            console.log('.....NO Dev Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const developerId = req.userId;
+        const role = req.role
+        if ( role !== "Exterior Developer" || role !== "Interior Developer" || role !== "File Verifier") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         console.log(developerId, '------------developerId new tasks')
         const devTasks = await devTaskModel.findOne({ developerId })

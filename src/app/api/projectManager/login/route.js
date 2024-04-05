@@ -23,8 +23,8 @@ export async function POST(request = NextRequest) {
             }
             //create token data
             const tokenData = {
-                proManagerId: pm._id,
-                role: "ProjectManager"
+                userId: pm._id,
+                role: user.designation,
             }
             const secret = process.env.SECRET_TOKEN
             const { password, __v, haveAccess, isVerified, ...others } = pm._doc

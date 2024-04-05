@@ -6,20 +6,17 @@ import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 import { leadTaskAssign } from "./leadTaskAssign";
 import { pmProjectUpdate } from "./pmProjectUpdate";
 import { userProjectUpdate } from "./userProjectUpdate";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
+import authMiddleware from "../../middleware/authMiddleware";
 
 connect();
 
-export async function POST(request = NextRequest) {
+export async function POST(req = NextRequest, res = NextResponse) {
   try {
-    const reqBody = await request.json();
-    console.log(reqBody, '----------55----------reqBody')
-    const { proManagerId } = await getDataFromToken();
-
-    if (!proManagerId) {
-      console.log('No PM Id present. Removing token cookie.');
-      return removeTokenCookie();
+    await authMiddleware(req, res); // passing req, res directly
+    const proManagerId = req.userId;
+    const role = req.role
+    if (role !== "Project Manager") {
+      return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
     }
     const { selectedTeams, projectId } = reqBody;
     console.log(reqBody, '--------------body')

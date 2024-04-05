@@ -8,6 +8,7 @@ import { IoMdCut } from "react-icons/io";
 import { userCompletedProjects, userNewProjects, userOngoingProjects } from '@/app/redux/users/userProSlice';
 import DataView from '../../components/DataView';
 import { userProjects } from '../../userAPIs/projectApis';
+import { dateConverter } from '@/app/api/helpers/dateConverter';
 
 function Projects() {
     const dispatch = useDispatch();
@@ -177,7 +178,7 @@ function Projects() {
                                                 {item.ProjectId.projectInfo.projectDetails.projectUSP}
                                             </td>
                                             <td className="px-6 py-4">
-                                                {item.ProjectId.createdAt}
+                                            {dateConverter(item.ProjectId.createdAt)}
                                             </td>
                                         </tr>
                                     ))}

@@ -2,17 +2,17 @@ import { NextRequest, NextResponse } from "next/server"
 import { upDateTask } from "./upDateTask"
 import { upDateOnLead } from "./upDateOnLead"
 import devTaskModel from "../../models/Developer/developerTask"
-import { getDataFromToken } from "../../helpers/getDataFromToken"
-import { removeTokenCookie } from "../../helpers/removeTokenCookie"
 
-export const POST = async (request = NextRequest) => {
+export const POST = async (req = NextRequest, res = NextResponse) => {
     try {
-        const { developerId } = await getDataFromToken()
-        if (!developerId) {
-            console.log('.....NO Dev Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const developerId = req.userId;
+        const role = req.role
+        console.log(userId, '-----------userId')
+        if ( role !== "Exterior Developer" || role !== "Interior Developer" || role !== "File Verifier") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
-        const reqBody = await request.json()
+        const reqBody = await req.json()
         const { projectId } = reqBody
         const findDevTask = await devTaskModel.findOne({ developerId })
         if (!findDevTask) {
@@ -28,7 +28,7 @@ export const POST = async (request = NextRequest) => {
         const upDatedDev = await upDateTask({ data, findDevTask, projectId })
         const teamLeadId = data.assignedLeadId.toString()
         const upDatedLead = await upDateOnLead({ projectId, teamLeadId })
-        return NextResponse.json({ message: "Task Completed", success: true ,upDatedDev }, { status: 200 });
+        return NextResponse.json({ message: "Task Completed", success: true, upDatedDev }, { status: 200 });
     } catch (error) {
         console.error(error.message, '--------error message');
     }

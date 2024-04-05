@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import developerModel from "../../models/Developer/developerLoginModel";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
 import leadLoginModel from "../../models/TeamLead/leadLoginModel";
+import authMiddleware from "../../middleware/authMiddleware";
 connect();
-export const GET = async (request = NextRequest) => {
+export const GET = async ( req = NextRequest, res = NextResponse ) => {
     try {
-        const { teamLeadId } = await getDataFromToken()
-        if (!teamLeadId) {
-            console.log('.....NO Lead Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const teamLeadId = req.userId;
+        const role = req.role
+        if (role !== "Exterior" || role !== "Interior") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         const findLead = await leadLoginModel.findById(teamLeadId)
         if (!findLead) {
