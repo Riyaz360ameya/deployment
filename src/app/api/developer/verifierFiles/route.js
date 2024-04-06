@@ -1,17 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 import { clientsFiles } from "../../helpers/clientsFiles";
 import ClientInformationModel from "../../models/ClientInformationModel";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
-export const POST = async (request = NextRequest) => {
+export const POST = async (req = NextRequest, res = NextResponse) => {
     try {
-        const { developerId } = await getDataFromToken()
-        if (!developerId) {
-            console.log('.....NO Dev Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const developerId = req.userId;
+        const role = req.role
+        if (!developerId && role !== "File Verifier") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
-        const reqBody = await request.json()
+        const reqBody = await req.json()
         const { projectId } = reqBody
         console.log(projectId, '------------projectId')
         const projectDetails = await ClientInformationModel.findById(projectId).populate(

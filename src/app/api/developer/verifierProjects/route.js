@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 import { connect } from "../../dbConfig/dbConfig";
 import verifierProjectModel from "../../models/Developer/verifierProjects";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 connect()
-export async function GET() {
+export async function GET(req = NextRequest, res = NextResponse) {
     try {
-        const { developerId } = await getDataFromToken()
-        if (!developerId) {
-            console.log('.....NO Dev Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const developerId = req.userId;
+        const role = req.role
+        if (!developerId && role !== "File Verifier") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         const verifierId = developerId
         console.log(verifierId, '----55-----developerId')
@@ -33,7 +33,7 @@ export async function GET() {
             devTasks
         });
     } catch (error) {
-        console.log(error.message, '------------allTasks error');
+        console.log(error.message, '----developer--------project verify error');
         return NextResponse.json({ error: error.message }, { status: 500 });
     } 
 }

@@ -3,25 +3,24 @@ import { NextRequest, NextResponse } from "next/server";
 import { upDatePMProjects } from "./upDatePMData";
 import { createNewProject } from "./createNewProject";
 import { updateUserProjects } from "./updateUserProjects";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 import { updateVerifier } from "./updateVerifier";
+import { authMiddleware } from "../../middleware/authMiddleware";;
 connect();
-export async function POST(request = NextRequest) {
+export async function POST( req = NextRequest, res = NextResponse ) {
     try {
-        const { userId, role } = await getDataFromToken()
-        console.log(userId, '--------------userId')
-        if (!userId) {
-            console.log('.....NO Lead Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const userId = req.userId;
+        const role = req.role
+        console.log(userId, '-----------userId', role)
+        if (role !== "user") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
-        const reqData = await request.json();
+        const reqData = await req.json()
         console.log(reqData, '--------------reqData')
-
         const savedProject = await createNewProject({ reqData, userId })
         const projectId = savedProject._id
         const user = await updateUserProjects({ userId, projectId })
-        const verifier = await updateVerifier({userId, projectId})
+        const verifier = await updateVerifier({ userId, projectId })
         const pm = await upDatePMProjects({ userId, projectId })
         console.log(projectId, '--------55--------ProjectId')
         return NextResponse.json({

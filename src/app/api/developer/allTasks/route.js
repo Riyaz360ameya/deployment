@@ -1,22 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../dbConfig/dbConfig";
 import devTaskModel from "../../models/Developer/developerTask";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
-connect()
-export async function GET() {
+import { authMiddleware } from "../../middleware/authMiddleware";connect()
+export async function GET(req = NextRequest, res = NextResponse) {
     try {
-        const { developerId } = await getDataFromToken()
-        if (!developerId) {
-            console.log('.....NO Dev Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const role = req.role
+        console.log(userId, '-----------userId')
+        if (!userId || role !== "Exterior Developer" || role !== "Interior Developer" || role !== "File Verifier") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
+        const developerId = req.userId;
         console.log(developerId, '----55-----developerId')
         const devTasks = await devTaskModel.findOne({ developerId })
-        .populate({
-            path: 'newTasks.projectId onGoingTasks.projectId completedTasks.projectId',
-            select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry -notifications',
-        }).sort({ projectReachedOn: -1 });
+            .populate({
+                path: 'newTasks.projectId onGoingTasks.projectId completedTasks.projectId',
+                select: '-email -password -isVerified -isAdmin -forgotPasswordToken -forgotPasswordTokenExpiry -notifications',
+            }).sort({ projectReachedOn: -1 });
         if (!devTasks) {
             return NextResponse.json({ error: error.message }, { status: 404 });
         }
@@ -31,7 +31,7 @@ export async function GET() {
             devTasks
         });
     } catch (error) {
-        console.log(error.message, '------------allTasks error');
+        console.log(error.message, '-------developer-----allTasks error');
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

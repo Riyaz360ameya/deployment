@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
 import userModel from "../../models/User/userModel";
 import fs from "fs/promises";
 import path from "path";
+import { authMiddleware } from "../../middleware/authMiddleware";;
 
 export async function POST(req = NextRequest) {
     try {
+        await authMiddleware(req, res); // passing req, res directly
+        const userId = req.userId;
+        const role = req.role
+        if (role !== "user") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
+        }
         const data = await req.formData();
         console.log(data, '------------------------data')
         const currentYear = new Date().getFullYear()
@@ -16,7 +22,6 @@ export async function POST(req = NextRequest) {
         console.log(projectFolder, "---------------- projectFolder name");
         const serverFolderPath = 'Z://Ameya360';
         //..................................................................//
-        const { userId, role } = await getDataFromToken();
         const user = await userModel.findById(userId)
         const organizationName = user.organization
         const clientName = user.firstName

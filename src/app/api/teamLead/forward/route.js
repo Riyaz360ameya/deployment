@@ -3,15 +3,15 @@ import LeadTaskModel from "../../models/TeamLead/leadTaskModel";
 import { upDateLeadTask } from "./upDateTask";
 import devTaskModel from "../../models/Developer/developerTask";
 import { upDatePmProjects } from "./upDatePmProjects";
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
-export const POST = async (request = NextRequest) => {
+export const POST = async ( req = NextRequest, res = NextResponse ) => {
     try {
-        const { teamLeadId } = await getDataFromToken()
-        if (!teamLeadId) {
-            console.log('.....NO Lead Id present');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const teamLeadId = req.userId;
+        const role = req.role
+        if (role !== "Exterior" || role !== "Interior") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         const reqBody = await request.json()
         const projectId = reqBody.projectId
@@ -29,7 +29,7 @@ export const POST = async (request = NextRequest) => {
         const upDatedLead = await upDateLeadTask({ data, findLeadTask, projectId })
         const proManagerId = data.assignedPersonId
         const upDatePm = await upDatePmProjects({ data, proManagerId, projectId })
-        return NextResponse.json({ message: "Update Sent To Project Manager", success: true,upDatedLead }, { status: 200 });
+        return NextResponse.json({ message: "Update Sent To Project Manager", success: true, upDatedLead }, { status: 200 });
     } catch (error) {
         console.error(error.message, '------------POST error');
         return NextResponse.json({ error: error.message }, { status: 500 });

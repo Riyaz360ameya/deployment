@@ -8,6 +8,8 @@ import { IoMdCut } from "react-icons/io";
 import { userCompletedProjects, userNewProjects, userOngoingProjects } from '@/app/redux/users/userProSlice';
 import DataView from '../../components/DataView';
 import { userProjects } from '../../userAPIs/projectApis';
+import { dateConverter } from '@/app/api/helpers/dateConverter';
+import { toast } from 'react-toastify';
 
 function Projects() {
     const dispatch = useDispatch();
@@ -39,8 +41,9 @@ function Projects() {
             handleData("New");
             setLoading(false);
         } catch (error) {
-            console.error('Error fetching tasks:', error.message);
             setLoading(false);
+            console.log(error.response.data.error, '-----------error message');
+            toast.error(error.response.data.error)
         }
     };
 
@@ -177,7 +180,7 @@ function Projects() {
                                                 {item.ProjectId.projectInfo.projectDetails.projectUSP}
                                             </td>
                                             <td className="px-6 py-4">
-                                                {item.ProjectId.createdAt}
+                                            {dateConverter(item.ProjectId.createdAt)}
                                             </td>
                                         </tr>
                                     ))}

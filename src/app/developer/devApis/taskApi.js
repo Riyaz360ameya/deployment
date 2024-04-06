@@ -2,6 +2,20 @@ import axios from "axios";
 
 const API = axios.create({ baseURL: "/api/developer" })
 
+API.interceptors.request.use((req) => {
+    try {
+
+        const token = localStorage.getItem("token");
+        if (token) {
+            req.headers.Authorization = `Bearer ${token}`;
+        }
+        return req;
+    } catch (error) {
+        console.log(error.message, '---------error in api')
+    }
+});
+
+
 // Developer
 export const allProjectFiles = (data) => API.post("/allProjectFiles", data);
 export const startTask = (projectId) => API.post("/startTask", { projectId });

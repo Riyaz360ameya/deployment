@@ -1,24 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from 'fs/promises';
 import path from 'path';
-import { getDataFromToken } from "../../helpers/getDataFromToken";
-import { removeTokenCookie } from "../../helpers/removeTokenCookie";
 import { clientsFiles } from "../../helpers/clientsFiles";
 import verifierProjectModel from "../../models/Developer/verifierProjects";
+import { authMiddleware } from "../../middleware/authMiddleware";
 
 export async function POST(request = NextRequest) {
     try {
-        const { developerId } = await getDataFromToken()
-        if (!developerId) {
-            console.log('.....NOT a Verifier');
-            return removeTokenCookie();
+        await authMiddleware(req, res); // passing req, res directly
+        const developerId = req.userId;
+        const role = req.role
+        console.log(userId, '-----------userId')
+        if ( role !== "Exterior Developer" || role !== "Interior Developer" || role !== "File Verifier") {
+            return NextResponse.json({ error: "Forbidden Entry" }, { status: 403 });
         }
         const verifierId = developerId
         console.log(verifierId, '----55-----developerId')
         const devTasks = await verifierProjectModel.findOne({ verifierId })
         if (!devTasks) {
             console.log('.....NO Verifier present');
-            return removeTokenCookie();
+            return NextResponse.json({ error: "No Tasks" }, { status: 404 })
         }
 
         const reqBody = await request.json();

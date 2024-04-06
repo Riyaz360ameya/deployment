@@ -38,17 +38,17 @@ export function middleware(req) {
             ) {
                 // Redirect based on the user's role
                 if (user) {
-                    return NextResponse.redirect(new URL('/user/dashboard', req.nextUrl));
+                    return NextResponse.redirect(new URL('/user/newProject', req.nextUrl));
                 } else if (pm) {
                     return NextResponse.redirect(new URL('/projectManager/dashboard', req.nextUrl));
                 } else if (lead) {
                     // Redirect to team lead's home
                     // Adjust the URL accordingly
-                    return NextResponse.redirect(new URL('/teamLead/dashboard', req.nextUrl));
+                    return NextResponse.redirect(new URL('/teamLead/tasks', req.nextUrl));
                 } else if (dev) {
                     // Redirect to developer's home
                     // Adjust the URL accordingly
-                    return NextResponse.redirect(new URL('/developer/dashboard', req.nextUrl));
+                    return NextResponse.redirect(new URL('/developer/newTasks', req.nextUrl));
                 }
             }
         }
@@ -73,7 +73,9 @@ export const config = {
         '/projectManager/dashboard/newProjects',
 
         '/teamLead/login',
-        '/teamLead/dashboard',
+        '/teamLead/tasks',
+        '/teamLead/developers',
+        '/teamLead/calender',
 
         '/developer/login',
         '/developer/dashboard',
