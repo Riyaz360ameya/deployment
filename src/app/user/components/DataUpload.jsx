@@ -141,7 +141,7 @@ const DataUpload = () => {
         }
     };
     return (
-        <div className='h-full  p-2  border border-stroke bg-gray-200 px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark dark:text-white sm:px-7.5 xl:pb-1 rounded '>
+        <div className='h-full p-2  border border-stroke bg-gray-200 px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark dark:text-white sm:px-7.5 xl:pb-1 rounded '>
             <div className="flex items-center p-5">
                 {steps?.map((step, i) => (
                     <>
