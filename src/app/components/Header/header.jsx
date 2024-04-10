@@ -6,6 +6,7 @@ import DropdownNotification from "./DropdownNotification";
 import DropdownUser from "./DropdownUser";
 import { PiBellLight, PiChatDotsLight } from "react-icons/pi";
 import { usePathname } from "next/navigation";
+import DropdownMessage from "./DropdownMessage";
 // import DropdownMessage from "./DropdownMessage";
 
 const Header = (props) => {
@@ -89,7 +90,7 @@ const Header = (props) => {
                         {/* <!-- Notification Menu Area --> */}
 
                         {/* <!-- Chat Notification Area --> */}
-                        {/* <DropdownMessage /> */}
+                        <DropdownMessage/>
                         {/* <!-- Chat Notification Area --> */}
                     </ul>
                     {/* <!-- User Area --> */}
