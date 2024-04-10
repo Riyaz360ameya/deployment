@@ -2,11 +2,11 @@ import Link from "next/link";
 import { CiMenuBurger } from "react-icons/ci";
 import Image from "next/image";
 import DarkModeSwitcher from "./DarkModeSwitcher";
-import DropdownMessage from "./DropDownMessage";
 import DropdownNotification from "./DropdownNotification";
 import DropdownUser from "./DropdownUser";
 import { PiBellLight, PiChatDotsLight } from "react-icons/pi";
 import { usePathname } from "next/navigation";
+// import DropdownMessage from "./DropdownMessage";
 
 const Header = (props) => {
     const pathname = usePathname()
@@ -89,7 +89,7 @@ const Header = (props) => {
                         {/* <!-- Notification Menu Area --> */}
 
                         {/* <!-- Chat Notification Area --> */}
-                        <DropdownMessage />
+                        {/* <DropdownMessage /> */}
                         {/* <!-- Chat Notification Area --> */}
                     </ul>
                     {/* <!-- User Area --> */}
